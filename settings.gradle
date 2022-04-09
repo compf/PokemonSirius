@@ -1,0 +1,4 @@
+include 'lwjgl3', 'core'
+include 'compf.core.engine'
+include 'engine'
+
