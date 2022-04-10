@@ -51,13 +51,19 @@ public class SharedPipe  implements Pipe{
         );
     }
     private static HashMap<String,Integer> threadListening=new HashMap<>();
+
+    @Override
+    public boolean avaliable() {
+        return !waitingList.isEmpty();
+    }
+
     @Override
     public Object read()  {
         try {
             synchronized (threadListening){
-                System.out.println();
-                System.out.println(Thread.currentThread().getName());
-                threadListening.put(Thread.currentThread().getName(),System.identityHashCode(waitingList));
+                //System.out.println();
+                //System.out.println(Thread.currentThread().getName());
+                //threadListening.put(Thread.currentThread().getName(),System.identityHashCode(waitingList));
 
             }
 

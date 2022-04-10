@@ -17,6 +17,11 @@ public class PipeEndPoint implements Pipe{
     }
 
     @Override
+    public boolean avaliable() {
+        return _read.avaliable();
+    }
+
+    @Override
     public Pipe waitForConnection() {
         //System.out.println("End point " +System.identityHashCode(this) +" wait for connection");
         return _read.waitForConnection();

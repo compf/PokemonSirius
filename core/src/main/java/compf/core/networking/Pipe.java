@@ -5,4 +5,5 @@ public interface Pipe {
     Object read();
     Pipe waitForConnection();
     Pipe connect();
+    boolean avaliable();
 }
