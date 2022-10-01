@@ -44,6 +44,9 @@ public class ConsolePrompt implements IOInterface {
 		message(msg);
 		return _scanner.nextInt();
 	}
+	public void endBattle(){
+		//TODO
+	}
 	public <T> int prompt(String prompt, IPrompt<T> promptHelper,BiPredicate<Integer,T> test, T... args) {
 		System.out.println(prompt);
 		for (int i = 0; i < args.length; i++) {

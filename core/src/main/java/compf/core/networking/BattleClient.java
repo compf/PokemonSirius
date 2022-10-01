@@ -72,7 +72,7 @@ public class BattleClient extends BaseServer implements Runnable {
 				_state=roundResult.State;
 				_io.update(roundResult);
 				if(roundResult.State.battleFinished()){
-					//Main.goBack();
+					_io.endBattle();
 				}
 				break;
 				case RequestPokemonSwitch:

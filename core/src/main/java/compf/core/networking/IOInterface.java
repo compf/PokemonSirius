@@ -14,7 +14,7 @@ public interface IOInterface {
 	public void setLock(boolean val);
 	public PlayerInput requestPlayerInput(short pkmnIndex, BattleState state);
 
-
+	public void endBattle();
 	short switchPokemon(BattleState state, short oldIndex);
 
 	public interface IPrompt<T> {

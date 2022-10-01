@@ -97,6 +97,7 @@ public class Main extends ApplicationAdapter  {
 	public void dispose() {
 		batch.dispose();
 		image.dispose();
+		System.exit(0);
 	}
 	private int lastKey=-1;
 

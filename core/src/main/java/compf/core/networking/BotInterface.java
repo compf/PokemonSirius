@@ -21,6 +21,9 @@ public class BotInterface implements IOInterface {
     public void update(BattleRoundResult state) {
 
     }
+    public void endBattle(){
+        
+    }
 
     @Override
     public void setLock(boolean val) {

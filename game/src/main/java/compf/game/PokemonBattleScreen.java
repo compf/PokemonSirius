@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import compf.Main;
 import compf.core.engine.*;
 import compf.core.engine.Player;
 import compf.core.engine.pokemon.Pokemon;
@@ -111,6 +113,9 @@ public class PokemonBattleScreen extends HierarchicalObject {
             else {
                 return moveItems;
             }
+        }
+        public void endBattle(){
+            Main.goBack();
         }
         protected BattleControl(int x, int y, int width, int height) {
             super(x, y, width, height);
