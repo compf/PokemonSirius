@@ -1,4 +1,4 @@
-package compf.core.game;
+package compf.game;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;

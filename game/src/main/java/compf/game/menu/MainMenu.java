@@ -1,4 +1,4 @@
-package compf.core.game.menu;
+package compf.game.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import compf.core.game.FontManager;
-import compf.core.game.Settings;
+import compf.game.FontManager;
+import compf.game.Settings;
 
 public class MainMenu extends BaseMenu<String> {
     static String[] menuItems={"Pokemon","Bag","Save"};

@@ -1,9 +1,9 @@
-package compf.core.game;
+package compf.game;
 
 import com.badlogic.gdx.math.Rectangle;
 
-public  class CollidableTexture extends DrawableObject {
-    public CollidableTexture(int x, int y, int width, int height) {
+public  class CollidableObject extends DrawableObject {
+    public CollidableObject(int x, int y, int width, int height) {
         super(x, y, width, height);
     }
     public boolean doesCollide(DrawableObject other){

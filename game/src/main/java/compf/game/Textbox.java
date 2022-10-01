@@ -1,4 +1,4 @@
-package compf.core.game;
+package compf.game;
 
 public class Textbox extends DrawableObject{
     protected Textbox(int x, int y, int width, int height) {

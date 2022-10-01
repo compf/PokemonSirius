@@ -1,11 +1,11 @@
-package compf.core.game;
+package compf.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.awt.*;
 
-public class RepeatableTexture extends CollidableTexture {
+public class RepeatableTexture extends CollidableObject {
     private Texture texture;
     public RepeatableTexture(int x, int y, int width, int height, Texture texture) {
         super(x, y, width, height);

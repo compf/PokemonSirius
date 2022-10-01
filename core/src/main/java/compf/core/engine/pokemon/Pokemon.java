@@ -56,16 +56,23 @@ public class Pokemon extends PokedexEntry  {
     }
     public enum Gender{Male,Female}
     public Pokemon(int nr){
-        this(SharedInformation.Instance.getPokedexEntry(nr));
+        this(SharedInformation.Instance.getPokedexEntry(nr),DefaultPokemonLevel);
     }
-    public Pokemon(PokedexEntry entry) {
+    private  static int DefaultPokemonLevel=50;
+    public Pokemon(PokedexEntry entry){
+        this(entry,DefaultPokemonLevel);
+    }
+    public Pokemon (int nr,int level){
+        this(SharedInformation.Instance.getPokedexEntry(nr),level);
+    }
+    public Pokemon(PokedexEntry entry,int level) {
         super._nr = entry._nr;
         super._name = entry._name;
         super._height = entry._height;
         super._weight = entry._weight;
         super._type1 = entry._type1;
         super._type2 = entry._type2==null?Type.Empty:entry._type2;
-        _lvl = 50;
+        _lvl = level;
         _nature = Nature.values()[MyObject.RNG.nextInt(25)];
         _gender=MyObject.randomNumber(0, 2)==0?Gender.Male:Gender.Female;
         super._baseStats = entry._baseStats;
@@ -109,6 +116,15 @@ public class Pokemon extends PokedexEntry  {
     public Move[] getMoves() {
         return _moves;
     }
+    public int getValidMovesCount(){
+        int count=0;
+        for(int i=0;i<SharedInformation.MovesPerPokemonCount;i++){
+            if(_moves[i]!=null){
+                count++;
+            }
+        }
+        return count;
+    }
     public int getMoveIndex(Move mv) {
         for(int i=0;i<4;i++)
             if(_moves[i].getNr()==mv.getNr())return i;
@@ -116,7 +132,10 @@ public class Pokemon extends PokedexEntry  {
     }
     public void setMove(int index,int moveNr) {
         _moves[index]=SharedInformation.Instance.getMove(moveNr);
-        _movesPP[index]=_moves[index].getPP();
+        if(moveNr>0){
+            _movesPP[index]=_moves[index].getPP();
+
+        }
     }
     public int getMovePP(int index) {
         return _movesPP[index];

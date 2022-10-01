@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+//import Main;
 import compf.core.engine.*;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.etc.BufferList;
@@ -70,6 +71,9 @@ public class BattleClient extends BaseServer implements Runnable {
 				var roundResult=(BattleRoundResult) msg.Data;
 				_state=roundResult.State;
 				_io.update(roundResult);
+				if(roundResult.State.battleFinished()){
+					//Main.goBack();
+				}
 				break;
 				case RequestPokemonSwitch:
 						short oldIndex=(short)msg.Data;

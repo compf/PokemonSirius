@@ -1,6 +1,6 @@
-package compf.core.game;
+package compf.game;
 
-import compf.core.game.menu.MainMenu;
+import compf.game.menu.MainMenu;
 
 public class Map extends FocusableHierarchicalObject{
     public Map(){

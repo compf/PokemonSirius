@@ -1,4 +1,4 @@
-package compf.core.game;
+package compf.game;
 
 public class FocusableHierarchicalObject extends HierarchicalObject{
     private DrawableObject focused;

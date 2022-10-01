@@ -1,4 +1,4 @@
-package compf.core.game;
+package compf.game;
 
 import java.util.concurrent.Semaphore;
 

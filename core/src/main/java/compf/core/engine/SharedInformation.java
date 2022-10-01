@@ -11,6 +11,8 @@ import compf.core.engine.pokemon.moves.*;
  */
 public final class SharedInformation {
 	public static final int[] PokemonGenCount= {151,251,386,493,650,722,808};
+	public static final int TeamSize =6 ;
+	public static final int MovesPerPokemonCount=4;
 	private static final String WIN_PATH="jdbc:sqlite:veekun-pokedex.sqlite";
 	private static  String PATH=WIN_PATH;
 	public static final  int PokemonCount = 491;
@@ -29,7 +31,7 @@ public static final SharedInformation Instance=new SharedInformation();
 		try {
 			
 			Class.forName("org.sqlite.JDBC");
-			final  String sqlString="jdbc:sqlite:assets/lib/veekun-pokedex.sqlite";
+			final  String sqlString="jdbc:sqlite:lib/veekun-pokedex.sqlite";
 			Connection conn=DriverManager.getConnection(sqlString);
 		
 		
@@ -131,7 +133,7 @@ public static final SharedInformation Instance=new SharedInformation();
 		return pokemon[nr-1];
 	}
 	public Move getMove(int nr) {
-		
+		if(nr==0)return null;
 		return moves[nr-1];
 	}
 

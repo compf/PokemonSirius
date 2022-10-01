@@ -1,4 +1,4 @@
-package compf.core.game;
+package compf.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -10,8 +10,8 @@ import compf.core.engine.*;
 import compf.core.engine.Player;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.moves.Move;
-import compf.core.game.menu.BaseMenu;
-import compf.core.game.menu.MainMenu;
+import compf.game.menu.BaseMenu;
+import compf.game.menu.MainMenu;
 import compf.core.networking.*;
 
 import java.awt.*;
@@ -26,25 +26,25 @@ import java.util.function.BiPredicate;
 public class PokemonBattleScreen extends HierarchicalObject {
     public enum MenuMode {MainMenu, Battle, Pokemon, Bag}
     private Thread serverThread,playerThread,botThread;
-    public PokemonBattleScreen(int x, int y, int width, int height, Player player, Pokemon enemy) {
+    public PokemonBattleScreen(int x, int y, int width, int height, Player player, Player enemy) {
         super(x, y, width, height);
         this.player = player;
         hpBarTextures = new Texture[]{getPixmapTexture(Color.GREEN), getPixmapTexture(Color.YELLOW), getPixmapTexture(Color.RED)};
-        myInfo = new PokemonInfo(200, 120, player.getCurrPokemon());
-        enemyInfo = new PokemonInfo(120, 400, enemy);
+        myInfo = new PokemonInfo(400, 120, player.getCurrPokemon());
+        enemyInfo = new PokemonInfo(200, 400, enemy.getCurrPokemon());
         addChild(myInfo);
         addChild(enemyInfo);
 
         var battleRule = new BattleRule(2, 1, 6, 1);
         battle = new PokemonBattle(battleRule);
         battle.init();
-       serverThread=new Thread(()->{
-           server=new BattleServer();
-           server.waitForConnection(SharedPipe.getOrCreatePipe(PLAYER_SERVER_PORT));
-           System.out.println("First waiting finnished");
-           server.waitForConnection(SharedPipe.getOrCreatePipe(BOT_SERVER_PORT));
-       });
-       serverThread.setName(("Server base thread"));
+        serverThread=new Thread(()->{
+            server=new BattleServer();
+            server.waitForConnection(SharedPipe.getOrCreatePipe(PLAYER_SERVER_PORT));
+            System.out.println("First waiting finnished");
+            server.waitForConnection(SharedPipe.getOrCreatePipe(BOT_SERVER_PORT));
+        });
+        serverThread.setName(("Server base thread"));
 
         serverThread.start();
         try {
@@ -53,31 +53,32 @@ public class PokemonBattleScreen extends HierarchicalObject {
             e.printStackTrace();
         }
         System.out.println("Sleep finnished");
-        Pokemon[] enemyTeam=new Pokemon[6];
-        enemyTeam[0]=enemy;
-        botPlayer=new Player((short)1,"Bot",enemyTeam);
+        botPlayer=enemy;
         playerInput = new BattleControl(60, 60, 250, 150);
         botInput=new BotInterface(botPlayer);
 
-            playerThread=new Thread((()-> {
-                try {
-                    playerClient = new BattleClient(battleRule, player.getName(), player.getTeam(), SharedPipe.getOrCreatePipe(PLAYER_SERVER_PORT), playerInput);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }));
-            playerThread.setName("Player thread");
-            playerThread.start();
-            botThread=new Thread((()-> {
-                try {
-                    botClient = new BattleClient(battleRule, "Bot",botPlayer.getTeam(), SharedPipe.getOrCreatePipe(BOT_SERVER_PORT), botInput);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }));
-            botThread.setName("Bot thread");
-            botThread.start();
-            this.addChild(playerInput);
+        playerThread=new Thread((()-> {
+            try {
+                playerClient = new BattleClient(battleRule, player.getName(), player.getTeam(), SharedPipe.getOrCreatePipe(PLAYER_SERVER_PORT), playerInput);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }));
+        playerThread.setName("Player thread");
+        playerThread.start();
+        botThread=new Thread((()-> {
+            try {
+                botClient = new BattleClient(battleRule, "Bot",botPlayer.getTeam(), SharedPipe.getOrCreatePipe(BOT_SERVER_PORT), botInput);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }));
+        botThread.setName("Bot thread");
+        botThread.start();
+        this.addChild(playerInput);
+    }
+    public PokemonBattleScreen(int x, int y, int width, int height, Player player, Pokemon enemy) {
+       this(x,y,width,height,player,new Player((short)1,"Wild " + enemy.getName(),new Pokemon[]{enemy,null,null,null,null,null}));
 
 
 
@@ -159,7 +160,7 @@ public class PokemonBattleScreen extends HierarchicalObject {
            // System.out.println("Battle control update");
 
         }
-        final int Diff=80;
+        final int Diff=160;
         private MyPoint[] menuItemPos=new MyPoint[] {
                 new MyPoint(getX() + 10, getY() + 10),
                 new MyPoint(getX() + Diff, getY() + 10),
@@ -173,6 +174,9 @@ public class PokemonBattleScreen extends HierarchicalObject {
             final int dy=+50;
             for(int i=0;i<4;i++){
                 String item=getItems()[i];
+                if(item==null){
+                    continue;
+                }
                 var pos=menuItemPos[i];
                 BitmapFont font;
                 if(item.equals(getCurrItem())){
@@ -228,7 +232,7 @@ public class PokemonBattleScreen extends HierarchicalObject {
         @Override
         public void render(SpriteBatch batch) {
             drawHPBar(batch);
-
+            blackFont.draw(batch, pokemon.getName(), getX(),getY()+40);
         }
 
         private void drawHPBar(SpriteBatch batch) {
@@ -240,7 +244,7 @@ public class PokemonBattleScreen extends HierarchicalObject {
             if (perc < 0.25) textureIndex = 2;
             else if (perc < 0.5) textureIndex = 1;
             batch.draw(hpBarTextures[textureIndex], getX() + 10, getY() + 10, maxWidth * perc, height);
-            blackFont.draw(batch, pokemon.getCurrHP() + "/" + pokemon.getMaxHP(), getX() + maxWidth + 10, getY() + 10);
+            blackFont.draw(batch, pokemon.getCurrHP() + "/" + pokemon.getMaxHP(), getX() + maxWidth + 30, getY() +40);
 
         }
     }

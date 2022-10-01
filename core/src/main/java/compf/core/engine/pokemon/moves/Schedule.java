@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 import compf.core.engine.*;
 import compf.core.engine.pokemon.Pokemon;
@@ -213,7 +214,7 @@ public class Schedule {
 	}
 
 	public boolean allPlayersGaveInput(int maxNumber) {
-		return _internList.stream().filter((item)->item._round==_currRound+1).count()==maxNumber;
+		return maxNumber== _internList.stream().filter((item)->item._round==_currRound+1).map(x->x._attacker).collect(Collectors.toSet()).stream().count();
 	}
 
 	

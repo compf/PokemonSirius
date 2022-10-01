@@ -1,4 +1,4 @@
-package compf.core.game;
+package compf.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.HashMap;
 
-public class NPC extends DrawableObject {
+public class NPC extends CollidableObject {
     private final Texture spritesheet;
     protected Direction lookDirection;
     protected int walkIndex=0;

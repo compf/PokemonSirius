@@ -1,9 +1,9 @@
-package compf.core.game.menu;
+package compf.game.menu;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import compf.core.game.DrawableObject;
-import compf.core.game.Settings;
+import compf.game.DrawableObject;
+import compf.game.Settings;
 
 import java.util.ArrayList;
 import java.util.Collections;

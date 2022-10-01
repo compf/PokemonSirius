@@ -29,7 +29,8 @@ public class BotInterface implements IOInterface {
 
     @Override
     public PlayerInput requestPlayerInput(short pkmnIndex, BattleState state) {
-        return new PlayerInput.AttackInput(pkmnIndex, (short)MyObject.randomNumber(0,4),(short)0,(short)0,player.getPlayerId());
+        short move=(short)MyObject.randomNumber(0,this.player.getPokemon(pkmnIndex).getValidMovesCount());
+        return new PlayerInput.AttackInput(pkmnIndex, move,(short)0,(short)0,player.getPlayerId());
     }
 
     @Override

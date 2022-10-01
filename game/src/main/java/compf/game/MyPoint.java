@@ -1,4 +1,4 @@
-package compf.core.game;
+package compf.game;
 
 public class MyPoint {
     public  final int x,y;
