@@ -3,6 +3,8 @@ package compf.core.networking;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class BaseServer {
 	/**
@@ -28,5 +30,16 @@ public class BaseServer {
 			return out.write(obj);
 
 	
+	}
+	private  static ConcurrentHashMap<String,String> lastLogged=new ConcurrentHashMap<String,String>();
+	public static  void log(String prompt){
+		lastLogged.put(Thread.currentThread().getName(), prompt);
+		System.out.println(prompt);
+	}
+	public static void printThreadLogs()
+	{
+		for(var entry:lastLogged.entrySet()){
+			System.out.println("Thread " + entry.getKey()+ " "+entry.getValue());
+		}
 	}
 }

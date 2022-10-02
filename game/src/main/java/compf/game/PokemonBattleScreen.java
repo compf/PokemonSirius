@@ -30,6 +30,7 @@ public class PokemonBattleScreen extends HierarchicalObject {
     private Thread serverThread,playerThread,botThread;
     public PokemonBattleScreen(int x, int y, int width, int height, Player player, Player enemy) {
         super(x, y, width, height);
+        SharedPipe.resetPipes();
         this.player = player;
         hpBarTextures = new Texture[]{getPixmapTexture(Color.GREEN), getPixmapTexture(Color.YELLOW), getPixmapTexture(Color.RED)};
         myInfo = new PokemonInfo(400, 120, player.getCurrPokemon());
@@ -43,7 +44,7 @@ public class PokemonBattleScreen extends HierarchicalObject {
         serverThread=new Thread(()->{
             server=new BattleServer();
             server.waitForConnection(SharedPipe.getOrCreatePipe(PLAYER_SERVER_PORT));
-            System.out.println("First waiting finnished");
+            server.log("First waiting finnished");
             server.waitForConnection(SharedPipe.getOrCreatePipe(BOT_SERVER_PORT));
         });
         serverThread.setName(("Server base thread"));
@@ -54,7 +55,8 @@ public class PokemonBattleScreen extends HierarchicalObject {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Sleep finnished");
+    
+        BaseServer.log("Sleep finnished");
         botPlayer=enemy;
         playerInput = new BattleControl(60, 60, 250, 150);
         botInput=new BotInterface(botPlayer);
@@ -141,12 +143,13 @@ public class PokemonBattleScreen extends HierarchicalObject {
 
         @Override
         public  void itemSelected() {
-            System.out.println("Item selected "+menuMode);
+            BaseServer.printThreadLogs();
+            BaseServer.log("Item selected "+menuMode);
             if (menuMode == MenuMode.MainMenu && getCurrIndex() == 0) {
                 this.menuMode=MenuMode.Battle;
 
             } else if (menuMode == MenuMode.Battle) {
-                System.out.println("Releasing sem by " +Thread.currentThread().getName() );
+                BaseServer.log("Releasing sem by " +Thread.currentThread().getName() );
                 blockObject.release();
                 menuMode=MenuMode.MainMenu;
                 setCurrIndex(0);
@@ -162,7 +165,7 @@ public class PokemonBattleScreen extends HierarchicalObject {
 
         public void update(BattleRoundResult state) {
 
-           // System.out.println("Battle control update");
+           // BaseServer.log("Battle control update");
 
         }
         final int Diff=160;
@@ -206,10 +209,10 @@ public class PokemonBattleScreen extends HierarchicalObject {
 
         public synchronized PlayerInput requestPlayerInput(short pkmnIndex, BattleState state) {
             try {
-                System.out.println(Thread.currentThread().getName()+ "waiting for sema");
+                BaseServer.log(Thread.currentThread().getName()+ "waiting for sema");
                 blockObject.acquire();
                 short moveIndex = (short) getCurrIndex(), targetPlayer = 1, targetPokemon = 0;
-                System.out.println("Player id released "+player.getPlayerId());
+                message("Player id released "+player.getPlayerId());
                 return new PlayerInput.AttackInput(pkmnIndex, moveIndex, targetPlayer, targetPokemon, player.getPlayerId());
 
             } catch (InterruptedException e) {

@@ -28,16 +28,16 @@ public class BattleServer extends BaseServer {
 
     public void waitForConnection(Pipe pipe) {
 
-        System.out.println("Server wait for connection");
+        log("Server wait for connection");
         Pipe socket = pipe.waitForConnection();
-        System.out.println("Server connected");
+        log("Server connected");
 
         short playerId = _globalPlayerId++;
 
         _pipes.put(playerId, pipe);
         _playerIds.add(playerId);
-        System.out.println("Server is running " + playerId);
-        System.out.println("Server sending player id " + playerId);
+        log("Server is running " + playerId);
+        log("Server sending player id " + playerId);
         writeObject(_pipes.get(playerId), new NetworkMessage(NetworkMessageKind.SendPlayerId, playerId));
         NetworkMessage msg = readObject(pipe);
         if (msg.Kind == NetworkMessageKind.BattleRules) {
@@ -95,16 +95,18 @@ public class BattleServer extends BaseServer {
 
     public void run(short gameId) {
         while (true) {
-
             var playerIds = _gamePlayers.get(gameId);
             for (short playerId : playerIds) {
                 var input = _pipes.get(playerId);
+                if(input.isWaitingForData()){
+                    var outp = _pipes.get(playerId);
+                    writeObject(outp, NetworkMessageKind.RequestInput.createMessage());
+                }
                 if(!input.avaliable())continue;
                 NetworkMessage msg = readObject(input);
-                System.out.println("Server reveived " + msg.Kind + " from " + playerId);
+                log("Server reveived " + msg.Kind + " from " + playerId);
                 ;
                 MyObject.nop();
-                System.out.println(msg.Kind.name() + " " + playerId);
                 switch (msg.Kind) {
 
                     case ReplyPlayerInformation: {
@@ -114,9 +116,9 @@ public class BattleServer extends BaseServer {
                         var battle = _battles.get(playerId);
                         battle.getPlayers().add(pl);
 
-                        System.out.println("Size " + battle.getPlayers().size());
+                        log("Size " + battle.getPlayers().size());
                         if (battle.getPlayers().isFull()) {
-                            System.out.println("full " + playerId);
+                            log("full " + playerId);
 
                             for(var id:playerIds){
                                 var outp = _pipes.get(id);
@@ -134,7 +136,7 @@ public class BattleServer extends BaseServer {
                         Interrupt interrupt = new Interrupt();
                         BufferList<PlayerInput> inputs = (BufferList<PlayerInput>) msg.Data;
                         for (var inp : inputs) {
-                            System.out.println("deb " + inp.PlayerId);
+                           log("deb " + inp.PlayerId);
                             var battle = _battles.get(inp.PlayerId);
                             battle.addInput(inp);
                             var rule = _rules.get(inp.PlayerId);
@@ -142,7 +144,7 @@ public class BattleServer extends BaseServer {
                             if (battle.allPlayerGaveInput(rule.NumberPlayers * rule.PokemonPerPlayerOnField)) {
                                 battle.incrementRound();
                                 var state = battle.executeSchedule(interrupt);
-                                System.out.println("All submitted");
+                                log("All submitted");
                                 for(var id:playerIds){
                                     var out_msg = NetworkMessageKind.Update.createMessage(state);
                                     var inp_msg = NetworkMessageKind.RequestInput.createMessage();

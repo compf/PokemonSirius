@@ -1,19 +1,28 @@
 package compf.core.networking;
 
-public class PipeEndPoint implements Pipe{
-    private Pipe _read,_write;
+public class PipeEndPoint implements Pipe {
+    private Pipe _read, _write;
 
     @Override
     public boolean write(Object obj) {
-       // System.out.println("Writing to "+System.identityHashCode(_write));
+        // System.out.println("Writing to "+System.identityHashCode(_write));
 
         return _write.write(obj);
     }
 
+    private volatile boolean isCurrentlyWaitingForData = false;
+
+    @Override
+    public boolean isWaitingForData() {
+        return isCurrentlyWaitingForData;
+    }
+
     @Override
     public Object read() {
-        //System.out.println("Reading from "+System.identityHashCode(_read));
-        return _read.read();
+        isCurrentlyWaitingForData = true;
+        Object result = _read.read();
+        isCurrentlyWaitingForData = false;
+        return result;
     }
 
     @Override
@@ -23,7 +32,8 @@ public class PipeEndPoint implements Pipe{
 
     @Override
     public Pipe waitForConnection() {
-        //System.out.println("End point " +System.identityHashCode(this) +" wait for connection");
+        // System.out.println("End point " +System.identityHashCode(this) +" wait for
+        // connection");
         return _read.waitForConnection();
     }
 
@@ -31,8 +41,9 @@ public class PipeEndPoint implements Pipe{
     public Pipe connect() {
         return _write.connect();
     }
-    public PipeEndPoint(Pipe read,Pipe write){
-        this._read=read;
-        this._write=write;
+
+    public PipeEndPoint(Pipe read, Pipe write) {
+        this._read = read;
+        this._write = write;
     }
 }

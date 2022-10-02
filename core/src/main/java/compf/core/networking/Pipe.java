@@ -6,4 +6,7 @@ public interface Pipe {
     Pipe waitForConnection();
     Pipe connect();
     boolean avaliable();
+    default boolean isWaitingForData(){
+        return false;
+    }
 }

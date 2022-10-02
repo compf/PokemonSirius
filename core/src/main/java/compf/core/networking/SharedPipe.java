@@ -57,6 +57,7 @@ public class SharedPipe  implements Pipe{
         return !waitingList.isEmpty();
     }
 
+
     @Override
     public Object read()  {
         try {
@@ -66,7 +67,6 @@ public class SharedPipe  implements Pipe{
                 //threadListening.put(Thread.currentThread().getName(),System.identityHashCode(waitingList));
 
             }
-
             Object obj= waitingList.poll(1,TimeUnit.HOURS);
             synchronized (threadListening){
                 threadListening.put(Thread.currentThread().getName(),null);
@@ -80,5 +80,9 @@ public class SharedPipe  implements Pipe{
     }
     private SharedPipe(int port){
         this.port=port;
+    }
+    public static void resetPipes() {
+        SharedPipe.serverReadPipes.clear();
+        SharedPipe.serverWritePipes.clear();
     }
 }

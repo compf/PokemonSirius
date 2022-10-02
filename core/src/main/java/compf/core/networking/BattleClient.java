@@ -20,7 +20,7 @@ public class BattleClient extends BaseServer implements Runnable {
 	Thread thread;
 	public BattleClient( BattleRule rule, String playerName, Pokemon[] team,Pipe pipe,IOInterface io) throws IOException {
 		_rule=rule;
-		System.out.println("Client init");
+		log("Client init");
 		pipe.connect();
 		this.pipe=pipe;
 		NetworkMessage msg=readObject(pipe);
@@ -28,18 +28,18 @@ public class BattleClient extends BaseServer implements Runnable {
 		_playerId=(short)msg.Data;
 
 		_player=new Player(_playerId,playerName,team);
-		System.out.println("Client " +_player.getName()+ " Receiving player id " +_playerId );
-		System.out.println("Client " +_player.getName()+ " writing rules "+_playerId   );
+		log("Client " +_player.getName()+ " Receiving player id " +_playerId );
+		log("Client " +_player.getName()+ " writing rules "+_playerId   );
 		writeObject(pipe,new NetworkMessage(NetworkMessageKind.BattleRules, rule));
-		System.out.println("Client " +_player.getName()+ " waiting player information "+_playerId   );
+		log("Client " +_player.getName()+ " waiting player information "+_playerId   );
 
 		msg=readObject(pipe);
 		if(msg.Kind!= NetworkMessageKind.RequestPlayerInformation)throw new IOException("Invalid message "+msg.Kind);
 		writeObject(pipe,new NetworkMessage(NetworkMessageKind.ReplyPlayerInformation,_player));
 		msg=readObject(pipe);
-		System.out.println("update");
+		log("update");
 		if(msg.Kind==NetworkMessageKind.Update) {
-			System.out.println("Received update");
+			log("Received update");
 			_state=((BattleRoundResult)msg.Data).State;
 			
 		}
@@ -54,15 +54,15 @@ public class BattleClient extends BaseServer implements Runnable {
 	}
 	public void run() {
 		while(true) {
-			System.out.println("Client waiting "+this._playerId);
+			log("Client waiting "+this._playerId);
 			NetworkMessage msg=readObject(pipe);
-			System.out.println("Client received "+msg.Kind.name()+" " + _playerId);
+			log("Client received "+msg.Kind.name()+" " + _playerId);
 			switch(msg.Kind) {
 			case RequestInput:
 				BufferList<PlayerInput> inputs=new BufferList<>(_rule.PokemonPerPlayerOnField);
 				for(short i=0;i<_rule.PokemonPerPlayerOnField;i++) {
 					var inp=_io.requestPlayerInput(i,_state);
-					System.out.println("Input from "+inp.PlayerId +" " +_io.getClass());
+					log("Input from "+inp.PlayerId +" " +_io.getClass());
 					inputs.add(inp);
 				}
 				writeObject(pipe,NetworkMessageKind.ReplyInput.createMessage(inputs));
