@@ -25,10 +25,7 @@ public class BotInterface implements IOInterface {
         
     }
 
-    @Override
-    public void setLock(boolean val) {
-
-    }
+   
 
     @Override
     public PlayerInput requestPlayerInput(short pkmnIndex, BattleState state) {

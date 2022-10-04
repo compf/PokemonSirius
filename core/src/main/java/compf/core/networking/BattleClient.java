@@ -28,6 +28,7 @@ public class BattleClient extends BaseServer implements Runnable {
 		_playerId=(short)msg.Data;
 
 		_player=new Player(_playerId,playerName,team);
+		System.out.println("Player initialized");
 		log("Client " +_player.getName()+ " Receiving player id " +_playerId );
 		log("Client " +_player.getName()+ " writing rules "+_playerId   );
 		writeObject(pipe,new NetworkMessage(NetworkMessageKind.BattleRules, rule));
@@ -52,6 +53,10 @@ public class BattleClient extends BaseServer implements Runnable {
 		thread.setName("Client "+_playerId);
 		thread.start();
 	}
+	public Player getPlayer() {
+		System.out.println("Player is "+_player);
+		return _player;
+	}
 	public void run() {
 		while(true) {
 			log("Client waiting "+this._playerId);
@@ -62,6 +67,7 @@ public class BattleClient extends BaseServer implements Runnable {
 				BufferList<PlayerInput> inputs=new BufferList<>(_rule.PokemonPerPlayerOnField);
 				for(short i=0;i<_rule.PokemonPerPlayerOnField;i++) {
 					var inp=_io.requestPlayerInput(i,_state);
+					if(inp==null)continue;
 					log("Input from "+inp.PlayerId +" " +_io.getClass());
 					inputs.add(inp);
 				}

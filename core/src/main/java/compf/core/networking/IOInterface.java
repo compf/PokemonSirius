@@ -11,7 +11,6 @@ import compf.core.engine.PlayerInput;
 public interface IOInterface {
 	public void message(String msg);
 	public void update(BattleRoundResult state);
-	public void setLock(boolean val);
 	public PlayerInput requestPlayerInput(short pkmnIndex, BattleState state);
 
 	public void endBattle();

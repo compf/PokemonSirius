@@ -119,11 +119,7 @@ public class ConsolePrompt implements IOInterface {
 		
 	}
 
-	@Override
-	public void setLock(boolean val) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public PlayerInput requestPlayerInput(short pkmnIndex, BattleState state) {

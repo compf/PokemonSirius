@@ -32,6 +32,9 @@ public class PokedexEntry implements Serializable, PokemonStat {
 		_baseStats[SPEED]=speed;
 		
 	}
+	public int[] getBaseStats(){
+		return _baseStats;
+	}
 	public Type getType1() {
 		return _type1;
 	}

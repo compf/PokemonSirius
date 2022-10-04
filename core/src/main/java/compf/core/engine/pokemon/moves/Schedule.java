@@ -214,7 +214,11 @@ public class Schedule {
 	}
 
 	public boolean allPlayersGaveInput(int maxNumber) {
-		return maxNumber== _internList.stream().filter((item)->item._round==_currRound+1).map(x->x._attacker).collect(Collectors.toSet()).stream().count();
+		long scheduleSize=_internList.stream().filter((item)->item._round==_currRound+1).map(x->x._attacker).collect(Collectors.toSet()).stream().count();
+		for(var s:_internList){
+			System.out.println("Schedule " +s._round +" "+ s._attacker+ " " +scheduleSize);
+		}
+		return scheduleSize==maxNumber;
 	}
 
 	

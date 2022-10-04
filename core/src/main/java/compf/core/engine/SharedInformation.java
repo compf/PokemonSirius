@@ -33,6 +33,7 @@ public static final SharedInformation Instance=new SharedInformation();
 			Class.forName("org.sqlite.JDBC");
 			final  String sqlString="jdbc:sqlite:lib/veekun-pokedex.sqlite";
 			Connection conn=DriverManager.getConnection(sqlString);
+			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaa");
 		
 		
 			initPokemon(conn);

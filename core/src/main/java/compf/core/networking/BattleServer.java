@@ -136,7 +136,7 @@ public class BattleServer extends BaseServer {
                         Interrupt interrupt = new Interrupt();
                         BufferList<PlayerInput> inputs = (BufferList<PlayerInput>) msg.Data;
                         for (var inp : inputs) {
-                           log("deb " + inp.PlayerId);
+                           log("input received from " + inp.PlayerId);
                             var battle = _battles.get(inp.PlayerId);
                             battle.addInput(inp);
                             var rule = _rules.get(inp.PlayerId);

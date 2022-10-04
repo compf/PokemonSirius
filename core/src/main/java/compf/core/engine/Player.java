@@ -74,6 +74,7 @@ public  class Player extends MyObject implements Serializable {
      * @return
      */
     public Pokemon getPokemon(int nr) {
+        if(nr>=_team.length)return null;
         return _team[nr];
     }
 

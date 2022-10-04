@@ -108,7 +108,7 @@ public class Pokemon extends PokedexEntry  {
         _moves=moves;
         for(int i=0;i<6;i++) {
             updateStat(i);
-            if(i<4)_movesPP[i]=_moves[i].getPP();
+            if(i<4)_movesPP[i]= _moves[i]!=null ? _moves[i].getPP():0;
         }
         _cHp=_stats[0];
 

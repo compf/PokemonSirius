@@ -221,7 +221,8 @@ public class PokemonBattle extends MyObject implements  Iterable<Pokemon> {
 				continue;
 			}
 			
-			var action=new BattleAction(item.getID(),dmgInf.getMessages(),BattleAction.ActionKind.Move,null);
+			var action=new BattleAction(item.getID(),dmgInf.getMessages(),BattleAction.ActionKind.Move,dmgInf.getDamage());
+			System.out.println("actuzr "+action.ActionId);
 			actions.add(action);
 			while(dmgInf.getEffects().size()>0) {
 				var effect=dmgInf.getEffects().removeFirst();

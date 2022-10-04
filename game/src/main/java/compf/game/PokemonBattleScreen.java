@@ -201,11 +201,7 @@ public class PokemonBattleScreen extends HierarchicalObject {
             }
         }
 
-        @Override
-        public void setLock(boolean val) {
-
-        }
-
+       
 
         public synchronized PlayerInput requestPlayerInput(short pkmnIndex, BattleState state) {
             try {
