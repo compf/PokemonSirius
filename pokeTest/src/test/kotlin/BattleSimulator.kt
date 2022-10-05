@@ -53,10 +53,12 @@ public class SimpleBattleSimulator {
          val actions:ArrayDeque<BattleAction> =ArrayDeque<BattleAction>();
 
         public val TestFinishedSemaphore: TimeoutSemaphore = TimeoutSemaphore(0)
-        public val BattleStartedSemaphore:TimeoutSemaphore=TimeoutSemaphore(1)
+        public val InputProvidedSemaphore:TimeoutSemaphore=TimeoutSemaphore(0)
+        public val AllInitializedSemaphore:TimeoutSemaphore=TimeoutSemaphore(0)
+
         constructor(){
             //TestFinishedSemaphore.acquireTimeout(1, 10, TimeUnit.SECONDS)
-            BattleStartedSemaphore.acquireTimeout(1, 10, TimeUnit.SECONDS)
+            //BattleStartedSemaphore.acquireTimeout(1, 10, TimeUnit.SECONDS)
         }
         override fun message(p0: String) {}
         private val queue: Queue<PlayerInput> = Queue<PlayerInput>()
@@ -70,21 +72,32 @@ public class SimpleBattleSimulator {
                 println("newaction" +act.Kind)
                 actions.addLast(act)
             }
-            TestFinishedSemaphore.release()
+            println("balance down "+balanceCounter +" " +player!!.playerId)
+            balanceCounter--
+            if(balanceCounter==0){
+                TestFinishedSemaphore.release()
+            }
             endBattle()
         }
         public override fun endBattle(){}
         public var player:Player?=null
+        private var balanceCounter=0
         public fun addInput(input: PlayerInput) {
             queue.addLast(input)
-            TestFinishedSemaphore.acquire()
+  
         }
         public fun addInputDefault() {
-            BattleStartedSemaphore.acquireTimeout(1,10, TimeUnit.SECONDS)
+            AllInitializedSemaphore.acquireTimeout(1,10, TimeUnit.SECONDS)
+           
+            println("balance up "+balanceCounter +" " +player!!.playerId)
+            balanceCounter++
+
             queue.addLast(PlayerInput.AttackInput(0, 0, 1, 0, player!!.playerId))
+            InputProvidedSemaphore.release()
         }
 
         override fun requestPlayerInput(pkmn: Short, state: BattleState): PlayerInput? {
+            InputProvidedSemaphore.acquireTimeout(1,10, TimeUnit.SECONDS)
             println("requestplayerinput  " + queue.size +" "+player!!.playerId)
 
             if (queue.isEmpty) {
@@ -137,7 +150,7 @@ public class SimpleBattleSimulator {
             meClient=BattleClient(rule,"Me",arrayOf(myPokemon),mePipe,meIO)
            mePlayer=meClient!!.player
            meIO.player=mePlayer
-           meIO.BattleStartedSemaphore.release()
+           meIO.AllInitializedSemaphore.release()
            
         });
         meWaitThread.start()
@@ -146,7 +159,7 @@ public class SimpleBattleSimulator {
             enemyClient=BattleClient(rule,"Enemy",arrayOf(enemyPokemon),enemyPipe,enemyIO)
             enemyPlayer=enemyClient!!.player
             enemyIO.player=enemyPlayer
-            enemyIO.BattleStartedSemaphore.release()
+            enemyIO.AllInitializedSemaphore.release()
         });
         enemyWaitThread.start()
 
