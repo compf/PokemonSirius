@@ -50,7 +50,7 @@ public class SimpleBattleSimulator {
          this.server=server
     }
     public inner class SimulationBattleIO : IOInterface {
-         val actions:ArrayDeque<BattleAction> =ArrayDeque<BattleAction>();
+         val actions:ArrayList<BattleAction> =ArrayList<BattleAction>();
 
         public val TestFinishedSemaphore: TimeoutSemaphore = TimeoutSemaphore(0)
         public val InputProvidedSemaphore:TimeoutSemaphore=TimeoutSemaphore(0)
@@ -70,7 +70,7 @@ public class SimpleBattleSimulator {
                 if(act.Kind!= BattleAction.ActionKind.Move)continue
 
                 println("newaction" +act.Kind)
-                actions.addLast(act)
+                actions.add(act)
             }
             println("balance down "+balanceCounter +" " +player!!.playerId)
             balanceCounter--
@@ -117,7 +117,8 @@ public class SimpleBattleSimulator {
             return 0
         }
     }
-    
+    private val  rootAssertion:GroupedAssertion=ThisOrderAssertion()
+    private var tempAssertion=rootAssertion;
     private val meIO:SimulationBattleIO;
     private val enemyIO:SimulationBattleIO;
     private var meAttacking=true;
@@ -137,11 +138,20 @@ public class SimpleBattleSimulator {
         meAttacking=!meAttacking
         return this
     }
-    private val assertions:Queue<ActionAssertion> =Queue()
     public fun assertDamage(min:Int,max:Int):SimpleBattleSimulator{
-        assertions.addLast(DamageAssertion(min, max))
+        tempAssertion.addAssertion(DamageAssertion(min, max))
         println("assert damage "+min)
         return this
+    }
+    public fun anyOrder():SimpleBattleSimulator{
+        rootAssertion.addAssertion(AnyOrderAssertion());
+        tempAssertion=rootAssertion.getLast();
+        return this;
+    }
+    public fun thisOrder():SimpleBattleSimulator{
+        rootAssertion.addAssertion(ThisOrderAssertion());
+        tempAssertion=rootAssertion.getLast();
+        return this;
     }
     public fun init():SimpleBattleSimulator{
       
@@ -182,14 +192,13 @@ public class SimpleBattleSimulator {
         println("Waiting for testwddscdvfvfdvd")
         meIO.TestFinishedSemaphore.acquireTimeout(1,30, TimeUnit.SECONDS)
         enemyIO.TestFinishedSemaphore.acquireTimeout(1,30, TimeUnit.SECONDS)
-        println("test finnished")
-        print(""+meIO.actions.size +" "+ assertions.size +"quora")
-        for(pair in assertions.zip(meIO.actions)){
-            println("windows "+pair.second?.Data)
-            if(!pair.first.check(pair.second)){
-                throw Exception("Assertion not successful " +pair.first +" " +pair.second.Data)
-            }
+        println("test finnished");
+        val success=rootAssertion.check(meIO.actions)
+        if(!success){
+            throw Exception("Assertion not successful")
         }
+       
+        
     }
     
 }

@@ -33,7 +33,7 @@ public class MainTest{
                 val enemyPokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(252,252,6,0,0,0), Nature.N1, 0, 0, 150)
 
                 val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)
-                simulator.init().attack().assertDamage(65, 77).attack().assertDamage(0, 0).execute()
+                simulator.init().anyOrder().attack().assertDamage(65, 77).attack().assertDamage(0, 0).execute()
         }
     
 }
