@@ -35,5 +35,14 @@ public class MainTest{
                 val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)
                 simulator.init().anyOrder().attack().assertDamage(65, 77).attack().assertDamage(0, 0).execute()
         }
+        @Test
+        public fun assertBattleWithDifferentSpeed(){
+                val server=BattleServer()
+                val mePokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,0), intArrayOf(252,252,6,0,0,0), Nature.N1, 0, 0, 15)
+                val enemyPokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(0,252,6,0,0,252), Nature.N1, 0, 0, 150)
+
+                val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)
+                simulator.init().thisOrder().attack().attack().assertDamage(0, 0).assertDamage(65, 77).execute()
+        }
     
 }

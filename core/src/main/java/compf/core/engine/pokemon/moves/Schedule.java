@@ -166,14 +166,6 @@ public class Schedule {
 		scheduleItem._id = mvIndex;
 
 		scheduleItem._priority = mv.getPriority();
-        if(scheduleItem.getAttacker().getStat(5)<scheduleItem.getDefender().getStat(5)
-                ||scheduleItem.getAttacker().getStat(5)==scheduleItem.getDefender().getStat(5) && MyObject.RNG.nextBoolean() ){
-            scheduleItem._priority=(byte)(-scheduleItem._priority);
-        }
-        else if((scheduleItem.getAttacker().getStat(5)>scheduleItem.getDefender().getStat(5))
-                ||scheduleItem.getAttacker().getStat(5)==scheduleItem.getDefender().getStat(5) && MyObject.RNG.nextBoolean()){
-            scheduleItem._priority*=2;
-        }
 
 		scheduleItem._round = _currRound + deltaRound;
 		scheduleItem._defender = defender;
@@ -187,14 +179,14 @@ public class Schedule {
 		@Override
 		public int compare(ScheduleItem o1, ScheduleItem o2) {
 
-		    if(o1._priority>o2._priority)return 1;
-		    else if(o1._priority<o2._priority)return -1;
+		    if(o1._priority>o2._priority)return -1;
+		    else if(o1._priority<o2._priority)return +1;
 		    else{
                 var att1=o1._battle.getPokemon(o1._attacker);
 
                 var att2=o2._battle.getPokemon(o2._attacker);
-               if(att1.getStat(5)>att2.getStat(5))return +1;
-               else if(att1.getStat(5)<att2.getStat(5))return -1;
+               if(att1.getStat(5)>att2.getStat(5))return -1;
+               else if(att1.getStat(5)<att2.getStat(5))return +1;
                else {
                    int rndVal=MyObject.RNG.nextInt(1);
                    if(rndVal==0)return -1;
