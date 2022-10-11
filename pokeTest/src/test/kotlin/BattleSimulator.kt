@@ -71,9 +71,10 @@ public class SimpleBattleSimulator {
 
                 println("newaction " +act.Kind + act.Data)
                 actions.add(act)
+                println("balance down "+balanceCounter +" " +player!!.playerId)
+                balanceCounter--
             }
-            println("balance down "+balanceCounter +" " +player!!.playerId)
-            balanceCounter--
+    
             if(balanceCounter==0){
                 TestFinishedSemaphore.release()
             }

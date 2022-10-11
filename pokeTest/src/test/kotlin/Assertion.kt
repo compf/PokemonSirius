@@ -52,7 +52,7 @@ public class AnyOrderAssertion: GroupedAssertion(){
                 for(cmp in ass.value ){
                     atLeastOneWithMoreThanOneAssertions = atLeastOneWithMoreThanOneAssertions || ((compAssertionsMap[cmp])!!.size>1);
                 }
-                if(!atLeastOneWithMoreThanOneAssertions){
+                if(atLeastOneWithMoreThanOneAssertions){
                     println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
                     return false
                 }
