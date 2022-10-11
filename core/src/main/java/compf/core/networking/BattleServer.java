@@ -6,6 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import compf.core.engine.*;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.effects.PokemonBattleEffect;
@@ -13,7 +16,7 @@ import compf.core.etc.BufferList;
 import compf.core.etc.MyObject;
 
 public class BattleServer extends BaseServer {
-
+    private static Logger MyLogger=LogManager.getLogger();
     private short _globalPlayerId = 0;
     private short _globalGameId = 0;
     private HashMap<Short, Pipe> _pipes = new HashMap<>();
@@ -30,16 +33,16 @@ public class BattleServer extends BaseServer {
 
     public void waitForConnection(Pipe pipe) {
 
-        log("Server wait for connection");
+        MyLogger.debug("Server wait for connection");
         Pipe socket = pipe.waitForConnection();
-        log("Server connected");
+        MyLogger.debug("Server connected");
 
         short playerId = _globalPlayerId++;
 
         _pipes.put(playerId, pipe);
         _playerIds.add(playerId);
-        log("Server is running " + playerId);
-        log("Server sending player id " + playerId);
+        MyLogger.debug("Server is running " + playerId);
+        MyLogger.debug("Server sending player id " + playerId);
         writeObject(_pipes.get(playerId), new NetworkMessage(NetworkMessageKind.SendPlayerId, playerId));
         NetworkMessage msg = readObject(pipe);
         if (msg.Kind == NetworkMessageKind.BattleRules) {
@@ -146,7 +149,7 @@ public class BattleServer extends BaseServer {
                 }
                 if(!input.avaliable())continue;
                 NetworkMessage msg = readObject(input);
-                log("Server reveived " + msg.Kind + " from " + playerId);
+                MyLogger.debug("Server reveived " + msg.Kind + " from " + playerId);
                 ;
                 MyObject.nop();
                 switch (msg.Kind) {
@@ -159,9 +162,9 @@ public class BattleServer extends BaseServer {
                         var battle = _battles.get(playerId);
                         battle.getPlayers().add(pl);
 
-                        log("Size " + battle.getPlayers().size());
+                        MyLogger.debug("Number of players " + battle.getPlayers().size());
                         if (battle.getPlayers().isFull()) {
-                            log("full " + playerId);
+                            MyLogger.debug("All players ready ");
                             informPlayerOfUpdate(gameId, new BattleRoundResult(null, new DetailedBattleState(battle.getPlayers()), null));
                             sendPlayerRequestInputs(gameId, rule);
                            
@@ -172,16 +175,15 @@ public class BattleServer extends BaseServer {
                         Interrupt interrupt = new Interrupt();
                         BufferList<PlayerInput> inputs = (BufferList<PlayerInput>) msg.Data;
                         for (var inp : inputs) {
-                           log("input received from " + inp.PlayerId);
+                            MyLogger.debug("input received from " + inp.PlayerId);
                             var battle = _battles.get(inp.PlayerId);
                             battle.addInput(inp);
                             var rule = _rules.get(inp.PlayerId);
-                            System.out.println("check enough sub");
                             // TODO what if pokemon field is vacant?
                             if (battle.allPlayerGaveInput(getNumberEnabledActors(gameId))) {
                                 battle.incrementRound();
                                 var state = battle.executeSchedule(interrupt);
-                                log("All submitted "+battle.getRound());
+                                MyLogger.debug("All players submitted input "+battle.getRound());
                                 informPlayerOfUpdate(gameId, state);
                                 sendPlayerRequestInputs(gameId, rule);
 

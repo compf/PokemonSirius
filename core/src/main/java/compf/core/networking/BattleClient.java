@@ -4,6 +4,9 @@ import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 //import Main;
 import compf.core.engine.*;
 import compf.core.engine.pokemon.Pokemon;
@@ -11,6 +14,7 @@ import compf.core.etc.BufferList;
 
 
 public class BattleClient extends BaseServer implements Runnable {
+	private static Logger MyLogger=LogManager.getLogger();
 	Pipe pipe;
 	private short _playerId;
 	BattleState _state;
@@ -20,7 +24,7 @@ public class BattleClient extends BaseServer implements Runnable {
 	Thread thread;
 	public BattleClient( BattleRule rule, String playerName, Pokemon[] team,Pipe pipe,IOInterface io) throws IOException {
 		_rule=rule;
-		log("Client init");
+		MyLogger.debug("Client init");
 		pipe.connect();
 		this.pipe=pipe;
 		NetworkMessage msg=readObject(pipe);
@@ -29,18 +33,18 @@ public class BattleClient extends BaseServer implements Runnable {
 
 		_player=new Player(_playerId,playerName,team);
 		System.out.println("Player initialized");
-		log("Client " +_player.getName()+ " Receiving player id " +_playerId );
-		log("Client " +_player.getName()+ " writing rules "+_playerId   );
+		MyLogger.debug("Client " +_player.getName()+ " Receiving player id " +_playerId );
+		MyLogger.debug("Client " +_player.getName()+ " writing rules "+_playerId   );
 		writeObject(pipe,new NetworkMessage(NetworkMessageKind.BattleRules, rule));
-		log("Client " +_player.getName()+ " waiting player information "+_playerId   );
+		MyLogger.debug("Client " +_player.getName()+ " waiting player information "+_playerId   );
 
 		msg=readObject(pipe);
 		if(msg.Kind!= NetworkMessageKind.RequestPlayerInformation)throw new IOException("Invalid message "+msg.Kind);
 		writeObject(pipe,new NetworkMessage(NetworkMessageKind.ReplyPlayerInformation,_player));
 		msg=readObject(pipe);
-		log("update");
+		MyLogger.debug("Update clients at beginning to inital statz");
 		if(msg.Kind==NetworkMessageKind.Update) {
-			log("Received update");
+			MyLogger.debug("Received expected update");
 			_state=((BattleRoundResult)msg.Data).State;
 			
 		}
@@ -54,21 +58,20 @@ public class BattleClient extends BaseServer implements Runnable {
 		thread.start();
 	}
 	public Player getPlayer() {
-		System.out.println("Player is "+_player);
 		return _player;
 	}
 	public void run() {
 		while(true) {
-			log("Client waiting "+this._playerId);
+			MyLogger.debug("Client waiting "+this._playerId);
 			NetworkMessage msg=readObject(pipe);
-			log("Client received "+msg.Kind.name()+" " + _playerId);
+			MyLogger.debug("Client received "+msg.Kind.name()+" " + _playerId);
 			switch(msg.Kind) {
 			case RequestInput:
 				BufferList<PlayerInput> inputs=new BufferList<>(_rule.PokemonPerPlayerOnField);
 					short pokemonIndex=(short)msg.Data;
 					var inp=_io.requestPlayerInput(pokemonIndex,_state);
 					if(inp==null)continue;
-					log("Input from "+inp.PlayerId +" " +_io.getClass());
+					MyLogger.debug("Input from "+inp.PlayerId +" " +_io.getClass());
 					inputs.add(inp);
 				writeObject(pipe,NetworkMessageKind.ReplyInput.createMessage(inputs));
 				break;

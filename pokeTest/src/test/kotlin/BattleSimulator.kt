@@ -13,6 +13,8 @@ import compf.core.networking.BattleServer
 import compf.core.networking.Pipe
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 public class TimeoutSemaphore(permits:Int):Semaphore(permits){
     public fun acquireTimeout(permits:Int,timeout:Long,unit:TimeUnit){
         val result=this.tryAcquire(permits,timeout, unit)
@@ -28,6 +30,7 @@ public class SimpleBattleSimulator {
         private fun getNextPortNumber():Int{
             return lastPortNumber++;
         }
+        private val MyLogger=LogManager.getLogger()
     }
     private val myPokemon:Pokemon;
     private val enemyPokemon:Pokemon;
@@ -64,14 +67,14 @@ public class SimpleBattleSimulator {
         private val queue: Queue<PlayerInput> = Queue<PlayerInput>()
         override fun update(result: BattleRoundResult) {
             
-            println("add actions !!!!!!!!!!!!!! "+result.Actions.size)
+            MyLogger.debug("Received updates "+result.Actions.size)
             if(result.Actions==null)return;
             for(act in  result.Actions){
                 if(act.Kind!= BattleAction.ActionKind.Move)continue
 
-                println("newaction " +act.Kind + act.Data)
+                MyLogger.debug("added an action " +act.Kind + act.Data)
                 actions.add(act)
-                println("balance down "+balanceCounter +" " +player!!.playerId)
+                MyLogger.debug("balance down "+balanceCounter +" " +player!!.playerId)
                 balanceCounter--
             }
     
@@ -99,10 +102,10 @@ public class SimpleBattleSimulator {
         override fun requestPlayerInput(pkmn: Short, state: BattleState): PlayerInput? {
             InputProvidedSemaphore.acquireTimeout(1,10, TimeUnit.SECONDS)
             InputProvidedSemaphore.release();
-            println("requestplayerinput  " + queue.size +" "+player!!.playerId)
+            MyLogger.debug("requestplayerinput  " + queue.size +" "+player!!.playerId)
 
             if (queue.isEmpty) {
-                println("empty queue "+player!!.playerId)
+                MyLogger.debug("empty queue "+player!!.playerId)
                
                 
 
@@ -132,10 +135,10 @@ public class SimpleBattleSimulator {
     private val server:BattleServer;
 
     public fun attack(playerId:Int):SimpleBattleSimulator{
-        println("attack " +meAttacking)
+        MyLogger.debug("attack " +meAttacking)
         val io= if (playerId==0)  meIO else enemyIO;
         io.addInputDefault()
-        println("attack finnished " +playerId)
+        MyLogger.debug("attack finnished " +playerId)
         
         return this
     }
@@ -148,7 +151,7 @@ public class SimpleBattleSimulator {
         tempAssertion.addAssertion(DamageAssertion(min, max))
         meIO.balanceCounter++;
         enemyIO.balanceCounter++;
-        println("assert damage "+min)
+        MyLogger.debug("assert damage "+min)
         return this
     }
     public fun anyOrder():SimpleBattleSimulator{
@@ -188,20 +191,16 @@ public class SimpleBattleSimulator {
         })
         serverWaitThread.start()
 
-     
-        println("joined dasdsdsadweqde")
-        
-        println("Waiting ahhlo")
         return this
        
     }
     public fun execute(){
         meIO.InputProvidedSemaphore.release();
         enemyIO.InputProvidedSemaphore.release();
-        println("Waiting for testwddscdvfvfdvd")
+        MyLogger.debug("Waiting for InputProvided")
         meIO.TestFinishedSemaphore.acquireTimeout(1,30, TimeUnit.SECONDS)
         enemyIO.TestFinishedSemaphore.acquireTimeout(1,30, TimeUnit.SECONDS)
-        println("test finnished");
+        MyLogger.debug("test finnished");
         val success=rootAssertion.check(meIO.actions)
         if(!success){
             throw Exception("Assertion not successful")
