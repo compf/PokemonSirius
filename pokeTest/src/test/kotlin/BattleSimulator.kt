@@ -69,7 +69,7 @@ public class SimpleBattleSimulator {
             for(act in  result.Actions){
                 if(act.Kind!= BattleAction.ActionKind.Move)continue
 
-                println("newaction" +act.Kind)
+                println("newaction " +act.Kind + act.Data)
                 actions.add(act)
             }
             println("balance down "+balanceCounter +" " +player!!.playerId)
@@ -81,23 +81,23 @@ public class SimpleBattleSimulator {
         }
         public override fun endBattle(){}
         public var player:Player?=null
-        private var balanceCounter=0
+        public var balanceCounter=0
         public fun addInput(input: PlayerInput) {
+            AllInitializedSemaphore.acquireTimeout(1,10, TimeUnit.SECONDS)
+            AllInitializedSemaphore.release()
             queue.addLast(input)
   
         }
         public fun addInputDefault() {
             AllInitializedSemaphore.acquireTimeout(1,10, TimeUnit.SECONDS)
-           
-            println("balance up "+balanceCounter +" " +player!!.playerId)
-            balanceCounter++
-
+            AllInitializedSemaphore.release()
             queue.addLast(PlayerInput.AttackInput(0, 0, 1, 0, player!!.playerId))
-            InputProvidedSemaphore.release()
+
         }
 
         override fun requestPlayerInput(pkmn: Short, state: BattleState): PlayerInput? {
             InputProvidedSemaphore.acquireTimeout(1,10, TimeUnit.SECONDS)
+            InputProvidedSemaphore.release();
             println("requestplayerinput  " + queue.size +" "+player!!.playerId)
 
             if (queue.isEmpty) {
@@ -130,16 +130,23 @@ public class SimpleBattleSimulator {
     private val enemyPort:Int
     private val server:BattleServer;
 
-    public fun attack():SimpleBattleSimulator{
+    public fun attack(playerId:Int):SimpleBattleSimulator{
         println("attack " +meAttacking)
-        val io= if (meAttacking)  meIO else enemyIO;
+        val io= if (playerId==0)  meIO else enemyIO;
         io.addInputDefault()
-        println("attack finnished " +meAttacking)
+        println("attack finnished " +playerId)
+        
+        return this
+    }
+    public fun attack():SimpleBattleSimulator{
+        attack( if (meAttacking)  0 else 1)
         meAttacking=!meAttacking
         return this
     }
     public fun assertDamage(min:Int,max:Int):SimpleBattleSimulator{
         tempAssertion.addAssertion(DamageAssertion(min, max))
+        meIO.balanceCounter++;
+        enemyIO.balanceCounter++;
         println("assert damage "+min)
         return this
     }
@@ -188,7 +195,8 @@ public class SimpleBattleSimulator {
        
     }
     public fun execute(){
-        
+        meIO.InputProvidedSemaphore.release();
+        enemyIO.InputProvidedSemaphore.release();
         println("Waiting for testwddscdvfvfdvd")
         meIO.TestFinishedSemaphore.acquireTimeout(1,30, TimeUnit.SECONDS)
         enemyIO.TestFinishedSemaphore.acquireTimeout(1,30, TimeUnit.SECONDS)

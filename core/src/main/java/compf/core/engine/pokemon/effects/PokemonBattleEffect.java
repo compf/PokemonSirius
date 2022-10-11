@@ -11,5 +11,9 @@ public  abstract class PokemonBattleEffect extends BattleEffect {
         _pkmn=pkmn;
     }
     public boolean canAttack() {return true;}
+    public boolean canReceiveCommand(){
+        return true;
+    }
+ 
 
 }

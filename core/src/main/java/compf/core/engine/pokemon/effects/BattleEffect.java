@@ -35,7 +35,9 @@ public abstract class BattleEffect extends MyObject implements Serializable {
 
 	private boolean _isEnabled = true;
 	protected BattleAction _action;
+	public void delayedAttack(Object... inf){
 
+	}
 	public void disable() {
 		_isEnabled = false;
 	}

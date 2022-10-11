@@ -65,12 +65,11 @@ public class BattleClient extends BaseServer implements Runnable {
 			switch(msg.Kind) {
 			case RequestInput:
 				BufferList<PlayerInput> inputs=new BufferList<>(_rule.PokemonPerPlayerOnField);
-				for(short i=0;i<_rule.PokemonPerPlayerOnField;i++) {
-					var inp=_io.requestPlayerInput(i,_state);
+					short pokemonIndex=(short)msg.Data;
+					var inp=_io.requestPlayerInput(pokemonIndex,_state);
 					if(inp==null)continue;
 					log("Input from "+inp.PlayerId +" " +_io.getClass());
 					inputs.add(inp);
-				}
 				writeObject(pipe,NetworkMessageKind.ReplyInput.createMessage(inputs));
 				break;
 			case Update:

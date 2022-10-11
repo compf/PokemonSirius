@@ -2,7 +2,6 @@ package compf.core.engine.pokemon.moves;
 
 import compf.core.engine.pokemon.PokemonStat;
 import compf.core.engine.pokemon.effects.*;
-import compf.core.engine.pokemon.effects.PoisonedStateCondition;
 
 // TODO Critical hit  quote for moves like Karateschlag is higher
 // TODO missing moves: 13
@@ -25,6 +24,8 @@ public class MoveFactory {
 			case 18:
 				//Wirbelwind
 				return new SwapPokemonMove(mv,true);
+			case 19:
+				return new DelayedMove(mv, FlyingEffect.class );
 			case 20: // Klammergriff
 				return new MultipleAttacksMove(mv, 3, 8);
 				
@@ -104,9 +105,7 @@ public class MoveFactory {
 				
 				
 				
-				
-			case 34:
-				return new PokemonEffectMove(mv, FlyingEffect.class,null,100);
+			
 			default:
 				return mv;
 		}

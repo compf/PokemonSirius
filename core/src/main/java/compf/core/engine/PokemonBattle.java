@@ -1,13 +1,17 @@
 package compf.core.engine;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.stream.Stream;
 
 import compf.core.networking.BattleServer.Interrupt;
 import compf.core.engine.pokemon.*;
 import compf.core.engine.pokemon.effects.*;
 import compf.core.engine.pokemon.effects.BattleEffectCollection;
 import compf.core.engine.pokemon.moves.DamageInformation;
+import compf.core.engine.pokemon.moves.MoveFactory;
 import compf.core.engine.pokemon.moves.Schedule;
 import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
 import compf.core.etc.MyObject;
@@ -48,6 +52,9 @@ public class PokemonBattle extends MyObject implements  Iterable<Pokemon> {
 
 	public void incrementRound() {
 		_schedule.incrementRound();
+	}
+	public int getRound(){
+		return _schedule.getCurrRound();
 	}
 
 	public class BattleIterator implements Iterator<Pokemon>{
@@ -99,6 +106,8 @@ public class PokemonBattle extends MyObject implements  Iterable<Pokemon> {
 			case DEFEND:
 				effect.defend(inf);
 				break;
+			case DELAYED_ATTACK:
+			effect.delayedAttack(inf);
 		
 		}
 	
@@ -172,14 +181,34 @@ public class PokemonBattle extends MyObject implements  Iterable<Pokemon> {
 
 
 	public enum EffectTime {
-		ROUND_STARTING, ROUND_ENDING, ATTACK, DEFEND, POKEMON_SWITCHED,POKEMON_DEFEATED
+		ROUND_STARTING, ROUND_ENDING, ATTACK, DEFEND, POKEMON_SWITCHED,POKEMON_DEFEATED,DELAYED_ATTACK
+	}
+	private Iterable<Pokemon> sort(){
+		ArrayList<Pokemon> ls=new ArrayList<>();
+		for(var pkmn:this){
+			ls.add(pkmn);
+		}
+		ls.sort(new Comparator<Pokemon>() {
+			@Override
+			public int compare(Pokemon arg0, Pokemon arg1) {
+				if(arg0.getStat(5)>arg1.getStat(5))return -1;
+				if(arg0.getStat(5)<arg1.getStat(5))return +1;
+				else return MyObject.checkPerc(50)?+1:-1;
+			}
+
+		});
+		return ls;
 	}
 
 	public BattleRoundResult executeSchedule(Interrupt interrupt) {
-		Object[] effectParam= {null};
+		Object[] effectParam= {null,null};
 		LinkedList<BattleAction> actions=new LinkedList<>();
 		executeEffects(_globalEffects, EffectTime.ROUND_STARTING, null);
 		executeEffects(EffectTime.ROUND_STARTING, null);
+		var pokemonSorted=sort();
+		for(var pkmn:pokemonSorted){
+			executeEffects(pkmn,EffectTime.DELAYED_ATTACK,_schedule );
+		}
 		while (_schedule.any()) {
 			ScheduleItem item = _schedule.getNext();
 			var attacker = (item.getAttacker());
@@ -199,7 +228,8 @@ public class PokemonBattle extends MyObject implements  Iterable<Pokemon> {
 			
 			// storing the damage information in this array of size one so that it might be changed by the effects
 			effectParam[0]=dmgInf;
-			
+			effectParam[1]=item;
+			System.out.println("battle_exe " +dmgInf.getDamage() +" " + item.getRound());
 			executeEffects(attacker, EffectTime.ATTACK, effectParam);
 			executeEffects(defender, EffectTime.DEFEND, effectParam);
 			dmgInf=(DamageInformation)effectParam[0];
@@ -287,8 +317,8 @@ public class PokemonBattle extends MyObject implements  Iterable<Pokemon> {
 			var att=(PlayerInput.AttackInput)inp;
 			int attackerIndex=combine(att.PlayerId,att.PokemonIndex);
 			int defenderIndex=combine(att.TargetPlayer,att.TargetPokemonIndex);
-			var move_nr=getPokemon(attackerIndex).getMoves()[att.MoveIndex].getNr();
-			_schedule.addMove(attackerIndex,defenderIndex,move_nr,1);
+			var move=new MoveFactory().create(getPokemon(attackerIndex).getMoves()[att.MoveIndex]);
+			move.init(_schedule, attackerIndex, defenderIndex);
 		}
 		
 	}

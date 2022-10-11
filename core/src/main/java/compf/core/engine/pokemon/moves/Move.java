@@ -96,11 +96,11 @@ public class Move implements Serializable {
 		}
 	}
 
-	public void init(Schedule schedule, short attacker, short defender) {
-		schedule.addMove(attacker, defender, getNr(), 1);
+	public void init(Schedule schedule, int attacker, int defender) {
+		schedule.addMove(attacker, defender, this, 1);
 	}
-	public void init(Schedule schedule, short attacker, short defender, int dr) {
-		schedule.addMove(attacker, defender, getNr(), dr);
+	public void init(Schedule schedule, int attacker, int defender, int dr) {
+		schedule.addMove(attacker, defender, this, dr);
 	}
 
 	public int calculateDamage(Pokemon att, Pokemon def) {

@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import compf.core.engine.*;
+import compf.core.engine.pokemon.Pokemon;
+import compf.core.engine.pokemon.effects.PokemonBattleEffect;
 import compf.core.etc.BufferList;
 import compf.core.etc.MyObject;
 
@@ -92,7 +94,47 @@ public class BattleServer extends BaseServer {
             thread.start();
         }
     }
+    private void sendPlayerRequestInputs(short gameId,BattleRule rule){
+        var playerIds = _gamePlayers.get(gameId);
+        for(var playerId:playerIds){
+            for(short pkmId=0;pkmId<rule.PokemonPerPlayerOnField;pkmId++){
+                if(canPlayerAttack(playerId,pkmId)){
+                    var inp_msg = NetworkMessageKind.RequestInput.createMessage(pkmId);
+                    writeObject(_pipes.get(playerId), inp_msg);
+                }           
+            }
+           
+        }
+    }
+    private void informPlayerOfUpdate(short gameId,BattleRoundResult state){
+        var playerIds = _gamePlayers.get(gameId);
+        for(var id:playerIds){
+                var inp_msg = NetworkMessageKind.Update.createMessage(state);
+                writeObject(_pipes.get(id), inp_msg);  
+        }
+    }
+    private boolean canPlayerAttack(short playerId,short pkmnId){
+        Pokemon pkmn=_players.get(playerId).getPokemon(pkmnId); 
+        boolean flag=pkmn.getCurrHP()>0 && pkmn.getEffects().stream().allMatch((e)->((PokemonBattleEffect)e).canReceiveCommand());
+        System.out.println("can player attack "+playerId+" "+pkmnId +" "+flag);
 
+        return flag;
+    }
+    private int getNumberEnabledActors(short gameId){
+        var playerIds = _gamePlayers.get(gameId);
+        BattleRule  rule=_rules.get(gameId);
+        int result=0;
+        for(var playerId:playerIds){
+            for(short pkmId=0;pkmId<rule.PokemonPerPlayerOnField;pkmId++){
+                if(canPlayerAttack(playerId,pkmId)){
+                    result++;
+                }           
+            }
+           
+        }
+        System.out.println("no needed actors "+result);
+        return result;
+    }
     public void run(short gameId) {
         while (true) {
             var playerIds = _gamePlayers.get(gameId);
@@ -112,6 +154,7 @@ public class BattleServer extends BaseServer {
                     case ReplyPlayerInformation: {
 
                         var pl = (Player) msg.Data;
+                        BattleRule rule=_rules.get(gameId);
                         _players.put(playerId, pl);
                         var battle = _battles.get(playerId);
                         battle.getPlayers().add(pl);
@@ -119,16 +162,9 @@ public class BattleServer extends BaseServer {
                         log("Size " + battle.getPlayers().size());
                         if (battle.getPlayers().isFull()) {
                             log("full " + playerId);
-
-                            for(var id:playerIds){
-                                var outp = _pipes.get(id);
-                                writeObject(outp,
-                                        NetworkMessageKind.Update.createMessage(new BattleRoundResult(null, new DetailedBattleState(battle.getPlayers()), null)));
-                                writeObject(outp, NetworkMessageKind.RequestInput.createMessage());
-                            }
-
-
-
+                            informPlayerOfUpdate(gameId, new BattleRoundResult(null, new DetailedBattleState(battle.getPlayers()), null));
+                            sendPlayerRequestInputs(gameId, rule);
+                           
                         }
                     }
                     break;
@@ -140,18 +176,14 @@ public class BattleServer extends BaseServer {
                             var battle = _battles.get(inp.PlayerId);
                             battle.addInput(inp);
                             var rule = _rules.get(inp.PlayerId);
+                            System.out.println("check enough sub");
                             // TODO what if pokemon field is vacant?
-                            if (battle.allPlayerGaveInput(rule.NumberPlayers * rule.PokemonPerPlayerOnField)) {
+                            if (battle.allPlayerGaveInput(getNumberEnabledActors(gameId))) {
                                 battle.incrementRound();
                                 var state = battle.executeSchedule(interrupt);
-                                log("All submitted");
-                                for(var id:playerIds){
-                                    var out_msg = NetworkMessageKind.Update.createMessage(state);
-                                    var inp_msg = NetworkMessageKind.RequestInput.createMessage();
-
-                                    writeObject(_pipes.get(id), out_msg);
-                                    writeObject(_pipes.get(id), inp_msg);
-                                }
+                                log("All submitted "+battle.getRound());
+                                informPlayerOfUpdate(gameId, state);
+                                sendPlayerRequestInputs(gameId, rule);
 
 
 

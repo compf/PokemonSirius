@@ -31,6 +31,7 @@ public class Schedule {
 		int _round;
 		int _id;
 		 int _uid;
+		 Move _move;
 
 		DamageInformation _dmg;
 		boolean _executed = false;
@@ -40,7 +41,7 @@ public class Schedule {
 			var def = _battle.getPokemon(_defender);
 
 			DamageInformation dmgInf;
-			var move=SharedInformation.Instance.getMove(_id);
+			var move=_move;
 			int accuracy=(int)(move.getAccuracy()*att.getStatStageFactor(6)*def.getStatStageFactor(7));
 			if(att.getMoveIndex(move)==-1){
 			    MyObject.nop();
@@ -66,7 +67,7 @@ public class Schedule {
 			return _battle.getPokemon(_defender);
 		}
 		public Move getMove() {
-			return SharedInformation.Instance.getMove(_id);
+			return _move;
 		}
 		public int getAttackerPos() {return _attacker;}
 		public int getDefenderPos() {return _defender;}
@@ -85,8 +86,9 @@ public class Schedule {
 			builder.append(_battle.getPokemon(_attacker).toString());
 			builder.append( " used ");
 			builder.append( SharedInformation.Instance.getMove(_id).getName());
-			builder.append( " on ");
+			builder.append( " in round " + this._round+ " on ");
 			builder.append( getDefender().toString());
+			if(_dmg!=null)
 				builder.append(	 " which made " + _dmg.getDamage() + " damage");
 			builder.append('\n');
 			// builder.append("Updated Stats " + getDefender().getName()+"
@@ -117,7 +119,9 @@ public class Schedule {
         public int getUID() {
 		    return _uid;
         }
-
+		public int getRound(){
+			return _round;
+		}
 		public int getID() {
 			return _id;
 		}
@@ -142,7 +146,13 @@ public class Schedule {
 		var resultOptional = _internList.stream().filter((obj) -> !obj._executed && obj._round == _currRound)
 				.sorted(_comp).findFirst();
 		var result = resultOptional.orElseThrow();
+		System.out.println("get next " +result._move.getName() + " "+result._round);
 		result._executed = true;
+		
+		for (var s : _internList) {
+			System.out.println(s);
+		}
+		System.out.println("end Schedulep#############################");
 		return result;
 	}
 
@@ -158,22 +168,25 @@ public class Schedule {
 		_currRound++;
 	}
 
-	public void addMove(int attacker, int defender, int mvIndex, int deltaRound) {
+	public void addMove(int attacker, int defender, Move mv, int deltaRound) {
 		var scheduleItem = new ScheduleItem(_battle);
-		var mv=SharedInformation.Instance.getMove(mvIndex);
 		scheduleItem._attacker = attacker;
 		scheduleItem._defender = defender;
-		scheduleItem._id = mvIndex;
+		scheduleItem._id = mv.getNr();
+		scheduleItem._move=mv;
 
 		scheduleItem._priority = mv.getPriority();
 
 		scheduleItem._round = _currRound + deltaRound;
+		System.out.println("Added move " +mv.getName() +" in round " +scheduleItem._round);
 		scheduleItem._defender = defender;
 		_internList.add(scheduleItem);
 	}
 
 	private int _currRound;
-
+	public int getCurrRound(){
+		return _currRound;
+	}
 	private static class ScheduleItemComparator implements Comparator<ScheduleItem> {
 //Note: this comparator imposes orderings that are inconsistent with equals."
 		@Override
@@ -210,7 +223,7 @@ public class Schedule {
 		for(var s:_internList){
 			System.out.println("Schedule " +s._round +" "+ s._attacker+ " " +scheduleSize);
 		}
-		return scheduleSize==maxNumber;
+		return scheduleSize>=maxNumber;
 	}
 
 	

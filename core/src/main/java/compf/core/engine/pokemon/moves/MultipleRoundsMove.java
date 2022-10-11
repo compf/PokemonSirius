@@ -10,7 +10,7 @@ public class MultipleRoundsMove extends Move {
         _min=min;
     }
     @Override
-    public void init(Schedule schedule,short attacker,short defender){
+    public void init(Schedule schedule,int attacker,int defender){
         int rnd= _min+MyObject.RNG.nextInt(_max-_min);
         for(int i=1;i<rnd;i++){
             super.init(schedule,attacker,defender,i);
