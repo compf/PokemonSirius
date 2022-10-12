@@ -28,7 +28,7 @@ public class MainTest{
         }
         val CUT_ID=15;
         val SPLASH_ID=150;
-        //@Test
+        @Test
         public fun assertSimpleBattle(){
                 val server=BattleServer()
                 val mePokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(252,252,6,0,0,0), Nature.N1, 0, 0, CUT_ID)
@@ -37,7 +37,7 @@ public class MainTest{
                 val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)
                 simulator.init().anyOrder().attack().assertDamage(65, 77).attack().assertDamage(0, 0).execute()
         }
-        //@Test
+        @Test
         public fun assertBattleWithDifferentSpeed(){
                 val server=BattleServer()
                 val mePokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,0), intArrayOf(252,252,6,0,0,0), Nature.N1, 0, 0, CUT_ID)
