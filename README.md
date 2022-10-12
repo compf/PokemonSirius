@@ -4,10 +4,10 @@ This is an attempt to recreate a simple 2d pokemon game using Java and OOP. The 
 
 Currently only simple functionalty like walkign around, starting a battle and  using simple moves is possible but the design should allow adding more functionality relatively easys. 
 
-#Contribution
+# Contribution
 You are encourage to submit pull request to help this project. You are also encouraged to inform me of any design mistakes that make developing the Pokemon clone unnecessary harder
 
-#License
+# License
 MIT License
 
 Copyright (c) [year] [fullname]
