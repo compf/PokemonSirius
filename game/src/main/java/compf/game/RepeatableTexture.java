@@ -6,10 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.awt.*;
 
 public class RepeatableTexture extends CollidableObject {
-    private Texture texture;
+   
     public RepeatableTexture(int x, int y, int width, int height, Texture texture) {
-        super(x, y, width, height);
-        this.texture=texture;
+        super(x, y, width, height,texture);
     }
     Point p;
     @Override

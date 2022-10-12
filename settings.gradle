@@ -1,3 +1,2 @@
-include 'game_launcher', 'core'
-include 'game', "pokeTest","map_maker"
+include 'game_launcher', 'core','game', "pokeTest","map_maker"
 

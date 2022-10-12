@@ -54,7 +54,7 @@ public class Main extends ApplicationAdapter  {
 		entries.add(new PokemonZone.PokemonZoneEntry(25,30,38,314));
 
 
-		frame.addChild(new PokemonZone(0,0,1024,1024,new Texture("grass.png"),entries,5));
+		frame.addChild(new PokemonZone(0,0,1024,1024,new Texture("tiles/grass.png"),entries,5));
 		Player player=new Player(50,40,72,96,new Texture("trainers.png"), Direction.Right,6,0);
 		Main.player=new compf.core.engine.Player((short)0,"Me",compf.core.engine.PokemonBattle.createRandomTeam());
 		Main.playerFrame=player;

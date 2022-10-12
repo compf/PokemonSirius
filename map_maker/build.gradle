@@ -2,7 +2,7 @@ apply plugin: 'application'
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 mainClassName = 'compf.core.map_maker.Lwjgl3Launcher'
-eclipse.project.name = appName + '-lwjgl3'
+eclipse.project.name = appName + 'MapMaker'
 sourceCompatibility = 17
 
 dependencies {

@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class DrawableObject {
     protected int x,y;
-    private final int width,height;
+    protected final int width,height;
     private DrawableObject parent;
     public static final Texture RectTexture=getPixmapTexture(Color.WHITE);;
 
@@ -28,6 +28,13 @@ public abstract class DrawableObject {
 
     public int getY() {
         return y;
+    }
+    public void setX(int x) {
+        this.x=x;
+    }
+
+    public void setY(int y) {
+        this.y=y;
     }
     public static int adjustX(int x){
         return x-Player.getPlayerX()/2;
