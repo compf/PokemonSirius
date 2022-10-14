@@ -9,26 +9,29 @@ public class BurnedStateCondition extends PokemonBattleEffect {
 
 	@Override
 	public void init(Object... inf) {
-		getPokemon().changeStatStage(PokemonStat.ATT,-1);
+		getPokemon().changeStatStage(PokemonStat.ATT, -1);
 
 	}
-	public BurnedStateCondition(Pokemon pkmn){
+
+	public BurnedStateCondition(Pokemon pkmn) {
 		super(pkmn);
 	}
+
 	@Override
 	public void roundEnding(Object... inf) {
-		var dmgInf=(DamageInformation)inf[0];
-		
-		getPokemon().modifyCurrHp( 0.875);
-		addMessage(getPokemon().toString()+ " lost a little bit HP due to burn");
-		
+		var dmgInf = (DamageInformation) inf[0];
+
+		getPokemon().modifyCurrHp(0.875);
+		addMessage(getPokemon().toString() + " lost a little bit HP due to burn");
+
 	}
 
 	@Override
 	public void pokemonSwitched(Object... inf) {
 		getPokemon().changeStatStage(PokemonStat.ATT, +1);
 	}
-	@Override 
+
+	@Override
 	public String toString() {
 		return "BRN";
 	}

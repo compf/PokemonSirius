@@ -1,5 +1,6 @@
 
 package compf;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -17,76 +18,87 @@ import compf.game.PokemonZone;
 import java.util.ArrayList;
 import java.util.Stack;
 
-
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
-public class Main extends ApplicationAdapter  {
+/**
+ * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all
+ * platforms.
+ */
+public class Main extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Texture image;
 	private DrawableObject currObject;
 	private static Main instance;
-	private static Stack<DrawableObject> frames=new Stack<>();
-	public static void switchFrame(DrawableObject newObj){
+	private static Stack<DrawableObject> frames = new Stack<>();
+
+	public static void switchFrame(DrawableObject newObj) {
 		frames.push(instance.currObject);
-		instance.currObject=newObj;
+		instance.currObject = newObj;
 	}
-	public static void goBack(){
-		instance.currObject=frames.pop();
+
+	public static void goBack() {
+		instance.currObject = frames.pop();
 	}
-	public static compf.core.engine.Player getPlayer(){
+
+	public static compf.core.engine.Player getPlayer() {
 		return player;
 	}
-	public static Player getPlayerFrame(){
+
+	public static Player getPlayerFrame() {
 		return playerFrame;
 	}
+
 	private static compf.core.engine.Player player;
 	private static Player playerFrame;
+
 	@Override
-	public void create()
-	{
-		Main.instance=this;
+	public void create() {
+		Main.instance = this;
 		batch = new SpriteBatch();
 		image = new Texture("libgdx.png");
 		compf.core.engine.SharedInformation.Instance.init();
-		HierarchicalObject frame=new HierarchicalObject(0,0,1024,1024);
-		ArrayList<PokemonZone.PokemonZoneEntry> entries=new ArrayList<>();
-		entries.add(new PokemonZone.PokemonZoneEntry(25,10,15,60));
-		entries.add(new PokemonZone.PokemonZoneEntry(50,5,8,127));
-		entries.add(new PokemonZone.PokemonZoneEntry(25,30,38,314));
+		HierarchicalObject frame = new HierarchicalObject(0, 0, 1024, 1024);
+		ArrayList<PokemonZone.PokemonZoneEntry> entries = new ArrayList<>();
+		entries.add(new PokemonZone.PokemonZoneEntry(25, 10, 15, 60));
+		entries.add(new PokemonZone.PokemonZoneEntry(50, 5, 8, 127));
+		entries.add(new PokemonZone.PokemonZoneEntry(25, 30, 38, 314));
 
-
-		frame.addChild(new PokemonZone(0,0,1024,1024,new Texture("tiles/grass.png"),entries,5));
-		Player player=new Player(50,40,72,96,new Texture("trainers.png"), Direction.Right,6,0);
-		Main.player=new compf.core.engine.Player((short)0,"Me",compf.core.engine.PokemonBattle.createRandomTeam());
-		Main.playerFrame=player;
+		frame.addChild(new PokemonZone(0, 0, 1024, 1024, new Texture("tiles/grass.png"), entries, 5));
+		Player player = new Player(50, 40, 72, 96, new Texture("trainers.png"), Direction.Right, 6, 0);
+		Main.player = new compf.core.engine.Player((short) 0, "Me", compf.core.engine.PokemonBattle.createRandomTeam());
+		Main.playerFrame = player;
 		frame.addChild(player);
-		//MainMenu menu=new MainMenu();
-		//frame.addChild(menu);
-		short id=0;
-		/*currObject=new PokemonBattleScreen(0,0,1024,1024,
-				new compf.core.engine.Player(id,"Test", TestUtil.getSingleMoveRandomTeam()),
-				TestUtil.createRandomPokemonSingleMove());*/
-		currObject=frame;
+		// MainMenu menu=new MainMenu();
+		// frame.addChild(menu);
+		short id = 0;
+		/*
+		 * currObject=new PokemonBattleScreen(0,0,1024,1024,
+		 * new compf.core.engine.Player(id,"Test", TestUtil.getSingleMoveRandomTeam()),
+		 * TestUtil.createRandomPokemonSingleMove());
+		 */
+		currObject = frame;
 		currObject.init();
 
-
 	}
-	private int[] allValidKeys= new int[]{Input.Keys.UP,Input.Keys.RIGHT,Input.Keys.DOWN,Input.Keys.LEFT,Input.Keys.SPACE,Input.Keys.B};
+
+	private int[] allValidKeys = new int[] { Input.Keys.UP, Input.Keys.RIGHT, Input.Keys.DOWN, Input.Keys.LEFT,
+			Input.Keys.SPACE, Input.Keys.B };
+
 	@Override
 	public void render() {
 
 		Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		boolean keyFound=false;
-		for(int key:allValidKeys){
-			if(Gdx.input.isKeyPressed(key) ){
+		boolean keyFound = false;
+		for (int key : allValidKeys) {
+			if (Gdx.input.isKeyPressed(key)) {
 
-				currObject.onKeyPress(key,key!=lastKey);
-				lastKey=key;
-				keyFound=true;
+				currObject.onKeyPress(key, key != lastKey);
+				lastKey = key;
+				keyFound = true;
 			}
 		}
-		if(!keyFound)lastKey=-1;
+		if (!keyFound)
+			lastKey = -1;
 		currObject.update();
 		currObject.render(batch);
 		batch.end();
@@ -99,9 +111,7 @@ public class Main extends ApplicationAdapter  {
 		image.dispose();
 		System.exit(0);
 	}
-	private int lastKey=-1;
 
-
-
+	private int lastKey = -1;
 
 }

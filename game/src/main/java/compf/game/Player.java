@@ -5,18 +5,23 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player extends NPC {
-    public Player(int x, int y, int width, int height, Texture texture, Direction dir, int spriteSheetX, int spriteSheetY) {
+    public Player(int x, int y, int width, int height, Texture texture, Direction dir, int spriteSheetX,
+            int spriteSheetY) {
         super(x, y, width, height, texture, dir, spriteSheetX, spriteSheetY);
     }
-    private static int player_x,player_y;
-    public static int getPlayerX(){
+
+    private static int player_x, player_y;
+
+    public static int getPlayerX() {
         return player_x;
     }
-    public static int getPlayerY(){
+
+    public static int getPlayerY() {
         return player_y;
     }
+
     @Override
-    public void onKeyPress(int keycode,boolean newPress) {
+    public void onKeyPress(int keycode, boolean newPress) {
         final int MoveSpeed = 5;
         switch (keycode) {
             case Settings.KEY_UP:
@@ -27,7 +32,6 @@ public class Player extends NPC {
                 } else {
                     walk();
                 }
-
 
                 break;
             case Settings.KEY_LEFT:
@@ -61,14 +65,15 @@ public class Player extends NPC {
 
                 break;
         }
-        player_x=x;
-        player_y=y;
+        player_x = x;
+        player_y = y;
 
     }
-    @Override
-    public void render(SpriteBatch batch){
 
-        batch.draw(lookDirectionRegions.get(lookDirection)[walkIndex],256,256,getWidth(),getHeight());
+    @Override
+    public void render(SpriteBatch batch) {
+
+        batch.draw(lookDirectionRegions.get(lookDirection)[walkIndex], 256, 256, getWidth(), getHeight());
 
     }
 }

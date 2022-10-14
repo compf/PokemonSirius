@@ -7,32 +7,41 @@ import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.moves.Move;
 import compf.core.etc.MyObject;
 
-public  class Player extends MyObject implements Serializable {
+public class Player extends MyObject implements Serializable {
     /**
      *
      */
     private static final long serialVersionUID = 1L;
     protected Pokemon[] _team = new Pokemon[6];
     protected String _name;
-    private HashSet<Player> _allies=new HashSet<>();
+    private HashSet<Player> _allies = new HashSet<>();
     private int _pokemonCount = 1;
     private short _id;
+
     public Player(short id) {
-    	_id=id;
+        _id = id;
     }
+
     public int getPokemonCount() {
         return _pokemonCount;
     }
+
     public void addAlly(Player pl) {
-    	if(pl==this)return;
-    	_allies.add(pl);
-    	pl.addAlly(this);
+        if (pl == this)
+            return;
+        _allies.add(pl);
+        pl.addAlly(this);
     }
+
     public boolean isAlly(Player pl) {
-    	return pl==this || _allies.contains(pl);
+        return pl == this || _allies.contains(pl);
     }
+
     // TODO AI for target selection
-    public  short chooseTarget(Object battle,boolean isEnemy,byte pkmnId,Move mv) {return 0;}
+    public short chooseTarget(Object battle, boolean isEnemy, byte pkmnId, Move mv) {
+        return 0;
+    }
+
     public void setPokemonCount(int val) {
         _pokemonCount = val;
     }
@@ -51,41 +60,45 @@ public  class Player extends MyObject implements Serializable {
 
     /**
      * test
+     * 
      * @param id
      * @param name
      * @param team
      */
-    public Player(short id,String name, Pokemon[] team) {
-    	_id=id;
+    public Player(short id, String name, Pokemon[] team) {
+        _id = id;
         _name = name;
         _team = team;
-        for(var p:team) {
-            if(p==null)break;
-        	p.setPlayer(this);
+        for (var p : team) {
+            if (p == null)
+                break;
+            p.setPlayer(this);
         }
 
     }
+
     /**
      * hello
      */
     /**
      * dswd
+     * 
      * @param nr
      * @return
      */
     public Pokemon getPokemon(int nr) {
-        if(nr>=_team.length)return null;
+        if (nr >= _team.length)
+            return null;
         return _team[nr];
     }
 
+    public Move chooseMove(int nr) {
+        return null;
+    }
 
-
-    public  Move chooseMove(int nr) {return null;}
-
-
-	public short getPlayerId() {
-		// TODO Auto-generated method stub
-		return _id;
-	}
+    public short getPlayerId() {
+        // TODO Auto-generated method stub
+        return _id;
+    }
 
 }

@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public interface BattleState extends Serializable {
     /**
-     * Get the current Hp of the pokemon, which is specified by the player id and the index number of the pokemon in the player's team
+     * Get the current Hp of the pokemon, which is specified by the player id and
+     * the index number of the pokemon in the player's team
      *
      * @param playerId  The id of the player
      * @param pkmnIndex The position of the pokemon in the player's team
@@ -14,8 +15,10 @@ public interface BattleState extends Serializable {
     public int getCurrHp(int playerId, int pkmnIndex);
 
     /**
-     * Get the max Hp of the pokemon, which is specified by the player id and the index number of the pokemon in the player's team
-     * <table></table>
+     * Get the max Hp of the pokemon, which is specified by the player id and the
+     * index number of the pokemon in the player's team
+     * <table>
+     * </table>
      *
      * @param playerId  The id of the player
      * @param pkmnIndex The position of the pokemon in the player's team
@@ -59,6 +62,5 @@ public interface BattleState extends Serializable {
     public String getPlayerName(int playerId);
 
     public boolean battleFinished();
-
 
 }

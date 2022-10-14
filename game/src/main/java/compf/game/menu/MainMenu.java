@@ -11,41 +11,42 @@ import compf.game.FontManager;
 import compf.game.Settings;
 
 public class MainMenu extends BaseMenu<String> {
-    static String[] menuItems={"Pokemon","Bag","Save"};
+    static String[] menuItems = { "Pokemon", "Bag", "Save" };
     private ShapeRenderer renderer;
+
     public MainMenu() {
-        super(MAIN_MENU_X,MAIN_MENU_Y,MAIN_MENU_WIDTH,MAIN_MENU_HEIGHT);
-        renderer=new ShapeRenderer();
+        super(MAIN_MENU_X, MAIN_MENU_Y, MAIN_MENU_WIDTH, MAIN_MENU_HEIGHT);
+        renderer = new ShapeRenderer();
     }
-    static final  int  MAIN_MENU_X=300,MAIN_MENU_Y=300,MAIN_MENU_WIDTH=100,MAIN_MENU_HEIGHT=300;
-    final
-    @Override
-    public void itemSelected() {
+
+    static final int MAIN_MENU_X = 300, MAIN_MENU_Y = 300, MAIN_MENU_WIDTH = 100, MAIN_MENU_HEIGHT = 300;
+
+    final @Override public void itemSelected() {
         // do nothing
     }
+
     @Override
-    public String[] getItems(){
+    public String[] getItems() {
         return menuItems;
     }
+
     @Override
     public void render(SpriteBatch batch) {
 
-       batch.draw(RectTexture,getX(),getY(),getWidth(),getHeight());
-        int x=getX()+10;
-        int y=getY()+getWidth()+30;
-        final int dy=+50;
-        for(String item:menuItems){
+        batch.draw(RectTexture, getX(), getY(), getWidth(), getHeight());
+        int x = getX() + 10;
+        int y = getY() + getWidth() + 30;
+        final int dy = +50;
+        for (String item : menuItems) {
             BitmapFont font;
-            if(item.equals(getCurrItem())){
-               font= FontManager.Instance.getFontByColor(Color.RED);
-            }
-            else{
-                font=FontManager.Instance.getFontByColor(Color.BLACK);
+            if (item.equals(getCurrItem())) {
+                font = FontManager.Instance.getFontByColor(Color.RED);
+            } else {
+                font = FontManager.Instance.getFontByColor(Color.BLACK);
             }
 
-
-            font.draw(batch,item,x,y);
-            y-=dy;
+            font.draw(batch, item, x, y);
+            y -= dy;
 
         }
 

@@ -21,14 +21,16 @@ public class DetailedBattleState implements BattleState {
         Player p = findById(playerId);
         if (p != null) {
             var pkmn = p.getPokemon(pkmnIndex);
-            if (pkmn != null) return pkmn.getCurrHP();
+            if (pkmn != null)
+                return pkmn.getCurrHP();
         }
         return 0;
     }
 
     private Player findById(int playerId) {
         for (var p : _players) {
-            if (p.getPlayerId() == playerId) return p;
+            if (p.getPlayerId() == playerId)
+                return p;
         }
         return null;
     }
@@ -69,7 +71,8 @@ public class DetailedBattleState implements BattleState {
     @Override
     public String getPlayerName(int playerId) {
         Player p = findById(playerId);
-        if (p != null) return p.getName();
+        if (p != null)
+            return p.getName();
         return null;
     }
 
@@ -77,16 +80,15 @@ public class DetailedBattleState implements BattleState {
     public boolean battleFinished() {
         boolean finnished = false;
         for (int id : getPlayerIds()) {
-            boolean playerFinished=true;
+            boolean playerFinished = true;
             for (int i = 0; i < SharedInformation.TeamSize; i++) {
                 int hp = getCurrHp(id, i);
                 playerFinished = playerFinished & hp == 0;
 
             }
-            finnished=finnished|playerFinished;
+            finnished = finnished | playerFinished;
         }
         return finnished;
     }
 
 }
-

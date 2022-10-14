@@ -9,40 +9,41 @@ import java.util.HashMap;
 public class NPC extends CollidableObject {
     private final Texture spritesheet;
     protected Direction lookDirection;
-    protected int walkIndex=0;
-     HashMap<Direction,TextureRegion[]> lookDirectionRegions=new HashMap<>();
+    protected int walkIndex = 0;
+    HashMap<Direction, TextureRegion[]> lookDirectionRegions = new HashMap<>();
 
-    public NPC(int x,int y,int width,int height,Texture texture,Direction dir,int spriteSheetX,int spriteSheetY){
-        super(x,y,width,height,texture);
-        this.spritesheet=texture;
-        this.lookDirection=dir;
-        Direction[] directionOrderSpritesheet={Direction.Down,Direction.Left,Direction.Right,Direction.Up};
-        for(int i=0;i<4;i++){
+    public NPC(int x, int y, int width, int height, Texture texture, Direction dir, int spriteSheetX,
+            int spriteSheetY) {
+        super(x, y, width, height, texture);
+        this.spritesheet = texture;
+        this.lookDirection = dir;
+        Direction[] directionOrderSpritesheet = { Direction.Down, Direction.Left, Direction.Right, Direction.Up };
+        for (int i = 0; i < 4; i++) {
 
-                this.lookDirectionRegions.put(directionOrderSpritesheet[i],new TextureRegion[]{
-                        new TextureRegion(texture,(spriteSheetX+0)*width,(spriteSheetY+i)*height,width,height),
-                        new TextureRegion(texture,(spriteSheetX+1)*width,(spriteSheetY+i)*height,width,height),
-                        new TextureRegion(texture,(spriteSheetX+2)*width,(spriteSheetY+i)*height,width,height),
-                });
+            this.lookDirectionRegions.put(directionOrderSpritesheet[i], new TextureRegion[] {
+                    new TextureRegion(texture, (spriteSheetX + 0) * width, (spriteSheetY + i) * height, width, height),
+                    new TextureRegion(texture, (spriteSheetX + 1) * width, (spriteSheetY + i) * height, width, height),
+                    new TextureRegion(texture, (spriteSheetX + 2) * width, (spriteSheetY + i) * height, width, height),
+            });
 
         }
 
     }
 
-
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(lookDirectionRegions.get(lookDirection)[walkIndex],x,y,getWidth(),getHeight());
+        batch.draw(lookDirectionRegions.get(lookDirection)[walkIndex], x, y, getWidth(), getHeight());
 
     }
 
-    protected void moveBy(final int dx,final int dy){
-        this.x+=dx;
-        this.y+=dy;
+    protected void moveBy(final int dx, final int dy) {
+        this.x += dx;
+        this.y += dy;
 
     }
-    protected void walk(){
-        walkIndex=(walkIndex+1)%3;
+
+    protected void walk() {
+        walkIndex = (walkIndex + 1) % 3;
 
     }
 }

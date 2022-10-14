@@ -2,18 +2,18 @@ package compf.core.engine;
 
 import java.io.Serializable;
 
-
-
-public class NetworkMessage implements Serializable{
+public class NetworkMessage implements Serializable {
 	private static final long serialVersionUID = -7740477375901976240L;
 	public final NetworkMessageKind Kind;
 	public final Object Data;
-	public NetworkMessage(NetworkMessageKind kind,Object data) {
-		Kind=kind;
-		Data=data;
+
+	public NetworkMessage(NetworkMessageKind kind, Object data) {
+		Kind = kind;
+		Data = data;
 	}
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return Kind.toString();
 	}
 }

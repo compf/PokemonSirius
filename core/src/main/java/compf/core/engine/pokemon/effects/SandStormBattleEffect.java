@@ -9,16 +9,16 @@ public class SandStormBattleEffect extends GlobalBattleEffect {
     public SandStormBattleEffect(PokemonBattle battle) {
         super(battle);
     }
+
     @Override
-    public void roundEnding(Object... obj){
-    	var inf=(DamageInformation)obj[0];
-        for(Pokemon pkmn:getBattle()){
-            if(!(pkmn.isType(Type.Ground) || pkmn.isType(Type.Rock) || pkmn.isType(Type.Steel))){
+    public void roundEnding(Object... obj) {
+        var inf = (DamageInformation) obj[0];
+        for (Pokemon pkmn : getBattle()) {
+            if (!(pkmn.isType(Type.Ground) || pkmn.isType(Type.Rock) || pkmn.isType(Type.Steel))) {
                 pkmn.modifyCurrHp(0.875);
                 addMessage(pkmn.toString() + " was damaged by sandstorm");
             }
         }
-
 
     }
 }

@@ -7,8 +7,8 @@ public class RelativeHierarchicalObject extends HierarchicalObject {
 
     @Override
     public void addChild(DrawableObject obj) {
-        obj.x=this.x+obj.x;
-        obj.y=this.y+obj.y;
+        obj.x = this.x + obj.x;
+        obj.y = this.y + obj.y;
         super.addChild(obj);
     }
 }

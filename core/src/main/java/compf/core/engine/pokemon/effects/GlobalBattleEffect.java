@@ -4,10 +4,12 @@ import compf.core.engine.PokemonBattle;
 
 public abstract class GlobalBattleEffect extends BattleEffect {
     private PokemonBattle _battle;
-    public PokemonBattle getBattle(){
+
+    public PokemonBattle getBattle() {
         return _battle;
     }
-    public GlobalBattleEffect(PokemonBattle battle){
-        _battle=battle;
+
+    public GlobalBattleEffect(PokemonBattle battle) {
+        _battle = battle;
     }
 }

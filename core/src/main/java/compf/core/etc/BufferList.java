@@ -8,11 +8,13 @@ public class BufferList<T> implements List<T>, Serializable {
 	private static final long serialVersionUID = -563315742032842168L;
 	private final ArrayList<T> _intern;
 	private int _max;
+
 	public BufferList(int max) {
-		_intern=new ArrayList<>(max);
-		_max=max;
-		
+		_intern = new ArrayList<>(max);
+		_max = max;
+
 	}
+
 	@Override
 	public Iterator<T> iterator() {
 		return _intern.iterator();
@@ -35,22 +37,21 @@ public class BufferList<T> implements List<T>, Serializable {
 
 	@Override
 	public Object[] toArray() {
-		
+
 		return _intern.toArray();
 	}
 
 	@Override
 	public <T> T[] toArray(T[] a) {
-		
+
 		return _intern.toArray(a);
 	}
 
 	@Override
 	public synchronized boolean add(T e) {
-		if(size()<_max) {
+		if (size() < _max) {
 			return _intern.add(e);
-		}
-		else {
+		} else {
 			throw new IllegalStateException("Cannot add more items than max");
 		}
 	}
@@ -72,7 +73,7 @@ public class BufferList<T> implements List<T>, Serializable {
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
-		return _intern.addAll(index,c);
+		return _intern.addAll(index, c);
 	}
 
 	@Override
@@ -97,12 +98,12 @@ public class BufferList<T> implements List<T>, Serializable {
 
 	@Override
 	public T set(int index, T element) {
-		return _intern.set(index,element);
+		return _intern.set(index, element);
 	}
 
 	@Override
 	public void add(int index, T element) {
-		_intern.add(index,element);
+		_intern.add(index, element);
 	}
 
 	@Override
@@ -132,14 +133,14 @@ public class BufferList<T> implements List<T>, Serializable {
 
 	@Override
 	public List<T> subList(int fromIndex, int toIndex) {
-		return _intern.subList(fromIndex,toIndex);
+		return _intern.subList(fromIndex, toIndex);
 	}
 
 	/**
 	 * Return true if the list is full
 	 */
 	public boolean isFull() {
-		return size()>=_max;
+		return size() >= _max;
 	}
 
 }

@@ -7,27 +7,28 @@ public class SubstituteEffect extends PokemonBattleEffect {
     public SubstituteEffect(Pokemon pkmn) {
         super(pkmn);
     }
-    private int _cap=45;
+
+    private int _cap = 45;
+
     @Override
-    public void init(Object... obj){
-        if(getPokemon().getCurrHP()>45){
+    public void init(Object... obj) {
+        if (getPokemon().getCurrHP() > 45) {
             getPokemon().modifyCurrHp(0.75);
-        }
-        else{
+        } else {
             disable();
-;
+            ;
         }
 
     }
+
     @Override
-    public void defend(Object... obj){
-        DamageInformation inf=(DamageInformation)obj[0];
-        if(inf.getDamage()<=_cap && _cap>0){
-            _cap-=inf.getDamage();
+    public void defend(Object... obj) {
+        DamageInformation inf = (DamageInformation) obj[0];
+        if (inf.getDamage() <= _cap && _cap > 0) {
+            _cap -= inf.getDamage();
             inf.modifyDamage(0);
             addMessage("Substitute works");
-        }
-        else{
+        } else {
             disable();
         }
     }

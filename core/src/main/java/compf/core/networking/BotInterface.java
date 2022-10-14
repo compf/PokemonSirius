@@ -9,9 +9,10 @@ import compf.core.etc.MyObject;
 public class BotInterface implements IOInterface {
     private final Player player;
 
-    public BotInterface(Player player){
-       this.player=player;
+    public BotInterface(Player player) {
+        this.player = player;
     }
+
     @Override
     public void message(String msg) {
 
@@ -21,16 +22,15 @@ public class BotInterface implements IOInterface {
     public void update(BattleRoundResult state) {
 
     }
-    public void endBattle(){
-        
-    }
 
-   
+    public void endBattle() {
+
+    }
 
     @Override
     public PlayerInput requestPlayerInput(short pkmnIndex, BattleState state) {
-        short move=(short)MyObject.randomNumber(0,this.player.getPokemon(pkmnIndex).getValidMovesCount());
-        return new PlayerInput.AttackInput(pkmnIndex, move,(short)0,(short)0,player.getPlayerId());
+        short move = (short) MyObject.randomNumber(0, this.player.getPokemon(pkmnIndex).getValidMovesCount());
+        return new PlayerInput.AttackInput(pkmnIndex, move, (short) 0, (short) 0, player.getPlayerId());
     }
 
     @Override

@@ -5,11 +5,11 @@ import java.util.Objects;
 
 public class BattleRule implements Serializable {
 
-	
 	@Override
 	public int hashCode() {
-		return Objects.hash(MaxPokemonInTeamPerPlayer,NumberPlayers,PlayersPerTeam,PokemonPerPlayerOnField);
+		return Objects.hash(MaxPokemonInTeamPerPlayer, NumberPlayers, PlayersPerTeam, PokemonPerPlayerOnField);
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -27,6 +27,7 @@ public class BattleRule implements Serializable {
 			return false;
 		return true;
 	}
+
 	/**
 	 * 
 	 */
@@ -35,12 +36,13 @@ public class BattleRule implements Serializable {
 	public final int PlayersPerTeam;
 	public final int MaxPokemonInTeamPerPlayer;
 	public final int PokemonPerPlayerOnField;
-	public BattleRule(int numberPlayers, int playersPerTeam, int maxPokemonInTeamPerPlayer, int pokemonPerPlayerOnField) {
+
+	public BattleRule(int numberPlayers, int playersPerTeam, int maxPokemonInTeamPerPlayer,
+			int pokemonPerPlayerOnField) {
 		NumberPlayers = numberPlayers;
 		PlayersPerTeam = playersPerTeam;
 		MaxPokemonInTeamPerPlayer = maxPokemonInTeamPerPlayer;
-		PokemonPerPlayerOnField=pokemonPerPlayerOnField;
+		PokemonPerPlayerOnField = pokemonPerPlayerOnField;
 	}
-	
-	
+
 }

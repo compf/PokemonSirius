@@ -16,7 +16,7 @@ import compf.core.etc.BufferList;
 import compf.core.etc.MyObject;
 
 public class BattleServer extends BaseServer {
-    private static Logger MyLogger=LogManager.getLogger();
+    private static Logger MyLogger = LogManager.getLogger();
     private short _globalPlayerId = 0;
     private short _globalGameId = 0;
     private HashMap<Short, Pipe> _pipes = new HashMap<>();
@@ -49,7 +49,6 @@ public class BattleServer extends BaseServer {
             _rules.put(playerId, (BattleRule) msg.Data);
             processBattleRule(playerId);
         }
-
 
     }
 
@@ -97,57 +96,64 @@ public class BattleServer extends BaseServer {
             thread.start();
         }
     }
-    private void sendPlayerRequestInputs(short gameId,BattleRule rule){
+
+    private void sendPlayerRequestInputs(short gameId, BattleRule rule) {
         var playerIds = _gamePlayers.get(gameId);
-        for(var playerId:playerIds){
-            for(short pkmId=0;pkmId<rule.PokemonPerPlayerOnField;pkmId++){
-                if(canPlayerAttack(playerId,pkmId)){
+        for (var playerId : playerIds) {
+            for (short pkmId = 0; pkmId < rule.PokemonPerPlayerOnField; pkmId++) {
+                if (canPlayerAttack(playerId, pkmId)) {
                     var inp_msg = NetworkMessageKind.RequestInput.createMessage(pkmId);
                     writeObject(_pipes.get(playerId), inp_msg);
-                }           
+                }
             }
-           
+
         }
     }
-    private void informPlayerOfUpdate(short gameId,BattleRoundResult state){
+
+    private void informPlayerOfUpdate(short gameId, BattleRoundResult state) {
         var playerIds = _gamePlayers.get(gameId);
-        for(var id:playerIds){
-                var inp_msg = NetworkMessageKind.Update.createMessage(state);
-                writeObject(_pipes.get(id), inp_msg);  
+        for (var id : playerIds) {
+            var inp_msg = NetworkMessageKind.Update.createMessage(state);
+            writeObject(_pipes.get(id), inp_msg);
         }
     }
-    private boolean canPlayerAttack(short playerId,short pkmnId){
-        Pokemon pkmn=_players.get(playerId).getPokemon(pkmnId); 
-        boolean flag=pkmn.getCurrHP()>0 && pkmn.getEffects().stream().allMatch((e)->((PokemonBattleEffect)e).canReceiveCommand());
-        System.out.println("can player attack "+playerId+" "+pkmnId +" "+flag);
+
+    private boolean canPlayerAttack(short playerId, short pkmnId) {
+        Pokemon pkmn = _players.get(playerId).getPokemon(pkmnId);
+        boolean flag = pkmn.getCurrHP() > 0
+                && pkmn.getEffects().stream().allMatch((e) -> ((PokemonBattleEffect) e).canReceiveCommand());
+        System.out.println("can player attack " + playerId + " " + pkmnId + " " + flag);
 
         return flag;
     }
-    private int getNumberEnabledActors(short gameId){
+
+    private int getNumberEnabledActors(short gameId) {
         var playerIds = _gamePlayers.get(gameId);
-        BattleRule  rule=_rules.get(gameId);
-        int result=0;
-        for(var playerId:playerIds){
-            for(short pkmId=0;pkmId<rule.PokemonPerPlayerOnField;pkmId++){
-                if(canPlayerAttack(playerId,pkmId)){
+        BattleRule rule = _rules.get(gameId);
+        int result = 0;
+        for (var playerId : playerIds) {
+            for (short pkmId = 0; pkmId < rule.PokemonPerPlayerOnField; pkmId++) {
+                if (canPlayerAttack(playerId, pkmId)) {
                     result++;
-                }           
+                }
             }
-           
+
         }
-        System.out.println("no needed actors "+result);
+        System.out.println("no needed actors " + result);
         return result;
     }
+
     public void run(short gameId) {
         while (true) {
             var playerIds = _gamePlayers.get(gameId);
             for (short playerId : playerIds) {
                 var input = _pipes.get(playerId);
-                if(input.isWaitingForData()){
+                if (input.isWaitingForData()) {
                     var outp = _pipes.get(playerId);
                     writeObject(outp, NetworkMessageKind.RequestInput.createMessage());
                 }
-                if(!input.avaliable())continue;
+                if (!input.avaliable())
+                    continue;
                 NetworkMessage msg = readObject(input);
                 MyLogger.debug("Server reveived " + msg.Kind + " from " + playerId);
                 ;
@@ -157,7 +163,7 @@ public class BattleServer extends BaseServer {
                     case ReplyPlayerInformation: {
 
                         var pl = (Player) msg.Data;
-                        BattleRule rule=_rules.get(gameId);
+                        BattleRule rule = _rules.get(gameId);
                         _players.put(playerId, pl);
                         var battle = _battles.get(playerId);
                         battle.getPlayers().add(pl);
@@ -165,12 +171,13 @@ public class BattleServer extends BaseServer {
                         MyLogger.debug("Number of players " + battle.getPlayers().size());
                         if (battle.getPlayers().isFull()) {
                             MyLogger.debug("All players ready ");
-                            informPlayerOfUpdate(gameId, new BattleRoundResult(null, new DetailedBattleState(battle.getPlayers()), null));
+                            informPlayerOfUpdate(gameId,
+                                    new BattleRoundResult(null, new DetailedBattleState(battle.getPlayers()), null));
                             sendPlayerRequestInputs(gameId, rule);
-                           
+
                         }
                     }
-                    break;
+                        break;
                     case ReplyInput: {
                         Interrupt interrupt = new Interrupt();
                         BufferList<PlayerInput> inputs = (BufferList<PlayerInput>) msg.Data;
@@ -183,16 +190,13 @@ public class BattleServer extends BaseServer {
                             if (battle.allPlayerGaveInput(getNumberEnabledActors(gameId))) {
                                 battle.incrementRound();
                                 var state = battle.executeSchedule(interrupt);
-                                MyLogger.debug("All players submitted input "+battle.getRound());
+                                MyLogger.debug("All players submitted input " + battle.getRound());
                                 informPlayerOfUpdate(gameId, state);
                                 sendPlayerRequestInputs(gameId, rule);
-
-
 
                             }
                         }
                     }
-
 
                 }
             }

@@ -15,12 +15,13 @@ public class Move implements Serializable {
 	private final int _nr;
 	private final String _name;
 	private final byte _pp;
-	private  final byte _accuracy;
+	private final byte _accuracy;
 	private final byte _priority;
 	private final byte _power;
 	private final Type _type;
 	private final MoveKind _kind;
 	private final TargetType _target;
+
 	public Type getType() {
 		return _type;
 	}
@@ -30,15 +31,20 @@ public class Move implements Serializable {
 	}
 
 	public enum TargetType {
-		None(1), SelectedPokemonMeFirst(2), Ally(3), UserField(4), UserOrAlly(5), OpponentField(6), User(7), RandomOpponent(8), AllOtherPokemon(9),
+		None(1), SelectedPokemonMeFirst(2), Ally(3), UserField(4), UserOrAlly(5), OpponentField(6), User(7),
+		RandomOpponent(8), AllOtherPokemon(9),
 		SelectedPokemon(10), AllOpponents(11), EntireField(12), UserAndAllies(13), AllPokemon(14);
+
 		public final int nr;
-		TargetType(int nr){
-			this.nr=nr;
+
+		TargetType(int nr) {
+			this.nr = nr;
 		}
-		public static TargetType find(int n){
-			for(var i:values()){
-				if(i.nr==n)return i;
+
+		public static TargetType find(int n) {
+			for (var i : values()) {
+				if (i.nr == n)
+					return i;
 			}
 			return null;
 		}
@@ -49,12 +55,13 @@ public class Move implements Serializable {
 		return new DamageInformation(dmg, getEffectiveness(item.getDefender(), _type), item.getAttacker(),
 				item.getDefender(), _nr);
 	}
+
 	public void finishedMove(DamageInformation dmg) {
-		
+
 	}
 
 	private static final double S = 2.0, N = 1.0, W = 0.5;
-	private static final double[][] _effectiveMatrix = { 
+	private static final double[][] _effectiveMatrix = {
 			{ N, N, N, N, N, W, N, 0, W, N, N, N, N, N, N, N, N, N },
 			{ S, N, W, W, N, S, W, 0, S, N, N, N, N, W, S, N, S, N },
 			{ N, S, N, N, N, W, S, N, W, N, N, S, W, N, N, N, N, N },
@@ -73,16 +80,19 @@ public class Move implements Serializable {
 			{ N, N, N, N, N, N, N, N, W, N, N, N, N, N, N, S, N, 0 },
 			{ N, W, N, N, N, N, N, S, N, N, N, N, N, S, N, N, W, W },
 			{ N, S, N, W, N, N, N, N, W, W, N, N, N, N, N, S, S, N }
-		 };
+	};
+
 	@Override
-	public boolean equals(Object obj){
-		if(obj==null)return false;
-		if(obj instanceof  Move){
-			Move mv=(Move)obj;
-			return mv._nr==_nr;
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (obj instanceof Move) {
+			Move mv = (Move) obj;
+			return mv._nr == _nr;
 		}
 		return false;
 	}
+
 	public static double getEffectiveness(Pokemon def, Type type) {
 
 		int row = type.getValue() - 1;
@@ -99,6 +109,7 @@ public class Move implements Serializable {
 	public void init(Schedule schedule, int attacker, int defender) {
 		schedule.addMove(attacker, defender, this, 1);
 	}
+
 	public void init(Schedule schedule, int attacker, int defender, int dr) {
 		schedule.addMove(attacker, defender, this, dr);
 	}
@@ -121,7 +132,8 @@ public class Move implements Serializable {
 		return (int) d4;
 	}
 
-	public Move(int nr, String name, byte power, byte pp, byte accuracy, byte priority, Type type, MoveKind kind,TargetType target) {
+	public Move(int nr, String name, byte power, byte pp, byte accuracy, byte priority, Type type, MoveKind kind,
+			TargetType target) {
 		_nr = nr;
 		_name = name;
 		_pp = pp;
@@ -130,20 +142,23 @@ public class Move implements Serializable {
 		_power = power;
 		_type = type;
 		_kind = kind;
-		_target=target;
+		_target = target;
 
 	}
 
 	public Move(final Move copy) {
-		this(copy._nr, copy._name, copy._power, copy._pp, copy._accuracy, copy._priority, copy._type, copy._kind,copy._target);
+		this(copy._nr, copy._name, copy._power, copy._pp, copy._accuracy, copy._priority, copy._type, copy._kind,
+				copy._target);
 	}
 
 	public int getNr() {
 		return _nr;
 	}
-	public TargetType getTarget(){
+
+	public TargetType getTarget() {
 		return _target;
 	}
+
 	public String getName() {
 		return _name;
 	}

@@ -2,12 +2,14 @@
 
 This is an attempt to recreate a simple 2d pokemon game using Java and OOP. The goal is to abstract the several components of a Pokemon game to increase modularity and portability. The game can currently only be played on a computer but doing battle via networks or porting the game to other platfforms should be possible
 
-Currently only simple functionalty like walkign around, starting a battle and  using simple moves is possible but the design should allow adding more functionality relatively easys. 
+Currently only simple functionalty like walkign around, starting a battle and using simple moves is possible but the design should allow adding more functionality relatively easys.
 
-# Contribution
+## Contribution
+
 You are encourage to submit pull request to help this project. You are also encouraged to inform me of any design mistakes that make developing the Pokemon clone unnecessary harder
 
-# License
+## License
+
 MIT License
 
 Copyright (c) [2022] [compf]
@@ -30,4 +32,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Pokemon is trademarked by Gamefreak and I don't intend  to commercially use this project
+Pokemon is trademarked by Gamefreak and I don't intend to commercially use this project

@@ -9,32 +9,33 @@ import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
 
 public class DelayedMove extends Move {
     private Class _effectClass;
-    public DelayedMove(Move mv,Class cls) {
+
+    public DelayedMove(Move mv, Class cls) {
         super(mv);
-        _effectClass=cls;//TODO Auto-generated constructor stub
+        _effectClass = cls;// TODO Auto-generated constructor stub
     }
 
     @Override
     public void init(Schedule schedule, int attacker, int defender) {
 
-        super.init(schedule, attacker, defender,1);
+        super.init(schedule, attacker, defender, 1);
     }
-
 
     @Override
     public DamageInformation execute(ScheduleItem item) {
         try {
-            var effect=(PokemonBattleEffect)_effectClass.getDeclaredConstructor(Pokemon.class).newInstance(item.getAttacker());
+            var effect = (PokemonBattleEffect) _effectClass.getDeclaredConstructor(Pokemon.class)
+                    .newInstance(item.getAttacker());
             item.getAttacker().addEffect(effect);
             System.out.println("added fly effect");
-         
+
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return super.execute(item);
-       
+
     }
-    
+
 }

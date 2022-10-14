@@ -1,4 +1,5 @@
 package compf.core.map_maker;
+
 import compf.game.Direction;
 import compf.game.DrawableObject;
 import compf.game.HierarchicalObject;
@@ -15,41 +16,45 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.nio.file.Path;
-import  compf.core.engine.SharedInformation;
+import compf.core.engine.SharedInformation;
 
-public class ScrollableTilesets  extends MouseReceptibleDrawableObject{
-    public ScrollableTilesets(){
-        super(0,0,tileWidth,2000);
+public class ScrollableTilesets extends MouseReceptibleDrawableObject {
+    public ScrollableTilesets() {
+        super(0, 0, tileWidth, 2000);
     }
-    private static final int tileWidth=64;
-    private static final int tileHeight=tileWidth;
+
+    private static final int tileWidth = 64;
+    private static final int tileHeight = tileWidth;
+
     @Override
-    public void init(){
-        int y=getX();
-        int x=getY();
-       var dir=new java.io.File("./tiles/");
-       System.out.println(dir.listFiles().length);
-        for( java.io.File file:dir.listFiles()){
-           
-            Texture texture=new Texture(file.getAbsolutePath());
-            CollidableObject obj=new CollidableObject(x,y,tileWidth,tileHeight,texture);
-            y+=tileHeight;
+    public void init() {
+        int y = getX();
+        int x = getY();
+        var dir = new java.io.File("./tiles/");
+        System.out.println(dir.listFiles().length);
+        for (java.io.File file : dir.listFiles()) {
+
+            Texture texture = new Texture(file.getAbsolutePath());
+            CollidableObject obj = new CollidableObject(x, y, tileWidth, tileHeight, texture);
+            y += tileHeight;
             tiles.add(obj);
         }
     }
-    private ArrayList<CollidableObject> tiles=new ArrayList<>();
+
+    private ArrayList<CollidableObject> tiles = new ArrayList<>();
 
     @Override
-    public void render(SpriteBatch batch){
-        for(CollidableObject coll:tiles){
+    public void render(SpriteBatch batch) {
+        for (CollidableObject coll : tiles) {
             coll.render(batch);
         }
     }
+
     @Override
-    public void mouseScroll(float amount){
-        final int dy=10;
-        for(var obj:tiles){
-            obj.setY(obj.getY()+(int)(dy*amount));
+    public void mouseScroll(float amount) {
+        final int dy = 10;
+        for (var obj : tiles) {
+            obj.setY(obj.getY() + (int) (dy * amount));
         }
     }
 }
