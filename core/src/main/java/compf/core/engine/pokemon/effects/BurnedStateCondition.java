@@ -19,10 +19,11 @@ public class BurnedStateCondition extends PokemonBattleEffect {
 
 	@Override
 	public void roundEnding(Object... inf) {
-		var dmgInf = (DamageInformation) inf[0];
-
+		int hpBefore=getPokemon().getCurrHP();
 		getPokemon().modifyCurrHp(0.875);
+		int hpAfter=getPokemon().getCurrHP();
 		addMessage(getPokemon().toString() + " lost a little bit HP due to burn");
+		_additionalData=hpBefore+" "+hpAfter;
 
 	}
 

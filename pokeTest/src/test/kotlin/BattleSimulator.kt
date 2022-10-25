@@ -70,11 +70,10 @@ public class SimpleBattleSimulator {
             MyLogger.debug("Received updates "+result.Actions.size)
             if(result.Actions==null)return;
             for(act in  result.Actions){
-                if(act.Kind!= BattleAction.ActionKind.Move)continue
 
-                MyLogger.debug("added an action " +act.Kind + act.Data)
+               println("added an action " +act.Kind + act.Data)
                 actions.add(act)
-                MyLogger.debug("balance down "+balanceCounter +" " +player!!.playerId)
+               println("balance down "+balanceCounter +" " +player!!.playerId)
                 balanceCounter--
             }
     
@@ -147,10 +146,17 @@ public class SimpleBattleSimulator {
         meAttacking=!meAttacking
         return this
     }
-    public fun assertDamage(min:Int,max:Int):SimpleBattleSimulator{
-        tempAssertion.addAssertion(DamageAssertion(min, max))
+    public fun assert(assertion:Assertion):SimpleBattleSimulator{
+        tempAssertion.addAssertion(assertion)
         meIO.balanceCounter++;
         enemyIO.balanceCounter++;
+        return this
+    }
+    public fun assertDontCare():SimpleBattleSimulator{
+        return assert(DontCareAssertion())
+    }
+    public fun assertDamage(min:Int,max:Int):SimpleBattleSimulator{
+        assert(DamageAssertion(min,max))
         MyLogger.debug("assert damage "+min)
         return this
     }

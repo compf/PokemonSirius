@@ -15,6 +15,9 @@ public class PokemonEffectMove extends Move {
 		_on_attacker = onAttacker;
 		_on_defender = onDefender;
 		_perc = perc;
+		if(MyObject.TestSettings.IgnoreEffectProbability){
+			_perc=100;
+		}
 	}
 
 	@Override

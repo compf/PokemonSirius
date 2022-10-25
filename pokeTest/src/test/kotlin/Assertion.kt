@@ -5,7 +5,22 @@ public interface Assertion {
 }
 
 public abstract class ActionAssertion : Assertion {}
+public class HPModifiedAssertion(val factor:Double):ActionAssertion() {
+    public override fun check(toCheck: Any): Boolean {
+        val action =toCheck as BattleAction;
+       val splitted= action.Data.toString().split(" ")
+       val from =splitted[0].toDouble()
+       val to=splitted[1].toDouble()
+       println("hp assertion")
+       return (to/from)==factor
 
+    }
+}
+public class DontCareAssertion:Assertion{
+    public override fun check(toCheck: Any): Boolean {
+        return true
+    }
+}
 public class DamageAssertion(val minDamage: Int, val maxDamage: Int) : ActionAssertion() {
     public override fun check(toCheck: Any): Boolean {
         val value = toCheck as BattleAction

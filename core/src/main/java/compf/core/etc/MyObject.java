@@ -3,6 +3,14 @@ package compf.core.etc;
 import java.util.Random;
 
 public class MyObject {
+	public static class TestSettings{
+		public static boolean IgnoreEffectProbability=false;
+		public static boolean IsTesting=false;
+		public static void makeTrue(){
+			IgnoreEffectProbability=true;
+			IsTesting=true;
+		}
+	}
 	public static final Random RNG = new Random();
 
 	public static void nop() {

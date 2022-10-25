@@ -35,7 +35,7 @@ public abstract class BattleEffect extends MyObject implements Serializable {
 
 	private boolean _isEnabled = true;
 	protected BattleAction _action;
-
+	protected Object _additionalData=null;
 	public void delayedAttack(Object... inf) {
 
 	}
@@ -47,13 +47,15 @@ public abstract class BattleEffect extends MyObject implements Serializable {
 	public boolean isEnabled() {
 		return _isEnabled;
 	}
-
+	private LinkedList<String> _messages=new LinkedList<>();
 	public void addMessage(String msg) {
-		_action.Messages.add(msg);
+		_messages.add(msg);
 	}
 
 	public BattleAction getBattleAction() {
-		return _action;
+		final BattleAction action= new BattleAction(getUID(), _messages, BattleAction.ActionKind.BattleEffect, _additionalData);
+		_messages=new LinkedList<>();
+		return action;
 	}
 
 	public int getUID() {
@@ -61,6 +63,5 @@ public abstract class BattleEffect extends MyObject implements Serializable {
 	}
 
 	public BattleEffect() {
-		_action = new BattleAction(getUID(), new LinkedList<>(), BattleAction.ActionKind.BattleEffect, null);
 	}
 }

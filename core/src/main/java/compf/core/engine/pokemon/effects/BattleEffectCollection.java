@@ -9,6 +9,7 @@ public class BattleEffectCollection extends ArrayList<BattleEffect> {
 
     @Override
     public boolean add(BattleEffect effect) {
+        if(effect==null)return false;
         for (var eff : this) {
             if (eff.getClass() == effect.getClass()) {
                 return false;
