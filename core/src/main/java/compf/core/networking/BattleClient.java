@@ -12,7 +12,7 @@ import compf.core.engine.*;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.etc.BufferList;
 
-public class BattleClient extends BaseServer implements Runnable {
+public class BattleClient extends BaseServer implements Runnable,SteppableHost {
 	private static Logger MyLogger = LogManager.getLogger();
 	Pipe pipe;
 	private short _playerId;
@@ -21,7 +21,12 @@ public class BattleClient extends BaseServer implements Runnable {
 	BattleRule _rule;
 	Player _player;
 	Thread thread;
-
+	protected BattleClient(Player player,BattleRule rule,IOInterface io,Pipe pipe){
+		this._player=player;
+		this._rule=rule;
+		this._io=io;
+		this.pipe=pipe;
+	}
 	public BattleClient(BattleRule rule, String playerName, Pokemon[] team, Pipe pipe, IOInterface io)
 			throws IOException {
 		_rule = rule;
@@ -63,37 +68,39 @@ public class BattleClient extends BaseServer implements Runnable {
 	public Player getPlayer() {
 		return _player;
 	}
+	public void step(short id){
+		MyLogger.debug("Client waiting " + this._playerId);
+		NetworkMessage msg = readObject(pipe);
+		MyLogger.debug("Client received " + msg.Kind.name() + " " + _playerId);
+		switch (msg.Kind) {
+			case RequestInput:
+				BufferList<PlayerInput> inputs = new BufferList<>(_rule.PokemonPerPlayerOnField);
+				short pokemonIndex = (short) msg.Data;
+				var inp = _io.requestPlayerInput(pokemonIndex, _state);
+				if (inp == null)
+					return;
+				MyLogger.debug("Input from " + inp.PlayerId + " " + _io.getClass());
+				inputs.add(inp);
+				writeObject(pipe, NetworkMessageKind.ReplyInput.createMessage(inputs));
+				break;
+			case Update:
+				var roundResult = (BattleRoundResult) msg.Data;
+				_state = roundResult.State;
+				_io.update(roundResult);
+				if (roundResult.State.battleFinished()) {
+					_io.endBattle();
+				}
+				break;
+			case RequestPokemonSwitch:
+				short oldIndex = (short) msg.Data;
+				writeObject(pipe,
+						NetworkMessageKind.ReplyPokemonSwitch.createMessage(_io.switchPokemon(_state, oldIndex)));
 
+		}
+	}
 	public void run() {
 		while (true) {
-			MyLogger.debug("Client waiting " + this._playerId);
-			NetworkMessage msg = readObject(pipe);
-			MyLogger.debug("Client received " + msg.Kind.name() + " " + _playerId);
-			switch (msg.Kind) {
-				case RequestInput:
-					BufferList<PlayerInput> inputs = new BufferList<>(_rule.PokemonPerPlayerOnField);
-					short pokemonIndex = (short) msg.Data;
-					var inp = _io.requestPlayerInput(pokemonIndex, _state);
-					if (inp == null)
-						continue;
-					MyLogger.debug("Input from " + inp.PlayerId + " " + _io.getClass());
-					inputs.add(inp);
-					writeObject(pipe, NetworkMessageKind.ReplyInput.createMessage(inputs));
-					break;
-				case Update:
-					var roundResult = (BattleRoundResult) msg.Data;
-					_state = roundResult.State;
-					_io.update(roundResult);
-					if (roundResult.State.battleFinished()) {
-						_io.endBattle();
-					}
-					break;
-				case RequestPokemonSwitch:
-					short oldIndex = (short) msg.Data;
-					writeObject(pipe,
-							NetworkMessageKind.ReplyPokemonSwitch.createMessage(_io.switchPokemon(_state, oldIndex)));
-
-			}
+			step((short)0);
 		}
 	}
 }

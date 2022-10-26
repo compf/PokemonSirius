@@ -15,6 +15,65 @@ import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.util.*
+
+public  class SimulationBattleIO : IOInterface {
+    private val MyLogger=LogManager.getLogger()
+
+    val actions: ArrayList<BattleAction> =ArrayList<BattleAction>();
+   constructor(player:Player){
+    this.player=player;
+       //TestFinishedSemaphore.acquireTimeout(1, 10, TimeUnit.SECONDS)
+       //BattleStartedSemaphore.acquireTimeout(1, 10, TimeUnit.SECONDS)
+   }
+   override fun message(p0: String) {}
+   private val queue: Queue<PlayerInput> = Queue<PlayerInput>()
+   override fun update(result: BattleRoundResult) {
+       
+       MyLogger.debug("Received updates "+result.Actions?.size)
+       if(result.Actions==null)return;
+       for(act in  result.Actions){
+
+          println("added an action " +act.Kind + act.Data)
+           actions.add(act)
+          println("balance down "+balanceCounter +" " +player!!.playerId)
+           balanceCounter--
+       }
+
+       if(balanceCounter==0){
+          
+       }
+       endBattle()
+   }
+   public override fun endBattle(){}
+   public val player:Player
+   public var balanceCounter=0
+   public fun addInput(input: PlayerInput) {
+       queue.addLast(input)
+
+   }
+   public fun addInputDefault() {
+       queue.addLast(PlayerInput.AttackInput(0, 0, 1, 0, player!!.playerId))
+
+   }
+
+   override fun requestPlayerInput(pkmn: Short, state: BattleState): PlayerInput? {
+       MyLogger.debug("requestplayerinput  " + queue.size +" "+player!!.playerId)
+
+       if (queue.isEmpty) {
+           MyLogger.debug("empty queue "+player!!.playerId)
+           return null
+       } else {
+           return queue.removeLast()
+       }
+   }
+
+   
+
+   override fun switchPokemon(p0: BattleState, p1: Short): Short {
+       return 0
+   }
+}
 public class TimeoutSemaphore(permits:Int):Semaphore(permits){
     public fun acquireTimeout(permits:Int,timeout:Long,unit:TimeUnit){
         val result=this.tryAcquire(permits,timeout, unit)
@@ -32,107 +91,24 @@ public class SimpleBattleSimulator {
         }
         private val MyLogger=LogManager.getLogger()
     }
-    private val myPokemon:Pokemon;
-    private val enemyPokemon:Pokemon;
-    private var mePlayer:Player?=null;
-    private var enemyPlayer:Player?=null;
-    public constructor(server:BattleServer,me:Pokemon,enemy:Pokemon) {
-    
-
-         mePort=SimpleBattleSimulator.getNextPortNumber()
-         enemyPort=SimpleBattleSimulator.getNextPortNumber()
-        myPokemon=me;
-        enemyPokemon=enemy;
-         mePipe=SharedPipe.getOrCreatePipe(mePort)
-         meIO=SimulationBattleIO()
-        
-
-         enemyPipe=SharedPipe.getOrCreatePipe(enemyPort)
-         enemyIO=SimulationBattleIO()
-      
+   
+    public constructor(server:TestableServer,me:Pokemon,enemy:Pokemon) {      
          this.server=server
+         this.meIO=server.meIO
+         this.enemyIO=server.enemyIO
+        this.meIO.player.team[0]=me
+        this.enemyIO.player.team[0]=enemy
     }
-    public inner class SimulationBattleIO : IOInterface {
-         val actions:ArrayList<BattleAction> =ArrayList<BattleAction>();
 
-        public val TestFinishedSemaphore: TimeoutSemaphore = TimeoutSemaphore(0)
-        public val InputProvidedSemaphore:TimeoutSemaphore=TimeoutSemaphore(0)
-        public val AllInitializedSemaphore:TimeoutSemaphore=TimeoutSemaphore(0)
-
-        constructor(){
-            //TestFinishedSemaphore.acquireTimeout(1, 10, TimeUnit.SECONDS)
-            //BattleStartedSemaphore.acquireTimeout(1, 10, TimeUnit.SECONDS)
-        }
-        override fun message(p0: String) {}
-        private val queue: Queue<PlayerInput> = Queue<PlayerInput>()
-        override fun update(result: BattleRoundResult) {
-            
-            MyLogger.debug("Received updates "+result.Actions.size)
-            if(result.Actions==null)return;
-            for(act in  result.Actions){
-
-               println("added an action " +act.Kind + act.Data)
-                actions.add(act)
-               println("balance down "+balanceCounter +" " +player!!.playerId)
-                balanceCounter--
-            }
-    
-            if(balanceCounter==0){
-                TestFinishedSemaphore.release()
-            }
-            endBattle()
-        }
-        public override fun endBattle(){}
-        public var player:Player?=null
-        public var balanceCounter=0
-        public fun addInput(input: PlayerInput) {
-            AllInitializedSemaphore.acquireTimeout(1,10, TimeUnit.SECONDS)
-            AllInitializedSemaphore.release()
-            queue.addLast(input)
-  
-        }
-        public fun addInputDefault() {
-            AllInitializedSemaphore.acquireTimeout(1,10, TimeUnit.SECONDS)
-            AllInitializedSemaphore.release()
-            queue.addLast(PlayerInput.AttackInput(0, 0, 1, 0, player!!.playerId))
-
-        }
-
-        override fun requestPlayerInput(pkmn: Short, state: BattleState): PlayerInput? {
-            InputProvidedSemaphore.acquireTimeout(1,10, TimeUnit.SECONDS)
-            InputProvidedSemaphore.release();
-            MyLogger.debug("requestplayerinput  " + queue.size +" "+player!!.playerId)
-
-            if (queue.isEmpty) {
-                MyLogger.debug("empty queue "+player!!.playerId)
-               
-                
-
-                return null
-            } else {
-                return queue.removeLast()
-            }
-        }
-
-        
-
-        override fun switchPokemon(p0: BattleState, p1: Short): Short {
-            return 0
-        }
-    }
     private val  rootAssertion:GroupedAssertion=ThisOrderAssertion()
     private var tempAssertion=rootAssertion;
-    private val meIO:SimulationBattleIO;
-    private val enemyIO:SimulationBattleIO;
+   
     private var meAttacking=true;
     private var meClient:BattleClient?=null;
     private var enemyClient:BattleClient?=null;
-    private val mePipe:Pipe;
-    private val enemyPipe:Pipe;
-    private val mePort:Int;
-    private val enemyPort:Int
     private val server:BattleServer;
-
+    private val meIO:SimulationBattleIO;
+    private val enemyIO:SimulationBattleIO;
     public fun attack(playerId:Int):SimpleBattleSimulator{
         MyLogger.debug("attack " +meAttacking)
         val io= if (playerId==0)  meIO else enemyIO;
@@ -170,42 +146,13 @@ public class SimpleBattleSimulator {
         tempAssertion=rootAssertion.getLast();
         return this;
     }
-    public fun init():SimpleBattleSimulator{
-      
-        val rule=BattleRule(2,1,1,1)
-        val meWaitThread=Thread({->
-            meClient=BattleClient(rule,"Me",arrayOf(myPokemon),mePipe,meIO)
-           mePlayer=meClient!!.player
-           meIO.player=mePlayer
-           meIO.AllInitializedSemaphore.release()
-           
-        });
-        meWaitThread.start()
-     
-        val enemyWaitThread=Thread({->
-            enemyClient=BattleClient(rule,"Enemy",arrayOf(enemyPokemon),enemyPipe,enemyIO)
-            enemyPlayer=enemyClient!!.player
-            enemyIO.player=enemyPlayer
-            enemyIO.AllInitializedSemaphore.release()
-        });
-        enemyWaitThread.start()
-
-        val serverWaitThread=Thread({->
-            server.waitForConnection(SharedPipe.getOrCreatePipe(mePort))
-            println("First connection")
-            server.waitForConnection(SharedPipe.getOrCreatePipe(enemyPort))
-        })
-        serverWaitThread.start()
-
-        return this
+   
+    public fun execute(expectedNumberOfActions:Int){
        
-    }
-    public fun execute(){
-        meIO.InputProvidedSemaphore.release();
-        enemyIO.InputProvidedSemaphore.release();
-        MyLogger.debug("Waiting for InputProvided")
-        meIO.TestFinishedSemaphore.acquireTimeout(1,30, TimeUnit.SECONDS)
-        enemyIO.TestFinishedSemaphore.acquireTimeout(1,30, TimeUnit.SECONDS)
+       while(meIO.actions.size<expectedNumberOfActions){
+        server.run(0)
+       }
+      
         MyLogger.debug("test finnished");
         val success=rootAssertion.check(meIO.actions)
         if(!success){

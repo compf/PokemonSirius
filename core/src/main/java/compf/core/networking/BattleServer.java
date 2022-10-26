@@ -15,18 +15,18 @@ import compf.core.engine.pokemon.effects.PokemonBattleEffect;
 import compf.core.etc.BufferList;
 import compf.core.etc.MyObject;
 
-public class BattleServer extends BaseServer {
+public class BattleServer extends BaseServer implements SteppableHost {
     private static Logger MyLogger = LogManager.getLogger();
     private short _globalPlayerId = 0;
     private short _globalGameId = 0;
-    private HashMap<Short, Pipe> _pipes = new HashMap<>();
-    private HashMap<Short, Thread> _threads = new HashMap<>();
-    private HashMap<Short, Boolean> _isPlaying = new HashMap<>();
-    private HashMap<Short, BattleRule> _rules = new HashMap<>();
-    private HashMap<Short, PokemonBattle> _battles = new HashMap<>();
-    private HashMap<Short, Player> _players = new HashMap<>();
-    private ArrayList<Short> _playerIds = new ArrayList<>();
-    private HashMap<Short, List<Short>> _gamePlayers = new HashMap<>();
+    protected HashMap<Short, Pipe> _pipes = new HashMap<>();
+    protected HashMap<Short, Thread> _threads = new HashMap<>();
+    protected HashMap<Short, Boolean> _isPlaying = new HashMap<>();
+    protected HashMap<Short, BattleRule> _rules = new HashMap<>();
+    protected HashMap<Short, PokemonBattle> _battles = new HashMap<>();
+    protected HashMap<Short, Player> _players = new HashMap<>();
+    protected ArrayList<Short> _playerIds = new ArrayList<>();
+    protected HashMap<Short, List<Short>> _gamePlayers = new HashMap<>();
 
     public BattleServer() {
     }
@@ -97,7 +97,7 @@ public class BattleServer extends BaseServer {
         }
     }
 
-    private void sendPlayerRequestInputs(short gameId, BattleRule rule) {
+    public void sendPlayerRequestInputs(short gameId, BattleRule rule) {
         var playerIds = _gamePlayers.get(gameId);
         for (var playerId : playerIds) {
             for (short pkmId = 0; pkmId < rule.PokemonPerPlayerOnField; pkmId++) {
@@ -110,7 +110,7 @@ public class BattleServer extends BaseServer {
         }
     }
 
-    private void informPlayerOfUpdate(short gameId, BattleRoundResult state) {
+    public void informPlayerOfUpdate(short gameId, BattleRoundResult state) {
         var playerIds = _gamePlayers.get(gameId);
         for (var id : playerIds) {
             var inp_msg = NetworkMessageKind.Update.createMessage(state);
@@ -142,64 +142,66 @@ public class BattleServer extends BaseServer {
         System.out.println("no needed actors " + result);
         return result;
     }
+    public void step(short gameId){
+        var playerIds = _gamePlayers.get(gameId);
+        for (short playerId : playerIds) {
+            var input = _pipes.get(playerId);
+            if (input.isWaitingForData()) {
+                var outp = _pipes.get(playerId);
+                writeObject(outp, NetworkMessageKind.RequestInput.createMessage());
+            }
+            if (!input.avaliable())
+                continue;
+            NetworkMessage msg = readObject(input);
+            MyLogger.debug("Server reveived " + msg.Kind + " from " + playerId);
+            ;
+            MyObject.nop();
+            switch (msg.Kind) {
 
-    public void run(short gameId) {
-        while (true) {
-            var playerIds = _gamePlayers.get(gameId);
-            for (short playerId : playerIds) {
-                var input = _pipes.get(playerId);
-                if (input.isWaitingForData()) {
-                    var outp = _pipes.get(playerId);
-                    writeObject(outp, NetworkMessageKind.RequestInput.createMessage());
+                case ReplyPlayerInformation: {
+
+                    var pl = (Player) msg.Data;
+                    BattleRule rule = _rules.get(pl.getPlayerId());
+                    _players.put(playerId, pl);
+                    var battle = _battles.get(playerId);
+                    battle.getPlayers().add(pl);
+
+                    MyLogger.debug("Number of players " + battle.getPlayers().size());
+                    if (battle.getPlayers().isFull()) {
+                        MyLogger.debug("All players ready ");
+                        informPlayerOfUpdate(gameId,
+                                new BattleRoundResult(null, new DetailedBattleState(battle.getPlayers()), null));
+                        sendPlayerRequestInputs(gameId, rule);
+
+                    }
                 }
-                if (!input.avaliable())
-                    continue;
-                NetworkMessage msg = readObject(input);
-                MyLogger.debug("Server reveived " + msg.Kind + " from " + playerId);
-                ;
-                MyObject.nop();
-                switch (msg.Kind) {
-
-                    case ReplyPlayerInformation: {
-
-                        var pl = (Player) msg.Data;
-                        BattleRule rule = _rules.get(gameId);
-                        _players.put(playerId, pl);
-                        var battle = _battles.get(playerId);
-                        battle.getPlayers().add(pl);
-
-                        MyLogger.debug("Number of players " + battle.getPlayers().size());
-                        if (battle.getPlayers().isFull()) {
-                            MyLogger.debug("All players ready ");
-                            informPlayerOfUpdate(gameId,
-                                    new BattleRoundResult(null, new DetailedBattleState(battle.getPlayers()), null));
+                    break;
+                case ReplyInput: {
+                    Interrupt interrupt = new Interrupt();
+                    BufferList<PlayerInput> inputs = (BufferList<PlayerInput>) msg.Data;
+                    for (var inp : inputs) {
+                        MyLogger.debug("input received from " + inp.PlayerId);
+                        var battle = _battles.get(inp.PlayerId);
+                        battle.addInput(inp);
+                        var rule = _rules.get(inp.PlayerId);
+                        // TODO what if pokemon field is vacant?
+                        if (battle.allPlayerGaveInput(getNumberEnabledActors(gameId))) {
+                            battle.incrementRound();
+                            var state = battle.executeSchedule(interrupt);
+                            MyLogger.debug("All players submitted input " + battle.getRound());
+                            informPlayerOfUpdate(gameId, state);
                             sendPlayerRequestInputs(gameId, rule);
 
                         }
                     }
-                        break;
-                    case ReplyInput: {
-                        Interrupt interrupt = new Interrupt();
-                        BufferList<PlayerInput> inputs = (BufferList<PlayerInput>) msg.Data;
-                        for (var inp : inputs) {
-                            MyLogger.debug("input received from " + inp.PlayerId);
-                            var battle = _battles.get(inp.PlayerId);
-                            battle.addInput(inp);
-                            var rule = _rules.get(inp.PlayerId);
-                            // TODO what if pokemon field is vacant?
-                            if (battle.allPlayerGaveInput(getNumberEnabledActors(gameId))) {
-                                battle.incrementRound();
-                                var state = battle.executeSchedule(interrupt);
-                                MyLogger.debug("All players submitted input " + battle.getRound());
-                                informPlayerOfUpdate(gameId, state);
-                                sendPlayerRequestInputs(gameId, rule);
-
-                            }
-                        }
-                    }
-
                 }
+
             }
+        }
+    }
+    public void run(short gameId) {
+        while (true) {
+            step(gameId);
         }
     }
 }

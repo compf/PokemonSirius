@@ -3,7 +3,7 @@ package compf.core.engine;
 public enum NetworkMessageKind {
 	BattleRules, RequestPlayerInformation, ReplyPlayerInformation, Update, ChoosePokemon, Message, SendPlayerId,
 
-	RequestInput, ReplyInput, RequestPokemonSwitch, ReplyPokemonSwitch
+	RequestInput, ReplyInput, RequestPokemonSwitch, ReplyPokemonSwitch,None
 
 	;
 
