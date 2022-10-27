@@ -128,8 +128,8 @@ public class SimpleBattleSimulator {
         enemyIO.balanceCounter++;
         return this
     }
-    public fun assertDontCare():SimpleBattleSimulator{
-        return assert(DontCareAssertion())
+    public fun assertNoDamage():SimpleBattleSimulator{
+        return assertDamage(0, 0)
     }
     public fun assertDamage(min:Int,max:Int):SimpleBattleSimulator{
         assert(DamageAssertion(min,max))

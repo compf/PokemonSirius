@@ -262,14 +262,19 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 					dmgInf.getDamage());
 			System.out.println("actuzr " + action.ActionId);
 			actions.add(action);
-			while (dmgInf.getEffects().size() > 0) {
-				var effect = dmgInf.getEffects().removeFirst();
-				actions.add(effect.getBattleAction());
-			}
+			
+
 
 		}
 		executeEffects(_globalEffects, EffectTime.ROUND_ENDING, null);
 		executeEffects(EffectTime.ROUND_ENDING, null);
+		for(var pkmn:this) {
+			for(var effect:pkmn.getEffects()){
+				actions.add(effect.getBattleAction());
+
+			}
+		}
+		
 		return new BattleRoundResult(actions, new DetailedBattleState(_players), NetworkMessageKind.Update);
 
 	}

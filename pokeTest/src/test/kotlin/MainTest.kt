@@ -2,8 +2,10 @@
 
 import compf.core.engine.pokemon.Nature
 import compf.core.engine.pokemon.PokedexEntry
+import compf.core.engine.pokemon.effects.BurnedStateCondition
 import compf.core.engine.SharedInformation
 import compf.core.networking.BattleServer
+import compf.core.etc.MyObject
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,6 +14,7 @@ public class MainTest{
                 @BeforeAll
                 @JvmStatic
                 public fun init(){
+                        MyObject.TestSettings.makeTrue()
                         SharedInformation.Instance.init()
                 }
         }
@@ -48,6 +51,17 @@ public class MainTest{
                 simulator.thisOrder().attack().attack().assertDamage(0, 0).assertDamage(65, 77).execute(2)
         }
         @Test
+        public fun testBurning(){
+                val server=TestableServer()
+                val mePokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,0), intArrayOf(252,252,6,0,0,0), Nature.N1, 0, 0, SPLASH_ID)
+                val enemyPokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(0,252,6,0,0,252), Nature.N1, 0, 0, SPLASH_ID)
+                enemyPokemon.addEffect(BurnedStateCondition(enemyPokemon))
+
+                val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)
+                val factor=7.0/8.0
+                simulator.anyOrder().attack().attack().assert(HPModifiedAssertion(factor)).attack().attack().assertNoDamage().assertNoDamage().assert(HPModifiedAssertion(factor)).execute(5)
+        }
+        //@Test
         public fun assertBattleWithFlying(){
                 val server=TestableServer()
                 val FLY_ID=19;
