@@ -26,9 +26,9 @@ public class PokemonZone extends RepeatableTexture {
         super.onKeyPress(keyCode, newPress);
     }
 
-    public PokemonZone(int x, int y, int width, int height, Texture texture, List<PokemonZoneEntry> pkmnZoneEntries,
+    public PokemonZone(int x, int y, int width, int height, String textureId, List<PokemonZoneEntry> pkmnZoneEntries,
             int probEncounter) {
-        super(x, y, width, height, texture);
+        super(x, y, width, height, textureId);
         pkmnZoneEntries.sort(null);
         pokemonZoneEntries = pkmnZoneEntries;
         this.probabilityEncounter = probEncounter;

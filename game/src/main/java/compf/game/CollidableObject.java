@@ -5,12 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class CollidableObject extends DrawableObject {
-    public CollidableObject(int x, int y, int width, int height, Texture texture) {
+    public CollidableObject(int x, int y, int width, int height, String textureId) {
         super(x, y, width, height);
-        this.texture = texture;
+        this.textureId = textureId;
     }
 
-    protected Texture texture;
+    protected String textureId;
 
     public boolean doesCollide(DrawableObject other) {
         Rectangle meRect = new Rectangle(x, y, getWidth(), getHeight());
@@ -26,6 +26,6 @@ public class CollidableObject extends DrawableObject {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(texture, x, y, width, height);
+        batch.draw(TextureManager.Instance.getTextureRegion(textureId), x, y, width, height);
     }
 }

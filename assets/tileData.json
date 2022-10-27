@@ -1,0 +1,14 @@
+{
+    "grass":{
+        "ox":0,
+        "oy":0,
+        "wh":16,
+        "file":"tiles/grass.png"
+    },
+    "water":{
+        "ox":660,
+        "oy":88,
+        "wh":32,
+        "file":"overworld_sprites.png"
+    }
+}

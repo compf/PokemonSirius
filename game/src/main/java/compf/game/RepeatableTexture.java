@@ -7,16 +7,17 @@ import java.awt.*;
 
 public class RepeatableTexture extends CollidableObject {
 
-    public RepeatableTexture(int x, int y, int width, int height, Texture texture) {
-        super(x, y, width, height, texture);
+    public RepeatableTexture(int x, int y, int width, int height, String textureId) {
+        super(x, y, width, height, textureId);
     }
 
     Point p;
 
     @Override
     public void render(SpriteBatch batch) {
-        int tileWidth = texture.getWidth();
-        int tileHeight = texture.getHeight();
+        var texture=TextureManager.Instance.getTextureRegion(textureId);
+        int tileWidth = texture.getRegionWidth();
+        int tileHeight = texture.getRegionHeight();
         for (int x = this.x; x < getWidth(); x += tileWidth) {
             for (int y = this.y; y < getHeight(); y += tileHeight) {
                 int x1 = adjustX(x);

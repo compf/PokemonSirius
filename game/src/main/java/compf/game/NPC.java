@@ -14,7 +14,7 @@ public class NPC extends CollidableObject {
 
     public NPC(int x, int y, int width, int height, Texture texture, Direction dir, int spriteSheetX,
             int spriteSheetY) {
-        super(x, y, width, height, texture);
+        super(x, y, width, height, null);
         this.spritesheet = texture;
         this.lookDirection = dir;
         Direction[] directionOrderSpritesheet = { Direction.Down, Direction.Left, Direction.Right, Direction.Up };

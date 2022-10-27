@@ -15,6 +15,13 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import compf.core.engine.SharedInformation;
 
@@ -32,15 +39,31 @@ public class ScrollableTilesets extends MouseReceptibleDrawableObject {
         int x = getY();
         var dir = new java.io.File("./tiles/");
         System.out.println(dir.listFiles().length);
-        for (java.io.File file : dir.listFiles()) {
+        JsonValue json=getTileData();
+        for (var jsonChild:json.iterator()) {
 
-            Texture texture = new Texture(file.getAbsolutePath());
-            CollidableObject obj = new CollidableObject(x, y, tileWidth, tileHeight, texture);
+            String id=jsonChild.name;
+            CollidableObject obj = new CollidableObject(x, y, tileWidth, tileHeight, id);
             y += tileHeight;
             tiles.add(obj);
         }
     }
-
+    private JsonValue getTileData(){
+        try(InputStream is=new FileInputStream("tileData.json"))
+        {
+            var reader=new JsonReader();
+            var json=reader.parse(is);
+            return json;
+        }
+       
+        catch(FileNotFoundException ex){
+            throw new Error("TileData.json could not be found");
+        }
+        catch(IOException ex) {
+            throw new Error("TileData.json could not be read");
+        }
+       
+    }
     private ArrayList<CollidableObject> tiles = new ArrayList<>();
 
     @Override
