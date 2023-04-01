@@ -18,7 +18,6 @@ allprojects {
 
 configure(subprojects) {
 	apply plugin: 'java-library'
-	sourceCompatibility = 12
 	compileJava {
 		options.incremental = true
 	}
