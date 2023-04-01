@@ -12,7 +12,7 @@ public class CollidableObject extends DrawableObject {
 
     protected String textureId;
 
-    public boolean doesCollide(DrawableObject other) {
+    public boolean doesCollide(Rectangle other) {
         Rectangle meRect = new Rectangle(x, y, getWidth(), getHeight());
         Rectangle otherRect = new Rectangle(other.x, other.y, other.getWidth(), other.getHeight());
         return meRect.overlaps(otherRect);

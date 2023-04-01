@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import compf.Main;
 import compf.core.engine.*;
+import compf.game.Geometry.MyPoint;
 import compf.core.engine.Player;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.moves.Move;
@@ -199,7 +200,7 @@ public class PokemonBattleScreen extends HierarchicalObject {
                     font = FontManager.Instance.getFontByColor(Color.BLACK);
                 }
 
-                font.draw(batch, item, pos.x, pos.y);
+                font.draw(batch, item, pos.getX(), pos.getY());
                 y -= dy;
 
             }

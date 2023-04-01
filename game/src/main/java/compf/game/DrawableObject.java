@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public abstract class DrawableObject {
+public abstract class DrawableObject implements Geometry.Rectangle{
     protected int x, y;
     protected final int width, height;
     private DrawableObject parent;
