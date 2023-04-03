@@ -133,7 +133,7 @@ public class TileBasedAreaGenerator {
                 endlessLoopPreventionCounter++;
                
             }while( endlessLoopPreventionCounter<100 &&  map.isUsed(currPos));
-            map.set(currPos,"grass");
+            map.set(currPos,tileType);
             totalCounter++;
         }while(!currPos.equals(startPoint));
         for(var pt_dir:turningPoints){
