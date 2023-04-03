@@ -6,7 +6,7 @@ import compf.game.TileBasedHierachicalObject;
 import compf.game.Geometry.MyVector;
 
 public class TileBasedAreaGenerator {
-    private static final int PROBABILITY_DIRECTION_CHANGE = 20;
+    private static final int PROBABILITY_DIRECTION_CHANGE = 5;
     private TileBasedHierachicalObject map;
     private String tileType;
     private static Direction[] upDown = { Direction.Up, Direction.Down };
@@ -15,7 +15,7 @@ public class TileBasedAreaGenerator {
     private int directionCounter=0;
     private int currDirectionIndex;
     private MyVector startPoint;
-  
+    private GeneratorPhase lastPhase=GeneratorPhase.GoAway;
     Direction[] mainDir;
     Direction[] otherDir;
 
@@ -28,9 +28,9 @@ public class TileBasedAreaGenerator {
     private void init() {
         int sx, sy;
         do {
-            sx =20;
-            sy =20;
-        } while (!map.isEmpty(sx, sy));
+            sx =10;
+            sy =10;
+        } while (map.isUsed(sx, sy));
         startPoint = new MyVector(sx, sy);
         int[] mainDirIndex= { MyObject.randomNumber(0, 2), MyObject.randomNumber(0, 2) };
         int[] otherDirIndex=getOppositeDirections(mainDirIndex);
@@ -66,7 +66,7 @@ public class TileBasedAreaGenerator {
         else{
             directions=Direction.getDirections(pos, startPoint);
         }
-        if(pos.getX()==0 || pos.getX()>=map.getWidth()-1 || pos.getY()==0 || pos.getY()>=map.getHeight()-1 ||  changeDirection()){
+        if(isPosInvalid(pos) ||  changeDirection()){
             directionCounter=0;
             currDirectionIndex=(currDirectionIndex+1)%directions.length;
         }
@@ -92,7 +92,9 @@ public class TileBasedAreaGenerator {
         }
 
     }
-
+    private boolean  isPosInvalid(MyVector pos){
+       return  false; //pos.getX()<0 || pos.getX()>=map.getWidth() || pos.getY()<0 || pos.getY()>=map.getHeight();
+    }
     public void generate() {
 
         Direction currDir = mainDir[MyObject.randomNumber(0, 2)];
@@ -101,12 +103,16 @@ public class TileBasedAreaGenerator {
         MyVector currPos=startPoint;
         do{
             GeneratorPhase phase=getPhase(totalCounter);
+            if(phase!=lastPhase){
+                directionCounter=0;
+            }
+            lastPhase=phase;
             System.out.println(phase);
             do{
-                currPos=getNextPos(currPos, phase);
+                currPos=getNextPos( currPos, phase);
                
-            }while(map.isUsed(currPos));
-            map.set(currPos, tileType);
+            }while( isPosInvalid(currPos) || map.isUsed(currPos));
+            map.set(currPos, phase==GeneratorPhase.GoAway?"grass":"water");
             totalCounter++;
             System.out.println(currPos.getX()+" "+currPos.getY());
         }while(!currPos.equals(startPoint));

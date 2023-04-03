@@ -1,5 +1,7 @@
 package compf.game;
 
+import java.util.Objects;
+
 public class Geometry {
     public static interface Point{
         public int getX();
@@ -33,6 +35,10 @@ public class Geometry {
                 return v.x==this.x && v.y==this.y;
             }
             return false;
+        }
+        @Override
+        public int hashCode() {
+            return Objects.hash(getX(),getY());
         }
     }
     public static class MyRect implements Rectangle{
