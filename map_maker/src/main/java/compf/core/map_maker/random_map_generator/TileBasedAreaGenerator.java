@@ -1,5 +1,8 @@
 package compf.core.map_maker.random_map_generator;
 
+import java.util.ArrayList;
+
+import compf.core.engine.Tuple;
 import compf.core.etc.MyObject;
 import compf.game.Direction;
 import compf.game.TileBasedHierachicalObject;
@@ -68,7 +71,13 @@ public class TileBasedAreaGenerator {
         }
         if(isPosInvalid(pos) ||  changeDirection()){
             directionCounter=0;
+            turningPoints.add(new Tuple<MyVector,Direction>(pos, directions[currDirectionIndex]));
             currDirectionIndex=(currDirectionIndex+1)%directions.length;
+            if(currDirectionIndex >=directions.length){
+                currDirectionIndex=0;
+            }
+            
+
         }
         else{
             directionCounter++;
@@ -92,14 +101,24 @@ public class TileBasedAreaGenerator {
         }
 
     }
+    ArrayList<Tuple<MyVector,Direction>> turningPoints=new ArrayList<>();
+
     private boolean  isPosInvalid(MyVector pos){
        return  false; //pos.getX()<0 || pos.getX()>=map.getWidth() || pos.getY()<0 || pos.getY()>=map.getHeight();
     }
+    private void floodfill(MyVector pos){
+        if(map.isUsed(pos))return;
+        map.set(pos, tileType);
+        floodfill(Direction.add(pos, Direction.Up));
+        floodfill(Direction.add(pos, Direction.Down));
+        floodfill(Direction.add(pos, Direction.Left));
+        floodfill(Direction.add(pos, Direction.Right));
+    }
     public void generate() {
 
-        Direction currDir = mainDir[MyObject.randomNumber(0, 2)];
   
         int totalCounter = 0;
+
         MyVector currPos=startPoint;
         do{
             GeneratorPhase phase=getPhase(totalCounter);
@@ -107,7 +126,6 @@ public class TileBasedAreaGenerator {
                 directionCounter=0;
             }
             lastPhase=phase;
-            System.out.println(phase);
             MyVector posDummy=currPos;
             int endlessLoopPreventionCounter=0;
             do{
@@ -115,10 +133,24 @@ public class TileBasedAreaGenerator {
                 endlessLoopPreventionCounter++;
                
             }while( endlessLoopPreventionCounter<100 &&  map.isUsed(currPos));
-            map.set(currPos, phase==GeneratorPhase.GoAway?"grass":"water");
+            map.set(currPos,"grass");
             totalCounter++;
-            System.out.println("Set "+currPos.getX()+" "+currPos.getY());
         }while(!currPos.equals(startPoint));
+        for(var pt_dir:turningPoints){
+            for(Direction dir :Direction.values()){
+                int usedCounter=0;
+                MyVector currPosFloodFill=pt_dir.Item1;
+                for(int i=0;i<desiredCount;i++){
+                    currPosFloodFill=Direction.add(currPosFloodFill, dir);
+                    if(map.isUsed(currPosFloodFill)){
+                        usedCounter++;
+                    }
+                }
+                if(usedCounter==1){
+                    floodfill(Direction.add(pt_dir.Item1, dir));
+                }
+            }
+        }
 
     }
 }

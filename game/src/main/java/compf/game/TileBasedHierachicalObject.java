@@ -31,7 +31,6 @@ public class TileBasedHierachicalObject extends HierarchicalObject {
     }
     public void set(MyVector pos, String type){
         tiles.put(pos, type);
-        System.out.println(type);
         this.addChild(new CollidableObject(this.getX()+pos.getX()*TEXTURE_SIZE, this.getY()+pos.getY()*TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, type));
     }
     public String get(MyVector pos){
