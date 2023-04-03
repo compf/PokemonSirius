@@ -1,0 +1,39 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/assets",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Lwjgl3Launcher",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/assets",
+            "mainClass": "compf.core.game_launcher.Lwjgl3Launcher",
+            "projectName": "PokemonSirius-GameLauncher"
+        },
+        {
+            "type": "java",
+            "name": "SimpleClient",
+            "cwd": "${workspaceFolder}/assets",
+            "request": "launch",
+            "mainClass": "compf.core.networking.SimpleClient",
+            "projectName": "PokemonSirius-core"
+        },
+        {
+            "type": "java",
+            "name": "Lwjgl3Launcher(1)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/assets",
+            "mainClass": "compf.core.map_maker.Lwjgl3Launcher",
+            "projectName": "PokemonSiriusMapMaker"
+        }
+    ]
+}

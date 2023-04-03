@@ -108,13 +108,16 @@ public class TileBasedAreaGenerator {
             }
             lastPhase=phase;
             System.out.println(phase);
+            MyVector posDummy=currPos;
+            int endlessLoopPreventionCounter=0;
             do{
-                currPos=getNextPos( currPos, phase);
+                currPos=getNextPos( posDummy, phase);
+                endlessLoopPreventionCounter++;
                
-            }while( isPosInvalid(currPos) || map.isUsed(currPos));
+            }while( endlessLoopPreventionCounter<100 &&  map.isUsed(currPos));
             map.set(currPos, phase==GeneratorPhase.GoAway?"grass":"water");
             totalCounter++;
-            System.out.println(currPos.getX()+" "+currPos.getY());
+            System.out.println("Set "+currPos.getX()+" "+currPos.getY());
         }while(!currPos.equals(startPoint));
 
     }

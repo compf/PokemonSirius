@@ -30,7 +30,7 @@ public class TileBasedHierachicalObject extends HierarchicalObject {
         return  !isEmpty(pos);
     }
     public void set(MyVector pos, String type){
-        tiles.put(new MyVector(x, y), type);
+        tiles.put(pos, type);
         System.out.println(type);
         this.addChild(new CollidableObject(this.getX()+pos.getX()*TEXTURE_SIZE, this.getY()+pos.getY()*TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE, type));
     }
