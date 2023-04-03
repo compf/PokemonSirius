@@ -14,6 +14,7 @@ import compf.game.DrawableObject;
 import compf.game.HierarchicalObject;
 import compf.game.Player;
 import compf.game.PokemonZone;
+import compf.game.Settings;
 import compf.game.TileBasedHierachicalObject;
 
 import java.util.ArrayList;
@@ -75,6 +76,20 @@ public class MapMakerMain extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
+		final int BY=20;
+
+		if(keycode==Settings.KEY_LEFT){
+			Player.MyCamera.setCameraPosBy(-BY, 0);
+		}
+		else if(keycode==Settings.KEY_RIGHT){
+			Player.MyCamera.setCameraPosBy(+BY, 0);
+		}
+		else if(keycode==Settings.KEY_UP){
+			Player.MyCamera.setCameraPosBy(0, +BY);
+		}
+		else if(keycode==Settings.KEY_DOWN){
+			Player.MyCamera.setCameraPosBy(0, -BY);
+		}
 		return false;
 	}
 
