@@ -139,7 +139,7 @@ public class MapMakerMain extends ApplicationAdapter implements InputProcessor {
 		final int factor = 1;
 
 		int dx = lastMouseX - screenX;
-		int dy = lastMouseY - screenY;
+		int dy = screenY-lastMouseY ;
 		final int AtLeast=10;
 
 
