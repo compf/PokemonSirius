@@ -40,6 +40,7 @@ public class HierarchicalObject extends DrawableObject {
     @Override
     public void render(SpriteBatch batch) {
         for (var c : children) {
+            System.out.println("Hey "+c.getX() + " "+c.getY());
             c.render(batch);
         }
     }

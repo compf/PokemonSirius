@@ -1,6 +1,6 @@
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 eclipse.project.name = appName + '-core'
-sourceCompatibility=19
+sourceCompatibility="$javaVersion"
 dependencies {
 	api "com.badlogicgames.gdx:gdx:$gdxVersion"
 	// https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc

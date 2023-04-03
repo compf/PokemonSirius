@@ -18,6 +18,7 @@ public class TextureManager {
     private HashMap<String,Texture> id_texture=new HashMap<>();
     public static final TextureManager Instance=new TextureManager();
     public  TextureRegion getTextureRegion(String id){
+        if(id==null) return getTextureRegion("water");
         if(!id_textureRegion.containsKey(id)){
             loadData(id);
         }

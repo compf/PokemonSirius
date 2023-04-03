@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import compf.Main;
 import compf.core.engine.*;
-import compf.game.Geometry.MyPoint;
+import compf.game.Geometry.MyVector;
 import compf.core.engine.Player;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.moves.Move;
@@ -175,11 +175,11 @@ public class PokemonBattleScreen extends HierarchicalObject {
         }
 
         final int Diff = 160;
-        private MyPoint[] menuItemPos = new MyPoint[] {
-                new MyPoint(getX() + 10, getY() + 10),
-                new MyPoint(getX() + Diff, getY() + 10),
-                new MyPoint(getX() + 10, getY() + Diff),
-                new MyPoint(getX() + Diff, getY() + Diff)
+        private MyVector[] menuItemPos = new MyVector[] {
+                new MyVector(getX() + 10, getY() + 10),
+                new MyVector(getX() + Diff, getY() + 10),
+                new MyVector(getX() + 10, getY() + Diff),
+                new MyVector(getX() + Diff, getY() + Diff)
         };
 
         @Override

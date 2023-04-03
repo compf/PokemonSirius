@@ -14,9 +14,12 @@ import compf.game.DrawableObject;
 import compf.game.HierarchicalObject;
 import compf.game.Player;
 import compf.game.PokemonZone;
+import compf.game.TileBasedHierachicalObject;
+
 import java.util.ArrayList;
 import java.util.Stack;
 import compf.core.engine.SharedInformation;
+import compf.core.map_maker.random_map_generator.TileBasedAreaGenerator;
 
 /**
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all
@@ -38,7 +41,9 @@ public class MapMakerMain extends ApplicationAdapter implements InputProcessor {
 		image = new Texture("libgdx.png");
 		SharedInformation.Instance.init();
 		Gdx.input.setInputProcessor(this);
-		HierarchicalObject frame = new HierarchicalObject(0, 0, 1024, 1024);
+		TileBasedHierachicalObject frame = new TileBasedHierachicalObject(0, 0, 1024, 1024);
+		TileBasedAreaGenerator gen=new TileBasedAreaGenerator(frame, "grass");
+		gen.generate();
 		ArrayList<PokemonZone.PokemonZoneEntry> entries = new ArrayList<>();
 		entries.add(new PokemonZone.PokemonZoneEntry(25, 10, 15, 60));
 		entries.add(new PokemonZone.PokemonZoneEntry(50, 5, 8, 127));
@@ -46,7 +51,7 @@ public class MapMakerMain extends ApplicationAdapter implements InputProcessor {
 
 		// frame.addChild(new PokemonZone(0,0,1024,1024,new
 		// Texture("tiles/grass.png"),entries,5));
-		frame.addChild(new ScrollableTilesets());
+		//frame.addChild(new ScrollableTilesets());
 		short id = 0;
 		/*
 		 * currObject=new PokemonBattleScreen(0,0,1024,1024,

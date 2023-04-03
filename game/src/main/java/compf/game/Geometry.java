@@ -12,10 +12,10 @@ public class Geometry {
             return false;
         }
     }
-    public static class MyPoint implements Point{
+    public static class MyVector implements Point{
         private final int x, y;
 
-        public MyPoint(int x, int y) {
+        public MyVector(int x, int y) {
             this.x = x;
             this.y = y;
         }
@@ -24,6 +24,15 @@ public class Geometry {
         }
         public int getY(){
             return y;
+        }
+        @Override
+        public boolean equals(Object obj) {
+            if(obj==null)return false;
+            if(obj==this)return true;
+            if(obj instanceof MyVector v){
+                return v.x==this.x && v.y==this.y;
+            }
+            return false;
         }
     }
     public static class MyRect implements Rectangle{
