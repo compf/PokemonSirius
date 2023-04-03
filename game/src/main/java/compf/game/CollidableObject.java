@@ -26,6 +26,6 @@ public class CollidableObject extends DrawableObject {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(TextureManager.Instance.getTextureRegion(textureId), x, y, width, height);
+        batch.draw(TextureManager.Instance.getTextureRegion(textureId), adjustX(x), adjustY(y), width, height);
     }
 }

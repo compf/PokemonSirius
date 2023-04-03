@@ -5,20 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player extends NPC {
+    public static final Camera MyCamera=new Camera();
     public Player(int x, int y, int width, int height, Texture texture, Direction dir, int spriteSheetX,
             int spriteSheetY) {
         super(x, y, width, height, texture, dir, spriteSheetX, spriteSheetY);
     }
 
-    private static int player_x, player_y;
-
-    public static int getPlayerX() {
-        return player_x;
-    }
-
-    public static int getPlayerY() {
-        return player_y;
-    }
 
     @Override
     public void onKeyPress(int keycode, boolean newPress) {
@@ -65,8 +57,7 @@ public class Player extends NPC {
 
                 break;
         }
-        player_x = x;
-        player_y = y;
+        MyCamera.setCameraPos(x, y);
 
     }
 

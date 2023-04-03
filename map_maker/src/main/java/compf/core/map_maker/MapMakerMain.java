@@ -42,7 +42,7 @@ public class MapMakerMain extends ApplicationAdapter implements InputProcessor {
 		SharedInformation.Instance.init();
 		Gdx.input.setInputProcessor(this);
 		TileBasedHierachicalObject frame = new TileBasedHierachicalObject(0, 0, 1024, 1024);
-		TileBasedAreaGenerator gen=new TileBasedAreaGenerator(frame, "grass");
+		TileBasedAreaGenerator gen = new TileBasedAreaGenerator(frame, "grass");
 		gen.generate();
 		ArrayList<PokemonZone.PokemonZoneEntry> entries = new ArrayList<>();
 		entries.add(new PokemonZone.PokemonZoneEntry(25, 10, 15, 60));
@@ -51,7 +51,7 @@ public class MapMakerMain extends ApplicationAdapter implements InputProcessor {
 
 		// frame.addChild(new PokemonZone(0,0,1024,1024,new
 		// Texture("tiles/grass.png"),entries,5));
-		//frame.addChild(new ScrollableTilesets());
+		// frame.addChild(new ScrollableTilesets());
 		short id = 0;
 		/*
 		 * currObject=new PokemonBattleScreen(0,0,1024,1024,
@@ -69,6 +69,7 @@ public class MapMakerMain extends ApplicationAdapter implements InputProcessor {
 	public boolean mouseMoved(int screenX, int screenY) {
 		// we can also handle mouse movement without anything pressed
 		// camera.unproject(tp.set(screenX, screenY, 0));
+
 		return false;
 	}
 
@@ -89,14 +90,18 @@ public class MapMakerMain extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean scrolled(float amountX, float amountY) {
+
 		for (var obj : currObject.getChildren()) {
 			if (obj instanceof MouseReceptibleDrawableObject) {
 				MouseReceptibleDrawableObject mObj = (MouseReceptibleDrawableObject) obj;
+
 				mObj.mouseScroll(amountY);
 			}
 		}
 		return false;
 	}
+
+	int lastMouseX, lastMouseY;
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -106,6 +111,8 @@ public class MapMakerMain extends ApplicationAdapter implements InputProcessor {
 				mObj.mouseDown(screenX, screenY, button);
 			}
 		}
+		lastMouseX = screenX;
+		lastMouseY = screenY;
 		dragging = true;
 		return true;
 	}
@@ -114,6 +121,18 @@ public class MapMakerMain extends ApplicationAdapter implements InputProcessor {
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		if (!dragging)
 			return false;
+		final int factor = 1;
+
+		int dx = lastMouseX - screenX;
+		int dy = lastMouseY - screenY;
+		final int AtLeast=10;
+
+
+			Player.MyCamera.setCameraPosBy(dx, dy);
+			lastMouseX=screenX;
+			lastMouseY=screenY;
+
+		
 		return true;
 	}
 

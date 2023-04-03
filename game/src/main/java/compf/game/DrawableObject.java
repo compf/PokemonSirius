@@ -47,11 +47,11 @@ public abstract class DrawableObject implements Geometry.Rectangle{
     }
 
     public static int adjustX(int x) {
-        return x - Player.getPlayerX() / 2;
+        return x - Player.MyCamera.getCameraX() / 2;
     }
 
     public static int adjustY(int y) {
-        return y - Player.getPlayerY() / 2;
+        return y - Player.MyCamera.getCameraX() / 2;
     }
 
     public int getWidth() {
