@@ -1,4 +1,4 @@
-extends Area2D
+extends CharacterBody2D
 
 
 # Called when the node enters the scene tree for the first time.
@@ -24,7 +24,8 @@ func _process(delta):
 		delta.x=BY
 	
 	if delta!=Vector2.ZERO:
-		position+=delta
+		#position+=delta
+		move_and_collide((delta))
 		$AnimatedSprite2D.play()
 	else:
 		$AnimatedSprite2D.stop()
