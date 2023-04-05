@@ -9,7 +9,7 @@ public class BattleRule implements Serializable {
 	public int hashCode() {
 		return Objects.hash(MaxPokemonInTeamPerPlayer, NumberPlayers, PlayersPerTeam, PokemonPerPlayerOnField);
 	}
-
+	public static  final  BattleRule DEFAULT_RULE = new BattleRule(2, 1, 6, 1);
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

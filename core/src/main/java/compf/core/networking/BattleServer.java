@@ -146,10 +146,10 @@ public class BattleServer extends BaseServer implements SteppableHost {
         var playerIds = _gamePlayers.get(gameId);
         for (short playerId : playerIds) {
             var input = _pipes.get(playerId);
-            if (input.isWaitingForData()) {
+            /*if (input.isWaitingForData()) {
                 var outp = _pipes.get(playerId);
                 writeObject(outp, NetworkMessageKind.RequestInput.createMessage());
-            }
+            }*/
             if (!input.avaliable())
                 continue;
             NetworkMessage msg = readObject(input);

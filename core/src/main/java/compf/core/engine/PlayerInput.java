@@ -25,10 +25,11 @@ public abstract class PlayerInput implements Serializable {
 
 	}
 
-	public static class SwitchPokemonInput {
+	public static class SwitchPokemonInput extends PlayerInput {
 		public final int PokemonIndex;
 
-		public SwitchPokemonInput(int playerId, int pokemonIndex) {
+		public SwitchPokemonInput(short playerId, short pokemonIndex) {
+			super(playerId);
 			PokemonIndex = pokemonIndex;
 		}
 	}
