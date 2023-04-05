@@ -1,17 +1,11 @@
 package compf.core.engine.pokemon.moves;
 
 import java.io.Serializable;
-import java.nio.ByteBuffer;
 import java.util.LinkedList;
 
-import compf.core.engine.ISerializable;
-import compf.core.engine.Player;
 import compf.core.engine.SharedInformation;
 import compf.core.engine.pokemon.Pokemon;
-import compf.core.engine.pokemon.effects.BattleEffect;
 import compf.core.engine.pokemon.effects.BattleEffectCollection;
-import compf.core.engine.pokemon.effects.GlobalBattleEffect;
-import compf.core.engine.pokemon.effects.PokemonBattleEffect;
 
 public class DamageInformation implements Serializable, Cloneable {
 	/**
