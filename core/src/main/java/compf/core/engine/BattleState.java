@@ -1,6 +1,7 @@
 package compf.core.engine;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 public interface BattleState extends Serializable {
     /**
@@ -61,6 +62,6 @@ public interface BattleState extends Serializable {
      */
     public String getPlayerName(int playerId);
 
-    public boolean battleFinished();
+    public Optional<Integer> getDefeatedPlayer();
 
 }

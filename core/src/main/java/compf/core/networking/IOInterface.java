@@ -14,7 +14,7 @@ public interface IOInterface {
 
 	public PlayerInput requestPlayerInput(short pkmnIndex, BattleState state);
 
-	public void endBattle();
+	public void battleEnded(int playerId);
 
 	short switchPokemon(BattleState state, short oldIndex);
 

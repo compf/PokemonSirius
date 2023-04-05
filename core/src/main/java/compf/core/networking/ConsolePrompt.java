@@ -47,7 +47,7 @@ public class ConsolePrompt implements IOInterface {
 		return _scanner.nextInt();
 	}
 
-	public void endBattle() {
+	public void battleEnded(int playerLost) {
 		// TODO
 	}
 

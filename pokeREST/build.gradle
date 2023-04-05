@@ -3,7 +3,7 @@ apply plugin: 'application'
 [compileJava]*.options*.encoding = 'UTF-8'
 eclipse.project.name = appName + '-pokeREST'
 sourceCompatibility="$javaVersion"
-mainClassName = 'compf.pokerest.MyMain'
+mainClassName = 'compf.pokerest.MyBattleClient'
 
 
 dependencies {

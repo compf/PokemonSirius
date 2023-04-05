@@ -17,7 +17,7 @@ import compf.core.networking.BotInterface;
 import compf.core.networking.IOInterface;
 import compf.core.networking.SharedPipe;
 
-public class MyMain {
+public class MyBattleClient {
     private static final int PLAYER_SERVER_PORT = 1997;
     private static final int BOT_SERVER_PORT = 1998;
     private static  BattleServer server;
@@ -57,5 +57,6 @@ public class MyMain {
         }));
         botThread.setName("Bot thread");
         botThread.start();
+        System.out.println("Hello World");
     }
 }

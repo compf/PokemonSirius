@@ -87,8 +87,8 @@ public class BattleClient extends BaseServer implements Runnable,SteppableHost {
 				var roundResult = (BattleRoundResult) msg.Data;
 				_state = roundResult.State;
 				_io.update(roundResult);
-				if (roundResult.State.battleFinished()) {
-					_io.endBattle();
+				if (roundResult.State.getDefeatedPlayer().isPresent()) {
+					_io.battleEnded(roundResult.State.getDefeatedPlayer().get());
 				}
 				break;
 			case RequestPokemonSwitch:

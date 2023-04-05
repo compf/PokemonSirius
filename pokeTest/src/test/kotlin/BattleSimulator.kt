@@ -43,9 +43,9 @@ public  class SimulationBattleIO : IOInterface {
        if(balanceCounter==0){
           
        }
-       endBattle()
+       battleEnded(0)
    }
-   public override fun endBattle(){}
+   public override fun battleEnded(player:Int){}
    public val player:Player
    public var balanceCounter=0
    public fun addInput(input: PlayerInput) {

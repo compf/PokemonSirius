@@ -23,7 +23,7 @@ public class BotInterface implements IOInterface {
 
     }
 
-    public void endBattle() {
+    public void battleEnded( int playerLost) {
 
     }
 

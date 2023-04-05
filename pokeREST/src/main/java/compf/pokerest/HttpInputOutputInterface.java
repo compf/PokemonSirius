@@ -88,7 +88,7 @@ public class HttpInputOutputInterface implements IOInterface {
          static void writeState(BattleState state,JsonWriter jsonWriter,BattleRule rule) throws IOException{
             jsonWriter.name("State");
             jsonWriter.beginObject();
-            jsonWriter.name("BattleEnded").value(state.battleFinished());
+            jsonWriter.name("BattleEnded").value(state.getDefeatedPlayer().orElse(-1));
             for(int playerId:state.getPlayerIds()){
                 jsonWriter.name(String.valueOf(playerId));
                 jsonWriter.beginObject();
@@ -179,15 +179,31 @@ public class HttpInputOutputInterface implements IOInterface {
     }
 
     @Override
-    public void endBattle() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'endBattle'");
+    public void battleEnded(int player) {
+        sendHTTP("/battleEnded", String.valueOf(player), false);
     }
 
     @Override
     public short switchPokemon(BattleState state, short oldIndex) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'switchPokemon'");
+        try {
+            StringWriter writer=new StringWriter();
+            JsonWriter jsonWriter=new JsonWriter(writer);
+            jsonWriter.beginObject();
+            jsonWriter.name("oldIndex").value(oldIndex);
+            UpdateWriter.writeState(state, jsonWriter, rule);
+            jsonWriter.endObject();
+
+
+            String response=sendHTTP("/SwitchPokemon", writer.toString(), true).body();
+            return Short.valueOf(response);
+           
+
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return -1;
     }
 
 }

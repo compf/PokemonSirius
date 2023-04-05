@@ -3,6 +3,7 @@ package compf.core.engine;
 import compf.core.engine.pokemon.PokemonStat;
 import compf.core.etc.BufferList;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class DetailedBattleState implements BattleState {
@@ -77,7 +78,7 @@ public class DetailedBattleState implements BattleState {
     }
 
     @Override
-    public boolean battleFinished() {
+    public Optional<Integer> getDefeatedPlayer() {
         boolean finnished = false;
         for (int id : getPlayerIds()) {
             boolean playerFinished = true;
@@ -87,8 +88,11 @@ public class DetailedBattleState implements BattleState {
 
             }
             finnished = finnished | playerFinished;
+            if(finnished){
+                return Optional.of(id);
+            }
         }
-        return finnished;
+        return Optional.empty();
     }
 
 }
