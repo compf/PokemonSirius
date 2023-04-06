@@ -34,11 +34,11 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-public class HttpInputOutputInterface implements IOInterface {
+public class MyHtppClient implements IOInterface {
     private int port;
     private BattleRule rule;
 
-    public HttpInputOutputInterface(int port,BattleRule rule) {
+    public MyHtppClient(int port,BattleRule rule) {
         this.port=port;
         this.rule=rule;
     }
@@ -156,16 +156,16 @@ public class HttpInputOutputInterface implements IOInterface {
             Gson gson=new Gson();
             Map<String, String> stringMap = gson.fromJson(response, mapType);
             if(stringMap.get("Kind").contentEquals("PlayerInput")){
-                short pokemonIndex=Short.parseShort(stringMap.get("PokemonIndex"));
-                short playerId=Short.parseShort(stringMap.get("PlayerId"));
-                short moveIndex=Short.parseShort(stringMap.get("MoveIndex"));
-                short targetPlayer=Short.parseShort(stringMap.get("TargetPlayer"));
-                short targetPokemonIndex=Short.parseShort(stringMap.get("TargetPokemonIndex"));
+                short pokemonIndex=(short)Float.parseFloat(stringMap.get("PokemonIndex"));
+                short playerId=(short)Float.parseFloat(stringMap.get("PlayerId"));
+                short moveIndex=(short)Float.parseFloat(stringMap.get("MoveIndex"));
+                short targetPlayer=(short)Float.parseFloat(stringMap.get("TargetPlayer"));
+                short targetPokemonIndex=(short)Float.parseFloat(stringMap.get("TargetPokemonIndex"));
 
                 return new PlayerInput.AttackInput(pkmnIndex, moveIndex, targetPlayer, targetPokemonIndex,playerId);
             }
             else if(stringMap.get("Kind").contentEquals("SwitchPokemonInput")){
-                return new PlayerInput.SwitchPokemonInput(Short.parseShort(stringMap.get("PlayerId")),Short.parseShort(stringMap.get("PokemonIndex")));
+                return new PlayerInput.SwitchPokemonInput((short)Float.parseFloat(stringMap.get("PlayerId")),(short)Float.parseFloat(stringMap.get("PokemonIndex")));
             }
 
 

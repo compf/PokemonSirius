@@ -42,3 +42,5 @@ item_count = 2
 max_columns = 2
 item_0/text = "Test"
 item_1/text = "Hallo"
+
+[connection signal="item_activated" from="CanvasLayer/ItemList" to="." method="_on_item_list_item_activated"]
