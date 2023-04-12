@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.util.function.BiPredicate;
 
 public class ConsolePrompt implements IOInterface {
-	protected final Scanner _scanner = new Scanner(System.in);
+	private static  Scanner _scanner =null;
 	private BattleRule _rule;
 	private Player _player;
 
@@ -18,7 +18,7 @@ public class ConsolePrompt implements IOInterface {
 		for (int i = 0; i < args.length; i++) {
 			System.out.println(i + "\t" + args[i]);
 		}
-		int result = _scanner.nextInt();
+		int result =  Integer.parseInt( nextLine());
 
 		return result;
 	}
@@ -28,7 +28,7 @@ public class ConsolePrompt implements IOInterface {
 		for (int i = begin; i < args.length; i++) {
 			System.out.println(i + "\t" + promptHelper.prompt(args[i], i));
 		}
-		int result = _scanner.nextInt();
+		int result = Integer.parseInt(nextLine());
 
 		return result;
 	}
@@ -44,7 +44,7 @@ public class ConsolePrompt implements IOInterface {
 
 	public int promptInt(String msg) {
 		message(msg);
-		return _scanner.nextInt();
+		return  Integer.parseInt( nextLine());
 	}
 
 	public void battleEnded(int playerLost) {
@@ -57,7 +57,7 @@ public class ConsolePrompt implements IOInterface {
 			if (test.test(i, args[i]))
 				System.out.println(i + "\t" + promptHelper.prompt(args[i], i));
 		}
-		int result = _scanner.nextInt();
+		int result =  Integer.parseInt( nextLine());
 
 		return result;
 	}
@@ -67,7 +67,7 @@ public class ConsolePrompt implements IOInterface {
 		for (int i = 0; i < args.length; i++) {
 			System.out.println(i + "\t" + promptHelper.prompt(args[i], i));
 		}
-		int result = _scanner.nextInt();
+		int result =  Integer.parseInt(nextLine());
 
 		return result;
 	}
@@ -77,7 +77,7 @@ public class ConsolePrompt implements IOInterface {
 		for (int i = 0; i < args.size(); i++) {
 			System.out.println(i + "\t" + promptHelper.prompt(args.get(i), i));
 		}
-		int result = _scanner.nextInt();
+		int result =  Integer.parseInt( nextLine());
 
 		return result;
 	}
@@ -155,10 +155,23 @@ public class ConsolePrompt implements IOInterface {
 		} while (index == oldIndex);
 		return index;
 	}
+	private String nextLine(){
+		if(_scanner==null){
+			_scanner=new Scanner(System.in);
+		}
+		System.out.println("My thread "+Thread.currentThread().getName());
+		System.out.println("Waiting for input");
+		synchronized(_scanner){
+			String result=_scanner.nextLine();
+			System.out.println("Scanner input " +result);
+			return result;
+		}
+		
+	}
 
 	private short promptShort(String s) {
 		message(s);
-		return _scanner.nextShort();
+		return  Short.parseShort( nextLine());
 	}
 
 }
