@@ -30,7 +30,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-public class MyClient implements IOInterface {
+/*public class MyClient implements IOInterface {
 
     private BattleRule rule;
     private Socket socket;
@@ -206,4 +206,4 @@ public class MyClient implements IOInterface {
         return -1;
     }
 
-}
+}*/

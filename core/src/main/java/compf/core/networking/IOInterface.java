@@ -5,10 +5,11 @@ import java.util.function.BiPredicate;
 
 import compf.core.engine.BattleRoundResult;
 import compf.core.engine.BattleState;
+import compf.core.engine.NetworkMessage;
 import compf.core.engine.PlayerInput;
 
 public interface IOInterface {
-	public void message(String msg);
+	/*public void message(String msg);
 
 	public void update(BattleRoundResult state);
 
@@ -16,7 +17,13 @@ public interface IOInterface {
 
 	public void battleEnded(int playerId);
 
-	short switchPokemon(BattleState state, short oldIndex);
+	short switchPokemon(BattleState state, short oldIndex);*/
+	Pipe getPipe();
+	NetworkMessage handle(NetworkMessage msg);
+	default NetworkMessage sendAndHandle(NetworkMessage msg){
+		getPipe().write(msg);
+		return handle(getPipe().read());
+	}
 
 	
 }

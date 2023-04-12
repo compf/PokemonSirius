@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.function.BiPredicate;
 
-public class ConsolePrompt implements IOInterface {
+public class ConsolePrompt extends SimpleIOInterface {
 	private static  Scanner _scanner =null;
 	private BattleRule _rule;
 	private Player _player;
@@ -121,8 +121,24 @@ public class ConsolePrompt implements IOInterface {
 		}
 		return pkmnSelectionIndexMap;
 	}
-
 	@Override
+    public NetworkMessage handle(NetworkMessage msg) {
+        switch (msg.Kind) {
+            case RequestInput:
+                return NetworkMessageKind.ReplyInput.createMessage(requestPlayerInput(((Tuple<Short,BattleState>) msg.Data)));
+            case SwitchPokemon:
+                return NetworkMessageKind.ReplyInput
+                        .createMessage(switchPokemon(((Tuple<Short, BattleState>) msg.Data)));
+            case Update:
+                update((BattleRoundResult) msg.Data);
+                return null;
+            case BattleEnded:
+                battleEnded((int) msg.Data);
+            default:
+                return null;
+
+        }
+    }
 	public void update(BattleRoundResult result) {
 		for (var action : result.Actions) {
 			for (var msg : action.Messages) {
@@ -134,28 +150,26 @@ public class ConsolePrompt implements IOInterface {
 
 	}
 
-	@Override
-	public PlayerInput requestPlayerInput(short pkmnIndex, BattleState state) {
+	public PlayerInput requestPlayerInput(Tuple<Short, BattleState> inf) {
 		short mvIndex = (short) prompt("Please input id of move", (mv, i) -> mv.getName(),
-				_player.getPokemon(pkmnIndex).getMoves());
-		var map = printState(state, true);
+				_player.getPokemon(inf.Item1).getMoves());
+		var map = printState(inf.Item2, true);
 		// printState(state,true);
 		int targetIndex = promptInt("Please input target index as described above");
 		var targetIndices = MyObject.getIndices(map.get(targetIndex));
 		short targetPlayer = targetIndices[0];
 		short targetPokemon = targetIndices[1];
 
-		return new PlayerInput.AttackInput(pkmnIndex, mvIndex, targetPlayer, targetPokemon, _player.getPlayerId());
+		return new PlayerInput.AttackInput(inf.Item1, mvIndex, targetPlayer, targetPokemon, _player.getPlayerId());
 	}
 
-	@Override
-	public short switchPokemon(BattleState state, short oldIndex) {
-		var map = printState(state, true, true, _rule.MaxPokemonInTeamPerPlayer);
+	public short switchPokemon(Tuple<Short, BattleState> inf) {
+		var map = printState(inf.Item2, true, true, _rule.MaxPokemonInTeamPerPlayer);
 		short index;
 		do {
 			index = promptShort(
-					"You must select a new pokemon. Please input a index from above(may not be same as " + oldIndex);
-		} while (index == oldIndex);
+					"You must select a new pokemon. Please input a index from above(may not be same as " + inf.Item1);
+		} while (index == inf.Item1);
 		return index;
 	}
 	private String nextLine(){

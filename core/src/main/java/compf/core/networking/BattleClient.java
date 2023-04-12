@@ -76,7 +76,7 @@ public class BattleClient extends BaseServer implements Runnable,SteppableHost {
 			case RequestInput:
 				BufferList<PlayerInput> inputs = new BufferList<>(_rule.PokemonPerPlayerOnField);
 				short pokemonIndex = (short) msg.Data;
-				var inp = _io.requestPlayerInput(pokemonIndex, _state);
+				var inp = (PlayerInput)_io.sendAndHandle(NetworkMessageKind.RequestInput.createMessage(new Tuple<Short,BattleState>(pokemonIndex,_state))).Data;
 				if (inp == null)
 					return;
 				MyLogger.debug("Input from " + inp.PlayerId + " " + _io.getClass());
@@ -86,15 +86,15 @@ public class BattleClient extends BaseServer implements Runnable,SteppableHost {
 			case Update:
 				var roundResult = (BattleRoundResult) msg.Data;
 				_state = roundResult.State;
-				_io.update(roundResult);
+				_io.sendAndHandle(NetworkMessageKind.Update.createMessage(roundResult));
 				if (roundResult.State.getDefeatedPlayer().isPresent()) {
-					_io.battleEnded(roundResult.State.getDefeatedPlayer().get());
+					_io.sendAndHandle(NetworkMessageKind.BattleEnded.createMessage(roundResult.State.getDefeatedPlayer().get()));
 				}
 				break;
 			case RequestPokemonSwitch:
 				short oldIndex = (short) msg.Data;
 				writeObject(pipe,
-						NetworkMessageKind.ReplyPokemonSwitch.createMessage(_io.switchPokemon(_state, oldIndex)));
+						NetworkMessageKind.ReplyPokemonSwitch.createMessage(_io.sendAndHandle(NetworkMessageKind.RequestPokemonSwitch.createMessage(new Tuple<Short,BattleState>(oldIndex,_state)))));
 
 		}
 	}

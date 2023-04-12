@@ -6,18 +6,22 @@ import compf.core.engine.PlayerInput
 import compf.core.engine.pokemon.Pokemon
 import compf.core.engine.BattleRule
 import compf.core.engine.BattleAction
+import compf.core.engine.NetworkMessage
+import compf.core.engine.NetworkMessageKind
+import compf.core.engine.Tuple
 import compf.core.networking.IOInterface
 import compf.core.networking.BattleClient
 import compf.core.networking.SharedPipe
 import compf.core.networking.BattleServer
 import compf.core.networking.Pipe
+import compf.core.networking.SimpleIOInterface
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.*
 
-public  class SimulationBattleIO : IOInterface {
+public  class SimulationBattleIO : SimpleIOInterface {
     private val MyLogger=LogManager.getLogger()
 
     val actions: ArrayList<BattleAction> =ArrayList<BattleAction>();
@@ -26,9 +30,33 @@ public  class SimulationBattleIO : IOInterface {
        //TestFinishedSemaphore.acquireTimeout(1, 10, TimeUnit.SECONDS)
        //BattleStartedSemaphore.acquireTimeout(1, 10, TimeUnit.SECONDS)
    }
-   override fun message(p0: String) {}
+   override fun handle(msg: NetworkMessage) :NetworkMessage? {
+    return when (msg.Kind) {
+         NetworkMessageKind.RequestInput -> {
+            return NetworkMessageKind.ReplyInput.createMessage(requestPlayerInput(( msg.Data as Tuple<Short,BattleState>)));
+
+         }
+         NetworkMessageKind.SwitchPokemon->{
+            return NetworkMessageKind.ReplyInput
+            .createMessage(switchPokemon(( msg.Data as Tuple<Short, BattleState> )));
+         }
+            
+         NetworkMessageKind.Update->{
+            update( msg.Data as BattleRoundResult);
+            return null;
+         }
+          
+         NetworkMessageKind.BattleEnded->{
+            battleEnded( msg.Data as Int);
+            return null;
+         }
+        else ->
+            return null;
+
+    }
+   }
    private val queue: Queue<PlayerInput> = Queue<PlayerInput>()
-   override fun update(result: BattleRoundResult) {
+    fun update(result: BattleRoundResult) {
        
        MyLogger.debug("Received updates "+result.Actions?.size)
        if(result.Actions==null)return;
@@ -45,7 +73,7 @@ public  class SimulationBattleIO : IOInterface {
        }
        battleEnded(0)
    }
-   public override fun battleEnded(player:Int){}
+   public  fun battleEnded(player:Int){}
    public val player:Player
    public var balanceCounter=0
    public fun addInput(input: PlayerInput) {
@@ -57,7 +85,7 @@ public  class SimulationBattleIO : IOInterface {
 
    }
 
-   override fun requestPlayerInput(pkmn: Short, state: BattleState): PlayerInput? {
+    fun requestPlayerInput(tuple:Tuple<Short, BattleState>): PlayerInput? {
        MyLogger.debug("requestplayerinput  " + queue.size +" "+player!!.playerId)
 
        if (queue.isEmpty) {
@@ -70,7 +98,7 @@ public  class SimulationBattleIO : IOInterface {
 
    
 
-   override fun switchPokemon(p0: BattleState, p1: Short): Short {
+    fun switchPokemon(tuple:Tuple<Short, BattleState> ): Short {
        return 0
    }
 }
