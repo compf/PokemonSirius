@@ -1,9 +1,11 @@
 package compf.core.networking;
 
-public interface Pipe {
-    boolean write(Object obj);
+import compf.core.engine.NetworkMessage;
 
-    Object read();
+public interface Pipe {
+    boolean write(NetworkMessage obj);
+
+    NetworkMessage read();
 
     Pipe waitForConnection();
 

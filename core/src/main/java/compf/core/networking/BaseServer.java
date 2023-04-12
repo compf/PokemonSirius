@@ -6,6 +6,8 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
+import compf.core.engine.NetworkMessage;
+
 public class BaseServer {
 	/**
 	 * Read an object from the {@link ObjectInputStream} and converts into the
@@ -15,9 +17,9 @@ public class BaseServer {
 	 * @param in  The input stream
 	 * @return The object or null on any error
 	 */
-	protected <T> T readObject(Pipe in) {
+	protected NetworkMessage readObject(Pipe in) {
 		// System.out.println("reading object "+in.getClass());
-		T res = (T) in.read();
+		var res= in.read();
 		// in.reset();
 		return res;
 	}
@@ -30,8 +32,8 @@ public class BaseServer {
 	 * @param obj The object to be written
 	 * @return A non-null object if successful, else a null value
 	 */
-	protected <T> boolean writeObject(Pipe out, T obj) {
-		return out.write(obj);
+	protected <T> boolean writeObject(Pipe out, NetworkMessage msg) {
+		return out.write(msg);
 
 	}
 

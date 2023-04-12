@@ -10,14 +10,14 @@ import compf.core.networking.IOInterface
 import compf.core.engine.pokemon.Pokemon
 import java.util.LinkedList
 class DefaultValuePipe:Pipe{
-    private val buffer=ArrayDeque<Any>()
-    override fun write(p0: Any): Boolean { 
+    private val buffer=ArrayDeque<NetworkMessage>()
+    override fun write(p0: NetworkMessage): Boolean { 
         buffer.addLast(p0);
         return true;
     }
     
 
-    override fun read(): Any { 
+    override fun read(): NetworkMessage { 
         if(buffer.isEmpty()){
             return NetworkMessage(NetworkMessageKind.None,null)
         }

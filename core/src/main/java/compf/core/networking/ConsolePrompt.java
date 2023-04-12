@@ -12,6 +12,9 @@ public class ConsolePrompt implements IOInterface {
 	private static  Scanner _scanner =null;
 	private BattleRule _rule;
 	private Player _player;
+	public interface IPrompt<T> {
+		String prompt(T item, int index);
+	}
 
 	public int prompt(String prompt, String... args) {
 		System.out.println(prompt);

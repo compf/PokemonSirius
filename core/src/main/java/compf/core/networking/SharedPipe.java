@@ -7,9 +7,11 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import compf.core.engine.NetworkMessage;
+
 public class SharedPipe implements Pipe {
     private final int port;
-    private BlockingQueue<Object> waitingList = new LinkedBlockingQueue<>();
+    private BlockingQueue<NetworkMessage> waitingList = new LinkedBlockingQueue<>();
     private static HashMap<Integer, SharedPipe> serverWritePipes = new HashMap<>();
     private static HashMap<Integer, SharedPipe> serverReadPipes = new HashMap<>();
 
@@ -50,7 +52,7 @@ public class SharedPipe implements Pipe {
     }
 
     @Override
-    public boolean write(Object obj) {
+    public boolean write(NetworkMessage obj) {
         System.out.println("Written " + port + " " + System.identityHashCode(waitingList));
         return waitingList.offer(obj);
     }
@@ -63,7 +65,7 @@ public class SharedPipe implements Pipe {
     }
 
     @Override
-    public Object read() {
+    public NetworkMessage read() {
         try {
             synchronized (threadListening) {
                 // System.out.println();
@@ -71,7 +73,7 @@ public class SharedPipe implements Pipe {
                 // threadListening.put(Thread.currentThread().getName(),System.identityHashCode(waitingList));
 
             }
-            Object obj = waitingList.poll(1, TimeUnit.HOURS);
+            NetworkMessage obj = waitingList.poll(1, TimeUnit.HOURS);
             synchronized (threadListening) {
                 threadListening.put(Thread.currentThread().getName(), null);
 

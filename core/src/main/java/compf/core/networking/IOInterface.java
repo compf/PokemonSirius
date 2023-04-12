@@ -18,7 +18,5 @@ public interface IOInterface {
 
 	short switchPokemon(BattleState state, short oldIndex);
 
-	public interface IPrompt<T> {
-		String prompt(T item, int index);
-	}
+	
 }

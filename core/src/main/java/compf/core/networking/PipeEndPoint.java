@@ -1,10 +1,12 @@
 package compf.core.networking;
 
+import compf.core.engine.NetworkMessage;
+
 public class PipeEndPoint implements Pipe {
     private Pipe _read, _write;
 
     @Override
-    public boolean write(Object obj) {
+    public boolean write(NetworkMessage obj) {
         // System.out.println("Writing to "+System.identityHashCode(_write));
 
         return _write.write(obj);
@@ -18,9 +20,9 @@ public class PipeEndPoint implements Pipe {
     }
 
     @Override
-    public Object read() {
+    public NetworkMessage read() {
         isCurrentlyWaitingForData = true;
-        Object result = _read.read();
+        NetworkMessage result = _read.read();
         isCurrentlyWaitingForData = false;
         return result;
     }
