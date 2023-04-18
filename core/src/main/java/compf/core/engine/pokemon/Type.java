@@ -3,7 +3,7 @@ package compf.core.engine.pokemon;
 public enum Type {
 	Empty(0),
 	Normal(1),
-	Fight(2),
+	Fighting(2),
 	Flying(3),
 	Poison(4),
 	Ground(5),
@@ -19,7 +19,8 @@ public enum Type {
 	Ice(15),
 	Dragon(16),
 	Dark(17),
-	Fairy(18);
+	Fairy(18),
+	Bird(19);
 
 	final int _value;
 

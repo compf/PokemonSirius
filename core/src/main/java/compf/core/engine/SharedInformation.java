@@ -1,13 +1,21 @@
 package compf.core.engine;
 
-/**
-* 
-*/
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
+import java.io.FileReader;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import compf.core.engine.pokemon.*;
 import compf.core.engine.pokemon.moves.*;
-
 /**
  * @author timoc
  * @date 15.06.18
@@ -18,9 +26,9 @@ public final class SharedInformation {
 	public static final int MovesPerPokemonCount = 4;
 	private static final String WIN_PATH = "jdbc:sqlite:veekun-pokedex.sqlite";
 	private static String PATH = WIN_PATH;
-	public static final int PokemonCount = 491;
+	public static final int PokemonCount = 1020;
 	public static final int MovesCount = PokemonCount - 100;
-	private PokedexEntry[] pokemon = new PokedexEntry[PokemonCount];
+	private HashMap<Integer,PokedexEntry> pokemon = new HashMap<>(PokemonCount);
 	private Move[] moves = new Move[MovesCount];
 	public static final SharedInformation Instance = new SharedInformation();
 
@@ -38,8 +46,12 @@ public final class SharedInformation {
 			Class.forName("org.sqlite.JDBC");
 			final String sqlString = "jdbc:sqlite:lib/veekun-pokedex.sqlite";
 			Connection conn = DriverManager.getConnection(sqlString);
+			System.out.println(System.getProperty("user.dir"));
+			try(var reader=new FileReader("lib/pokedex.json")){
+				JsonObject convertedObject = new Gson().fromJson(reader, JsonObject.class);
+				initPokemon(convertedObject);
+			}
 
-			initPokemon(conn);
 			initMoves(conn);
 			conn.close();
 		} catch (Exception e) {
@@ -47,55 +59,40 @@ public final class SharedInformation {
 			e.printStackTrace();
 		}
 	}
+	private boolean shallExclude(JsonObject object ){
+		return object.has("baseSpecies");
+	}
+	private void initPokemon(JsonObject fullData) throws SQLException {
+		
+		for(String name:fullData.keySet())
+		 {
+			var object=fullData.get(name).getAsJsonObject();
+			if(shallExclude(fullData)){
+				continue;
+			}
 
-	private void initPokemon(Connection conn) throws SQLException {
-		PreparedStatement pkmnStatement = conn.prepareStatement("SELECT * FROM pokemon WHERE ?=id");
-		PreparedStatement typeStatement = conn.prepareStatement("SELECT * FROM pokemon_types WHERE ?=pokemon_id");
-		PreparedStatement statStatement = conn.prepareStatement("SELECT * FROM pokemon_stats WHERE ?=pokemon_id");
-		for (int i = 1; i < PokemonCount; i++) {
-			pkmnStatement.setInt(1, i);
-			typeStatement.setInt(1, i);
-			statStatement.setInt(1, i);
-			var reader = pkmnStatement.executeQuery();
-			// reader.beforeFirst();
-			reader.next();
-			String name = reader.getString(2);
-			name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
-			float height = reader.getFloat(4);
-			float weight = reader.getFloat(5);
-			reader.close();
-			reader = typeStatement.executeQuery();
+			float height = object.get("heightm").getAsFloat();
+			float weight = object.get("weightkg").getAsFloat();;
 			// reader.beforeFirst();
 			boolean firstType = true;
 			Type type1 = Type.Empty;
 			Type type2 = Type.Empty;
-			while (reader.next()) {
-				if (firstType) {
-					type1 = Type.parse(reader.getInt(2));
-					firstType = false;
-				} else {
-					type2 = Type.parse(reader.getInt(2));
-				}
-
+			JsonArray typeArray=object.get("types").getAsJsonArray();
+			type1=Enum.valueOf(Type.class,typeArray.get(0).getAsString());
+			if(typeArray.size()>1){
+				type2=Enum.valueOf(Type.class,typeArray.get(1).getAsString());
 			}
-			reader.close();
-			reader = statStatement.executeQuery();
 			// reader.beforeFirst();
 			int hp, att, def, satt, sdef, speed;
-			reader.next();
-			hp = reader.getInt(3);
-			reader.next();
-			att = reader.getInt(3);
-			reader.next();
-			def = reader.getInt(3);
-			reader.next();
-			satt = reader.getInt(3);
-			reader.next();
-			sdef = reader.getInt(3);
-			reader.next();
-			speed = reader.getInt(3);
-			// System.out.println(name);
-			pokemon[i - 1] = new PokedexEntry(i, name, type1, type2, height, weight, hp, att, def, satt, sdef, speed);
+			var baseStats=object.get("baseStats").getAsJsonObject();
+			hp = baseStats.get("hp").getAsInt();
+			att = baseStats.get("atk").getAsInt();
+			def = baseStats.get("def").getAsInt();
+			satt = baseStats.get("spa").getAsInt();
+			sdef = baseStats.get("spd").getAsInt();
+			speed = baseStats.get("spe").getAsInt();
+			int nr=object.get("num").getAsInt();
+			pokemon.put(nr, new PokedexEntry(nr, name, type1, type2, height, weight, hp, att, def, satt, sdef, speed));
 		}
 
 	}
@@ -140,7 +137,7 @@ public final class SharedInformation {
 	}
 
 	public PokedexEntry getPokedexEntry(int nr) {
-		return pokemon[nr - 1];
+		return pokemon.get(nr );
 	}
 
 	public Move getMove(int nr) {
