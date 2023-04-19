@@ -31,23 +31,21 @@ public class Move implements Serializable {
 	}
 
 	public enum TargetType {
-		None(1), SelectedPokemonMeFirst(2), Ally(3), UserField(4), UserOrAlly(5), OpponentField(6), User(7),
-		RandomOpponent(8), AllOtherPokemon(9),
-		SelectedPokemon(10), AllOpponents(11), EntireField(12), UserAndAllies(13), AllPokemon(14);
-
-		public final int nr;
-
-		TargetType(int nr) {
-			this.nr = nr;
-		}
-
-		public static TargetType find(int n) {
-			for (var i : values()) {
-				if (i.nr == n)
-					return i;
-			}
-			return null;
-		}
+		adjacentAlly,
+		allySide,
+		allAdjacent,
+		any,
+		allies,
+		adjacentAllyOrSelf,
+		foeSide,
+		normal,
+		scripted,
+		all,
+		allyTeam,
+		self,
+		randomNormal,
+		adjacentFoe,
+		allAdjacentFoes;
 	}
 
 	public DamageInformation execute(Schedule.ScheduleItem item) {
@@ -113,10 +111,13 @@ public class Move implements Serializable {
 	public void init(Schedule schedule, int attacker, int defender, int dr) {
 		schedule.addMove(attacker, defender, this, dr);
 	}
-	private int getCriticalHitFactor(){
-		if(MyObject.TestSettings.IgnoreEffectProbability)return 1;
+
+	private int getCriticalHitFactor() {
+		if (MyObject.TestSettings.IgnoreEffectProbability)
+			return 1;
 		return MyObject.RNG.nextInt(100) < 15 ? 2 : 1;
 	}
+
 	public int calculateDamage(Pokemon att, Pokemon def) {
 		double d1 = (2 * att.getLevel()) / 5 + 2;
 		double attValue, defValue;

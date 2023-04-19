@@ -110,7 +110,7 @@ public final class SharedInformation {
 				accuracy=Byte.valueOf(accuracyStr);
 			}
 			byte priority = object.get("priority").getAsByte();
-			String target = object.get("target").getAsString();
+			Move.TargetType target = Enum.valueOf(Move.TargetType.class,object.get("target").getAsString());
 			if (priority >= 0)
 				priority++; // Prevent Zero in priority
 			else
@@ -119,7 +119,7 @@ public final class SharedInformation {
 			String damageClass = object.get("category").getAsString();
 			Move.MoveKind kind = Enum.valueOf(MoveKind.class, damageClass);
 			int nr=object.get("num").getAsInt();
-			final Move mv = new Move(nr, name, power, pp, accuracy, priority, type, kind, null);
+			final Move mv = new Move(nr, name, power, pp, accuracy, priority, type, kind, target);
 			moves.put(nr,factory.create(mv));
 		}
 	}
