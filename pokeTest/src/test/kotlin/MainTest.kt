@@ -61,7 +61,7 @@ public class MainTest{
                 val factor=7.0/8.0
                 simulator.anyOrder().attack().attack().assert(HPModifiedAssertion(factor)).attack().attack().assertNoDamage().assertNoDamage().assert(HPModifiedAssertion(factor)).execute(5)
         }
-        //@Test
+        @Test
         public fun assertBattleWithFlying(){
                 val server=TestableServer()
                 val FLY_ID=19;
