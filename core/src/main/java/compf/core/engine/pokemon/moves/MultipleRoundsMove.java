@@ -13,7 +13,7 @@ public class MultipleRoundsMove extends Move {
 
     @Override
     public void init(Schedule schedule, int attacker, int defender) {
-        int rnd = _min + MyObject.RNG.nextInt(_max - _min);
+        int rnd = _min + MyObject.getRNG().randomNumber(_max - _min,this.getClass());
         for (int i = 1; i < rnd; i++) {
             super.init(schedule, attacker, defender, i);
         }

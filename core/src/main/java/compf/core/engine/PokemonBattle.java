@@ -32,7 +32,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 		var team = new Pokemon[6];
 		for (int i = 0; i < 6; i++) {
 			team[i] = new Pokemon(SharedInformation.Instance
-					.getPokedexEntry(1 + MyObject.RNG.nextInt(SharedInformation.PokemonCount - 1)));
+					.getPokedexEntry(1 + MyObject.getRNG().randomNumber(0,SharedInformation.PokemonCount - 1,PokemonBattle.class)));
 		}
 		return team;
 	}
@@ -200,7 +200,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 				if (arg0.getStat(5) < arg1.getStat(5))
 					return +1;
 				else
-					return MyObject.checkPerc(50) ? +1 : -1;
+					return MyObject.getRNG().checkPerc(50,Comparator.class) ? +1 : -1;
 			}
 
 		});

@@ -6,13 +6,15 @@ public class MyObject {
 	public static class TestSettings{
 		public static boolean IgnoreEffectProbability=false;
 		public static boolean IsTesting=false;
-		public static void makeTrue(){
-			IgnoreEffectProbability=true;
-			IsTesting=true;
+		public static void activateTest(RandomGenerator gen){
+			RNG=gen;
 		}
 	}
-	public static final Random RNG = new Random();
-
+	private static RealRandomGenerator realRNG=new RealRandomGenerator();
+	private static  RandomGenerator RNG = realRNG;
+	public static RandomGenerator getRNG(){
+		return RNG;
+	}
 	public static void nop() {
 		// TODO Auto-generated method stub
 
@@ -33,17 +35,7 @@ public class MyObject {
 		}
 	}
 
-	public static int getPerc() {
-		return MyObject.RNG.nextInt(101);
-	}
-
-	public static boolean checkPerc(int upTo) {
-		return getPerc() <= upTo;
-	}
-
-	public static int randomNumber(int fromInc, int toExc) {
-		return RNG.nextInt(toExc - fromInc) + fromInc;
-	}
+	
 
 	public static byte[] getIndices(short index) {
 		byte b1 = (byte) (index >> 8);

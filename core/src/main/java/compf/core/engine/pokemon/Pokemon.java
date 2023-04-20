@@ -89,17 +89,17 @@ public class Pokemon extends PokedexEntry {
         super._type1 = entry._type1;
         super._type2 = entry._type2 == null ? Type.Empty : entry._type2;
         _lvl = level;
-        _nature = Nature.values()[MyObject.RNG.nextInt(25)];
-        _gender = MyObject.randomNumber(0, 2) == 0 ? Gender.Male : Gender.Female;
+        _nature = Nature.values()[MyObject.getRNG().randomNumber(25,this.getClass())];
+        _gender = MyObject.getRNG().randomNumber(0, 2,this.getClass()) == 0 ? Gender.Male : Gender.Female;
         super._baseStats = entry._baseStats;
         for (int i = 0; i < 6; i++) {
-            _ivs[i] = MyObject.RNG.nextInt(32);
+            _ivs[i] = MyObject.getRNG().randomNumber(32,this.getClass());
             _evs[i] = 0;
 
             updateStat(i);
             if (i < 4) {
                 _moves[i] = SharedInformation.Instance
-                        .getMove(1 + MyObject.RNG.nextInt(SharedInformation.MovesCount - 1));
+                        .getMove(1 + MyObject.getRNG().randomNumber(SharedInformation.MovesCount - 1,this.getClass()));
                 if (_moves[i] == null) {
                     _moves[i] = SharedInformation.Instance.getMove(1);
                 }

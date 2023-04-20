@@ -46,7 +46,7 @@ public class Schedule {
 			if (att.getMoveIndex(move) == -1) {
 				MyObject.nop();
 			}
-			if (MyObject.checkPerc(accuracy)) {
+			if (MyObject.getRNG().checkPerc(accuracy,this.getClass())) {
 				dmgInf = move.execute(this);
 				att.changeMovePP(att.getMoveIndex(move), -1);
 				_dmg = dmgInf;
@@ -154,13 +154,11 @@ public class Schedule {
 		var resultOptional = _internList.stream().filter((obj) -> !obj._executed && obj._round == _currRound)
 				.sorted(_comp).findFirst();
 		var result = resultOptional.orElseThrow();
-		System.out.println("get next " + result._move.getName() + " " + result._round);
 		result._executed = true;
 
 		for (var s : _internList) {
 			System.out.println(s);
 		}
-		System.out.println("end Schedulep#############################");
 		return result;
 	}
 
@@ -215,7 +213,7 @@ public class Schedule {
 				else if (att1.getStat(5) < att2.getStat(5))
 					return +1;
 				else {
-					int rndVal = MyObject.RNG.nextInt(1);
+					int rndVal = MyObject.getRNG().randomNumber(1,ScheduleItemComparator.class);
 					if (rndVal == 0)
 						return -1;
 					else

@@ -47,7 +47,7 @@ public class BotInterface extends SimpleIOInterface {
     }
 
     public PlayerInput requestPlayerInput(short pkmnIndex) {
-        short move = (short) MyObject.randomNumber(0, this._player.getPokemon(pkmnIndex).getValidMovesCount());
+        short move = (short) MyObject.getRNG().randomNumber(0, this._player.getPokemon(pkmnIndex).getValidMovesCount(),BotInterface.class);
         return new PlayerInput.AttackInput(pkmnIndex, move, (short) 0, (short) 0, _player.getPlayerId());
     }
 

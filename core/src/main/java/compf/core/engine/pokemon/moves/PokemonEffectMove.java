@@ -23,7 +23,7 @@ public class PokemonEffectMove extends Move {
 	@Override
 	public DamageInformation execute(Schedule.ScheduleItem item) {
 		DamageInformation dmgInf = super.execute(item);
-		if (MyObject.checkPerc(_perc)) {
+		if (MyObject.getRNG().checkPerc(_perc,this.getClass())) {
 			var def = item._battle.getPokemon(item._defender);
 			PokemonBattleEffect attEffect = null, defEffect = null;
 			try {

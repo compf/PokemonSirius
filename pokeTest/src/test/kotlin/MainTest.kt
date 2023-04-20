@@ -3,6 +3,7 @@
 import compf.core.engine.pokemon.Nature
 import compf.core.engine.pokemon.PokedexEntry
 import compf.core.engine.pokemon.effects.BurnedStateCondition
+import compf.core.engine.pokemon.moves.Move
 import compf.core.engine.SharedInformation
 import compf.core.networking.BattleServer
 import compf.core.etc.MyObject
@@ -14,8 +15,13 @@ public class MainTest{
                 @BeforeAll
                 @JvmStatic
                 public fun init(){
-                        MyObject.TestSettings.makeTrue()
+                        MyObject.TestSettings.activateTest(createDefaultDeterministicRandomGenerator())
                         SharedInformation.Instance.init()
+                }
+                public fun createDefaultDeterministicRandomGenerator():DeterministicRandomGenerator{
+                        val gen=DeterministicRandomGenerator()
+                        gen.addDeterministicValue( Move::class.java, 15)
+                        return gen
                 }
         }
         

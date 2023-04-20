@@ -14,7 +14,7 @@ public class MultipleAttacksMove extends Move {
 
     @Override
     public DamageInformation execute(ScheduleItem item) {
-        int rounds = MyObject.randomNumber(_min, _max);
+        int rounds = MyObject.getRNG().randomNumber(_min, _max,this.getClass());
         int totalDamage = 0;
         for (int i = 0; i < rounds; i++) {
             totalDamage += super.execute(item).getDamage();

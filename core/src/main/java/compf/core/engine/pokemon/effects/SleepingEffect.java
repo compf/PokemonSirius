@@ -9,7 +9,7 @@ public class SleepingEffect extends PokemonBattleEffect {
 
     public SleepingEffect(Pokemon pkmn) {
         super(pkmn);
-        _rounds = MyObject.randomNumber(2, 6);
+        _rounds = MyObject.getRNG().randomNumber(2, 6,this.getClass());
 
     }
 

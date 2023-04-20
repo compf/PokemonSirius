@@ -14,7 +14,7 @@ public class ProtectionEffect extends PokemonBattleEffect {
     @Override
     public void defend(Object... obj) {
         DamageInformation inf = (DamageInformation) obj[0];
-        if (MyObject.RNG.nextInt(256) < _perc) {
+        if (MyObject.getRNG().randomNumber(256,this.getClass()) < _perc) {
             inf.modifyDamage(0);
             disable();
             _perc /= 2;

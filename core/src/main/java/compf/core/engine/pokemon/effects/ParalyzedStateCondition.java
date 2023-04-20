@@ -19,7 +19,7 @@ public class ParalyzedStateCondition extends PokemonBattleEffect {
 	@Override
 	public void attack(Object... obj) {
 		DamageInformation dmg = (DamageInformation) obj[0];
-		if (MyObject.checkPerc(20)) {
+		if (MyObject.getRNG().checkPerc(20,this.getClass())) {
 			addMessage(dmg.getAttacker().toString() + " failed due to Paralysis");
 			dmg.modifyDamage(0);
 			disable();

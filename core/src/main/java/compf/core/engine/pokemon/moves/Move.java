@@ -113,9 +113,7 @@ public class Move implements Serializable {
 	}
 
 	private int getCriticalHitFactor() {
-		if (MyObject.TestSettings.IgnoreEffectProbability)
-			return 1;
-		return MyObject.RNG.nextInt(100) < 15 ? 2 : 1;
+		return MyObject.getRNG().randomNumber(100,this.getClass()) < 15 ? 2 : 1;
 	}
 
 	public int calculateDamage(Pokemon att, Pokemon def) {
@@ -130,7 +128,7 @@ public class Move implements Serializable {
 		} else
 			return 0;
 		double d2 = d1 * _power * (attValue / defValue) / 50 + 2;
-		double d3 = d2 * (getCriticalHitFactor()) * (0.85 + MyObject.RNG.nextInt(16) / 100.0);
+		double d3 = d2 * (getCriticalHitFactor()) * (0.85 + MyObject.getRNG().randomNumber(16,this.getClass()) / 100.0);
 		double d4 = d3 * getEffectiveness(def, _type)
 				* (att.getType1() == _type || att.getType2() == _type ? 1.5 : 1.0);
 		return (int) d4;
