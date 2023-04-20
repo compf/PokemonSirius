@@ -195,7 +195,7 @@ public class Schedule {
 		return _currRound;
 	}
 
-	private static class ScheduleItemComparator implements Comparator<ScheduleItem> {
+	public static class ScheduleItemComparator implements Comparator<ScheduleItem> {
 		// Note: this comparator imposes orderings that are inconsistent with equals."
 		@Override
 		public int compare(ScheduleItem o1, ScheduleItem o2) {
@@ -213,7 +213,7 @@ public class Schedule {
 				else if (att1.getStat(5) < att2.getStat(5))
 					return +1;
 				else {
-					int rndVal = MyObject.getRNG().randomNumber(1,ScheduleItemComparator.class);
+					int rndVal = MyObject.getRNG().randomNumber(2,ScheduleItemComparator.class);
 					if (rndVal == 0)
 						return -1;
 					else

@@ -5,14 +5,23 @@ public class DeterministicRandomGenerator: RealRandomGenerator(){
         deterministicMap.put(type, value);
     }
     public override fun  getPerc(caller: Class<*> ) :Int {
+        if(deterministicMap.containsKey(caller)){
+            return deterministicMap.get(caller) as Int
+        }
 		return super.getPerc(caller);
 	}
 
 	public  override fun checkPerc( upTo:Int, caller:Class<*>): Boolean {
-		return super.checkPerc(upTo, caller)
+        if(deterministicMap.containsKey(caller)){
+            return deterministicMap.get(caller) as Boolean
+        }
+        return super.checkPerc(upTo, caller)
 	}
 
 	public  override fun  randomNumber( fromInc:Int,  toExc:Int,caller:Class<*> ):Int {
-		return super.randomNumber(fromInc, toExc, caller)
+        if(deterministicMap.containsKey(caller)){
+            return deterministicMap.get(caller) as Int
+        }
+        return super.randomNumber(fromInc, toExc, caller)
 	} 
 }
