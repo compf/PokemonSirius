@@ -3,6 +3,7 @@ package compf.core.engine.pokemon.moves;
 import java.io.Serializable;
 
 import compf.core.engine.pokemon.Pokemon;
+import compf.core.engine.pokemon.PokemonTypeHolder;
 import compf.core.engine.pokemon.Type;
 import compf.core.etc.MyObject;
 
@@ -91,7 +92,7 @@ public class Move implements Serializable {
 		return false;
 	}
 
-	public static double getEffectiveness(Pokemon def, Type type) {
+	public static double getEffectiveness(PokemonTypeHolder def, Type type) {
 
 		int row = type.getValue() - 1;
 		if (def.getType2() == Type.Empty || def.getType2() == null) {

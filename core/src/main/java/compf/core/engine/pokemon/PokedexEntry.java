@@ -2,7 +2,7 @@ package compf.core.engine.pokemon;
 
 import java.io.Serializable;
 
-public class PokedexEntry implements Serializable, PokemonStat {
+public class PokedexEntry implements Serializable, PokemonStat,PokemonTypeHolder {
 	/**
 	 * 
 	 */
