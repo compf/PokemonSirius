@@ -29,8 +29,12 @@ public final class SharedInformation {
 
 	public static final int PokemonCount = 1020;
 	public static final int MovesCount = PokemonCount ;
-	private HashMap<Integer,PokedexEntry> pokemon = new HashMap<>(PokemonCount);
-	private HashMap<Integer,Move> moves =  new HashMap<>(MovesCount);
+	private HashMap<Integer,PokedexEntry> nrPokemon = new HashMap<>(PokemonCount);
+	private HashMap<String,PokedexEntry> namePokemon = new HashMap<>(PokemonCount);
+
+	private HashMap<Integer,Move> nrMove =  new HashMap<>(MovesCount);
+	private HashMap<String,Move> nameMove =  new HashMap<>(MovesCount);
+
 	public static final SharedInformation Instance = new SharedInformation();
 
 	/**
@@ -44,7 +48,7 @@ public final class SharedInformation {
 
 		try {
 
-			
+			System.out.println(System.getProperty("user.dir"));
 			try(var reader=new FileReader("lib/pokedex.json")){
 				JsonObject convertedObject = new Gson().fromJson(reader, JsonObject.class);
 				initPokemon(convertedObject);
@@ -55,7 +59,7 @@ public final class SharedInformation {
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new Error(e.getMessage());
 		}
 	}
 	private boolean shallExclude(JsonObject object ){
@@ -88,7 +92,9 @@ public final class SharedInformation {
 			sdef = baseStats.get("spd").getAsInt();
 			speed = baseStats.get("spe").getAsInt();
 			int nr=object.get("num").getAsInt();
-			pokemon.put(nr, new PokedexEntry(nr, name, type1, type2, height, weight, hp, att, def, satt, sdef, speed));
+			var entry=new PokedexEntry(nr, name, type1, type2, height, weight, hp, att, def, satt, sdef, speed);
+			nrPokemon.put(nr,entry );
+			namePokemon.put(name,entry);
 		}
 
 	}
@@ -120,16 +126,24 @@ public final class SharedInformation {
 			Move.MoveKind kind = Enum.valueOf(MoveKind.class, damageClass);
 			int nr=object.get("num").getAsInt();
 			final Move mv = new Move(nr, name, power, pp, accuracy, priority, type, kind, target);
-			moves.put(nr,factory.create(mv));
+			nrMove.put(nr,factory.create(mv));
+			nameMove.put(name,mv);
 		}
 	}
 
 	public PokedexEntry getPokedexEntry(int nr) {
-		return pokemon.get(nr );
+		return nrPokemon.get(nr );
+	}
+	public PokedexEntry getPokedexEntry(String name) {
+		System.out.println("entry "+name);
+		return namePokemon.get(name);
 	}
 
 	public Move getMove(int nr) {
-		return moves.get(nr);
+		return nrMove.get(nr);
+	}
+	public Move getMove(String name) {
+		return nameMove.get(name);
 	}
 
 }

@@ -3,7 +3,7 @@ apply plugin: 'application'
 [compileJava]*.options*.encoding = 'UTF-8'
 eclipse.project.name = appName + '-prototype'
 sourceCompatibility="$javaVersion"
-mainClassName = 'compf.prototype.SinglePlayerAgainstBotProtytype'
+//mainClassName = 'compf.prototype.SinglePlayerAgainstBotProtytype'
 
 
 dependencies {
@@ -29,9 +29,9 @@ jar {
 		exclude('META-INF/INDEX.LIST', 'META-INF/maven/**')
 	}
 // setting the manifest makes the JAR runnable.
-	manifest {
+	/*manifest {
 		attributes 'Main-Class': project.mainClassName
-	}
+	}*/
 // this last step may help on some OSes that need extra instruction to make runnable JARs.
 	doLast {
 		file(archiveFile).setExecutable(true, false)
