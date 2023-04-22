@@ -69,7 +69,7 @@ public class MyObject {
 
 	public static <T> int indexOf(T[] arr, T val) {
 		for (int i = 0; i < arr.length; i++) {
-			if (arr[i] == val) {
+			if (arr[i]==val || arr[i].equals( val)) {
 				return i;
 			}
 		}

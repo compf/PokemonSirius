@@ -3,9 +3,12 @@
  */
 package teambuilder
 import compf.core.engine.pokemon.PokePasteParser;
+import compf.core.engine.pokemon.PokemonStat
+import compf.core.engine.pokemon.Nature
 import compf.core.engine.SharedInformation
 import kotlin.test.Test
 import kotlin.test.assertTrue
+import kotlin.test.assertEquals
 import org.junit.jupiter.api.BeforeAll
 
 class LibraryTest {
@@ -20,18 +23,27 @@ class LibraryTest {
     @Test fun testPokePasteParser() {
         SharedInformation.Instance.init()
        val input=
-"""metagross @ Weakness Policy  
+"""Metagross @ Weakness Policy  
 Ability: Clear Body  
 Level: 50  
 EVs: 252 HP / 252 Atk / 4 SpD  
 Adamant Nature  
-- protect  
+- Protect  
 - Iron Head  
 - Ice Punch  
 - Stomping Tantrum  
 """;
        val parser=PokePasteParser(input)
 
-       parser.parse()
+       val pkmn=parser.parse()
+       assertEquals(252,pkmn.getEV(PokemonStat.HP))
+       assertEquals(252,pkmn.getEV(PokemonStat.ATT))
+       assertEquals(pkmn.getEV(PokemonStat.SDEF),4)
+       assertEquals(Nature.Hardy, pkmn.nature)
+       assertEquals(50, pkmn.level)
+       val finder=ThreatFinder(pkmn)
+       val result=finder.findThreats(1.0)
+       println(result.size)
+
     }
 }

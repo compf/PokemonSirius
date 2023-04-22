@@ -46,7 +46,7 @@ public class PokePasteParser {
             else if(lines[i].startsWith("Level")){
                level=Integer.parseInt(lines[i].split(":")[1].strip());
             }
-            else if(lines[i].startsWith("Evs")){
+            else if(lines[i].startsWith("EVs")){
                 evs=parseStatLine(lines[i], 0);
              }
              else if(lines[i].startsWith("Ivs")){
@@ -57,18 +57,18 @@ public class PokePasteParser {
              }
              else if(lines[i].startsWith("-")){
                 String move=lines[i].substring(2).strip();
-                moves[MyObject.indexOf(moves, null)]=SharedInformation.Instance.getMove(move);
-                System.out.println("Move " +move +moves[0]);
+                int moveIndex=MyObject.indexOf(moves, null);
+                moves[moveIndex]=SharedInformation.Instance.getMove(move);
+                System.out.println("Move " +move );
              }
         }
         int nr=SharedInformation.Instance.getPokedexEntry(firstLine.species).getNr();
-        return new Pokemon(level, nr, evs, ivs, nature, moves);
+        return new Pokemon(nr, level, evs, ivs, nature, moves);
     }
     private int[] parseStatLine(String line,int defaultValue){
         int[] values=new int[6];
         Arrays.fill(values,defaultValue);
-        String[] statsSplitted=line.split("/");
-
+        String[] statsSplitted=line.substring(5).split("/");
         for(String valStatName:statsSplitted){
             String[] splitted=valStatName.strip().split(" ");
             values[MyObject.indexOf(statNames, splitted[1])]=Integer.parseInt(splitted[0]);

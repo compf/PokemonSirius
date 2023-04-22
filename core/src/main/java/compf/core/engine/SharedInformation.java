@@ -92,9 +92,10 @@ public final class SharedInformation {
 			sdef = baseStats.get("spd").getAsInt();
 			speed = baseStats.get("spe").getAsInt();
 			int nr=object.get("num").getAsInt();
-			var entry=new PokedexEntry(nr, name, type1, type2, height, weight, hp, att, def, satt, sdef, speed);
+			String realName=object.get("name").getAsString();
+			var entry=new PokedexEntry(nr, realName, type1, type2, height, weight, hp, att, def, satt, sdef, speed);
 			nrPokemon.put(nr,entry );
-			namePokemon.put(name,entry);
+			namePokemon.put(realName,entry);
 		}
 
 	}
@@ -125,9 +126,10 @@ public final class SharedInformation {
 			String damageClass = object.get("category").getAsString();
 			Move.MoveKind kind = Enum.valueOf(MoveKind.class, damageClass);
 			int nr=object.get("num").getAsInt();
-			final Move mv = new Move(nr, name, power, pp, accuracy, priority, type, kind, target);
+			String realName=object.get("name").getAsString();
+			final Move mv = new Move(nr, realName, power, pp, accuracy, priority, type, kind, target);
 			nrMove.put(nr,factory.create(mv));
-			nameMove.put(name,mv);
+			nameMove.put(realName,mv);
 		}
 	}
 
@@ -135,7 +137,6 @@ public final class SharedInformation {
 		return nrPokemon.get(nr );
 	}
 	public PokedexEntry getPokedexEntry(String name) {
-		System.out.println("entry "+name);
 		return namePokemon.get(name);
 	}
 

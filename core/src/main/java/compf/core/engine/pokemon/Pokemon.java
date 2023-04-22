@@ -35,7 +35,15 @@ public class Pokemon extends PokedexEntry {
     public void setPlayer(Player pl) {
         _player = pl;
     }
-
+    public int getEV(int pos){
+        return _evs[pos];
+    }
+    public int getIV(int pos){
+        return _ivs[pos];
+    }
+    public Nature getNature(){
+        return _nature;
+    }
     private BattleEffectCollection _effects = new BattleEffectCollection();
 
     public BattleEffectCollection getEffects() {
