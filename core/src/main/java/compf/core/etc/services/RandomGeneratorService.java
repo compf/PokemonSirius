@@ -1,6 +1,6 @@
-package compf.core.etc;
+package compf.core.etc.services;
 
-public interface RandomGenerator {
+public interface RandomGeneratorService {
 
 	public  boolean checkPerc(int upTo,Object callerInfo);
 

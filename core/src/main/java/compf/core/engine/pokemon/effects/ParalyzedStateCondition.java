@@ -3,6 +3,7 @@ package compf.core.engine.pokemon.effects;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.moves.DamageInformation;
 import compf.core.etc.MyObject;
+import compf.core.etc.services.SharedInformation;
 
 public class ParalyzedStateCondition extends PokemonBattleEffect {
 
@@ -19,7 +20,7 @@ public class ParalyzedStateCondition extends PokemonBattleEffect {
 	@Override
 	public void attack(Object... obj) {
 		DamageInformation dmg = (DamageInformation) obj[0];
-		if (MyObject.getRNG().checkPerc(20,this.getClass())) {
+		if (SharedInformation.Instance.getRNG().checkPerc(20,this.getClass())) {
 			addMessage(dmg.getAttacker().toString() + " failed due to Paralysis");
 			dmg.modifyDamage(0);
 			disable();

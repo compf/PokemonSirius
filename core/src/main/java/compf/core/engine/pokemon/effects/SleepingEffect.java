@@ -3,13 +3,14 @@ package compf.core.engine.pokemon.effects;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.moves.DamageInformation;
 import compf.core.etc.MyObject;
+import compf.core.etc.services.SharedInformation;
 
 public class SleepingEffect extends PokemonBattleEffect {
     int _rounds;
 
     public SleepingEffect(Pokemon pkmn) {
         super(pkmn);
-        _rounds = MyObject.getRNG().randomNumber(2, 6,this.getClass());
+        _rounds = SharedInformation.Instance.getRNG().randomNumber(2, 6,this.getClass());
 
     }
 

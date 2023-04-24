@@ -1,6 +1,6 @@
 package compf.core.engine.pokemon.moves;
 
-import compf.core.etc.MyObject;
+import compf.core.etc.services.SharedInformation;
 
 public class MultipleRoundsMove extends Move {
     private int _max, _min;
@@ -13,7 +13,7 @@ public class MultipleRoundsMove extends Move {
 
     @Override
     public void init(Schedule schedule, int attacker, int defender) {
-        int rnd = _min + MyObject.getRNG().randomNumber(_max - _min,this.getClass());
+        int rnd = _min + SharedInformation.Instance.getRNG().randomNumber(_max - _min,this.getClass());
         for (int i = 1; i < rnd; i++) {
             super.init(schedule, attacker, defender, i);
         }

@@ -1,8 +1,8 @@
-package compf.core.etc;
+package compf.core.etc.services;
 
 import java.util.Random;
 
-public class RealRandomGenerator implements RandomGenerator {
+public class RealRandomGeneratorService implements RandomGeneratorService {
     private Random RNG=new Random();
 
 

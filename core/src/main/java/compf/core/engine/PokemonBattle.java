@@ -15,7 +15,7 @@ import compf.core.engine.pokemon.moves.MoveFactory;
 import compf.core.engine.pokemon.moves.Schedule;
 import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
 import compf.core.etc.MyObject;
-
+import compf.core.etc.services.SharedInformation;
 public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 
 	Schedule _schedule;
@@ -31,8 +31,8 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 	public static Pokemon[] createRandomTeam() {
 		var team = new Pokemon[6];
 		for (int i = 0; i < 6; i++) {
-			team[i] = new Pokemon(SharedInformation.Instance
-					.getPokedexEntry(1 + MyObject.getRNG().randomNumber(0,SharedInformation.PokemonCount - 1,PokemonBattle.class)));
+			team[i] = new Pokemon(SharedInformation.Instance.getPokedexEntryService()
+			.get(1 + SharedInformation.Instance.getRNG().randomNumber(0,SharedInformation.Instance.getPokedexEntryService().getCount() - 1,PokemonBattle.class)));
 		}
 		return team;
 	}
@@ -200,7 +200,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 				if (arg0.getStat(5) < arg1.getStat(5))
 					return +1;
 				else
-					return MyObject.getRNG().checkPerc(50,Comparator.class) ? +1 : -1;
+					return SharedInformation.Instance.getRNG().checkPerc(50,Comparator.class) ? +1 : -1;
 			}
 
 		});

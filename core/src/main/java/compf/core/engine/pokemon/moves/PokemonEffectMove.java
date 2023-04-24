@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.effects.PokemonBattleEffect;
 import compf.core.etc.MyObject;
+import compf.core.etc.services.SharedInformation;
 
 public class PokemonEffectMove extends Move {
 	private Class<?> _on_attacker, _on_defender;
@@ -15,15 +16,12 @@ public class PokemonEffectMove extends Move {
 		_on_attacker = onAttacker;
 		_on_defender = onDefender;
 		_perc = perc;
-		if(MyObject.TestSettings.IgnoreEffectProbability){
-			_perc=100;
-		}
 	}
 
 	@Override
 	public DamageInformation execute(Schedule.ScheduleItem item) {
 		DamageInformation dmgInf = super.execute(item);
-		if (MyObject.getRNG().checkPerc(_perc,this.getClass())) {
+		if (SharedInformation.Instance.getRNG().checkPerc(_perc,this.getClass())) {
 			var def = item._battle.getPokemon(item._defender);
 			PokemonBattleEffect attEffect = null, defEffect = null;
 			try {

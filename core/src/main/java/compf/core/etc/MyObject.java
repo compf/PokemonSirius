@@ -3,18 +3,7 @@ package compf.core.etc;
 import java.util.Random;
 
 public class MyObject {
-	public static class TestSettings{
-		public static boolean IgnoreEffectProbability=false;
-		public static boolean IsTesting=false;
-		public static void activateTest(RandomGenerator gen){
-			RNG=gen;
-		}
-	}
-	private static RealRandomGenerator realRNG=new RealRandomGenerator();
-	private static  RandomGenerator RNG = realRNG;
-	public static RandomGenerator getRNG(){
-		return RNG;
-	}
+
 	public static void nop() {
 		// TODO Auto-generated method stub
 

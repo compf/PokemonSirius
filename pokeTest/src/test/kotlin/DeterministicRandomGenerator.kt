@@ -1,5 +1,7 @@
-import compf.core.etc.RealRandomGenerator;
-public class DeterministicRandomGenerator: RealRandomGenerator(){
+
+
+import compf.core.etc.services.RealRandomGeneratorService
+public class DeterministicRandomGenerator: RealRandomGeneratorService(){
     private val deterministicMap:HashMap<Any,Any> = HashMap()
     public fun addDeterministicValue(callerInfo:Any,value:Any){
         deterministicMap.put(callerInfo, value);

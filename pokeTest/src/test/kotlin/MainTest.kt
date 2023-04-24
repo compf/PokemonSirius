@@ -6,7 +6,6 @@ import compf.core.engine.pokemon.effects.BurnedStateCondition
 import compf.core.engine.pokemon.effects.ParalyzedStateCondition
 import compf.core.engine.pokemon.moves.Move
 import compf.core.engine.pokemon.moves.Schedule
-import compf.core.engine.SharedInformation
 import compf.core.networking.BattleServer
 import compf.core.etc.MyObject
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -14,19 +13,22 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import java.awt.SplashScreen
 import compf.core.etc.CallerInformation
+import compf.core.etc.services.DefaultPokedexEntryService
+import compf.core.etc.services.DefaultMoveService
+import compf.core.etc.services.SharedInformation
 public class MainTest{
         companion object{
+                val generator=DeterministicRandomGenerator()
                 @BeforeAll
                 @JvmStatic
                 public fun init(){
-                        MyObject.TestSettings.activateTest(createDefaultDeterministicRandomGenerator())
-                        SharedInformation.Instance.init()
+                        SharedInformation.Instance.init(DefaultPokedexEntryService("pokedex.json"),
+                        DefaultMoveService("moves.json"),generator)
                 }
                 public fun createDefaultDeterministicRandomGenerator():DeterministicRandomGenerator{
-                        val gen=DeterministicRandomGenerator()
-                        gen.addDeterministicValue( CallerInformation.CriticalHit, false)
-                        gen.addDeterministicValue(Schedule.ScheduleItemComparator::class.java, 0)
-                        return gen
+                        generator.addDeterministicValue( CallerInformation.CriticalHit, false)
+                        generator.addDeterministicValue(Schedule.ScheduleItemComparator::class.java, false)
+                        return generator
                 }
         }
         
@@ -89,7 +91,6 @@ public class MainTest{
                 val enemyPokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(252,252,6,0,0,0), Nature.Hardy, 0, 0, SPLASH_ID)
                 val gen=createDefaultDeterministicRandomGenerator()
                 gen.addDeterministicValue(ParalyzedStateCondition::class.java, true)
-                MyObject.TestSettings.activateTest(gen)
 
                 mePokemon.addEffect(ParalyzedStateCondition(mePokemon))
                 val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)

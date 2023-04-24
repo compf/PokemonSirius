@@ -6,10 +6,10 @@ import java.util.Arrays;
 import java.util.regex.*;
 import org.apache.logging.log4j.core.util.StringEncoder;
 
-import compf.core.engine.SharedInformation;
 import compf.core.engine.pokemon.Pokemon.Gender;
 import compf.core.engine.pokemon.moves.Move;
 import compf.core.etc.MyObject;
+import compf.core.etc.services.SharedInformation;
 
 public class PokePasteParser {
     private String[] lines;
@@ -58,11 +58,11 @@ public class PokePasteParser {
              else if(lines[i].startsWith("-")){
                 String move=lines[i].substring(2).strip();
                 int moveIndex=MyObject.indexOf(moves, null);
-                moves[moveIndex]=SharedInformation.Instance.getMove(move);
+                moves[moveIndex]=SharedInformation.Instance.getMoveService().get(move);
                 System.out.println("Move " +move );
              }
         }
-        int nr=SharedInformation.Instance.getPokedexEntry(firstLine.species).getNr();
+        int nr=SharedInformation.Instance.getPokedexEntryService().get(firstLine.species).getNr();
         return new Pokemon(nr, level, evs, ivs, nature, moves);
     }
     private int[] parseStatLine(String line,int defaultValue){

@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import compf.core.engine.*;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.etc.MyObject;
+import compf.core.etc.services.SharedInformation;;
 
 public class Schedule {
 	public void add(ScheduleItem item) {
@@ -46,7 +47,7 @@ public class Schedule {
 			if (att.getMoveIndex(move) == -1) {
 				MyObject.nop();
 			}
-			if (MyObject.getRNG().checkPerc(accuracy,this.getClass())) {
+			if (SharedInformation.Instance.getRNG().checkPerc(accuracy,this.getClass())) {
 				dmgInf = move.execute(this);
 				att.changeMovePP(att.getMoveIndex(move), -1);
 				_dmg = dmgInf;
@@ -92,7 +93,7 @@ public class Schedule {
 			builder.append('\n');
 			builder.append(_battle.getPokemon(_attacker).toString());
 			builder.append(" used ");
-			builder.append(SharedInformation.Instance.getMove(_id).getName());
+			builder.append(SharedInformation.Instance.getMoveService().get(_id).getName());
 			builder.append(" in round " + this._round + " on ");
 			builder.append(getDefender().toString());
 			if (_dmg != null)
@@ -213,8 +214,8 @@ public class Schedule {
 				else if (att1.getStat(5) < att2.getStat(5))
 					return +1;
 				else {
-					int rndVal = MyObject.getRNG().randomNumber(2,ScheduleItemComparator.class);
-					if (rndVal == 0)
+					boolean tie = SharedInformation.Instance.getRNG().checkPerc(50,ScheduleItemComparator.class);
+					if (tie)
 						return -1;
 					else
 						return +1;

@@ -3,12 +3,12 @@ package compf.core.engine.pokemon;
 import java.nio.ByteBuffer;
 
 import compf.core.engine.Player;
-import compf.core.engine.SharedInformation;
 import compf.core.engine.pokemon.effects.BattleEffectCollection;
 import compf.core.engine.pokemon.effects.ItemEffect;
 import compf.core.engine.pokemon.effects.PokemonBattleEffect;
 import compf.core.engine.pokemon.moves.Move;
 import compf.core.etc.MyObject;
+import compf.core.etc.services.SharedInformation;
 
 public class Pokemon extends PokedexEntry {
 
@@ -76,7 +76,7 @@ public class Pokemon extends PokedexEntry {
     }
 
     public Pokemon(int nr) {
-        this(SharedInformation.Instance.getPokedexEntry(nr), DefaultPokemonLevel);
+        this(SharedInformation.Instance.getPokedexEntryService().get(nr), DefaultPokemonLevel);
     }
 
     private static int DefaultPokemonLevel = 50;
@@ -86,7 +86,7 @@ public class Pokemon extends PokedexEntry {
     }
 
     public Pokemon(int nr, int level) {
-        this(SharedInformation.Instance.getPokedexEntry(nr), level);
+        this(SharedInformation.Instance.getPokedexEntryService().get(nr), level);
     }
 
     public Pokemon(PokedexEntry entry, int level) {
@@ -97,19 +97,19 @@ public class Pokemon extends PokedexEntry {
         super._type1 = entry._type1;
         super._type2 = entry._type2 == null ? Type.Empty : entry._type2;
         _lvl = level;
-        _nature = Nature.values()[MyObject.getRNG().randomNumber(25,this.getClass())];
-        _gender = MyObject.getRNG().randomNumber(0, 2,this.getClass()) == 0 ? Gender.Male : Gender.Female;
+        _nature = Nature.values()[SharedInformation.Instance.getRNG().randomNumber(25,this.getClass())];
+        _gender = SharedInformation.Instance.getRNG().randomNumber(0, 2,this.getClass()) == 0 ? Gender.Male : Gender.Female;
         super._baseStats = entry._baseStats;
         for (int i = 0; i < 6; i++) {
-            _ivs[i] = MyObject.getRNG().randomNumber(32,this.getClass());
+            _ivs[i] = SharedInformation.Instance.getRNG().randomNumber(32,this.getClass());
             _evs[i] = 0;
 
             updateStat(i);
             if (i < 4) {
-                _moves[i] = SharedInformation.Instance
-                        .getMove(1 + MyObject.getRNG().randomNumber(SharedInformation.MovesCount - 1,this.getClass()));
+                _moves[i] = SharedInformation.Instance.getMoveService()
+                        .get(1 + SharedInformation.Instance.getRNG().randomNumber(SharedInformation.Instance.getMoveService().getCount() - 1,this.getClass()));
                 if (_moves[i] == null) {
-                    _moves[i] = SharedInformation.Instance.getMove(1);
+                    _moves[i] = SharedInformation.Instance.getMoveService().get(1);
                 }
                 _movesPP[i] = _moves[i].getPP();
             }
@@ -119,7 +119,7 @@ public class Pokemon extends PokedexEntry {
     }
 
     public Pokemon(int nr, int lvl, int[] evs, int[] ivs, Nature nature, Move[] moves) {
-        PokedexEntry entry = SharedInformation.Instance.getPokedexEntry(nr);
+        PokedexEntry entry = SharedInformation.Instance.getPokedexEntryService().get(nr);
         _name = entry._name;
         _height = entry._height;
         _weight = entry._weight;
@@ -147,7 +147,8 @@ public class Pokemon extends PokedexEntry {
 
     public int getValidMovesCount() {
         int count = 0;
-        for (int i = 0; i < SharedInformation.MovesPerPokemonCount; i++) {
+        final int MovesPerPokemonCount=4;
+        for (int i = 0; i < MovesPerPokemonCount; i++) {
             if (_moves[i] != null) {
                 count++;
             }
@@ -163,7 +164,7 @@ public class Pokemon extends PokedexEntry {
     }
 
     public void setMove(int index, int moveNr) {
-        _moves[index] = SharedInformation.Instance.getMove(moveNr);
+        _moves[index] = SharedInformation.Instance.getMoveService().get(moveNr);
         if (moveNr > 0) {
             _movesPP[index] = _moves[index].getPP();
 

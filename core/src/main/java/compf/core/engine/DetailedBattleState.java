@@ -82,7 +82,8 @@ public class DetailedBattleState implements BattleState {
         boolean finnished = false;
         for (int id : getPlayerIds()) {
             boolean playerFinished = true;
-            for (int i = 0; i < SharedInformation.TeamSize; i++) {
+            final int TeamSize=6;
+            for (int i = 0; i < TeamSize; i++) {
                 int hp = getCurrHp(id, i);
                 playerFinished = playerFinished & hp == 0;
 

@@ -14,9 +14,12 @@ import compf.core.engine.DetailedBattleState;
 import compf.core.engine.Player;
 import compf.core.engine.PlayerInput;
 import compf.core.engine.PokemonBattle;
-import compf.core.engine.SharedInformation;
 import compf.core.engine.pokemon.PokedexEntry;
 import compf.core.engine.pokemon.Pokemon;
+import compf.core.etc.services.DefaultMoveService;
+import compf.core.etc.services.DefaultPokedexEntryService;
+import compf.core.etc.services.RealRandomGeneratorService;
+import compf.core.etc.services.SharedInformation;
 import compf.core.networking.BattleClient;
 import compf.core.networking.BattleServer;
 import compf.core.networking.BotInterface;
@@ -33,8 +36,8 @@ public class SinglePlayerAgainstBotProtytype {
     private static final int BOT_SERVER_PORT = 1998;
     private static  BattleServer server;
     private static BattleClient playerClient,botClient;
-    public static void main(String[] args) {
-        SharedInformation.Instance.init();
+    public static void main(String[] args) throws IOException {
+        SharedInformation.Instance.init(new DefaultPokedexEntryService("pokedex.json"), new DefaultMoveService("moves.json"), new RealRandomGeneratorService());
 
       if(args.length==0 || args[0].contentEquals("consoleRandom")){
         Player botPlayer=new Player((short)1, "Bot",PokemonBattle.createRandomTeam());

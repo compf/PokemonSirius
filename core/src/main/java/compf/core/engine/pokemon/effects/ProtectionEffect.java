@@ -2,7 +2,7 @@ package compf.core.engine.pokemon.effects;
 
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.moves.DamageInformation;
-import compf.core.etc.MyObject;
+import compf.core.etc.services.SharedInformation;
 
 public class ProtectionEffect extends PokemonBattleEffect {
     private int _perc = 256;
@@ -14,7 +14,7 @@ public class ProtectionEffect extends PokemonBattleEffect {
     @Override
     public void defend(Object... obj) {
         DamageInformation inf = (DamageInformation) obj[0];
-        if (MyObject.getRNG().randomNumber(256,this.getClass()) < _perc) {
+        if (SharedInformation.Instance.getRNG().randomNumber(256,this.getClass()) < _perc) {
             inf.modifyDamage(0);
             disable();
             _perc /= 2;

@@ -2,7 +2,7 @@
 
 import compf.core.engine.pokemon.Nature
 import compf.core.engine.pokemon.Pokemon
-import compf.core.engine.SharedInformation
+import compf.core.etc.services.SharedInformation
 
 public class PokemonCreator {
     companion object{
@@ -22,10 +22,10 @@ public class PokemonCreator {
         public val SplashIndex=150
 
         public fun createPokemon(nr:Int,level:Int, ivs:IntArray,evs:IntArray,nature:Nature,abilityId:Int,itemId:Int,moveId:Int):Pokemon{
-            return Pokemon(nr,level,evs,ivs,nature,arrayOf(SharedInformation.Instance.getMove(moveId),null,null,null))
+            return Pokemon(nr,level,evs,ivs,nature,arrayOf(SharedInformation.Instance.moveService.get(moveId),null,null,null))
         }
         public fun createStubPokemon(nr:Int,level:Int, ivs:IntArray,evs:IntArray,nature:Nature,abilityId:Int,itemId:Int):Pokemon{
-            return Pokemon(nr,level,evs,ivs,nature,arrayOf(SharedInformation.Instance.getMove(SplashIndex),null,null,null))
+            return Pokemon(nr,level,evs,ivs,nature,arrayOf(SharedInformation.Instance.moveService.get (SplashIndex),null,null,null))
         }
     }
 }

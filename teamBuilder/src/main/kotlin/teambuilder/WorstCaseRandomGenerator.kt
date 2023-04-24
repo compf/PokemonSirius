@@ -1,7 +1,7 @@
 package teambuilder
 
-import compf.core.etc.RandomGenerator
-public class WorstCaseRandomGenerator :RandomGenerator{
+import compf.core.etc.services.RandomGeneratorService
+public class WorstCaseRandomGenerator :RandomGeneratorService{
 
 
     override fun checkPerc(upTo: Int, callerInfo:Any): Boolean { 

@@ -5,8 +5,10 @@ package teambuilder
 import compf.core.engine.pokemon.PokePasteParser;
 import compf.core.engine.pokemon.PokemonStat
 import compf.core.engine.pokemon.Nature
-import compf.core.engine.SharedInformation
 import compf.core.etc.MyObject
+import compf.core.etc.services.DefaultPokedexEntryService
+import compf.core.etc.services.DefaultMoveService
+import compf.core.etc.services.SharedInformation
 import kotlin.test.Test
 import kotlin.test.assertTrue
 import kotlin.test.assertEquals
@@ -17,8 +19,8 @@ class LibraryTest {
         @BeforeAll
         @JvmStatic
         public fun init(){
-                SharedInformation.Instance.init()
-                MyObject.TestSettings.activateTest(WorstCaseRandomGenerator())
+                SharedInformation.Instance.init(DefaultPokedexEntryService("pokedex.json"),
+                DefaultMoveService("moves.json"),WorstCaseRandomGenerator())
         }
  
 }

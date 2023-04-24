@@ -3,10 +3,9 @@ package compf.core.engine.pokemon.moves;
 import java.io.Serializable;
 import java.util.LinkedList;
 
-import compf.core.engine.SharedInformation;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.effects.BattleEffectCollection;
-
+import compf.core.etc.services.SharedInformation;;
 public class DamageInformation implements Serializable, Cloneable {
 	/**
 	 * 
@@ -96,7 +95,7 @@ public class DamageInformation implements Serializable, Cloneable {
 		builder.append('\n');
 		builder.append(_attacker.toString());
 		builder.append(" used ");
-		builder.append(SharedInformation.Instance.getMove(_moveId).getName());
+		builder.append(SharedInformation.Instance.getMoveService().get(_moveId).getName());
 		builder.append(" on ");
 		builder.append(_defender.toString());
 		builder.append(" which made " + getDamage() + " damage");
