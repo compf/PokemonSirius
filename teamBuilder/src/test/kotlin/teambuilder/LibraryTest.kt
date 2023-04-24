@@ -6,6 +6,7 @@ import compf.core.engine.pokemon.PokePasteParser;
 import compf.core.engine.pokemon.PokemonStat
 import compf.core.engine.pokemon.Nature
 import compf.core.engine.SharedInformation
+import compf.core.etc.MyObject
 import kotlin.test.Test
 import kotlin.test.assertTrue
 import kotlin.test.assertEquals
@@ -17,11 +18,12 @@ class LibraryTest {
         @JvmStatic
         public fun init(){
                 SharedInformation.Instance.init()
+                MyObject.TestSettings.activateTest(WorstCaseRandomGenerator())
         }
  
 }
     @Test fun testPokePasteParser() {
-        SharedInformation.Instance.init()
+        //SharedInformation.Instance.init()
        val input=
 """Metagross @ Weakness Policy  
 Ability: Clear Body  

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import java.awt.SplashScreen
+import compf.core.etc.CallerInformation
 public class MainTest{
         companion object{
                 @BeforeAll
@@ -23,7 +24,7 @@ public class MainTest{
                 }
                 public fun createDefaultDeterministicRandomGenerator():DeterministicRandomGenerator{
                         val gen=DeterministicRandomGenerator()
-                        gen.addDeterministicValue( Move::class.java, 15)
+                        gen.addDeterministicValue( CallerInformation.CriticalHit, false)
                         gen.addDeterministicValue(Schedule.ScheduleItemComparator::class.java, 0)
                         return gen
                 }

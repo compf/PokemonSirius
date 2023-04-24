@@ -5,6 +5,7 @@ import java.io.Serializable;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.PokemonTypeHolder;
 import compf.core.engine.pokemon.Type;
+import compf.core.etc.CallerInformation;
 import compf.core.etc.MyObject;
 
 public class Move implements Serializable {
@@ -114,7 +115,7 @@ public class Move implements Serializable {
 	}
 
 	private int getCriticalHitFactor() {
-		return MyObject.getRNG().randomNumber(100,this.getClass()) < 15 ? 2 : 1;
+		return MyObject.getRNG().checkPerc(15,CallerInformation.CriticalHit) ? 2 : 1;
 	}
 
 	public int calculateDamage(Pokemon att, Pokemon def) {
@@ -129,7 +130,7 @@ public class Move implements Serializable {
 		} else
 			return 0;
 		double d2 = d1 * _power * (attValue / defValue) / 50 + 2;
-		double d3 = d2 * (getCriticalHitFactor()) * (0.85 + MyObject.getRNG().randomNumber(16,this.getClass()) / 100.0);
+		double d3 = d2 * (getCriticalHitFactor()) * (0.85 + MyObject.getRNG().randomNumber(16,CallerInformation.MoveStrengthVariation) / 100.0);
 		double d4 = d3 * getEffectiveness(def, _type)
 				* (att.getType1() == _type || att.getType2() == _type ? 1.5 : 1.0);
 		return (int) d4;

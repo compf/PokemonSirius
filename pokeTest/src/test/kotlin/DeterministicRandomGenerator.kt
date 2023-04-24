@@ -1,27 +1,22 @@
 import compf.core.etc.RealRandomGenerator;
 public class DeterministicRandomGenerator: RealRandomGenerator(){
-    private val deterministicMap:HashMap<Class<*>,Any> = HashMap()
-    public fun addDeterministicValue(type:Class<*>,value:Any){
-        deterministicMap.put(type, value);
+    private val deterministicMap:HashMap<Any,Any> = HashMap()
+    public fun addDeterministicValue(callerInfo:Any,value:Any){
+        deterministicMap.put(callerInfo, value);
     }
-    public override fun  getPerc(caller: Class<*> ) :Int {
-        if(deterministicMap.containsKey(caller)){
-            return deterministicMap.get(caller) as Int
+
+
+	public  override fun checkPerc( upTo:Int, callerInfo:Any): Boolean {
+        if(deterministicMap.containsKey(callerInfo)){
+            return deterministicMap.get(callerInfo) as Boolean
         }
-		return super.getPerc(caller);
+        return super.checkPerc(upTo, callerInfo)
 	}
 
-	public  override fun checkPerc( upTo:Int, caller:Class<*>): Boolean {
-        if(deterministicMap.containsKey(caller)){
-            return deterministicMap.get(caller) as Boolean
+	public  override fun  randomNumber( fromInc:Int,  toExc:Int,callerInfo:Any ):Int {
+        if(deterministicMap.containsKey(callerInfo)){
+            return deterministicMap.get(callerInfo) as Int
         }
-        return super.checkPerc(upTo, caller)
-	}
-
-	public  override fun  randomNumber( fromInc:Int,  toExc:Int,caller:Class<*> ):Int {
-        if(deterministicMap.containsKey(caller)){
-            return deterministicMap.get(caller) as Int
-        }
-        return super.randomNumber(fromInc, toExc, caller)
+        return super.randomNumber(fromInc, toExc, callerInfo)
 	} 
 }
