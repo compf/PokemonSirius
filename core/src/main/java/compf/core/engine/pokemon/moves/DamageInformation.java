@@ -64,6 +64,9 @@ public class DamageInformation implements Serializable, Cloneable {
 
 	}
 
+	public int getMoveId(){
+		return _moveId;
+	}
 	public int getDamage() {
 		return _dmg;
 	}

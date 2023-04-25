@@ -19,7 +19,7 @@ class LibraryTest {
         @BeforeAll
         @JvmStatic
         public fun init(){
-                SharedInformation.Instance.init(DefaultPokedexEntryService("pokedex.json"),
+                SharedInformation.Instance.init(DefaultPokedexEntryService("kanto.json"),
                 DefaultMoveService("moves.json"),WorstCaseRandomGenerator())
         }
  
@@ -27,7 +27,7 @@ class LibraryTest {
     @Test fun testPokePasteParser() {
         //SharedInformation.Instance.init()
        val input=
-"""Metagross @ Weakness Policy  
+"""Pikachu @ Weakness Policy  
 Ability: Clear Body  
 Level: 50  
 EVs: 252 HP / 252 Atk / 4 SpD  
