@@ -22,8 +22,8 @@ public class MainTest{
                 @BeforeAll
                 @JvmStatic
                 public fun init(){
-                        SharedInformation.Instance.init(DefaultPokedexEntryService("pokedex.json"),
-                        DefaultMoveService("moves.json"),generator)
+                        SharedInformation.Instance.init(DefaultPokedexEntryService("pikachu.json"),
+                        DefaultMoveService("kanto_moves.json"),generator)
                 }
                 public fun createDefaultDeterministicRandomGenerator():DeterministicRandomGenerator{
                         generator.addDeterministicValue( CallerInformation.CriticalHit, false)

@@ -1,0 +1,71 @@
+{
+    "pikachu": {
+        "num": 25,
+        "name": "Pikachu",
+        "types": [
+            "Electric"
+        ],
+        "baseStats": {
+            "hp": 35,
+            "atk": 55,
+            "def": 40,
+            "spa": 50,
+            "spd": 50,
+            "spe": 90
+        },
+        "abilities": {
+            "0": "Static",
+            "H": "Lightning Rod"
+        },
+        "heightm": 0.4,
+        "weightkg": 6,
+        "color": "Yellow",
+        "prevo": "Pichu",
+        "evoType": "levelFriendship",
+        "evos": [
+            "Raichu",
+            "Raichu-Alola"
+        ],
+        "eggGroups": [
+            "Field",
+            "Fairy"
+        ],
+        "otherFormes": [
+            "Pikachu-Cosplay",
+            "Pikachu-Rock-Star",
+            "Pikachu-Belle",
+            "Pikachu-Pop-Star",
+            "Pikachu-PhD",
+            "Pikachu-Libre",
+            "Pikachu-Original",
+            "Pikachu-Hoenn",
+            "Pikachu-Sinnoh",
+            "Pikachu-Unova",
+            "Pikachu-Kalos",
+            "Pikachu-Alola",
+            "Pikachu-Partner",
+            "Pikachu-Starter",
+            "Pikachu-World"
+        ],
+        "formeOrder": [
+            "Pikachu",
+            "Pikachu-Original",
+            "Pikachu-Hoenn",
+            "Pikachu-Sinnoh",
+            "Pikachu-Unova",
+            "Pikachu-Kalos",
+            "Pikachu-Alola",
+            "Pikachu-Partner",
+            "Pikachu-Starter",
+            "Pikachu-World",
+            "Pikachu-Rock-Star",
+            "Pikachu-Belle",
+            "Pikachu-Pop-Star",
+            "Pikachu-PhD",
+            "Pikachu-Libre",
+            "Pikachu-Cosplay"
+        ],
+        "canGigantamax": "G-Max Volt Crash",
+        "tier": "NFE"
+    }
+}
