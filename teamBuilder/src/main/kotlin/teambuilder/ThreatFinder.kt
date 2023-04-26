@@ -17,9 +17,8 @@ public class ThreatFinder (val defender:Pokemon){
         if(effect is PokemonBattleEffect){
             val field=PokemonBattleEffect::class.java.getDeclaredField("_pkmn")
             field.isAccessible=true
-            field.set(effect, defender)
+            field.set(effect, pkmn)
         }
-        effect.init(null)
     }
     private fun getMoveKindAttackStat(kind:Move.MoveKind):Int{
         if(kind==Move.MoveKind.Physical)return 1
@@ -48,9 +47,12 @@ public class ThreatFinder (val defender:Pokemon){
                                 if(type==Type.Empty || type==Type.Bird)continue
                                 val mv=ImaginaryMove(power, type, kind)
                                 val attacker=Pokemon(entry.nr, defender.level,evMap[kind],ivs,nature,arrayOf(mv,null,null,null))
-                                applyEffect(effect, defender)
+                                applyEffect(effect, attacker)
                                 if(effect is PokemonBattleEffect){
-                                    attacker.addEffect(effect as PokemonBattleEffect)
+                                    attacker.addEffect(effect )
+                                }
+                                else{
+                                    effect.init(null)
                                 }
                                 
                                 val key=arrayOf(attacker,power,kind,type,nature,effect).joinToString(" ") 
@@ -58,7 +60,7 @@ public class ThreatFinder (val defender:Pokemon){
                                 effect.disable()
                                 val ratio=dmg/(defender.maxHP.toDouble())
                                 if(ratio >= minDamageHPRatio){
-                                    println(key +ratio)
+                                    println(key +" " + ratio)
                                     resultMap.putIfAbsent(key, ratio)
                                 }
                             }
