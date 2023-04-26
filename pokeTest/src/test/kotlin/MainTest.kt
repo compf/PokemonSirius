@@ -24,11 +24,12 @@ public class MainTest{
                 public fun init(){
                         SharedInformation.Instance.init(DefaultPokedexEntryService("pikachu.json"),
                         DefaultMoveService("kanto_moves.json"),generator)
+                        addDeterministicRandomResults()
+
                 }
-                public fun createDefaultDeterministicRandomGenerator():DeterministicRandomGenerator{
+                public fun addDeterministicRandomResults(){
                         generator.addDeterministicValue( CallerInformation.CriticalHit, false)
                         generator.addDeterministicValue(Schedule.ScheduleItemComparator::class.java, false)
-                        return generator
                 }
         }
         
@@ -89,12 +90,13 @@ public class MainTest{
                 val server=TestableServer()
                 val mePokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(252,252,6,0,0,0), Nature.Hardy, 0, 0, CUT_ID)
                 val enemyPokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(252,252,6,0,0,0), Nature.Hardy, 0, 0, SPLASH_ID)
-                val gen=createDefaultDeterministicRandomGenerator()
-                gen.addDeterministicValue(ParalyzedStateCondition::class.java, true)
-
-                mePokemon.addEffect(ParalyzedStateCondition(mePokemon))
-                val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)
-                simulator.thisOrder().attack().attack().assertDamage(0, 0).assertDamage(0, 0).execute(2)
+                generator.addTempDeterministicValue(ParalyzedStateCondition::class.java, true, { 
+                        mePokemon.addEffect(ParalyzedStateCondition(mePokemon))
+                        val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)
+                        simulator.thisOrder().attack().attack().assertDamage(0, 0).assertDamage(0, 0).execute(2)
+                        
+                 })
+               
         }
     
 }

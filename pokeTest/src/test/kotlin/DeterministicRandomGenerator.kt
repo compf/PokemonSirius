@@ -6,6 +6,14 @@ public class DeterministicRandomGenerator: RealRandomGeneratorService(){
     public fun addDeterministicValue(callerInfo:Any,value:Any){
         deterministicMap.put(callerInfo, value);
     }
+    public fun addTempDeterministicValue(callerInfo:Any,value:Any,callback:(() -> Unit)){
+        addDeterministicValue(callerInfo, value)
+        callback()
+        removeDeterministicValue(callerInfo)
+    }
+    public fun removeDeterministicValue(callerInfo:Any){
+        deterministicMap.remove(callerInfo)
+    }
 
 
 	public  override fun checkPerc( upTo:Int, callerInfo:Any): Boolean {

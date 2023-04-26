@@ -94,9 +94,11 @@ public class ThisOrderAssertion: GroupedAssertion(){
         val compList=toCheck as ArrayList<Any>
         for(i in 0 until assertionList.size){
             if(assertionList[i] is GroupedAssertion && !assertionList[i].check(compList)) {
+                println("Assertion " +assertionList[i] +" failed by list" )
                 return false;
             }
             else if(!(assertionList[i] is GroupedAssertion) && !assertionList[i].check(compList[i])){
+                println("Assertion " +assertionList[i] +" failed by "+(compList[i] as BattleAction).Data )
                 return false;
             }
         }
