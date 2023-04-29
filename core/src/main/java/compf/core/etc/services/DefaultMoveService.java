@@ -16,7 +16,8 @@ import compf.core.engine.pokemon.moves.Move.MoveKind;
 public class DefaultMoveService implements MoveService {
 
     private HashMap<Integer,Move> nrMove =  new HashMap<>();
-	private HashMap<String,Move> nameMove =  new HashMap<>();
+	private HashMap<String,Move> realNameMove =  new HashMap<>();
+	private HashMap<String,String> idRealName=new HashMap<>();
     public DefaultMoveService(String resource) throws IOException{
         try(var reader=new InputStreamReader(SharedInformation.Instance.getResource(resource))){
             JsonObject convertedObject = new Gson().fromJson(reader, JsonObject.class);
@@ -34,7 +35,11 @@ public class DefaultMoveService implements MoveService {
 		return nrMove.get(nr);
 	}
 	public Move get(String name) {
-		return nameMove.get(name);
+		return realNameMove.get(name);
+	}
+	@Override
+	public String getRealName(String id) {
+		return idRealName.get(id);
 	}
     @Override
     public Iterator<Move> iterator() {
@@ -43,8 +48,8 @@ public class DefaultMoveService implements MoveService {
 
 	private void initMoves(JsonObject fullData)  {
 		final MoveFactory factory = new MoveFactory();
-		for (String name:fullData.keySet()) {
-			var object=fullData.get(name).getAsJsonObject();
+		for (String id:fullData.keySet()) {
+			var object=fullData.get(id).getAsJsonObject();
 			Type type = Enum.valueOf(Type.class, object.get("type").getAsString());
 			if (type == null)
 				type = Type.Normal;
@@ -70,7 +75,8 @@ public class DefaultMoveService implements MoveService {
 			String realName=object.get("name").getAsString();
 			final Move mv = new Move(nr, realName, power, pp, accuracy, priority, type, kind, target);
 			nrMove.put(nr,factory.create(mv));
-			nameMove.put(realName,mv);
+			idRealName.put(id, realName);
+			realNameMove.put(realName,mv);
 		}
 	}
 }

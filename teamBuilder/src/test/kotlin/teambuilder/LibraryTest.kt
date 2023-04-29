@@ -9,6 +9,7 @@ import compf.core.etc.MyObject
 import compf.core.etc.services.DefaultPokedexEntryService
 import compf.core.etc.services.DefaultMoveService
 import compf.core.etc.services.SharedInformation
+import compf.core.etc.services.DefaultLearnsetService
 import kotlin.test.Test
 import kotlin.test.assertTrue
 import kotlin.test.assertEquals
@@ -20,7 +21,7 @@ class LibraryTest {
         @JvmStatic
         public fun init(){
                 SharedInformation.Instance.init(DefaultPokedexEntryService("kanto.json"),
-                DefaultMoveService("moves.json"),WorstCaseRandomGenerator())
+                DefaultMoveService("moves.json"),WorstCaseRandomGenerator(),DefaultLearnsetService("learnsets.json"))
         }
  
 }

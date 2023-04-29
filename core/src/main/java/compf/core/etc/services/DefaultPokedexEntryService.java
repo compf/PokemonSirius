@@ -27,17 +27,21 @@ public class DefaultPokedexEntryService implements PokedexEntryService {
 	}
     @Override
 	public PokedexEntry get(String name) {
-		return namePokemon.get(name);
+		return realNamePokemon.get(name);
 	}
 
 	@Override
 	public int getCount() {
 		return nrPokemon.size();
 	}
-
+	@Override
+	public String getPokemonId(int nr) {
+		return nrId.get(nr);
+	}
 	
     private HashMap<Integer,PokedexEntry> nrPokemon = new HashMap<>();
-	private HashMap<String,PokedexEntry> namePokemon = new HashMap<>();
+	private HashMap<String,PokedexEntry> realNamePokemon = new HashMap<>();
+	private HashMap<Integer,String> nrId=new HashMap<>();
     @Override
     public Iterator<PokedexEntry> iterator() {
        return nrPokemon.values().iterator();
@@ -47,9 +51,9 @@ public class DefaultPokedexEntryService implements PokedexEntryService {
 	}
 	private void initPokemon(JsonObject fullData)  {
 		
-		for(String name:fullData.keySet())
+		for(String id:fullData.keySet())
 		 {
-			var object=fullData.get(name).getAsJsonObject();
+			var object=fullData.get(id).getAsJsonObject();
 			if(shallExclude(fullData)){
 				continue;
 			}
@@ -73,9 +77,10 @@ public class DefaultPokedexEntryService implements PokedexEntryService {
 			speed = baseStats.get("spe").getAsInt();
 			int nr=object.get("num").getAsInt();
 			String realName=object.get("name").getAsString();
+			nrId.put(nr, id);
 			var entry=new PokedexEntry(nr, realName, type1, type2, height, weight, hp, att, def, satt, sdef, speed);
 			nrPokemon.put(nr,entry );
-			namePokemon.put(realName,entry);
+			realNamePokemon.put(realName,entry);
 		}
 
 	}

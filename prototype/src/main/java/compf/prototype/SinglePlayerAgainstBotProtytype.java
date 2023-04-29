@@ -20,6 +20,7 @@ import compf.core.etc.services.DefaultMoveService;
 import compf.core.etc.services.DefaultPokedexEntryService;
 import compf.core.etc.services.RealRandomGeneratorService;
 import compf.core.etc.services.SharedInformation;
+import compf.core.etc.services.StubLearnsetService;
 import compf.core.networking.BattleClient;
 import compf.core.networking.BattleServer;
 import compf.core.networking.BotInterface;
@@ -37,7 +38,8 @@ public class SinglePlayerAgainstBotProtytype {
     private static  BattleServer server;
     private static BattleClient playerClient,botClient;
     public static void main(String[] args) throws IOException {
-        SharedInformation.Instance.init(new DefaultPokedexEntryService("pokedex.json"), new DefaultMoveService("moves.json"), new RealRandomGeneratorService());
+        SharedInformation.Instance.init(new DefaultPokedexEntryService("pokedex.json"), new DefaultMoveService("moves.json"), new RealRandomGeneratorService(),
+        new StubLearnsetService());
 
       if(args.length==0 || args[0].contentEquals("consoleRandom")){
         Player botPlayer=new Player((short)1, "Bot",PokemonBattle.createRandomTeam());

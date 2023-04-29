@@ -16,6 +16,7 @@ import compf.core.etc.CallerInformation
 import compf.core.etc.services.DefaultPokedexEntryService
 import compf.core.etc.services.DefaultMoveService
 import compf.core.etc.services.SharedInformation
+import compf.core.etc.services.StubLearnsetService
 public class MainTest{
         companion object{
                 val generator=DeterministicRandomGenerator()
@@ -23,7 +24,7 @@ public class MainTest{
                 @JvmStatic
                 public fun init(){
                         SharedInformation.Instance.init(DefaultPokedexEntryService("pikachu.json"),
-                        DefaultMoveService("kanto_moves.json"),generator)
+                        DefaultMoveService("kanto_moves.json"),generator,StubLearnsetService())
                         addDeterministicRandomResults()
 
                 }
