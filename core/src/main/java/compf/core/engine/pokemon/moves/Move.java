@@ -166,7 +166,10 @@ public class Move implements Serializable {
 	public TargetType getTarget() {
 		return _target;
 	}
-
+	@Override
+	public String toString() {
+		return getName()+ "(Power="+getPower()+ ", Type="+getType()+")";
+	}
 	public String getName() {
 		return _name;
 	}

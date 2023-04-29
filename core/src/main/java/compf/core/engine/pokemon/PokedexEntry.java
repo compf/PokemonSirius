@@ -37,6 +37,10 @@ public class PokedexEntry implements Serializable, PokemonStat,PokemonTypeHolder
 	public int[] getBaseStats() {
 		return _baseStats;
 	}
+	@Override
+	public String toString() {
+		return getName();
+	}
 
 	public Type getType1() {
 		return _type1;

@@ -28,7 +28,7 @@ class LibraryTest {
     @Test fun testPokePasteParser() {
         //SharedInformation.Instance.init()
        val input=
-"""Pikachu @ Weakness Policy  
+"""Dragonite @ Weakness Policy  
 Ability: Clear Body  
 Level: 50  
 EVs: 252 HP / 252 Atk / 4 SpD  

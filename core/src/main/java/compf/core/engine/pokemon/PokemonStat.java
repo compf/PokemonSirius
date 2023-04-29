@@ -9,4 +9,28 @@ public interface PokemonStat {
 	public static final int SPEED = 5;
 	public static final int ACCURACY = 6;
 	public static final int EVASION = 7;
+	public static String getName(int index){
+		switch(index){
+			case 0:
+			return "HP";
+			case 1:
+			return "ATT";
+			case 2:
+			return "DEf";
+			case 3:
+			return "SATT";
+			case 4:
+			return "SDEF";
+			case 5:
+			return "INIT";
+			case 6:
+			return "ACC";
+			case 7:
+			return "EVAS";
+			default:
+			return null;
+
+
+		}
+	}
 }
