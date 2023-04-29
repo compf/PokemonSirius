@@ -1,5 +1,12 @@
 package compf.core.engine.pokemon;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public enum Nature {
 	Hardy(0, PokemonStat.ATT, PokemonStat.ATT),
 	Lonely(1, PokemonStat.ATT, PokemonStat.DEF),
@@ -47,6 +54,10 @@ public enum Nature {
 
 	public int getLoweringValue() {
 		return _lowerStat;
+	}
+	public static Iterable<Nature> getUniqueNatures(){
+		List<Nature> natures=Arrays.asList(values());
+		return natures;
 	}
 
 	public static Nature find(int val) {

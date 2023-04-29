@@ -28,6 +28,9 @@ public class Move implements Serializable {
 	public Type getType() {
 		return _type;
 	}
+	public MoveKind getKind(){
+		return _kind;
+	}
 
 	public enum MoveKind {
 		Physical, Special, Status

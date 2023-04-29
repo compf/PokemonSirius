@@ -45,8 +45,8 @@ Adamant Nature
        assertEquals(pkmn.getEV(PokemonStat.SDEF),4)
        assertEquals(Nature.Hardy, pkmn.nature)
        assertEquals(50, pkmn.level)
-       val finder=ThreatFinder(pkmn)
-       val result=finder.findThreats(1.0)
+       val finder=ThreatFinder(pkmn,1.0)
+       val result=finder.findThreats()
        println(result.size)
 
     }
