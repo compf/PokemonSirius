@@ -3,12 +3,12 @@ package teambuilder
 import compf.core.engine.pokemon.Nature
 import compf.core.engine.pokemon.PokedexEntry
 import compf.core.engine.pokemon.Pokemon
+import compf.core.engine.pokemon.PokemonStat
 import compf.core.engine.pokemon.effects.BattleEffect
 import compf.core.engine.pokemon.effects.ChoiceItemEffect
 import compf.core.engine.pokemon.effects.PokemonBattleEffect
 import compf.core.engine.pokemon.effects.StubEffect
 import compf.core.engine.pokemon.moves.Move
-import compf.core.engine.pokemon.PokemonStat
 import compf.core.etc.services.SharedInformation
 import kotlin.collections.HashMap
 
@@ -20,9 +20,19 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
             var otherEffect: BattleEffect?,
             var otherMove: Move?
     ) {
-        public override fun toString():String{
-            var statNames=otherEV?.mapIndexed({i,x ->  if (x ==ThreatFinder.H)  i else null})?.filterNotNull()!!.map({i->PokemonStat.getName(i)}).joinToString(",") 
-            return  otherEntry?.toString()+ " "+ otherNature?.toString() +" " + statNames+" "+ otherMove?.toString()
+        public override fun toString(): String {
+            var statNames =
+                    otherEV?.mapIndexed({ i, x -> if (x == ThreatFinder.H) i else null })
+                                    ?.filterNotNull()!!
+                            .map({ i -> PokemonStat.getName(i) })
+                            .joinToString(",")
+            return otherEntry?.toString() +
+                    " " +
+                    otherNature?.toString() +
+                    " " +
+                    statNames +
+                    " " +
+                    otherMove?.toString()
         }
         companion object {
             public fun allNull(): ThreatData {
@@ -30,7 +40,7 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
             }
         }
     }
-    companion object{
+    companion object {
         val H = 252
     }
 
@@ -86,7 +96,9 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
                 SharedInformation.Instance.pokedexEntryService.getPokemonId(
                         threatData.otherEntry!!.nr
                 )
-        for (moveId in SharedInformation.Instance.learnsetService.getMoves(pokemonId)) {
+        val moves= SharedInformation.Instance.learnsetService.getMoves(pokemonId);
+        if(moves==null)return;
+        for (moveId in moves) {
             val moveName = SharedInformation.Instance.moveService.getRealName(moveId)
             val move = SharedInformation.Instance.moveService.get(moveName)
             threatData.otherMove = move
@@ -107,12 +119,13 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
         for (effect in effects) {
             threatData.otherEffect = effect
             val danger = checkThreat(threatData)
-            if (danger >= minDamageHPRatio) {
-                println(threatData.toString()+ " "+danger)
+            if (danger) {
+                counter++
+               // println(threatData.toString() + " " + danger)
             }
         }
     }
-    private fun checkThreat(threatData: ThreatData): Double {
+    private fun checkThreat(threatData: ThreatData): Boolean {
         val ivs = intArrayOf(31, 31, 31, 31, 31, 31)
         var otherPokemon =
                 Pokemon(
@@ -129,9 +142,21 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
         } else {
             threatData.otherEffect!!.init(null)
         }
-        val dmg = threatData.otherMove!!.calculateDamage(otherPokemon, mePokemon)
+        val damageOtherToMe = threatData.otherMove!!.calculateDamage(otherPokemon, mePokemon)
+        var bestMove:Move=mePokemon.moves[0]
+        var bestDamage=0
+        for(myMove in mePokemon.moves.filterNotNull()){
+            val dmg=myMove.calculateDamage(mePokemon, otherPokemon)
+            if(dmg>bestDamage){
+                bestMove=myMove
+                bestDamage=dmg
+            }
+        }
+        if(bestDamage.toDouble()/otherPokemon.maxHP>=minDamageHPRatio && mePokemon.getStat(PokemonStat.SPEED)>otherPokemon.getStat(PokemonStat.SPEED)){
+            return false
+        }
         threatData.otherEffect!!.disable()
-        return dmg.toDouble() / mePokemon.maxHP
+        return damageOtherToMe.toDouble() / mePokemon.maxHP> minDamageHPRatio
     }
     public fun findThreats(): Map<String, Double> {
         val resultMap = HashMap<String, Double>()

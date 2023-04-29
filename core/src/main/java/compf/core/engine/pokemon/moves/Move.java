@@ -98,7 +98,7 @@ public class Move implements Serializable {
 	}
 
 	public static double getEffectiveness(PokemonTypeHolder def, Type type) {
-
+		if(def.getType1()==Type.Bird || def.getType2()==Type.Bird || type==Type.Bird)return 0;
 		int row = type.getValue() - 1;
 		if (def.getType2() == Type.Empty || def.getType2() == null) {
 			int col = def.getType1().getValue() - 1;

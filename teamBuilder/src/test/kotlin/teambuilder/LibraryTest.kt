@@ -20,7 +20,7 @@ class LibraryTest {
         @BeforeAll
         @JvmStatic
         public fun init(){
-                SharedInformation.Instance.init(DefaultPokedexEntryService("kanto.json"),
+                SharedInformation.Instance.init(DefaultPokedexEntryService("pokedex.json"),
                 DefaultMoveService("moves.json"),WorstCaseRandomGenerator(),DefaultLearnsetService("learnsets.json"))
         }
  
