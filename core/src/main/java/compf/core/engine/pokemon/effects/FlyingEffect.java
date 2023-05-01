@@ -16,17 +16,17 @@ public class FlyingEffect extends PokemonBattleEffect {
     }
 
     @Override
-    public void roundEnding(Object... obj) {
+    public void roundEnding(EffectParam param) {
         newRound = true;
     }
 
     @Override
-    public void attack(Object... obj) {
+    public void attack(EffectParam param) {
         System.out.println("Use attack fly");
         if (!(newRound)) {
             System.out.println("Flying killed");
-            DamageInformation inf = (DamageInformation) obj[0];
-            item = (ScheduleItem) obj[1];
+            DamageInformation inf = param.damageInf();
+            item = param.scheduleItem();
             this.dmg = inf.clone();
             inf.kill();
 
@@ -39,8 +39,8 @@ public class FlyingEffect extends PokemonBattleEffect {
     }
 
     @Override
-    public void delayedAttack(Object... inf) {
-        Schedule schedule = (Schedule) inf[0];
+    public void delayedAttack(EffectParam param) {
+        Schedule schedule = param.schedule();
         schedule.addMove(item.getAttackerPos(), item.getDefenderPos(), item.getMove(), 0);
     }
 
@@ -55,10 +55,10 @@ public class FlyingEffect extends PokemonBattleEffect {
     }
 
     @Override
-    public void defend(Object... obj) {
-        DamageInformation inf = (DamageInformation) obj[0];
+    public void defend(EffectParam param) {
+        DamageInformation inf = param.damageInf();
         if (isEnabled()) {
-            inf.modifyDamage(0);
+            inf.kill();
             addMessage(getPokemon() + " is flying and thus not vulnerable");
         }
     }

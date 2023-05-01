@@ -12,31 +12,30 @@ public abstract class BattleEffect extends MyObject implements Serializable {
 		 */
 	private static final long serialVersionUID = 1L;
 
-	public void init(Object... inf) {
+	public void init(EffectParam param) {
 	}
 
-	public void roundBeginning(Object... inf) {
+	public void roundBeginning(EffectParam param) {
 	}
 
-	public void pokemonSwitched(Object... inf) {
+	public void pokemonSwitched(EffectParam param) {
 	}
 
-	public void pokemonDefeated(Object inf) {
+
+
+	public void attack(EffectParam param) {
 	}
 
-	public void attack(Object... inf) {
+	public void defend(EffectParam param) {
 	}
 
-	public void defend(Object... inf) {
-	}
-
-	public void roundEnding(Object... inf) {
+	public void roundEnding(EffectParam param) {
 	}
 
 	private boolean _isEnabled = true;
 	protected BattleAction _action;
 	protected Object _additionalData=null;
-	public void delayedAttack(Object... inf) {
+	public void delayedAttack(EffectParam param) {
 
 	}
 
@@ -63,5 +62,8 @@ public abstract class BattleEffect extends MyObject implements Serializable {
 	}
 
 	public BattleEffect() {
+	}
+
+	public void pokemonDefeated(EffectParam param) {
 	}
 }

@@ -12,8 +12,8 @@ public class ProtectionEffect extends PokemonBattleEffect {
     }
 
     @Override
-    public void defend(Object... obj) {
-        DamageInformation inf = (DamageInformation) obj[0];
+    public void defend(EffectParam param) {
+        DamageInformation inf = param.damageInf();
         if (SharedInformation.Instance.getRNG().randomNumber(256,this.getClass()) < _perc) {
             inf.modifyDamage(0);
             disable();

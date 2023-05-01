@@ -16,8 +16,8 @@ public class FrozenStateCondition extends PokemonBattleEffect {
     private static final long serialVersionUID = 1L;
 
     @Override
-    public void attack(Object... obj) {
-        DamageInformation inf = (DamageInformation) obj[0];
+    public void attack(EffectParam param) {
+        DamageInformation inf = param.damageInf();
         addMessage(getPokemon().toString() + " is frozen and cannot attack");
         inf.kill();
     }

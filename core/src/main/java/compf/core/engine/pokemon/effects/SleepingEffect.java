@@ -15,10 +15,10 @@ public class SleepingEffect extends PokemonBattleEffect {
     }
 
     @Override
-    public void attack(Object... obj) {
+    public void attack(EffectParam param) {
         if (_rounds > 0) {
             _rounds--;
-            DamageInformation dmgInf = (DamageInformation) obj[0];
+            DamageInformation dmgInf = param.damageInf();
             addMessage(dmgInf.getAttacker() + " sleeps");
             dmgInf.kill();
         }

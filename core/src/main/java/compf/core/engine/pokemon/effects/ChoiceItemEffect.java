@@ -18,7 +18,7 @@ public class ChoiceItemEffect extends ItemEffect {
        this._by=by;
     }
     @Override
-    public void init(Object... inf) {
+    public void init(EffectParam param) {
         try {
             Field field=Pokemon.class.getDeclaredField("_stats");
             field.setAccessible(true);
@@ -49,8 +49,8 @@ public class ChoiceItemEffect extends ItemEffect {
 
     }
     @Override
-    public void attack(Object... inf) {
-        var dmg=(DamageInformation)inf[0];
+    public void attack(EffectParam param) {
+        var dmg=param.damageInf();
         if(_lastMoveId==-1 || dmg.getMoveId()==_lastMoveId){
             _lastMoveId=dmg.getMoveId();
         }

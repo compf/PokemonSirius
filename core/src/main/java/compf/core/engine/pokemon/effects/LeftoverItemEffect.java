@@ -9,9 +9,8 @@ public class LeftoverItemEffect extends ItemEffect {
     }
 
     @Override
-    public void roundBeginning(Object... obj) {
+    public void roundBeginning(EffectParam param) {
         getPokemon().modifyCurrHp(1.25);
-        var inf = (DamageInformation) obj[0];
         addMessage("Leftover healed " + getPokemon());
     }
 }

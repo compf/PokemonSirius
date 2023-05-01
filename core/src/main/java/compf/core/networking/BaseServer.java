@@ -29,7 +29,7 @@ public class BaseServer {
 	 * 
 	 * @param <T> The type of the object
 	 * @param out The {@link ObjectOutputStream}
-	 * @param obj The object to be written
+	 * @param The object to be written
 	 * @return A non-null object if successful, else a null value
 	 */
 	protected <T> boolean writeObject(Pipe out, NetworkMessage msg) {

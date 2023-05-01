@@ -8,7 +8,7 @@ import compf.core.engine.pokemon.moves.DamageInformation;
 public class BurnedStateCondition extends PokemonBattleEffect {
 
 	@Override
-	public void init(Object... inf) {
+	public void init(EffectParam param) {
 		getPokemon().changeStatStage(PokemonStat.ATT, -1);
 
 	}
@@ -18,7 +18,7 @@ public class BurnedStateCondition extends PokemonBattleEffect {
 	}
 
 	@Override
-	public void roundEnding(Object... inf) {
+	public void roundEnding(EffectParam param) {
 		int hpBefore=getPokemon().getCurrHP();
 		getPokemon().modifyCurrHp(0.875);
 		int hpAfter=getPokemon().getCurrHP();
@@ -28,7 +28,7 @@ public class BurnedStateCondition extends PokemonBattleEffect {
 	}
 
 	@Override
-	public void pokemonSwitched(Object... inf) {
+	public void pokemonSwitched(EffectParam param) {
 		getPokemon().changeStatStage(PokemonStat.ATT, +1);
 	}
 

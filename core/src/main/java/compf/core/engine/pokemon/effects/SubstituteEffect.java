@@ -11,7 +11,7 @@ public class SubstituteEffect extends PokemonBattleEffect {
     private int _cap = 45;
 
     @Override
-    public void init(Object... obj) {
+    public void init(EffectParam param) {
         if (getPokemon().getCurrHP() > 45) {
             getPokemon().modifyCurrHp(0.75);
         } else {
@@ -22,8 +22,8 @@ public class SubstituteEffect extends PokemonBattleEffect {
     }
 
     @Override
-    public void defend(Object... obj) {
-        DamageInformation inf = (DamageInformation) obj[0];
+    public void defend(EffectParam param) {
+        DamageInformation inf = param.damageInf();
         if (inf.getDamage() <= _cap && _cap > 0) {
             _cap -= inf.getDamage();
             inf.modifyDamage(0);

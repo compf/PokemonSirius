@@ -22,7 +22,6 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 	private BattleEffectCollection _globalEffects = new BattleEffectCollection();
 	private static int _uid;
 	public static PokemonBattle Battle;
-	private BattleRule rule;
 
 	public int getUID() {
 		return _uid++;
@@ -38,7 +37,6 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 	}
 
 	public PokemonBattle(BattleRule rule) {
-		this.rule = rule;
 		this._players = new compf.core.etc.BufferList<>(rule.NumberPlayers);
 		_schedule = new Schedule(this);
 	}
@@ -89,56 +87,54 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 		return new BattleIterator();
 	}
 
-	private void executeEffect(BattleEffect effect, EffectTime time, Object... inf) {
+	private void executeEffect(BattleEffect effect, EffectTime time, EffectParam param) {
 		if (!effect.isEnabled())
 			return;
 		switch (time) {
 			case POKEMON_DEFEATED:
-				effect.pokemonDefeated(inf);
+				effect.pokemonDefeated(param);
 				break;
 			case POKEMON_SWITCHED:
-				effect.pokemonSwitched(inf);
+				effect.pokemonSwitched(param);
 				break;
 			case ROUND_STARTING:
-				effect.roundBeginning(inf);
+				effect.roundBeginning(param);
 				break;
 			case ROUND_ENDING:
-				effect.roundEnding(inf);
+				effect.roundEnding(param);
 				break;
 			case ATTACK:
-				effect.attack(inf);
+				effect.attack(param);
 				break;
 			case DEFEND:
-				effect.defend(inf);
+				effect.defend(param);
 				break;
 			case DELAYED_ATTACK:
-				effect.delayedAttack(inf);
+				effect.delayedAttack(param);
 
 		}
 
 	}
 
-	private void executeEffects(BattleEffectCollection effects, EffectTime time, Object... inf) {
+	private void executeEffects(BattleEffectCollection effects, EffectTime time, EffectParam param) {
 		for (var effect : effects) {
-			executeEffect(effect, time, inf);
+			executeEffect(effect, time, param);
 		}
 		effects.removeIf((obj) -> !obj.isEnabled());
 	}
 
-	private void executeEffects(EffectTime time, Object... inf) {
+	private void executeEffects(EffectTime time, EffectParam param) {
 		for (Pokemon pkmn : this) {
-			executeEffects(pkmn.getEffects(), time, inf);
+			executeEffects(pkmn.getEffects(), time, param);
 		}
 
 	}
 
-	private void executeEffects(Pokemon pkmn, EffectTime time, Object... inf) {
-		executeEffects(pkmn.getEffects(), time, inf);
+	private void executeEffects(Pokemon pkmn, EffectTime time, EffectParam param) {
+		executeEffects(pkmn.getEffects(), time, param);
 	}
 
-	private void executeEffects(PokemonBattle battle, EffectTime time) {
-		executeEffects(battle._globalEffects, time, (Object[]) null);
-	}
+
 
 	protected boolean _run = true;
 	public static final byte PLAYER1 = -1;
@@ -208,13 +204,12 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 	}
 
 	public BattleRoundResult executeSchedule(Interrupt interrupt) {
-		Object[] effectParam = { null, null };
 		LinkedList<BattleAction> actions = new LinkedList<>();
 		executeEffects(_globalEffects, EffectTime.ROUND_STARTING, null);
 		executeEffects(EffectTime.ROUND_STARTING, null);
 		var pokemonSorted = sort();
 		for (var pkmn : pokemonSorted) {
-			executeEffects(pkmn, EffectTime.DELAYED_ATTACK, _schedule);
+			executeEffects(pkmn, EffectTime.DELAYED_ATTACK, new EffectParam(null, null, _schedule));
 		}
 		while (_schedule.any()) {
 			ScheduleItem item = _schedule.getNext();
@@ -232,14 +227,12 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 				}
 			}
 
-			// storing the damage information in this array of size one so that it might be
-			// changed by the effects
-			effectParam[0] = dmgInf;
-			effectParam[1] = item;
+
+			EffectParam effectParam=new EffectParam(dmgInf, item, _schedule);
 			System.out.println("battle_exe " + dmgInf.getDamage() + " " + item.getRound());
 			executeEffects(attacker, EffectTime.ATTACK, effectParam);
 			executeEffects(defender, EffectTime.DEFEND, effectParam);
-			dmgInf = (DamageInformation) effectParam[0];
+			dmgInf = effectParam.damageInf();
 			if (attacker.getCurrHP() <= 0) {
 
 				String msg = (switchPokemon(interrupt, attacker));
