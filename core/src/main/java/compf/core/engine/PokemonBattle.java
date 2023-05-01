@@ -36,8 +36,8 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 		return team;
 	}
 
-	public PokemonBattle(BattleRule rule) {
-		this._players = new compf.core.etc.BufferList<>(rule.NumberPlayers);
+	public PokemonBattle(int numPlayers) {
+		this._players = new compf.core.etc.BufferList<>(numPlayers);
 		_schedule = new Schedule(this);
 	}
 

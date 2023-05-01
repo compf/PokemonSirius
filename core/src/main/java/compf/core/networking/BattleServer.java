@@ -79,7 +79,7 @@ public class BattleServer extends BaseServer implements SteppableHost {
             var rulePlayerList = (HashMap.Entry<BattleRule, List<HashMap.Entry<Short, BattleRule>>>) rulePlayerListObj;
             var rule = (BattleRule) rulePlayerList.getKey();
             var ids = rulePlayerList.getValue().stream().map((entry) -> entry.getKey()).toArray();
-            PokemonBattle battle = new PokemonBattle(rule);
+            PokemonBattle battle = new PokemonBattle(rule.NumberPlayers);
             short gameId = _globalGameId++;
             _gamePlayers.put(gameId, new LinkedList<>());
             Thread thread = new Thread(() -> this.run(gameId));

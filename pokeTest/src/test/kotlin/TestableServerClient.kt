@@ -55,7 +55,7 @@ public class TestableServer:BattleServer{
         this._playerIds.add(0)
         this._playerIds.add(1)
 
-        val battle=PokemonBattle(this._rules.get(0))
+        val battle=PokemonBattle(rule.NumberPlayers)
         this._battles.put(0, battle)
         this._battles.put(1, battle)
         battle.getPlayers().add(this._players.get(0));
