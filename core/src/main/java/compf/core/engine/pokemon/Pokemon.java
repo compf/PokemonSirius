@@ -35,11 +35,11 @@ public class Pokemon extends PokedexEntry {
     public void setPlayer(Player pl) {
         _player = pl;
     }
-    public int getEV(int pos){
-        return _evs[pos];
+    public int[] getEVs(){
+        return _evs;
     }
-    public int getIV(int pos){
-        return _ivs[pos];
+    public int[] getIVs(){
+        return _ivs;
     }
     public Nature getNature(){
         return _nature;

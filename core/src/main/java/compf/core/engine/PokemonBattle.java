@@ -274,6 +274,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 	private String switchPokemon(Interrupt interrupt, Pokemon pkmn) {
 		short oldIndex = (short) indexOf(pkmn.getPlayer().getTeam(), pkmn);
 		short newIndex = interrupt.forceSwitch(pkmn.getPlayer().getPlayerId(), oldIndex);
+		if(newIndex==-1)return "Could not switch";
 		var dummy = pkmn.getPlayer().getTeam()[oldIndex];
 		String msg = pkmn.getPlayer().getName() + " replaced " + pkmn.toString() + " with "
 				+ pkmn.getPlayer().getPokemon(newIndex).getName();

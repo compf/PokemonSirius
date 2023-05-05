@@ -12,7 +12,10 @@ public class DetailedBattleState implements BattleState {
      */
     private static final long serialVersionUID = 1L;
     private BufferList<Player> _players;
-
+    public Player[] getAllPlayers(){
+        Player[] players=new Player[_players.size()];
+        return _players.toArray(players);
+    }
     public DetailedBattleState(BufferList<Player> bufferList) {
         _players = bufferList;
     }

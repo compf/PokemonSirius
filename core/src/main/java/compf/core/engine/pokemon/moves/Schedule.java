@@ -185,7 +185,7 @@ public class Schedule {
 		scheduleItem._priority = mv.getPriority();
 
 		scheduleItem._round = _currRound + deltaRound;
-		System.out.println("Added move " + mv.getName() + " in round " + scheduleItem._round);
+		//System.out.println("Added move " + mv.getName() + " in round " + scheduleItem._round);
 		scheduleItem._defender = defender;
 		_internList.add(scheduleItem);
 	}

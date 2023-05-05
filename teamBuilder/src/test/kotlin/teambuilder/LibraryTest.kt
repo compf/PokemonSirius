@@ -41,9 +41,9 @@ Adamant Nature
        val parser=PokePasteParser(input)
 
        val pkmn=parser.parse()
-       assertEquals(252,pkmn.getEV(PokemonStat.HP))
-       assertEquals(252,pkmn.getEV(PokemonStat.ATT))
-       assertEquals(pkmn.getEV(PokemonStat.SDEF),4)
+       assertEquals(252,pkmn.eVs[PokemonStat.HP])
+       assertEquals(252,pkmn.eVs[PokemonStat.ATT])
+       assertEquals(pkmn.eVs[PokemonStat.SDEF],4)
        assertEquals(Nature.Hardy, pkmn.nature)
        assertEquals(50, pkmn.level)
        val finder=ThreatFinder(pkmn,1.0)

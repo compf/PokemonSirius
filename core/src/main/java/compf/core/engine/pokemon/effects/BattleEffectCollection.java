@@ -6,15 +6,18 @@ public class BattleEffectCollection extends ArrayList<BattleEffect> {
     public BattleEffectCollection() {
 
     }
-
+    public boolean hasEffect(Class<?> effectType){
+        for (var eff : this) {
+            if (eff.getClass() == effectType) {
+                return true;
+            }
+        }
+        return false;
+    }
     @Override
     public boolean add(BattleEffect effect) {
         if(effect==null)return false;
-        for (var eff : this) {
-            if (eff.getClass() == effect.getClass()) {
-                return false;
-            }
-        }
+        if(hasEffect(effect.getClass()))return false;
         return super.add(effect);
 
     }

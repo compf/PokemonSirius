@@ -187,7 +187,7 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
         } else {
             threatData.otherEffect!!.init(null)
         }
-        val damageOtherToMe = threatData.otherMove!!.calculateDamage(otherPokemon, mePokemon)
+       /*val damageOtherToMe = threatData.otherMove!!.calculateDamage(otherPokemon, mePokemon)
         var bestMove:Move=mePokemon.moves[0]
         var bestDamage=0
         for(myMove in mePokemon.moves.filterNotNull()){
@@ -201,7 +201,13 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
             return false
         }
         threatData.otherEffect!!.disable()
-        return damageOtherToMe.toDouble() / mePokemon.maxHP> minDamageHPRatio
+        return damageOtherToMe.toDouble() / mePokemon.maxHP> minDamageHPRatio*/
+        val executor=BattleExecutor(mePokemon, otherPokemon)
+        val state=executor.execute(5)
+        val rater=BattleStateRater()
+        val rating=rater.rate(state, 0)
+        println("Rating "+rating)
+        return rating<=0.4
     }
     public fun findThreats(): Map<String, Double> {
         val resultMap = HashMap<String, Double>()
