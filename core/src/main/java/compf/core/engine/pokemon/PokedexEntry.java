@@ -33,7 +33,12 @@ public class PokedexEntry implements Serializable, PokemonStat,PokemonTypeHolder
 		_baseStats[SPEED] = speed;
 
 	}
-
+    public int statsSum() {
+        int sum = 0;
+        for (int item : _baseStats)
+            sum += item;
+        return sum;
+    }
 	public int[] getBaseStats() {
 		return _baseStats;
 	}

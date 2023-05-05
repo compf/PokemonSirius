@@ -11,6 +11,7 @@ import compf.core.engine.pokemon.effects.StubEffect
 import compf.core.engine.pokemon.moves.Move
 import compf.core.etc.services.SharedInformation
 import kotlin.collections.HashMap
+import query.PokedexQuery
 
 public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) {
     class ThreatData(
@@ -43,7 +44,52 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
     companion object {
         val H = 252
     }
+    public fun <T> sample (maxNumber:Int,prob:Int,seq:Sequence<T>):List<T>{
+        var result=mutableListOf<T>()
+        var counter=0
+        while(counter<maxNumber){
+            result.addAll(seq.filter { SharedInformation.Instance.getRNG().checkPerc(prob, PokedexEntry::class.java)}.take(maxNumber-result.size) )
+            counter=result.size
+        }
+        return result
 
+
+    }
+    private fun getCategory(entry:PokedexEntry):PokedexEntryCategory{
+       
+        val ATT_THRESHOLD=75
+        val SATT_THRESHOLD=75;
+         if(entry.baseStats[PokemonStat.ATT]>ATT_THRESHOLD && entry.baseStats[PokemonStat.SATT]<SATT_THRESHOLD){
+            return PokedexEntryCategory.PhysicalSweeper
+        }
+        else if(entry.baseStats[PokemonStat.SATT]>SATT_THRESHOLD && entry.baseStats[PokemonStat.ATT]<ATT_THRESHOLD){
+            return PokedexEntryCategory.SpecialSweeper
+        }
+        else{
+            return PokedexEntryCategory.Any
+        }
+    }
+    private fun getMoveFilter(entry:PokedexEntry):(it:Move)->Boolean{
+        val category=getCategory(entry)
+
+        if(category==PokedexEntryCategory.PhysicalSweeper){
+            return {it->it.kind==Move.MoveKind.Physical};
+        }
+        else if(category==PokedexEntryCategory.SpecialSweeper){
+            return {it->it.kind==Move.MoveKind.Special};
+        }
+        else{
+            return {_->true}
+        }
+    }
+    public  fun getGoodMoves(entry:PokedexEntry):List<Move>{
+        val id=SharedInformation.Instance.pokedexEntryService.getPokemonId(entry.nr)
+        var seq=SharedInformation.Instance.learnsetService.getMoves(id).asSequence().map{it->SharedInformation.Instance.moveService.get(SharedInformation.Instance.moveService.getRealName(it))}.filter(getMoveFilter(entry))
+        if(seq.any()){
+            return sample(4, 30, seq)
+        }
+        return emptyList()
+    }
     private val evSpreads: Array<IntArray> =
             arrayOf(
                     intArrayOf(H, H, 0, 0, 0, 0),
@@ -73,7 +119,9 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
         if (kind == Move.MoveKind.Physical) return 1 else return 3
     }
     private fun iteratePokedexEntries(threatData: ThreatData) {
-        for (entry in SharedInformation.Instance.pokedexEntryService.iterator()) {
+        val query=PokedexQuery()
+        var entries=sample(20,30,query.getSimiliarPokemon(mePokemon, 0.8, 1.2) { it->it.statsSum().toDouble() })
+        for (entry in entries) {
             threatData.otherEntry = entry
             iterateEvSpread(threatData)
         }
@@ -96,11 +144,8 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
                 SharedInformation.Instance.pokedexEntryService.getPokemonId(
                         threatData.otherEntry!!.nr
                 )
-        val moves= SharedInformation.Instance.learnsetService.getMoves(pokemonId);
-        if(moves==null)return;
-        for (moveId in moves) {
-            val moveName = SharedInformation.Instance.moveService.getRealName(moveId)
-            val move = SharedInformation.Instance.moveService.get(moveName)
+        val moves= getGoodMoves(threatData.otherEntry!!)
+        for (move in moves) {
             threatData.otherMove = move
             iterateEffects(threatData)
         }

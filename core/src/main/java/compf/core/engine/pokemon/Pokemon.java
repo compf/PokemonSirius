@@ -60,12 +60,7 @@ public class Pokemon extends PokedexEntry {
         _itemEffect = effect;
     }
 
-    public int statsSum() {
-        int sum = 0;
-        for (int item : _stats)
-            sum += item;
-        return sum;
-    }
+
 
     public int getMaxHP() {
         return _stats[PokemonStat.HP];

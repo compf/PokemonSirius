@@ -2,6 +2,7 @@ package compf.core.etc.services;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,11 +16,10 @@ public class DefaultLearnsetService implements LearnsetService {
     @Override
     public Iterable<String> getMoves(String id) {
         // TODO Auto-generated method stub
-        return pokemonIdMoves.get(id);
+        return pokemonIdMoves.getOrDefault(id,new ArrayList<>());
     }
     private void initMoveset(JsonObject jsonObj){
         for(String pokemonId:jsonObj.keySet()){
-            System.out.println(pokemonId);
             LinkedList<String> moves=new LinkedList<>();
             if(jsonObj.get(pokemonId).getAsJsonObject().has("learnset")){
                 for(String moveId:jsonObj.get(pokemonId).getAsJsonObject().get("learnset").getAsJsonObject().keySet()){

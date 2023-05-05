@@ -52,7 +52,7 @@ public class BattleServer extends BaseServer implements SteppableHost {
 
     }
 
-    public class Interrupt {
+    public class NetworkInterrupt implements Interrupt {
         /**
          * Forces the client to switch the pokemon
          *
@@ -177,7 +177,7 @@ public class BattleServer extends BaseServer implements SteppableHost {
                 }
                     break;
                 case ReplyInput: {
-                    Interrupt interrupt = new Interrupt();
+                    Interrupt interrupt = new NetworkInterrupt();
                     BufferList<PlayerInput> inputs = (BufferList<PlayerInput>) msg.Data;
                     for (var inp : inputs) {
                         MyLogger.debug("input received from " + inp.PlayerId);

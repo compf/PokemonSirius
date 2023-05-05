@@ -80,7 +80,10 @@ public class DefaultPokedexEntryService implements PokedexEntryService {
 			nrId.put(nr, id);
 			var entry=new PokedexEntry(nr, realName, type1, type2, height, weight, hp, att, def, satt, sdef, speed);
 			nrPokemon.put(nr,entry );
-			realNamePokemon.put(realName,entry);
+			if(!realNamePokemon.containsKey(realName)){
+				realNamePokemon.put(realName,entry);
+
+			}
 		}
 
 	}

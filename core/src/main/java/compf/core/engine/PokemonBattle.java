@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.stream.Stream;
 
-import compf.core.networking.BattleServer.Interrupt;
 import compf.core.engine.pokemon.*;
 import compf.core.engine.pokemon.effects.*;
 import compf.core.engine.pokemon.effects.BattleEffectCollection;
@@ -140,9 +139,9 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 	public static final byte PLAYER1 = -1;
 	public static final byte PLAYER2 = +1;
 
-	public void execute() {
+	/*public void execute() {
 
-		/*
+		
 		 * Move mv = null;
 		 * while (_run) {
 		 * Prompt.prompt(this.toString());
@@ -172,8 +171,8 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 		 * mv = null;
 		 * 
 		 * }
-		 */
-	}
+		 
+	}*/
 
 	public void exit() {
 
