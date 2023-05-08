@@ -228,7 +228,6 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 
 
 			EffectParam effectParam=new EffectParam(dmgInf, item, _schedule);
-			System.out.println("battle_exe " + dmgInf.getDamage() + " " + item.getRound());
 			executeEffects(attacker, EffectTime.ATTACK, effectParam);
 			executeEffects(defender, EffectTime.DEFEND, effectParam);
 			dmgInf = effectParam.damageInf();
@@ -252,7 +251,6 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 
 			var action = new BattleAction(item.getID(), dmgInf.getMessages(), BattleAction.ActionKind.Move,
 					dmgInf.getDamage());
-			System.out.println("actuzr " + action.ActionId);
 			actions.add(action);
 			
 
@@ -284,17 +282,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 
 	}
 
-	protected void enemyLose() {
-		System.out.println("Enemy loses");
-		_run = false;
 
-	}
-
-	protected void playerLose() {
-		System.out.println("Player loses");
-		_run = false;
-
-	}
 
 	/**
 	 * @param index the index, <0 for player, >0 for enemy

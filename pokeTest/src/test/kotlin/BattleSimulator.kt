@@ -9,6 +9,7 @@ import compf.core.engine.BattleAction
 import compf.core.engine.NetworkMessage
 import compf.core.engine.NetworkMessageKind
 import compf.core.engine.Tuple
+import compf.core.etc.services.SharedInformation
 import compf.core.networking.IOInterface
 import compf.core.networking.BattleClient
 import compf.core.networking.SharedPipe
@@ -62,9 +63,9 @@ public  class SimulationBattleIO : SimpleIOInterface {
        if(result.Actions==null)return;
        for(act in  result.Actions){
 
-          println("added an action " +act.Kind + act.Data)
+           SharedInformation.Instance.getLoggerService().log("added an action " +act.Kind + act.Data,SimulationBattleIO::class)
            actions.add(act)
-          println("balance down "+balanceCounter +" " +player!!.playerId)
+           SharedInformation.Instance.getLoggerService().log("balance down "+balanceCounter +" " +player!!.playerId,SimulationBattleIO::class)
            balanceCounter--
        }
 

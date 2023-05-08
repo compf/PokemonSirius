@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import compf.core.etc.services.SharedInformation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,18 +40,18 @@ public class BattleClient extends BaseServer implements Runnable,SteppableHost {
 		_playerId = (short) msg.Data;
 
 		_player = new Player(_playerId, playerName, team);
-		System.out.println("Player initialized");
-		MyLogger.debug("Client " + _player.getName() + " Receiving player id " + _playerId);
-		MyLogger.debug("Client " + _player.getName() + " writing rules " + _playerId);
+		SharedInformation.Instance.getLoggerService().log("Player initialized",BattleClient.class);
+		SharedInformation.Instance.getLoggerService().log("Client " + _player.getName() + " Receiving player id " + _playerId,BattleClient.class);
+		SharedInformation.Instance.getLoggerService().log("Client " + _player.getName() + " writing rules " + _playerId,BattleClient.class);
 		writeObject(pipe, new NetworkMessage(NetworkMessageKind.BattleRules, rule));
-		MyLogger.debug("Client " + _player.getName() + " waiting player information " + _playerId);
+		SharedInformation.Instance.getLoggerService().log("Client " + _player.getName() + " waiting player information " + _playerId,BattleClient.class);
 
 		msg = readObject(pipe);
 		if (msg.Kind != NetworkMessageKind.RequestPlayerInformation)
 			throw new IOException("Invalid message " + msg.Kind);
 		writeObject(pipe, new NetworkMessage(NetworkMessageKind.ReplyPlayerInformation, _player));
 		msg = readObject(pipe);
-		MyLogger.debug("Update clients at beginning to inital statz");
+		SharedInformation.Instance.getLoggerService().log("Update clients at beginning to inital statz",BattleClient.class);
 		if (msg.Kind == NetworkMessageKind.Update) {
 			MyLogger.debug("Received expected update");
 			_state = ((BattleRoundResult) msg.Data).State;
@@ -69,9 +70,9 @@ public class BattleClient extends BaseServer implements Runnable,SteppableHost {
 		return _player;
 	}
 	public void step(short id){
-		MyLogger.debug("Client waiting " + this._playerId);
+		SharedInformation.Instance.getLoggerService().log("Client waiting " + this._playerId,BattleClient.class);
 		NetworkMessage msg = readObject(pipe);
-		MyLogger.debug("Client received " + msg.Kind.name() + " " + _playerId);
+		SharedInformation.Instance.getLoggerService().log("Client received " + msg.Kind.name() + " " + _playerId,BattleClient.class);
 		switch (msg.Kind) {
 			case RequestInput:
 				BufferList<PlayerInput> inputs = new BufferList<>(_rule.PokemonPerPlayerOnField);
@@ -79,7 +80,7 @@ public class BattleClient extends BaseServer implements Runnable,SteppableHost {
 				var inp = (PlayerInput)_io.sendAndHandle(NetworkMessageKind.RequestInput.createMessage(new Tuple<Short,BattleState>(pokemonIndex,_state))).Data;
 				if (inp == null)
 					return;
-				MyLogger.debug("Input from " + inp.PlayerId + " " + _io.getClass());
+				SharedInformation.Instance.getLoggerService().log("Input from " + inp.PlayerId + " " + _io.getClass(),BattleClient.class);
 				inputs.add(inp);
 				writeObject(pipe, NetworkMessageKind.ReplyInput.createMessage(inputs));
 				break;

@@ -39,7 +39,6 @@ public class PokePasteParser {
         int[] ivs={31,31,31,31,31,31};
         Move[] moves=new Move[4];
         for(int i=1;i<lines.length;i++){
-            System.out.println("Colds\""+lines[i]+"\"");
             if(lines[i].startsWith("Ability")){
                 //ignore for now
             }
@@ -59,7 +58,6 @@ public class PokePasteParser {
                 String move=lines[i].substring(2).strip();
                 int moveIndex=MyObject.indexOf(moves, null);
                 moves[moveIndex]=SharedInformation.Instance.getMoveService().get(move);
-                System.out.println("Move " +move );
              }
         }
         int nr=SharedInformation.Instance.getPokedexEntryService().get(firstLine.species).getNr();
@@ -80,7 +78,6 @@ public class PokePasteParser {
         var inf=new FirstLineInformation();
         boolean atSignFound=false;
         for(int i=0;i<whiteSpaceSplitted.length;i++){
-            System.out.println("Parse first line "+whiteSpaceSplitted[i]);
             if(whiteSpaceSplitted[i].contentEquals("(F)") ){
                 
             }

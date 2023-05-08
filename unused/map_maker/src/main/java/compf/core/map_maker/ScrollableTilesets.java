@@ -38,7 +38,6 @@ public class ScrollableTilesets extends MouseReceptibleDrawableObject {
         int y = getX();
         int x = getY();
         var dir = new java.io.File("./tiles/");
-        System.out.println(dir.listFiles().length);
         JsonValue json=getTileData();
         for (var jsonChild:json.iterator()) {
 

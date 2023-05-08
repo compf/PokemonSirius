@@ -4,6 +4,7 @@ import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.moves.DamageInformation;
 import compf.core.engine.pokemon.moves.Schedule;
 import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
+import compf.core.etc.services.SharedInformation;
 
 public class FlyingEffect extends PokemonBattleEffect {
     private boolean newRound = false;
@@ -22,9 +23,9 @@ public class FlyingEffect extends PokemonBattleEffect {
 
     @Override
     public void attack(EffectParam param) {
-        System.out.println("Use attack fly");
+        SharedInformation.Instance.getLoggerService().log("Use attack fly",FlyingEffect.class);
         if (!(newRound)) {
-            System.out.println("Flying killed");
+            SharedInformation.Instance.getLoggerService().log("Flying killed",FlyingEffect.class);
             DamageInformation inf = param.damageInf();
             item = param.scheduleItem();
             this.dmg = inf.clone();
@@ -32,7 +33,7 @@ public class FlyingEffect extends PokemonBattleEffect {
 
         } else {
             isFlying = false;
-            System.out.println("use flying");
+            SharedInformation.Instance.getLoggerService().log("use flying",FlyingEffect.class);
             disable();
         }
 

@@ -29,7 +29,8 @@ public final class SharedInformation {
 
 	public static final SharedInformation Instance = new SharedInformation();
 
-	public void init(PokedexEntryService entryService, MoveService moveService, RandomGeneratorService randomService,LearnsetService learnsetService) {
+	public void init(PokedexEntryService entryService, MoveService moveService, RandomGeneratorService randomService,LearnsetService learnsetService,
+					 LoggerService loggerService) {
 		if(entryService!=null){
 			pokedexEntryService=entryService;
 		}
@@ -44,12 +45,17 @@ public final class SharedInformation {
 		if(learnsetService!=null){
 			this.learnsetService=learnsetService;
 		}
+		if(loggerService!=null){
+			this.loggerService=loggerService;
+		}
 	}
 
 	private PokedexEntryService pokedexEntryService;
 	private MoveService moveService;
 	private RandomGeneratorService randomService;
 	private LearnsetService learnsetService;
+
+	private LoggerService loggerService;
 
 	public PokedexEntryService getPokedexEntryService() {
 		return pokedexEntryService;
@@ -65,7 +71,7 @@ public final class SharedInformation {
 	public LearnsetService getLearnsetService(){
 		return learnsetService;
 	}
-
+	public  LoggerService getLoggerService(){return loggerService;}
 	public InputStream getResource(String resourceName) throws IOException {
 		return new FileInputStream("assets/" + resourceName);
 	}

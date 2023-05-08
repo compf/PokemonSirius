@@ -1,4 +1,5 @@
 import compf.core.engine.BattleAction
+import compf.core.etc.services.SharedInformation
 
 public interface Assertion {
     public fun check(toCheck: Any): Boolean
@@ -19,7 +20,7 @@ public class HPModifiedAssertion(val factor:Double):ActionAssertion() {
        if(splitted.size<2)return false
        val from =splitted[0].toDouble()
        val to=splitted[1].toDouble()
-       println("hp assertion " +from +" "+to)
+        SharedInformation.Instance.getLoggerService().log("hp assertion " +from +" "+to,SimpleBattleSimulator::class)
        val EPSILON=2.0/from
        return Math.abs((to/from)-factor)<EPSILON
 
@@ -63,7 +64,7 @@ public class AnyOrderAssertion: GroupedAssertion(){
         for(comp in compList){
             for(assertion in assertionList){
                 if(assertion.check(comp)){
-                    println("Assertion " +assertion +" satisfied by "+(comp as BattleAction).Data )
+                    SharedInformation.Instance.getLoggerService().log("Assertion " +assertion +" satisfied by "+(comp as BattleAction).Data,SimpleBattleSimulator::class )
                     if(!compAssertionsMap.containsKey(comp)){
                         compAssertionsMap.set(comp, HashSet())
                     } 
@@ -74,7 +75,7 @@ public class AnyOrderAssertion: GroupedAssertion(){
                     assertionCompMap[assertion]?.add(comp);
                 }
                 else{
-                    println("Assertion " +assertion +" failed by "+(comp as BattleAction).Data )
+                    SharedInformation.Instance.getLoggerService().log("Assertion " +assertion +" failed by "+(comp as BattleAction).Data,SimpleBattleSimulator::class )
 
                 }
             }
@@ -94,11 +95,11 @@ public class ThisOrderAssertion: GroupedAssertion(){
         val compList=toCheck as ArrayList<Any>
         for(i in 0 until assertionList.size){
             if(assertionList[i] is GroupedAssertion && !assertionList[i].check(compList)) {
-                println("Assertion " +assertionList[i] +" failed by list" )
+                SharedInformation.Instance.getLoggerService().log("Assertion " +assertionList[i] +" failed by list" ,ThisOrderAssertion::class)
                 return false;
             }
             else if(!(assertionList[i] is GroupedAssertion) && !assertionList[i].check(compList[i])){
-                println("Assertion " +assertionList[i] +" failed by "+(compList[i] as BattleAction).Data )
+                SharedInformation.Instance.getLoggerService().log("Assertion " +assertionList[i] +" failed by "+(compList[i] as BattleAction).Data ,ThisOrderAssertion::class)
                 return false;
             }
         }

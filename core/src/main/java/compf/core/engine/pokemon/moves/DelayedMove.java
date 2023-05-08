@@ -6,6 +6,7 @@ import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.Type;
 import compf.core.engine.pokemon.effects.PokemonBattleEffect;
 import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
+import compf.core.etc.services.SharedInformation;
 
 public class DelayedMove extends Move {
     private Class _effectClass;
@@ -27,7 +28,7 @@ public class DelayedMove extends Move {
             var effect = (PokemonBattleEffect) _effectClass.getDeclaredConstructor(Pokemon.class)
                     .newInstance(item.getAttacker());
             item.getAttacker().addEffect(effect);
-            System.out.println("added fly effect");
+            SharedInformation.Instance.getLoggerService().log("added delayed effect",DelayedMove.class);
 
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException e) {

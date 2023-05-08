@@ -10,6 +10,7 @@ import compf.core.etc.services.DefaultPokedexEntryService
 import compf.core.etc.services.DefaultMoveService
 import compf.core.etc.services.SharedInformation
 import compf.core.etc.services.DefaultLearnsetService
+import compf.core.etc.services.NoLoggerService
 import kotlin.test.Test
 import kotlin.test.assertTrue
 import kotlin.test.assertEquals
@@ -21,7 +22,7 @@ class LibraryTest {
         @JvmStatic
         public fun init(){
                 SharedInformation.Instance.init(DefaultPokedexEntryService("pokedex.json"),
-                DefaultMoveService("moves.json"),WorstCaseRandomGenerator(),DefaultLearnsetService("learnsets.json"))
+                DefaultMoveService("moves.json"),WorstCaseRandomGenerator(),DefaultLearnsetService("learnsets.json"),NoLoggerService())
         }
  
 }
@@ -48,7 +49,6 @@ Adamant Nature
        assertEquals(50, pkmn.level)
        val finder=ThreatFinder(pkmn,1.0)
        val result=finder.findThreats()
-       println(result.size)
 
     }
 }

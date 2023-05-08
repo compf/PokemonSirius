@@ -8,6 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import compf.core.engine.NetworkMessage;
+import compf.core.etc.services.SharedInformation;
 
 public class SharedPipe implements Pipe {
     private final int port;
@@ -35,10 +36,10 @@ public class SharedPipe implements Pipe {
 
     @Override
     public Pipe waitForConnection() {
-        System.out.println("Wait for connection " + System.identityHashCode(waitingList));
+        SharedInformation.Instance.getLoggerService().log("Wait for connection " + System.identityHashCode(waitingList),SharedPipe.class);
         while (!isConnecting)
             Thread.onSpinWait();
-        System.out.println("Confirm connection " + System.identityHashCode(waitingList));
+        SharedInformation.Instance.getLoggerService().log("Confirm connection " + System.identityHashCode(waitingList),SharedPipe.class);
 
         isConnecting = false;
         return this;
@@ -47,13 +48,13 @@ public class SharedPipe implements Pipe {
     @Override
     public Pipe connect() {
         isConnecting = true;
-        System.out.println("Connected " + System.identityHashCode(waitingList));
+        SharedInformation.Instance.getLoggerService().log("Connected " + System.identityHashCode(waitingList),SharedPipe.class);
         return this;
     }
 
     @Override
     public boolean write(NetworkMessage obj) {
-        System.out.println("Written " + port + " " + System.identityHashCode(waitingList));
+        SharedInformation.Instance.getLoggerService().log("Written " + port + " " + System.identityHashCode(waitingList),SharedPipe.class);
         return waitingList.offer(obj);
     }
 
@@ -67,18 +68,12 @@ public class SharedPipe implements Pipe {
     @Override
     public NetworkMessage read() {
         try {
-            synchronized (threadListening) {
-                // System.out.println();
-                // System.out.println(Thread.currentThread().getName());
-                // threadListening.put(Thread.currentThread().getName(),System.identityHashCode(waitingList));
 
-            }
             NetworkMessage obj = waitingList.poll(1, TimeUnit.HOURS);
             synchronized (threadListening) {
                 threadListening.put(Thread.currentThread().getName(), null);
 
             }
-            // System.out.println("Read "+obj);
             return obj;
         } catch (InterruptedException e) {
             return null;

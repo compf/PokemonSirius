@@ -7,7 +7,6 @@ public class PipeEndPoint implements Pipe {
 
     @Override
     public boolean write(NetworkMessage obj) {
-        // System.out.println("Writing to "+System.identityHashCode(_write));
 
         return _write.write(obj);
     }
@@ -34,8 +33,6 @@ public class PipeEndPoint implements Pipe {
 
     @Override
     public Pipe waitForConnection() {
-        // System.out.println("End point " +System.identityHashCode(this) +" wait for
-        // connection");
         return _read.waitForConnection();
     }
 

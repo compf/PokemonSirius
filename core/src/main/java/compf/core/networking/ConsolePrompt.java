@@ -176,11 +176,8 @@ public class ConsolePrompt extends SimpleIOInterface {
 		if(_scanner==null){
 			_scanner=new Scanner(System.in);
 		}
-		System.out.println("My thread "+Thread.currentThread().getName());
-		System.out.println("Waiting for input");
 		synchronized(_scanner){
 			String result=_scanner.nextLine();
-			System.out.println("Scanner input " +result);
 			return result;
 		}
 		

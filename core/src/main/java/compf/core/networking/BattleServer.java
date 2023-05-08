@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import compf.core.etc.services.SharedInformation;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -122,7 +123,7 @@ public class BattleServer extends BaseServer implements SteppableHost {
         Pokemon pkmn = _players.get(playerId).getPokemon(pkmnId);
         boolean flag = pkmn.getCurrHP() > 0
                 && pkmn.getEffects().stream().allMatch((e) -> ((PokemonBattleEffect) e).canReceiveCommand());
-        System.out.println("can player attack " + playerId + " " + pkmnId + " " + flag);
+        SharedInformation.Instance.getLoggerService().log("can player attack " + playerId + " " + pkmnId + " " + flag,BattleServer.class);
 
         return flag;
     }
@@ -139,7 +140,7 @@ public class BattleServer extends BaseServer implements SteppableHost {
             }
 
         }
-        System.out.println("no needed actors " + result);
+        SharedInformation.Instance.getLoggerService().log("no needed actors " + result,BattleServer.class);
         return result;
     }
     public void step(short gameId){

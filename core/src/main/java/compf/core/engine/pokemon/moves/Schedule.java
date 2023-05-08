@@ -158,7 +158,7 @@ public class Schedule {
 		result._executed = true;
 
 		for (var s : _internList) {
-			System.out.println(s);
+			SharedInformation.Instance.getLoggerService().log(s.toString(),Schedule.class);
 		}
 		return result;
 	}
@@ -185,7 +185,6 @@ public class Schedule {
 		scheduleItem._priority = mv.getPriority();
 
 		scheduleItem._round = _currRound + deltaRound;
-		//System.out.println("Added move " + mv.getName() + " in round " + scheduleItem._round);
 		scheduleItem._defender = defender;
 		_internList.add(scheduleItem);
 	}
@@ -234,9 +233,6 @@ public class Schedule {
 	public boolean allPlayersGaveInput(int maxNumber) {
 		long scheduleSize = _internList.stream().filter((item) -> item._round == _currRound + 1).map(x -> x._attacker)
 				.collect(Collectors.toSet()).stream().count();
-		for (var s : _internList) {
-			System.out.println("Schedule " + s._round + " " + s._attacker + " " + scheduleSize);
-		}
 		return scheduleSize >= maxNumber;
 	}
 

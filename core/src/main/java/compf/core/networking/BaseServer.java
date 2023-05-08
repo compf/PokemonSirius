@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import compf.core.engine.NetworkMessage;
+import compf.core.etc.services.SharedInformation;
 
 public class BaseServer {
 	/**
@@ -18,7 +19,6 @@ public class BaseServer {
 	 * @return The object or null on any error
 	 */
 	protected NetworkMessage readObject(Pipe in) {
-		// System.out.println("reading object "+in.getClass());
 		var res= in.read();
 		// in.reset();
 		return res;
@@ -41,12 +41,8 @@ public class BaseServer {
 
 	public static void log(String prompt) {
 		lastLogged.put(Thread.currentThread().getName(), prompt);
-		System.out.println(prompt);
+		SharedInformation.Instance.getLoggerService().log(prompt,BaseServer.lastLogged);
 	}
 
-	public static void printThreadLogs() {
-		for (var entry : lastLogged.entrySet()) {
-			System.out.println("Thread " + entry.getKey() + " " + entry.getValue());
-		}
-	}
+
 }

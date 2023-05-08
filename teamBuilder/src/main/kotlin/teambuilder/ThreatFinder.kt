@@ -10,7 +10,6 @@ import compf.core.engine.pokemon.effects.PokemonBattleEffect
 import compf.core.engine.pokemon.effects.StubEffect
 import compf.core.engine.pokemon.moves.Move
 import compf.core.etc.services.SharedInformation
-import kotlin.collections.HashMap
 import query.PokedexQuery
 
 public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) {
@@ -44,7 +43,7 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
     companion object {
         val H = 252
     }
-    public fun <T> sample (maxNumber:Int,prob:Int,seq:Sequence<T>):List<T>{
+    public fun <T> sample (maxNumber:Int,prob:Int,seq: Sequence<T>):List<T>{
         var result=mutableListOf<T>()
         var counter=0
         while(counter<maxNumber){
@@ -206,14 +205,14 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
         val state=executor.execute(5)
         val rater=BattleStateRater()
         val rating=rater.rate(state, 0)
-        println("Rating "+rating)
+        SharedInformation.Instance.getLoggerService().log("Rating"+rating,null)
         return rating<=0.4
     }
     public fun findThreats(): Map<String, Double> {
         val resultMap = HashMap<String, Double>()
         var threatData = ThreatData.allNull()
         iteratePokedexEntries(threatData)
-        println("counter " + counter)
+        SharedInformation.Instance.getLoggerService().log("counter " + counter,true)
         return resultMap
     }
 }
