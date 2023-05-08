@@ -47,7 +47,7 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
         var result=mutableListOf<T>()
         var counter=0
         while(counter<maxNumber){
-            result.addAll(seq.filter { SharedInformation.Instance.getRNG().checkPerc(prob, PokedexEntry::class.java)}.take(maxNumber-result.size) )
+            result.addAll(seq.filter { SharedInformation.Instance.getRNG().checkPerc(prob, ThreatFinder::class)}.take(maxNumber-result.size) )
             counter=result.size
         }
         return result
