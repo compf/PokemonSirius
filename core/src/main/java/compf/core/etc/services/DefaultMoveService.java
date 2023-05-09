@@ -53,8 +53,8 @@ public class DefaultMoveService implements MoveService {
 			Type type = Enum.valueOf(Type.class, object.get("type").getAsString());
 			if (type == null)
 				type = Type.Normal;
-			byte power = object.get("basePower").getAsByte();
-			byte pp = object.get("pp").getAsByte();
+			int power = object.get("basePower").getAsInt();
+			int pp = object.get("pp").getAsInt();
 			String accuracyStr = object.get("accuracy").getAsString();
 			byte accuracy;
 			if (accuracyStr.contentEquals("true")) {
@@ -62,7 +62,7 @@ public class DefaultMoveService implements MoveService {
 			}else{
 				accuracy=Byte.valueOf(accuracyStr);
 			}
-			byte priority = object.get("priority").getAsByte();
+			int priority = object.get("priority").getAsInt();
 			Move.TargetType target = Enum.valueOf(Move.TargetType.class,object.get("target").getAsString());
 			if (priority >= 0)
 				priority++; // Prevent Zero in priority

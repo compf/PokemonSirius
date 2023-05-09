@@ -17,10 +17,10 @@ public class Move implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final int _nr;
 	private final String _name;
-	private final byte _pp;
-	private final byte _accuracy;
-	private final byte _priority;
-	private final byte _power;
+	private final int _pp;
+	private final int _accuracy;
+	private final int _priority;
+	private final int _power;
 	private final Type _type;
 	private final MoveKind _kind;
 	private final TargetType _target;
@@ -140,7 +140,7 @@ public class Move implements Serializable {
 		return (int) d4;
 	}
 
-	public Move(int nr, String name, byte power, byte pp, byte accuracy, byte priority, Type type, MoveKind kind,
+	public Move(int nr, String name, int power, int pp, int accuracy, int priority, Type type, MoveKind kind,
 			TargetType target) {
 		_nr = nr;
 		_name = name;
@@ -182,7 +182,7 @@ public class Move implements Serializable {
 		return _power;
 	}
 
-	public byte getPriority() {
+	public int getPriority() {
 		// TODO Auto-generated method stub
 		return _priority;
 	}

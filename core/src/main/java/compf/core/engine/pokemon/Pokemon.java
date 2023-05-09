@@ -1,6 +1,7 @@
 package compf.core.engine.pokemon;
 
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 import compf.core.engine.Player;
 import compf.core.engine.pokemon.effects.BattleEffectCollection;
@@ -164,6 +165,12 @@ public class Pokemon extends PokedexEntry {
             _movesPP[index] = _moves[index].getPP();
 
         }
+    }
+
+    @Override
+    public int statsSum() {
+
+        return Arrays.stream(_stats).sum();
     }
 
     public int getMovePP(int index) {

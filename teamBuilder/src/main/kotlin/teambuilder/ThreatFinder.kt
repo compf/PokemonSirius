@@ -14,18 +14,18 @@ import query.PokedexQuery
 
 public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) {
     class ThreatData(
-            var otherEntry: PokedexEntry?,
-            var otherNature: Nature?,
-            var otherEV: IntArray?,
-            var otherEffect: BattleEffect?,
-            var otherMove: Move?
+        var otherEntry: PokedexEntry?,
+        var otherNature: Nature?,
+        var otherEV: IntArray?,
+        var otherEffect: BattleEffect?,
+        var otherMove: Move?
     ) {
         public override fun toString(): String {
             var statNames =
-                    otherEV?.mapIndexed({ i, x -> if (x == ThreatFinder.H) i else null })
-                                    ?.filterNotNull()!!
-                            .map({ i -> PokemonStat.getName(i) })
-                            .joinToString(",")
+                otherEV?.mapIndexed({ i, x -> if (x == ThreatFinder.H) i else null })
+                    ?.filterNotNull()!!
+                    .map({ i -> PokemonStat.getName(i) })
+                    .joinToString(",")
             return otherEntry?.toString() +
                     " " +
                     otherNature?.toString() +
@@ -34,79 +34,109 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
                     " " +
                     otherMove?.toString()
         }
+
+        fun createPokemon(level: Int): Pokemon {
+            val ivs = intArrayOf(31, 31, 31, 31, 31, 31)
+
+            return Pokemon(
+                otherEntry!!.nr,
+                level,
+                otherEV!!,
+                ivs,
+                otherNature,
+                arrayOf(otherMove, null, null, null)
+            )
+        }
+
+        fun clone(): ThreatData {
+            return ThreatData(otherEntry, otherNature, otherEV, otherEffect, otherMove)
+        }
+
         companion object {
             public fun allNull(): ThreatData {
                 return ThreatData(null, null, null, null, null)
             }
         }
     }
+
     companion object {
         val H = 252
     }
-    public fun <T> sample (maxNumber:Int,prob:Int,seq: Sequence<T>):List<T>{
-        var result=mutableListOf<T>()
-        var counter=0
-        while(counter<maxNumber){
-            result.addAll(seq.filter { SharedInformation.Instance.getRNG().checkPerc(prob, ThreatFinder::class)}.take(maxNumber-result.size) )
-            counter=result.size
+
+    public fun <T> sample(maxNumber: Int, prob: Int, seq: Iterable<T>): List<T> {
+
+        var count = 0;
+        val result = ArrayList<T>(maxNumber)
+        while(result.size<maxNumber){
+            for(s in seq){
+                if(SharedInformation.Instance.rng.checkPerc(prob,ThreatFinder::class)){
+                    result.add(s)
+                }
+                if(result.size>=maxNumber)break
+            }
         }
         return result
 
 
     }
-    private fun getCategory(entry:PokedexEntry):PokedexEntryCategory{
-       
-        val ATT_THRESHOLD=75
-        val SATT_THRESHOLD=75;
-         if(entry.baseStats[PokemonStat.ATT]>ATT_THRESHOLD && entry.baseStats[PokemonStat.SATT]<SATT_THRESHOLD){
+
+    private fun getCategory(entry: PokedexEntry): PokedexEntryCategory {
+
+        val ATT_THRESHOLD = 75
+        val SATT_THRESHOLD = 75;
+        if (entry.baseStats[PokemonStat.ATT] > ATT_THRESHOLD && entry.baseStats[PokemonStat.SATT] < SATT_THRESHOLD) {
             return PokedexEntryCategory.PhysicalSweeper
-        }
-        else if(entry.baseStats[PokemonStat.SATT]>SATT_THRESHOLD && entry.baseStats[PokemonStat.ATT]<ATT_THRESHOLD){
+        } else if (entry.baseStats[PokemonStat.SATT] > SATT_THRESHOLD && entry.baseStats[PokemonStat.ATT] < ATT_THRESHOLD) {
             return PokedexEntryCategory.SpecialSweeper
-        }
-        else{
+        } else {
             return PokedexEntryCategory.Any
         }
     }
-    private fun getMoveFilter(entry:PokedexEntry):(it:Move)->Boolean{
-        val category=getCategory(entry)
 
-        if(category==PokedexEntryCategory.PhysicalSweeper){
-            return {it->it.kind==Move.MoveKind.Physical};
-        }
-        else if(category==PokedexEntryCategory.SpecialSweeper){
-            return {it->it.kind==Move.MoveKind.Special};
-        }
-        else{
-            return {_->true}
+    private fun getMoveFilter(entry: PokedexEntry): (it: Move) -> Boolean {
+        val category = getCategory(entry)
+
+        if (category == PokedexEntryCategory.PhysicalSweeper) {
+            return { it -> it.kind == Move.MoveKind.Physical };
+        } else if (category == PokedexEntryCategory.SpecialSweeper) {
+            return { it -> it.kind == Move.MoveKind.Special };
+        } else {
+            return { _ -> true }
         }
     }
-    public  fun getGoodMoves(entry:PokedexEntry):List<Move>{
-        val id=SharedInformation.Instance.pokedexEntryService.getPokemonId(entry.nr)
-        var seq=SharedInformation.Instance.learnsetService.getMoves(id).asSequence().map{it->SharedInformation.Instance.moveService.get(SharedInformation.Instance.moveService.getRealName(it))}.filter(getMoveFilter(entry))
-        if(seq.any()){
+
+    public fun getGoodMoves(entry: PokedexEntry): List<Move> {
+        val id = SharedInformation.Instance.pokedexEntryService.getPokemonId(entry.nr)
+        var seq = SharedInformation.Instance.learnsetService.getMoves(id).asSequence().map { it ->
+            SharedInformation.Instance.moveService.get(
+                SharedInformation.Instance.moveService.getRealName(it)
+            )
+        }.filter(getMoveFilter(entry)).toList()
+        if (seq.any()) {
             return sample(4, 30, seq)
         }
         return emptyList()
     }
+
     private val evSpreads: Array<IntArray> =
-            arrayOf(
-                    intArrayOf(H, H, 0, 0, 0, 0),
-                    intArrayOf(0, H, H, 0, 0, 0),
-                    intArrayOf(0, 0, H, H, 0, 0),
-                    intArrayOf(0, 0, 0, H, H, 0),
-                    intArrayOf(0, 0, 0, 0, H, H),
-                    intArrayOf(0, H, 0, H, 0, 0),
-                    intArrayOf(0, H, 0, 0, H, 0),
-                    intArrayOf(0, 0, H, 0, H, 0),
-                    intArrayOf(H, 0, 0, 0, H, 0),
-                    intArrayOf(H, 0, H, 0, 0, 0),
-                    intArrayOf(H, 0, 0, H, 0, 0),
-                    intArrayOf(H, 0, 0, 0, 0, H),
-                    intArrayOf(0, H, 0, 0, 0, H),
-                    intArrayOf(0, 0, H, 0, 0, H),
-                    intArrayOf(0, 0, 0, H, 0, H),
-            )
+        arrayOf(
+            intArrayOf(H, H, 0, 0, 0, 0),
+            intArrayOf(0, H, H, 0, 0, 0),
+            intArrayOf(0, 0, H, H, 0, 0),
+            intArrayOf(0, 0, 0, H, H, 0),
+            intArrayOf(0, 0, 0, 0, H, H),
+            intArrayOf(0, H, 0, H, 0, 0),
+            intArrayOf(0, H, 0, 0, H, 0),
+            intArrayOf(0, 0, H, 0, H, 0),
+            intArrayOf(H, 0, 0, 0, H, 0),
+            intArrayOf(H, 0, H, 0, 0, 0),
+            intArrayOf(H, 0, 0, H, 0, 0),
+            intArrayOf(H, 0, 0, 0, 0, H),
+            intArrayOf(0, H, 0, 0, 0, H),
+            intArrayOf(0, 0, H, 0, 0, H),
+            intArrayOf(0, 0, 0, H, 0, H),
+        )
+
     private fun applyEffect(effect: BattleEffect, pkmn: Pokemon) {
         if (effect is PokemonBattleEffect) {
             val field = PokemonBattleEffect::class.java.getDeclaredField("_pkmn")
@@ -114,23 +144,27 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
             field.set(effect, pkmn)
         }
     }
+
     private fun getMoveKindAttackStat(kind: Move.MoveKind): Int {
         if (kind == Move.MoveKind.Physical) return 1 else return 3
     }
+
     private fun iteratePokedexEntries(threatData: ThreatData) {
-        val query=PokedexQuery()
-        var entries=sample(20,30,query.getSimiliarPokemon(mePokemon, 0.8, 1.2) { it->it.statsSum().toDouble() })
+        val query = PokedexQuery()
+        var entries = sample(20, 30, query.getSimiliarPokemon(mePokemon, 0.5, 1.5) { it -> it.statsSum().toDouble() }.toList())
         for (entry in entries) {
             threatData.otherEntry = entry
             iterateEvSpread(threatData)
         }
     }
+
     private fun iterateEvSpread(threatData: ThreatData) {
         for (evs in evSpreads) {
             threatData.otherEV = evs
             iterateNatures(threatData)
         }
     }
+
     private fun iterateNatures(threatData: ThreatData) {
         var natures = Nature.getUniqueNatures()
         for (nature in natures) {
@@ -138,81 +172,85 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
             iterateMoves(threatData)
         }
     }
+
     private fun iterateMoves(threatData: ThreatData) {
         val pokemonId =
-                SharedInformation.Instance.pokedexEntryService.getPokemonId(
-                        threatData.otherEntry!!.nr
-                )
-        val moves= getGoodMoves(threatData.otherEntry!!)
+            SharedInformation.Instance.pokedexEntryService.getPokemonId(
+                threatData.otherEntry!!.nr
+            )
+        val moves = getGoodMoves(threatData.otherEntry!!)
         for (move in moves) {
             threatData.otherMove = move
             iterateEffects(threatData)
         }
     }
+
     private var counter = 0
     private fun iterateEffects(threatData: ThreatData) {
         val effects =
-                arrayOf(
-                        StubEffect(),
-                        ChoiceItemEffect(
-                                null,
-                                getMoveKindAttackStat(threatData.otherMove!!.kind),
-                                1.5
-                        )
+            arrayOf(
+                StubEffect(),
+                ChoiceItemEffect(
+                    null,
+                    getMoveKindAttackStat(threatData.otherMove!!.kind),
+                    1.5
                 )
+            )
         for (effect in effects) {
             threatData.otherEffect = effect
             val danger = checkThreat(threatData)
             if (danger) {
                 counter++
-               // println(threatData.toString() + " " + danger)
+                // println(threatData.toString() + " " + danger)
             }
         }
     }
+
     private fun checkThreat(threatData: ThreatData): Boolean {
-        val ivs = intArrayOf(31, 31, 31, 31, 31, 31)
-        var otherPokemon =
-                Pokemon(
-                        threatData.otherEntry!!.nr,
-                        mePokemon.level,
-                        threatData.otherEV!!,
-                        ivs,
-                        threatData.otherNature,
-                        arrayOf(threatData.otherMove, null, null, null)
-                )
+        var otherPokemon = threatData.createPokemon(mePokemon.level)
+
         applyEffect(threatData.otherEffect!!, otherPokemon)
         if (threatData.otherEffect is PokemonBattleEffect) {
             otherPokemon.addEffect(threatData.otherEffect as PokemonBattleEffect)
         } else {
             threatData.otherEffect!!.init(null)
         }
-       /*val damageOtherToMe = threatData.otherMove!!.calculateDamage(otherPokemon, mePokemon)
-        var bestMove:Move=mePokemon.moves[0]
-        var bestDamage=0
-        for(myMove in mePokemon.moves.filterNotNull()){
-            val dmg=myMove.calculateDamage(mePokemon, otherPokemon)
-            if(dmg>bestDamage){
-                bestMove=myMove
-                bestDamage=dmg
-            }
-        }
-        if(bestDamage.toDouble()/otherPokemon.maxHP>=minDamageHPRatio && mePokemon.getStat(PokemonStat.SPEED)>otherPokemon.getStat(PokemonStat.SPEED)){
-            return false
-        }
-        threatData.otherEffect!!.disable()
-        return damageOtherToMe.toDouble() / mePokemon.maxHP> minDamageHPRatio*/
-        val executor=BattleExecutor(mePokemon, otherPokemon)
-        val state=executor.execute(5)
-        val rater=BattleStateRater()
-        val rating=rater.rate(state, 0)
-        SharedInformation.Instance.getLoggerService().log("Rating"+rating,null)
-        return rating<=0.4
+        /*val damageOtherToMe = threatData.otherMove!!.calculateDamage(otherPokemon, mePokemon)
+         var bestMove:Move=mePokemon.moves[0]
+         var bestDamage=0
+         for(myMove in mePokemon.moves.filterNotNull()){
+             val dmg=myMove.calculateDamage(mePokemon, otherPokemon)
+             if(dmg>bestDamage){
+                 bestMove=myMove
+                 bestDamage=dmg
+             }
+         }
+         if(bestDamage.toDouble()/otherPokemon.maxHP>=minDamageHPRatio && mePokemon.getStat(PokemonStat.SPEED)>otherPokemon.getStat(PokemonStat.SPEED)){
+             return false
+         }
+         threatData.otherEffect!!.disable()
+         return damageOtherToMe.toDouble() / mePokemon.maxHP> minDamageHPRatio*/
+        val executor = BattleExecutor(mePokemon, otherPokemon)
+        val state = executor.execute(5)
+        val rater = BattleStateRater()
+        val rating = rater.rate(state, 0)
+        val ratingInt = (10 * rating).toInt()
+        ratingMap.computeIfAbsent(ratingInt) { ArrayList<ThreatData>() }
+        ratingMap[ratingInt]!!.add(threatData.clone())
+        SharedInformation.Instance.getLoggerService().log("Rating" + rating, null)
+        return rating <= 0.4
     }
+
+    private val ratingMap = mutableMapOf<Int, MutableList<ThreatData>>()
     public fun findThreats(): Map<String, Double> {
         val resultMap = HashMap<String, Double>()
         var threatData = ThreatData.allNull()
         iteratePokedexEntries(threatData)
-        SharedInformation.Instance.getLoggerService().log("counter " + counter,true)
+        SharedInformation.Instance.getLoggerService().log("counter  " + counter, true)
+        for (x in ratingMap) {
+            SharedInformation.Instance.getLoggerService()
+                .log(x.key.toString() + " " + x.value.minWith {a,b->  a.createPokemon(mePokemon.level).statsSum().compareTo(b.createPokemon(mePokemon.level).statsSum()) }, true)
+        }
         return resultMap
     }
 }

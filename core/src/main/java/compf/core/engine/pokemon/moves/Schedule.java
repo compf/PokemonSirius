@@ -28,7 +28,7 @@ public class Schedule {
 		PokemonBattle _battle;
 		int _attacker;
 		int _defender;
-		byte _priority;
+		int _priority;
 		int _round;
 		int _id;
 		int _uid;
