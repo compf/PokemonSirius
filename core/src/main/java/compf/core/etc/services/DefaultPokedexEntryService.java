@@ -76,6 +76,7 @@ public class DefaultPokedexEntryService implements PokedexEntryService {
 			sdef = baseStats.get("spd").getAsInt();
 			speed = baseStats.get("spe").getAsInt();
 			int nr=object.get("num").getAsInt();
+			if(nr<=0)continue;;
 			String realName=object.get("name").getAsString();
 			nrId.put(nr, id);
 			var entry=new PokedexEntry(nr, realName, type1, type2, height, weight, hp, att, def, satt, sdef, speed);
