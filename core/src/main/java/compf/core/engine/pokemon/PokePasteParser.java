@@ -34,7 +34,7 @@ public class PokePasteParser {
     public Pokemon parse(){
         var firstLine=parseFirstLine(lines[0]);
         int level=50;
-        Nature nature=Nature.Hardy;
+        Nature nature=Nature.ATT_ATT;
         int[] evs={0,0,0,0,0,0};
         int[] ivs={31,31,31,31,31,31};
         Move[] moves=new Move[4];
@@ -52,7 +52,7 @@ public class PokePasteParser {
                 evs=parseStatLine(lines[i], 31);
              }
              else if(lines[i].endsWith("Nature")){
-                nature=Enum.valueOf(Nature.class, lines[i].split(" ")[0]);
+                nature=Nature.parse( lines[i].split(" ")[0]);
              }
              else if(lines[i].startsWith("-")){
                 String move=lines[i].substring(2).strip();

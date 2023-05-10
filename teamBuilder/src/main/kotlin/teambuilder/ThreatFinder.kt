@@ -10,7 +10,8 @@ import compf.core.engine.pokemon.effects.PokemonBattleEffect
 import compf.core.engine.pokemon.effects.StubEffect
 import compf.core.engine.pokemon.moves.Move
 import compf.core.etc.services.SharedInformation
-import query.PokedexQuery
+import pokeclass.PokedexEntryCategory
+import pokeclass.PokedexQuery
 
 public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) {
     class ThreatData(

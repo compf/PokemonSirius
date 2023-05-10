@@ -4,7 +4,7 @@ import compf.core.engine.pokemon.PokedexEntry
 import compf.core.etc.services.RandomGeneratorService
 import compf.core.etc.services.RealRandomGeneratorService
 import compf.core.networking.BotInterface
-import query.PokedexQuery
+
 public class WorstCaseRandomGenerator :RandomGeneratorService{
 
     private val  defaultGenerator:RealRandomGeneratorService=RealRandomGeneratorService();

@@ -8,44 +8,46 @@ import java.util.List;
 import java.util.Set;
 
 public enum Nature {
-	Hardy(0, PokemonStat.ATT, PokemonStat.ATT),
-	Lonely(1, PokemonStat.ATT, PokemonStat.DEF),
-	Adamant(2, PokemonStat.ATT, PokemonStat.SATT),
-	Naughty(3, PokemonStat.ATT, PokemonStat.SDEF),
-	Brave(4, PokemonStat.ATT, PokemonStat.SPEED),
+	ATT_ATT("Hardy",0, PokemonStat.ATT, PokemonStat.ATT),
+	ATT_DEF("Lonely",1, PokemonStat.ATT, PokemonStat.DEF),
+	ATT_SATT("Adamant",2, PokemonStat.ATT, PokemonStat.SATT),
+	ATT_SDEF("Naughty",3, PokemonStat.ATT, PokemonStat.SDEF),
+	ATT_SPEED("Brave",4, PokemonStat.ATT, PokemonStat.SPEED),
 
-	Bold(5, PokemonStat.DEF, PokemonStat.ATT),
-	Docile(6, PokemonStat.DEF, PokemonStat.DEF),
-	Impish(7, PokemonStat.DEF, PokemonStat.SATT),
-	Lax(8, PokemonStat.DEF, PokemonStat.SDEF),
-	Relaxed(9, PokemonStat.DEF, PokemonStat.SPEED),
+	DEF_ATT("Bold",5, PokemonStat.DEF, PokemonStat.ATT),
+	DEF_DEF("Docile",6, PokemonStat.DEF, PokemonStat.DEF),
+	DEF_SATT("Impish",7, PokemonStat.DEF, PokemonStat.SATT),
+	DEF_SDEF("Lax",8, PokemonStat.DEF, PokemonStat.SDEF),
+	DEF_SPEED("Relaxed",9, PokemonStat.DEF, PokemonStat.SPEED),
 
-	Modest(10, PokemonStat.SATT, PokemonStat.ATT),
-	Mild(11, PokemonStat.SATT, PokemonStat.DEF),
-	Bashful(12, PokemonStat.SATT, PokemonStat.SATT),
-	Rash(13, PokemonStat.SATT, PokemonStat.SDEF),
-	Quiet(14, PokemonStat.SATT, PokemonStat.SPEED),
+	SATT_ATT("Modest",10, PokemonStat.SATT, PokemonStat.ATT),
+	SATT_DEF("Mild",11, PokemonStat.SATT, PokemonStat.DEF),
+	SATT_SATT("Bashful",12, PokemonStat.SATT, PokemonStat.SATT),
+	SATT_SDEF("Rash",13, PokemonStat.SATT, PokemonStat.SDEF),
+	SATT_SPEED("Quiet",14, PokemonStat.SATT, PokemonStat.SPEED),
 
-	Calm(15, PokemonStat.SDEF, PokemonStat.ATT),
-	Gentle(16, PokemonStat.SDEF, PokemonStat.DEF),
-	Careful(17, PokemonStat.SDEF, PokemonStat.SATT),
-	Quirky(18, PokemonStat.SDEF, PokemonStat.SDEF),
-	Sassy(19, PokemonStat.SDEF, PokemonStat.SPEED),
+	SDEF_ATT("Calm",15, PokemonStat.SDEF, PokemonStat.ATT),
+	SDEF_DEF("Gentle",16, PokemonStat.SDEF, PokemonStat.DEF),
+	SDEF_SATT("Careful",17, PokemonStat.SDEF, PokemonStat.SATT),
+	SDEF_SDEF("Quirky",18, PokemonStat.SDEF, PokemonStat.SDEF),
+	SDEF_SPEED("Sassy",19, PokemonStat.SDEF, PokemonStat.SPEED),
 
-	Timid(20, PokemonStat.SPEED, PokemonStat.ATT),
-	Hasty(21, PokemonStat.SPEED, PokemonStat.DEF),
-	Jolly(22, PokemonStat.SPEED, PokemonStat.SATT),
-	Naive(23, PokemonStat.SPEED, PokemonStat.SDEF),
-	Serious(24, PokemonStat.SPEED, PokemonStat.SPEED),
+	SPEED_ATT("Timid",20, PokemonStat.SPEED, PokemonStat.ATT),
+	SPEED_DEF("Hasty",21, PokemonStat.SPEED, PokemonStat.DEF),
+	SPEED_SATT("Jolly",22, PokemonStat.SPEED, PokemonStat.SATT),
+	SPEED_SDEF("Naive",23, PokemonStat.SPEED, PokemonStat.SDEF),
+	SPEED_SPEED("Serious",24, PokemonStat.SPEED, PokemonStat.SPEED),
 	;
 
 	final int _higherStat, _lowerStat, _index;
+	final String _name;
 
-	Nature(int index, int h, int l) {
+	Nature(String name,int index, int h, int l) {
 
 		_higherStat = h;
 		_lowerStat = l;
 		_index = index;
+		this._name=name;
 	}
 
 	public int getRisingValue() {
@@ -60,8 +62,13 @@ public enum Nature {
 		return natures;
 	}
 
-	public static Nature find(int val) {
-		return values()[val];
+	public static Nature parse(String val){
+		for(var n:values()){
+			if(n._name.contentEquals(val)){
+				return n;
+			}
+		}
+		return null;
 	}
 
 }
