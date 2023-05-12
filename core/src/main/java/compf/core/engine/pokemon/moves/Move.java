@@ -117,9 +117,9 @@ public class Move implements Serializable {
 	public void init(Schedule schedule, int attacker, int defender, int dr) {
 		schedule.addMove(attacker, defender, this, dr);
 	}
-
-	private int getCriticalHitFactor() {
-		return SharedInformation.Instance.getRNG().checkPerc(15,CallerInformation.CriticalHit) ? 2 : 1;
+	private final double  CRIT_FACTOR=1.5;
+	private double getCriticalHitFactor() {
+		return SharedInformation.Instance.getRNG().checkPerc(15,CallerInformation.CriticalHit) ? CRIT_FACTOR : 1;
 	}
 
 	public int calculateDamage(Pokemon att, Pokemon def) {

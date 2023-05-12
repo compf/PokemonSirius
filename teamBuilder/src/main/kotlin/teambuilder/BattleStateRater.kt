@@ -11,7 +11,7 @@ import compf.core.engine.pokemon.effects.SleepingEffect
 public class BattleStateRater{
     public fun rate(state:BattleState,playerId:Short):Double{
         val converted=state as DetailedBattleState
-        val players=converted.getAllPlayers()
+        val players=converted.allPlayers
        val player= if (players[0].playerId==playerId) players[0] else players[1]
        var totalHpSum=0
        var hpSum=0.0

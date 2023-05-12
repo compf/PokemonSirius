@@ -1,7 +1,5 @@
 package compf.core.networking;
 
-import javax.xml.crypto.Data;
-
 import compf.core.engine.BattleRoundResult;
 import compf.core.engine.BattleState;
 import compf.core.engine.NetworkMessage;
@@ -9,10 +7,10 @@ import compf.core.engine.NetworkMessageKind;
 import compf.core.engine.Player;
 import compf.core.engine.PlayerInput;
 import compf.core.engine.Tuple;
-import compf.core.etc.MyObject;
 
 public class BotInterface extends SimpleIOInterface {
     private final Player _player;
+    private   BattleState _state;
 
     public BotInterface(Player player) {
         this._player = player;
@@ -39,16 +37,26 @@ public class BotInterface extends SimpleIOInterface {
     }
 
     public void update(BattleRoundResult state) {
-
+    _state=state.State;
     }
 
     public void battleEnded(int playerLost) {
 
     }
+    private short selectEnemyPlayerId(){
+        for(int pId :_state.getPlayerIds()){
+            if(pId!=_player.getPlayerId() )return (short)pId;
+        }
+        return  -1;
+    }
+    private short selectEnemyPokemonId(short playerId){
+        return 0;
+    }
 
     public PlayerInput requestPlayerInput(short pkmnIndex) {
+        short enemyPlayerId=selectEnemyPlayerId();
         short move = (short) compf.core.etc.services.SharedInformation.Instance.getRNG().randomNumber(0, this._player.getPokemon(pkmnIndex).getValidMovesCount(),BotInterface.class);
-        return new PlayerInput.AttackInput(pkmnIndex, move, (short) 0, (short) 0, _player.getPlayerId());
+        return new PlayerInput.AttackInput(pkmnIndex, move, enemyPlayerId, selectEnemyPokemonId(enemyPlayerId), _player.getPlayerId());
     }
 
     public short switchPokemon(Tuple<Short, BattleState> inf) {

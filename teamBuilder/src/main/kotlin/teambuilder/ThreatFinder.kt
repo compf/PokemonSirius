@@ -221,6 +221,10 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
             SharedInformation.Instance.getLoggerService()
                 .log(x.key.toString() + " " + x.value.minWith {a,b->  a.createPokemon(mePokemon.level).statsSum().compareTo(b.createPokemon(mePokemon.level).statsSum()) }, true)
         }
+        val weakestThreat=ratingMap[0]!!.minWith {a,b->  a.createPokemon(mePokemon.level).statsSum().compareTo(b.createPokemon(mePokemon.level).statsSum()) }
+        val debugExecutor=DebugExecutor(mePokemon,weakestThreat.createPokemon(50))
+        debugExecutor.execute(10)
+
         return resultMap
     }
 }

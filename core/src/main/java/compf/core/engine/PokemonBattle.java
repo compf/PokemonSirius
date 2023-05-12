@@ -242,16 +242,17 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 			dmgInf.getMessages().addFirst(dmgInf.toString());
 
 			item.getMove().finishedMove(dmgInf);
-			if (defender.getCurrHP() <= 0) {
-				String msg = (switchPokemon(interrupt, defender));
-				var action = new BattleAction(-1, msg, BattleAction.ActionKind.SwitchPokemon, null);
-				actions.add(action);
-				continue;
-			}
-
 			var action = new BattleAction(item.getID(), dmgInf.getMessages(), BattleAction.ActionKind.Move,
 					dmgInf);
 			actions.add(action);
+			if (defender.getCurrHP() <= 0) {
+				String msg = (switchPokemon(interrupt, defender));
+				var switchAction = new BattleAction(-1, msg, BattleAction.ActionKind.SwitchPokemon, null);
+				actions.add(switchAction);
+
+			}
+
+
 			
 
 

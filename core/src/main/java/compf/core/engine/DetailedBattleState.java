@@ -3,6 +3,7 @@ package compf.core.engine;
 import compf.core.engine.pokemon.PokemonStat;
 import compf.core.etc.BufferList;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -11,12 +12,12 @@ public class DetailedBattleState implements BattleState {
      * First version
      */
     private static final long serialVersionUID = 1L;
-    private BufferList<Player> _players;
+    private List<Player> _players;
     public Player[] getAllPlayers(){
         Player[] players=new Player[_players.size()];
         return _players.toArray(players);
     }
-    public DetailedBattleState(BufferList<Player> bufferList) {
+    public DetailedBattleState(List<Player> bufferList) {
         _players = bufferList;
     }
 
