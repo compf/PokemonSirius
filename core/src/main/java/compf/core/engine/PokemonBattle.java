@@ -250,7 +250,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 			}
 
 			var action = new BattleAction(item.getID(), dmgInf.getMessages(), BattleAction.ActionKind.Move,
-					dmgInf.getDamage());
+					dmgInf);
 			actions.add(action);
 			
 

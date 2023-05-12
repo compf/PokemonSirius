@@ -1,4 +1,5 @@
 import compf.core.engine.BattleAction
+import compf.core.engine.pokemon.moves.DamageInformation
 import compf.core.etc.services.SharedInformation
 
 public interface Assertion {
@@ -11,7 +12,7 @@ public abstract class ActionAssertion : Assertion {
 public class HPModifiedAssertion(val factor:Double):ActionAssertion() {
     protected override fun isDataValid(toCheck:Any):Boolean{
         val action =toCheck as BattleAction;
-        return action.Data!=null && action.Data.toString().contains(" ")
+        return action.Data!=null && action.Data is String && action.toString().contains(" ")
     }
     public override fun check(toCheck: Any): Boolean {
         if(!this.isDataValid(toCheck))return false
@@ -33,17 +34,17 @@ public class HPModifiedAssertion(val factor:Double):ActionAssertion() {
 public class DamageAssertion(val minDamage: Int, val maxDamage: Int) : ActionAssertion() {
     protected override fun isDataValid(toCheck:Any):Boolean{
         val action =toCheck as BattleAction;
-        return action.Data!=null && action.Data.toString().toIntOrNull()!=null
+        return action.Data!=null && action.Data is DamageInformation
     }
     public override fun check(toCheck: Any): Boolean {
         if(!this.isDataValid(toCheck))return false
         val value = toCheck as BattleAction
         if (value!!.Data == null) return true
-        val damage = value!!.Data as Int
-        return minDamage <= damage && damage <= maxDamage
+        val damage = (value!!.Data as DamageInformation).damage
+        return damage in minDamage..maxDamage
     }
     override fun toString(): String {
-        return "" + minDamage + " to " + maxDamage
+        return "$minDamage to $maxDamage"
     }
 }
 public abstract class GroupedAssertion :Assertion{
