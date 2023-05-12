@@ -18,22 +18,22 @@ class PokedexEntryClassifier {
 
 
         if (entry.baseStats[PokemonStat.ATT] > ATT_THRESHOLD ) {
-            result.add(PokedexEntryCategory.PhysicalSweeper)
+            result.add(PhysicalSweeper())
         }
         if (entry.baseStats[PokemonStat.SATT] > SATT_THRESHOLD) {
-            result.add(PokedexEntryCategory.SpecialSweeper)
+            result.add(SpecialSweeper())
         }
         if (entry.baseStats[PokemonStat.ATT] > ATT_THRESHOLD && entry.baseStats[PokemonStat.SATT] > SATT_THRESHOLD) {
-            result.add(PokedexEntryCategory.MixedSweeper)
+            result.add(MixedSweeper())
         }
         if (entry.baseStats[PokemonStat.DEF] > DEF_THRESHOLD ) {
-            result.add(PokedexEntryCategory.PhysicalTank)
+            result.add(PhysicalTank())
         }
         if (entry.baseStats[PokemonStat.SDEF] > SDEF_THRESHOLD ) {
-            result.add(PokedexEntryCategory.SpecialTank)
+            result.add(SpecialTank())
         }
         if(result.isEmpty()){
-            result.add(PokedexEntryCategory.Other)
+            result.add(OtherCategory())
         }
         return result
     }

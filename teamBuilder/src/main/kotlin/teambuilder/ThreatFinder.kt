@@ -21,7 +21,7 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
         var otherNature: Nature?,
         var otherEV: IntArray?,
         var otherEffect: BattleEffect?,
-        var otherMove: Move?
+        var otherMoves: Array<Move>?
     ) {
         public override fun toString(): String {
             var statNames =
@@ -35,7 +35,7 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
                     " " +
                     statNames +
                     " " +
-                    otherMove?.toString()
+                    otherMoves?.joinToString(",")
         }
 
         fun createPokemon(level: Int): Pokemon {
@@ -47,12 +47,12 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
                 otherEV!!,
                 ivs,
                 otherNature,
-                arrayOf(otherMove, null, null, null)
+                otherMoves
             )
         }
 
         fun clone(): ThreatData {
-            return ThreatData(otherEntry, otherCatgory,otherNature, otherEV, otherEffect, otherMove)
+            return ThreatData(otherEntry, otherCatgory,otherNature, otherEV, otherEffect, otherMoves)
         }
 
         companion object {
@@ -86,17 +86,17 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
 
 
 
-    public fun getGoodMoves(threatData: ThreatData): List<Move> {
+    public fun getGoodMoves(threatData: ThreatData): Array<Move> {
         val id = SharedInformation.Instance.pokedexEntryService.getPokemonId(threatData.otherEntry!!.nr)
         var seq = SharedInformation.Instance.learnsetService.getMoves(id).asSequence().map { it ->
             SharedInformation.Instance.moveService.get(
                 SharedInformation.Instance.moveService.getRealName(it)
             )
-        }.filter(threatData.otherCatgory!!.moveFilter).toList()
+        }.filter{threatData.otherCatgory!!.isGoodMove(it)}.toList()
         if (seq.any()) {
-            return sample(4, 30, seq)
+            return sample(4, 30, seq).toTypedArray()
         }
-        return emptyList()
+        return arrayOf()
     }
     private fun applyEffect(effect: BattleEffect, pkmn: Pokemon) {
         if (effect is PokemonBattleEffect) {
@@ -127,14 +127,14 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
     }
 
     private fun iterateEvSpread(threatData: ThreatData) {
-        for (evs in threatData.otherCatgory!!.evDistr) {
+        for (evs in threatData.otherCatgory!!.getEvDistributions()) {
             threatData.otherEV = evs.evs
             iterateNatures(threatData)
         }
     }
 
     private fun iterateNatures(threatData: ThreatData) {
-        var natures = threatData.otherCatgory!!.natures
+        var natures = threatData.otherCatgory!!.getNatures()
         for (nature in natures) {
             threatData.otherNature = nature
             iterateMoves(threatData)
@@ -147,10 +147,12 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
                 threatData.otherEntry!!.nr
             )
         val moves = getGoodMoves(threatData)
-        for (move in moves) {
-            threatData.otherMove = move
+        threatData.otherMoves=moves
+        if(moves.any()){
             iterateEffects(threatData)
+
         }
+
     }
 
     private var counter = 0
@@ -160,9 +162,9 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
                 StubEffect(),
                 ChoiceItemEffect(
                     null,
-                    getMoveKindAttackStat(threatData.otherMove!!.kind),
+                   threatData.otherCatgory!!.getBestOffensiveStat(threatData.otherEntry!!),
                     1.5
-                )
+                ),
             )
         for (effect in effects) {
             threatData.otherEffect = effect
