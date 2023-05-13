@@ -11,9 +11,11 @@ import compf.core.engine.Tuple;
 public class BotInterface extends SimpleIOInterface {
     private final Player _player;
     private   BattleState _state;
+    private BotAI _ai;
 
-    public BotInterface(Player player) {
+    public BotInterface(Player player,BotAI ai) {
         this._player = player;
+        _ai=ai;
     }
 
 
@@ -54,9 +56,7 @@ public class BotInterface extends SimpleIOInterface {
     }
 
     public PlayerInput requestPlayerInput(short pkmnIndex) {
-        short enemyPlayerId=selectEnemyPlayerId();
-        short move = (short) compf.core.etc.services.SharedInformation.Instance.getRNG().randomNumber(0, this._player.getPokemon(pkmnIndex).getValidMovesCount(),BotInterface.class);
-        return new PlayerInput.AttackInput(pkmnIndex, move, enemyPlayerId, selectEnemyPokemonId(enemyPlayerId), _player.getPlayerId());
+       return _ai.getPlayerInput(pkmnIndex,_player,_state);
     }
 
     public short switchPokemon(Tuple<Short, BattleState> inf) {

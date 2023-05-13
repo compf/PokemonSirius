@@ -17,12 +17,7 @@ import compf.core.engine.PokemonBattle;
 import compf.core.engine.pokemon.PokedexEntry;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.etc.services.*;
-import compf.core.networking.BattleClient;
-import compf.core.networking.BattleServer;
-import compf.core.networking.BotInterface;
-import compf.core.networking.ConsolePrompt;
-import compf.core.networking.IOInterface;
-import compf.core.networking.SharedPipe;
+import compf.core.networking.*;
 
 public class SinglePlayerAgainstBotProtytype {
     static int getPort(){
@@ -53,7 +48,7 @@ public class SinglePlayerAgainstBotProtytype {
             
         });
         serverThread.start();
-        BotInterface botInput =new BotInterface(botPlayer);
+        BotInterface botInput =new BotInterface(botPlayer,new RandomBotAI());
        
       
         Thread playerThread = new Thread((() -> {

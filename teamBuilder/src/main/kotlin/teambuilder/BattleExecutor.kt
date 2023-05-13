@@ -30,7 +30,7 @@ open class BattleExecutor(val myPokemon:Pokemon,val otherPokemon:Pokemon){
         battle.players.add(mePlayer)
         battle.players.add(enemyPlayer)
         var lastState:BattleState?=null
-        val ioInterfaces=arrayOf(BotInterface(mePlayer),BotInterface(enemyPlayer))
+        val ioInterfaces=arrayOf(BotInterface(mePlayer,SequentialMoveSelectorAI()),BotInterface(enemyPlayer,SequentialMoveSelectorAI()))
         for(io in ioInterfaces){
             io.update(BattleRoundResult(LinkedList<BattleAction>(),DetailedBattleState(listOf(mePlayer,enemyPlayer)),NetworkMessageKind.Update))
         }
