@@ -1,5 +1,6 @@
 package compf.core.engine.pokemon.moves;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class Schedule {
 		/**
 		 * 
 		 */
+		@Serial
 		private static final long serialVersionUID = 1L;
 		PokemonBattle _battle;
 		int _attacker;
@@ -94,10 +96,10 @@ public class Schedule {
 			builder.append(_battle.getPokemon(_attacker).toString());
 			builder.append(" used ");
 			builder.append(SharedInformation.Instance.getMoveService().get(_id).getName());
-			builder.append(" in round " + this._round + " on ");
+			builder.append(" in round ").append(this._round).append(" on ");
 			builder.append(getDefender().toString());
 			if (_dmg != null)
-				builder.append(" which made " + _dmg.getDamage() + " damage");
+				builder.append(" which made ").append(_dmg.getDamage()).append(" damage");
 			builder.append('\n');
 			// builder.append("Updated Stats " + getDefender().getName()+"
 			// "+getDefender().getCurrHP() );
@@ -153,7 +155,7 @@ public class Schedule {
 	public ScheduleItem getNext() {
 
 		var resultOptional = _internList.stream().filter((obj) -> !obj._executed && obj._round == _currRound)
-				.sorted(_comp).findFirst();
+				.min(_comp);
 		var result = resultOptional.orElseThrow();
 		result._executed = true;
 
@@ -168,7 +170,7 @@ public class Schedule {
 	}
 
 	public boolean any() {
-		return _internList.stream().filter((obj) -> !obj._executed && obj._round == _currRound).count() > 0;
+		return _internList.stream().anyMatch((obj) -> !obj._executed && obj._round == _currRound);
 	}
 
 	public void incrementRound() {
@@ -213,6 +215,7 @@ public class Schedule {
 				else if (att1.getStat(5) < att2.getStat(5))
 					return +1;
 				else {
+					// will not return 0 because there must be  an order
 					boolean tie = SharedInformation.Instance.getRNG().checkPerc(50,ScheduleItemComparator.class);
 					if (tie)
 						return -1;
@@ -232,7 +235,7 @@ public class Schedule {
 
 	public boolean allPlayersGaveInput(int maxNumber) {
 		long scheduleSize = _internList.stream().filter((item) -> item._round == _currRound + 1).map(x -> x._attacker)
-				.collect(Collectors.toSet()).stream().count();
+				.collect(Collectors.toSet()).size();
 		return scheduleSize >= maxNumber;
 	}
 

@@ -11,10 +11,8 @@ import compf.core.etc.services.SharedInformation;
 
 public class BaseServer {
 	/**
-	 * Read an object from the {@link ObjectInputStream} and converts into the
-	 * type @link T
-	 * 
-	 * @param <T>
+	 * Read an object from the {@link ObjectInputStream} and converts into a network message
+	 *
 	 * @param in  The input stream
 	 * @return The object or null on any error
 	 */
@@ -27,9 +25,8 @@ public class BaseServer {
 	/**
 	 * Write an object to the {@link ObjectOutputStream}
 	 * 
-	 * @param <T> The type of the object
 	 * @param out The {@link ObjectOutputStream}
-	 * @param The object to be written
+	 * @param msg object to be written
 	 * @return A non-null object if successful, else a null value
 	 */
 	protected <T> boolean writeObject(Pipe out, NetworkMessage msg) {

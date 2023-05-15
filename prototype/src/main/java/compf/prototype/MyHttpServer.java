@@ -29,7 +29,7 @@ import compf.core.networking.SharedPipe;
 
 public class MyHttpServer {
 
-    class StartBattleHandler implements HttpHandler{
+   static class StartBattleHandler implements HttpHandler{
 
         private BotInterface botInput;
         @Override

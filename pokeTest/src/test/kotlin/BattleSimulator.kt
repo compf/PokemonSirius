@@ -69,9 +69,7 @@ public  class SimulationBattleIO : SimpleIOInterface {
            balanceCounter--
        }
 
-       if(balanceCounter==0){
-          
-       }
+
        battleEnded(0)
    }
    public  fun battleEnded(player:Int){}

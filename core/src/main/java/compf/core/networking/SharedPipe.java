@@ -58,7 +58,6 @@ public class SharedPipe implements Pipe {
         return waitingList.offer(obj);
     }
 
-    private static HashMap<String, Integer> threadListening = new HashMap<>();
 
     @Override
     public boolean avaliable() {
@@ -69,12 +68,7 @@ public class SharedPipe implements Pipe {
     public NetworkMessage read() {
         try {
 
-            NetworkMessage obj = waitingList.poll(1, TimeUnit.HOURS);
-            synchronized (threadListening) {
-                threadListening.put(Thread.currentThread().getName(), null);
-
-            }
-            return obj;
+            return  waitingList.poll(1, TimeUnit.HOURS);
         } catch (InterruptedException e) {
             return null;
         }

@@ -1,5 +1,6 @@
 package compf.core.engine;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -31,7 +32,8 @@ public class BattleRule implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7226253462303207468L;
+	@Serial
+    private static final long serialVersionUID = -7226253462303207468L;
 	public final int NumberPlayers;
 	public final int PlayersPerTeam;
 	public final int MaxPokemonInTeamPerPlayer;

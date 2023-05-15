@@ -13,7 +13,7 @@ public class StatModifyingMove extends Move {
 
     @Override
     public DamageInformation execute(Schedule.ScheduleItem item) {
-        int target = 0;
+        int target;
         if (_who == ME) {
             target = item.getAttackerPos();
         } else {

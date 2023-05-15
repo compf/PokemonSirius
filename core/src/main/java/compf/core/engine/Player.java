@@ -1,5 +1,6 @@
 package compf.core.engine;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashSet;
 
@@ -11,6 +12,7 @@ public class Player extends MyObject implements Serializable {
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 1L;
     protected Pokemon[] _team = new Pokemon[6];
     protected String _name;
@@ -77,15 +79,7 @@ public class Player extends MyObject implements Serializable {
 
     }
 
-    /**
-     * hello
-     */
-    /**
-     * dswd
-     * 
-     * @param nr
-     * @return
-     */
+
     public Pokemon getPokemon(int nr) {
         if (nr >= _team.length)
             return null;

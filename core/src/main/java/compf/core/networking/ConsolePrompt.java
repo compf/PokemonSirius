@@ -176,10 +176,7 @@ public class ConsolePrompt extends SimpleIOInterface {
 		if(_scanner==null){
 			_scanner=new Scanner(System.in);
 		}
-		synchronized(_scanner){
-			String result=_scanner.nextLine();
-			return result;
-		}
+			return _scanner.nextLine();
 		
 	}
 

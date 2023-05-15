@@ -3,6 +3,8 @@ package compf.core.engine.pokemon.effects;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.moves.DamageInformation;
 
+import java.io.Serial;
+
 public class FrozenStateCondition extends PokemonBattleEffect {
 
     public FrozenStateCondition(Pokemon pkmn) {
@@ -13,6 +15,7 @@ public class FrozenStateCondition extends PokemonBattleEffect {
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Override

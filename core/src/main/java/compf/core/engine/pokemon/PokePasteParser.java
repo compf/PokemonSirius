@@ -79,7 +79,7 @@ public class PokePasteParser {
         boolean atSignFound=false;
         for(int i=0;i<whiteSpaceSplitted.length;i++){
             if(whiteSpaceSplitted[i].contentEquals("(F)") ){
-                
+                //male by default
             }
             else if( whiteSpaceSplitted[i].contentEquals("(M)")){
                 inf.gender=Gender.Female;
@@ -93,7 +93,7 @@ public class PokePasteParser {
             else if(atSignFound){
                 inf.item+=whiteSpaceSplitted[i]+" "; 
             }
-            else if(!atSignFound){
+            else {
                 inf.nickname=whiteSpaceSplitted[i];
             }
         }

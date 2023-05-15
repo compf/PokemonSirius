@@ -1,5 +1,6 @@
 package compf.core.engine;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -8,6 +9,7 @@ public class BattleAction implements Serializable {
 		Move, Ability, SwitchPokemon, Other, BattleEffect
 	}
 
+	@Serial
 	private static final long serialVersionUID = -1557747125081633438L;
 	public final LinkedList<String> Messages;
 	public final int ActionId;

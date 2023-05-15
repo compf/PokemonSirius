@@ -22,9 +22,7 @@ public class DefaultLearnsetService implements LearnsetService {
         for(String pokemonId:jsonObj.keySet()){
             LinkedList<String> moves=new LinkedList<>();
             if(jsonObj.get(pokemonId).getAsJsonObject().has("learnset")){
-                for(String moveId:jsonObj.get(pokemonId).getAsJsonObject().get("learnset").getAsJsonObject().keySet()){
-                    moves.add(moveId);
-                }
+                moves.addAll(jsonObj.get(pokemonId).getAsJsonObject().get("learnset").getAsJsonObject().keySet());
             }
            
             pokemonIdMoves.put(pokemonId, moves);

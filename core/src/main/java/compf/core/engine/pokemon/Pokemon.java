@@ -1,5 +1,6 @@
 package compf.core.engine.pokemon;
 
+import java.io.Serial;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
@@ -16,6 +17,7 @@ public class Pokemon extends PokedexEntry {
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 1L;
     private int[] _stats = new int[6];
     private int[] _evs = new int[6];
@@ -215,11 +217,16 @@ public class Pokemon extends PokedexEntry {
             } else {
                 double natureFactor = 1;
                 if (_nature.getRisingValue() == _nature.getLoweringValue())
-                    ;
-                else if (i == _nature.getRisingValue())
+                {
+                    // do nothing
+                }
+                else if (i == _nature.getRisingValue()){
                     natureFactor = 1.1;
-                else if (i == _nature.getLoweringValue())
+
+                }
+                else if (i == _nature.getLoweringValue()){
                     natureFactor = 0.9;
+                }
                 double d2 = (((2 * _baseStats[i] + _ivs[i] + _evs[i] / 4.0) * _lvl) / 100.0 + 5) * natureFactor;
                 _stats[i] = (int) (d2);
             }

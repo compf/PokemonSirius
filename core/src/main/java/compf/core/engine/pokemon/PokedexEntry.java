@@ -1,12 +1,14 @@
 package compf.core.engine.pokemon;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class PokedexEntry implements Serializable, PokemonStat,PokemonTypeHolder {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	@Serial
+    private static final long serialVersionUID = 1L;
 	protected int _nr;
 	protected String _name;
 	protected int[] _baseStats = new int[6];

@@ -51,8 +51,7 @@ public class DefaultMoveService implements MoveService {
 		for (String id:fullData.keySet()) {
 			var object=fullData.get(id).getAsJsonObject();
 			Type type = Enum.valueOf(Type.class, object.get("type").getAsString());
-			if (type == null)
-				type = Type.Normal;
+
 			int power = object.get("basePower").getAsInt();
 			int pp = object.get("pp").getAsInt();
 			String accuracyStr = object.get("accuracy").getAsString();

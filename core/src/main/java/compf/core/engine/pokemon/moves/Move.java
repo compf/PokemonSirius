@@ -1,5 +1,6 @@
 package compf.core.engine.pokemon.moves;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import compf.core.engine.pokemon.Pokemon;
@@ -14,6 +15,7 @@ public class Move implements Serializable {
 	/**
 	 * 
 	 */
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private final int _nr;
 	private final String _name;
@@ -123,7 +125,7 @@ public class Move implements Serializable {
 	}
 
 	public int calculateDamage(Pokemon att, Pokemon def) {
-		double d1 = (2 * att.getLevel()) / 5 + 2;
+		double d1 = (int)((2.0 * att.getLevel()) / 5.0 + 2);
 		double attValue, defValue;
 		if (_kind == MoveKind.Physical) {
 			attValue = att.getStat(1) * att.getStatStageFactor(1);

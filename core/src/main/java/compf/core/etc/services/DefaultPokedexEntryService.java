@@ -60,7 +60,7 @@ public class DefaultPokedexEntryService implements PokedexEntryService {
 
 			float height = object.get("heightm").getAsFloat();
 			float weight = object.get("weightkg").getAsFloat();;
-			Type type1 = Type.Empty;
+			Type type1 ;
 			Type type2 = Type.Empty;
 			JsonArray typeArray=object.get("types").getAsJsonArray();
 			type1=Enum.valueOf(Type.class,typeArray.get(0).getAsString());

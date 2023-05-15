@@ -33,7 +33,7 @@ public class MyObject {
 	}
 
 	public static int combine(short playerIndex, short pokeIndex) {
-		return (int) ((playerIndex << 16) | pokeIndex);
+		return  ((playerIndex << 16) | pokeIndex);
 	}
 
 	public static short[] getIndices(int index) {
@@ -53,7 +53,7 @@ public class MyObject {
 	}
 
 	public long combine(int playerIndex, int pokeIndex) {
-		return (long) ((playerIndex << 32) | pokeIndex);
+		return ((playerIndex << 32) | pokeIndex);
 	}
 
 	public static <T> int indexOf(T[] arr, T val) {

@@ -1,9 +1,6 @@
 package compf.core.engine;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.stream.Stream;
 
 import compf.core.engine.pokemon.*;
@@ -36,9 +33,11 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 	}
 
 	public PokemonBattle(int numPlayers) {
-		this._players = new compf.core.etc.BufferList<>(numPlayers);
+		this._players = new ArrayList<Player>(numPlayers);
 		_schedule = new Schedule(this);
+		_numPlayeers=numPlayers;
 	}
+	private int _numPlayeers;
 
 	public void init() {
 
@@ -55,6 +54,10 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 
 	public int getRound() {
 		return _schedule.getCurrRound();
+	}
+
+	public boolean hasEnoughPlayers() {
+		return _players.size()>=_numPlayeers;
 	}
 
 	public class BattleIterator implements Iterator<Pokemon> {
@@ -194,8 +197,11 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 					return -1;
 				if (arg0.getStat(5) < arg1.getStat(5))
 					return +1;
-				else
+				else{
+					// Randome choice if equal, will neve return 0
 					return SharedInformation.Instance.getRNG().checkPerc(50,Comparator.class) ? +1 : -1;
+
+				}
 			}
 
 		});
@@ -289,9 +295,9 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 	 * @param index the index, <0 for player, >0 for enemy
 	 * @return the pokemon at that index
 	 */
-	private compf.core.etc.BufferList<Player> _players;
+	private ArrayList<Player> _players;
 
-	public compf.core.etc.BufferList<Player> getPlayers() {
+	public List<Player> getPlayers() {
 
 		return _players;
 

@@ -1,6 +1,8 @@
 package compf.core.engine.pokemon.moves;
 
 import compf.core.engine.pokemon.effects.GlobalBattleEffect;
+
+import java.io.Serial;
 import java.lang.reflect.InvocationTargetException;
 
 public class GlobalEffectMove extends Move {
@@ -14,7 +16,8 @@ public class GlobalEffectMove extends Move {
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 1L;
+	@Serial
+    private static final long serialVersionUID = 1L;
 
 	@Override
 	public DamageInformation execute(Schedule.ScheduleItem item) {

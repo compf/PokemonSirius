@@ -1,5 +1,6 @@
 package compf.core.engine.pokemon.moves;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -10,6 +11,7 @@ public class DamageInformation implements Serializable, Cloneable {
 	/**
 	 * 
 	 */
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private int _dmg, _moveId;
 	private double _effectiveness;
@@ -101,7 +103,7 @@ public class DamageInformation implements Serializable, Cloneable {
 		builder.append(SharedInformation.Instance.getMoveService().get(_moveId).getName());
 		builder.append(" on ");
 		builder.append(_defender.toString());
-		builder.append(" which made " + getDamage() + " damage");
+		builder.append(" which made ").append(getDamage()).append(" damage");
 		builder.append('\n');
 		// builder.append("Updated Stats " + getDefender().getName()+"
 		// "+getDefender().getCurrHP() );

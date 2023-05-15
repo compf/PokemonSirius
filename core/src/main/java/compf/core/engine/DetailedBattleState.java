@@ -3,6 +3,7 @@ package compf.core.engine;
 import compf.core.engine.pokemon.PokemonStat;
 import compf.core.etc.BufferList;
 
+import java.io.Serial;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,6 +12,7 @@ public class DetailedBattleState implements BattleState {
     /**
      * First version
      */
+    @Serial
     private static final long serialVersionUID = 1L;
     private List<Player> _players;
     public Player[] getAllPlayers(){
@@ -83,17 +85,15 @@ public class DetailedBattleState implements BattleState {
 
     @Override
     public Optional<Integer> getDefeatedPlayer() {
-        boolean finnished = false;
         for (int id : getPlayerIds()) {
             boolean playerFinished = true;
             final int TeamSize=6;
             for (int i = 0; i < TeamSize; i++) {
                 int hp = getCurrHp(id, i);
-                playerFinished = playerFinished & hp == 0;
+                playerFinished = playerFinished && hp == 0;
 
             }
-            finnished = finnished | playerFinished;
-            if(finnished){
+            if(playerFinished){
                 return Optional.of(id);
             }
         }

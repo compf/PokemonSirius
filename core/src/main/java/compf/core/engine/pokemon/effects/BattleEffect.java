@@ -1,5 +1,6 @@
 package compf.core.engine.pokemon.effects;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -10,7 +11,8 @@ public abstract class BattleEffect extends MyObject implements Serializable {
 	/**
 		 *
 		 */
-	private static final long serialVersionUID = 1L;
+	@Serial
+    private static final long serialVersionUID = 1L;
 
 	public void init(EffectParam param) {
 	}

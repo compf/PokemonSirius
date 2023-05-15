@@ -1,10 +1,14 @@
 package compf.core.etc;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
 public class BufferList<T> implements List<T>, Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -563315742032842168L;
 	private final ArrayList<T> _intern;
 	private int _max;
@@ -41,11 +45,12 @@ public class BufferList<T> implements List<T>, Serializable {
 		return _intern.toArray();
 	}
 
+	@NotNull
 	@Override
-	public <T> T[] toArray(T[] a) {
-
-		return _intern.toArray(a);
+	public <T1> T1 @NotNull [] toArray(@NotNull T1 @NotNull [] a) {
+		return a;
 	}
+
 
 	@Override
 	public synchronized boolean add(T e) {
@@ -62,27 +67,27 @@ public class BufferList<T> implements List<T>, Serializable {
 	}
 
 	@Override
-	public boolean containsAll(Collection<?> c) {
+	public boolean containsAll(@NotNull Collection<?>  c) {
 		return _intern.containsAll(c);
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends T> c) {
+	public boolean addAll(@NotNull Collection<? extends T> c) {
 		return _intern.addAll(c);
 	}
 
 	@Override
-	public boolean addAll(int index, Collection<? extends T> c) {
+	public boolean addAll(int index, @NotNull Collection<? extends T> c) {
 		return _intern.addAll(index, c);
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> c) {
+	public boolean removeAll(@NotNull Collection<?> c) {
 		return _intern.removeAll(c);
 	}
 
 	@Override
-	public boolean retainAll(Collection<?> c) {
+	public boolean retainAll(@NotNull Collection<?> c) {
 		return _intern.retainAll(c);
 	}
 
