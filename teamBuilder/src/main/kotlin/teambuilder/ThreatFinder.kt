@@ -17,7 +17,7 @@ import pokeclass.PokedexEntryClassifier
 public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) {
     class ThreatData(
         var otherEntry: PokedexEntry?,
-        var otherCatgory:PokedexEntryCategory?,
+        var otherCategory:PokedexEntryCategory?,
         var otherNature: Nature?,
         var otherEV: IntArray?,
         var otherEffect: BattleEffect?,
@@ -52,7 +52,7 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
         }
 
         fun clone(): ThreatData {
-            return ThreatData(otherEntry, otherCatgory,otherNature, otherEV, otherEffect, otherMoves)
+            return ThreatData(otherEntry, otherCategory,otherNature, otherEV, otherEffect, otherMoves)
         }
 
         companion object {
@@ -88,7 +88,7 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
 
     public fun getGoodMoves(threatData: ThreatData): Array<Move> {
         var seq = SharedInformation.Instance.learnsetService.getMoveNames(threatData.otherEntry!!.name).asSequence().map { it
-        }.map{SharedInformation.Instance.moveService.get(it)}.filter{threatData.otherCatgory!!.isGoodMove(it)}.toList()
+        }.map{SharedInformation.Instance.moveService.get(it)}.filter{threatData.otherCategory!!.isGoodMove(it)}.toList()
         if (seq.any()) {
             return sample(4, 30, seq).toTypedArray()
         }
@@ -117,20 +117,20 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
     private fun iterateCategories(threatData: ThreatData){
         val classifier=PokedexEntryClassifier()
         for(cat in classifier.getPossibleCategories(threatData.otherEntry!!)){
-            threatData.otherCatgory=cat
+            threatData.otherCategory=cat
             iterateEvSpread(threatData)
         }
     }
 
     private fun iterateEvSpread(threatData: ThreatData) {
-        for (evs in threatData.otherCatgory!!.getEvDistributions()) {
+        for (evs in threatData.otherCategory!!.getEvDistributions()) {
             threatData.otherEV = evs.evs
             iterateNatures(threatData)
         }
     }
 
     private fun iterateNatures(threatData: ThreatData) {
-        var natures = threatData.otherCatgory!!.getNatures()
+        var natures = threatData.otherCategory!!.getNatures()
         for (nature in natures) {
             threatData.otherNature = nature
             iterateMoves(threatData)
@@ -155,7 +155,7 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
                 StubEffect(),
                 ChoiceItemEffect(
                     null,
-                   threatData.otherCatgory!!.getBestOffensiveStat(threatData.otherEntry!!),
+                   threatData.otherCategory!!.getBestOffensiveStat(threatData.otherEntry!!),
                     1.5
                 ),
             )

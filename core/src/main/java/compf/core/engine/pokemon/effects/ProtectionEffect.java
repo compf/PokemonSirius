@@ -21,6 +21,9 @@ public class ProtectionEffect extends PokemonBattleEffect {
             if (param.damageInf().getMoveId() == PROTECTION_ID) {
                 _perc /= 2;
             }
+            else{
+                this.disable();
+            }
 
         }
     }
