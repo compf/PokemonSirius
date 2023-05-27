@@ -5,7 +5,9 @@ import compf.core.engine.pokemon.Nature
 import compf.core.engine.pokemon.PokedexEntry
 import compf.core.engine.pokemon.effects.BurnedStateCondition
 import compf.core.engine.pokemon.effects.ParalyzedStateCondition
+import compf.core.engine.pokemon.effects.ProtectionEffect
 import compf.core.engine.pokemon.moves.Move
+import compf.core.engine.pokemon.moves.PokemonEffectMove
 import compf.core.engine.pokemon.moves.Schedule
 import compf.core.networking.BattleServer
 import compf.core.etc.MyObject
@@ -115,6 +117,23 @@ public class MainTest{
                         
 
                
+        }
+
+        @Test
+        public fun  assertBattleWithProtect(){
+                val  PROTECT_ID=182;
+                val mePokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(252,252,6,0,0,0), Nature.ATT_ATT, 0, 0, PROTECT_ID)
+                val enemyPokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,0), intArrayOf(252,252,6,0,0,0), Nature.ATT_ATT, 0, 0, CUT_ID)
+                val gen= newGenerator()
+                gen.addUnchangeableDeterminsticValue(ProtectionEffect::class.java,50)
+                gen.addUnchangeableDeterminsticValue(PokemonEffectMove::class.java,true)
+                val server=TestableServer(mePokemon,enemyPokemon)
+                val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)
+                val numberTurns=4
+                for(i in 1..numberTurns){
+                        simulator.attack().attack().assertNoDamage().assertDamage(if (i==numberTurns) 77 else 0)
+                }
+              simulator.execute(2*numberTurns)
         }
     
 }

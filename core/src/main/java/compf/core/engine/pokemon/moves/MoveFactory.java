@@ -28,6 +28,8 @@ public class MoveFactory {
 				return new DelayedMove(mv, FlyingEffect.class);
 			case 20: // Klammergriff
 				return new MultipleAttacksMove(mv, 3, 8);
+			case 182:
+				return new PokemonEffectMove(mv, ProtectionEffect.class,null,100);
 
 			default:
 				return mv;
