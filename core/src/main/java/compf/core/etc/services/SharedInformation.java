@@ -1,25 +1,14 @@
 package compf.core.etc.services;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 
-import compf.core.engine.pokemon.*;
-import compf.core.engine.pokemon.moves.*;
-import compf.core.engine.pokemon.moves.Move.MoveKind;
+import compf.core.etc.services.learnset.LearnsetService;
+import compf.core.etc.services.logging.LoggerService;
+import compf.core.etc.services.move.MoveService;
+import compf.core.etc.services.pokemon.PokedexEntryService;
+import compf.core.etc.services.random.RandomGeneratorService;
 
 /**
  * @author timoc
@@ -29,7 +18,7 @@ public final class SharedInformation {
 
 	public static final SharedInformation Instance = new SharedInformation();
 
-	public void init(PokedexEntryService entryService, MoveService moveService, RandomGeneratorService randomService,LearnsetService learnsetService,
+	public void init(PokedexEntryService entryService, MoveService moveService, RandomGeneratorService randomService, LearnsetService learnsetService,
 					 LoggerService loggerService) {
 		if(entryService!=null){
 			pokedexEntryService=entryService;

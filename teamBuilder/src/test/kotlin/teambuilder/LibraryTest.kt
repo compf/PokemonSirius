@@ -5,14 +5,12 @@ package teambuilder
 import compf.core.engine.pokemon.PokePasteParser;
 import compf.core.engine.pokemon.PokemonStat
 import compf.core.engine.pokemon.Nature
-import compf.core.etc.MyObject
-import compf.core.etc.services.DefaultPokedexEntryService
-import compf.core.etc.services.DefaultMoveService
+import compf.core.etc.services.pokemon.DefaultPokedexEntryService
+import compf.core.etc.services.move.DefaultMoveService
 import compf.core.etc.services.SharedInformation
-import compf.core.etc.services.DefaultLearnsetService
-import compf.core.etc.services.NoLoggerService
+import compf.core.etc.services.learnset.DefaultLearnsetService
+import compf.core.etc.services.logging.NoLoggerService
 import kotlin.test.Test
-import kotlin.test.assertTrue
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.BeforeAll
 
@@ -21,8 +19,12 @@ class LibraryTest {
         @BeforeAll
         @JvmStatic
         public fun init(){
-                SharedInformation.Instance.init(DefaultPokedexEntryService("pokedex.json"),
-                DefaultMoveService("moves.json"),WorstCaseRandomGenerator(),DefaultLearnsetService("learnsets.json"),NoLoggerService())
+                SharedInformation.Instance.init(
+                    DefaultPokedexEntryService("pokedex.json"),
+                    DefaultMoveService("moves.json"),WorstCaseRandomGenerator(),
+                    DefaultLearnsetService("learnsets.json"),
+                    NoLoggerService()
+                )
         }
  
 }

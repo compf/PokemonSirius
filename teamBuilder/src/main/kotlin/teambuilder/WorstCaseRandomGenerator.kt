@@ -1,13 +1,14 @@
 package teambuilder
 
 import compf.core.engine.pokemon.PokedexEntry
-import compf.core.etc.services.RandomGeneratorService
-import compf.core.etc.services.RealRandomGeneratorService
+import compf.core.etc.services.random.RandomGeneratorService
+import compf.core.etc.services.random.RealRandomGeneratorService
 import compf.core.networking.BotInterface
 
-public class WorstCaseRandomGenerator :RandomGeneratorService{
+public class WorstCaseRandomGenerator : RandomGeneratorService {
 
-    private val  defaultGenerator:RealRandomGeneratorService=RealRandomGeneratorService();
+    private val  defaultGenerator: RealRandomGeneratorService =
+        RealRandomGeneratorService();
     override fun checkPerc(upTo: Int, callerInfo:Any): Boolean { 
         if(callerInfo==ThreatFinder::class || callerInfo==PokedexEntry::class.java ){
             return this.defaultGenerator.checkPerc(upTo,callerInfo);

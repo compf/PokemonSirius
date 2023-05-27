@@ -1,6 +1,6 @@
 
 
-import compf.core.etc.services.RealRandomGeneratorService
+import compf.core.etc.services.random.RealRandomGeneratorService
 import java.util.*
 import kotlin.collections.HashMap
 

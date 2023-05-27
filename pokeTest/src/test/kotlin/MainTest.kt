@@ -2,32 +2,32 @@
 
 import compf.core.engine.PokemonBattle.PokemonComparator
 import compf.core.engine.pokemon.Nature
-import compf.core.engine.pokemon.PokedexEntry
 import compf.core.engine.pokemon.effects.BurnedStateCondition
 import compf.core.engine.pokemon.effects.ParalyzedStateCondition
 import compf.core.engine.pokemon.effects.ProtectionEffect
 import compf.core.engine.pokemon.moves.Move
 import compf.core.engine.pokemon.moves.PokemonEffectMove
 import compf.core.engine.pokemon.moves.Schedule
-import compf.core.networking.BattleServer
-import compf.core.etc.MyObject
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
-import java.awt.SplashScreen
 import compf.core.etc.CallerInformation
-import compf.core.etc.services.DefaultPokedexEntryService
-import compf.core.etc.services.DefaultMoveService
-import compf.core.etc.services.NoLoggerService
+import compf.core.etc.services.pokemon.DefaultPokedexEntryService
+import compf.core.etc.services.move.DefaultMoveService
+import compf.core.etc.services.logging.NoLoggerService
 import compf.core.etc.services.SharedInformation
-import compf.core.etc.services.StubLearnsetService
+import compf.core.etc.services.learnset.StubLearnsetService
 public class MainTest{
         companion object{
                 @BeforeAll
                 @JvmStatic
                 public fun init(){
-                        SharedInformation.Instance.init(DefaultPokedexEntryService("pikachu.json"),
-                        DefaultMoveService("kanto_moves.json"),null,StubLearnsetService(),NoLoggerService())
+                        SharedInformation.Instance.init(
+                                DefaultPokedexEntryService("pikachu.json"),
+                                DefaultMoveService("kanto_moves.json"),null,
+                                StubLearnsetService(),
+                                NoLoggerService()
+                        )
 
                 }
                 public fun addDeterministicRandomResults(generator:DeterministicRandomGenerator){
