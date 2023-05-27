@@ -36,7 +36,7 @@ Ability: Clear Body
 Level: 50  
 EVs: 252 HP / 252 Atk / 4 SpD  
 Adamant Nature  
-- Protect  
+- Thunder  
 - Iron Head  
 - Ice Punch  
 - Stomping Tantrum  

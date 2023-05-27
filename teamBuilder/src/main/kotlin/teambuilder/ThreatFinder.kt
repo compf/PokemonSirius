@@ -87,12 +87,8 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
 
 
     public fun getGoodMoves(threatData: ThreatData): Array<Move> {
-        val id = SharedInformation.Instance.pokedexEntryService.getPokemonId(threatData.otherEntry!!.nr)
-        var seq = SharedInformation.Instance.learnsetService.getMoves(id).asSequence().map { it ->
-            SharedInformation.Instance.moveService.get(
-                SharedInformation.Instance.moveService.getRealName(it)
-            )
-        }.filter{threatData.otherCatgory!!.isGoodMove(it)}.toList()
+        var seq = SharedInformation.Instance.learnsetService.getMoveNames(threatData.otherEntry!!.name).asSequence().map { it
+        }.map{SharedInformation.Instance.moveService.get(it)}.filter{threatData.otherCatgory!!.isGoodMove(it)}.toList()
         if (seq.any()) {
             return sample(4, 30, seq).toTypedArray()
         }
@@ -142,10 +138,7 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
     }
 
     private fun iterateMoves(threatData: ThreatData) {
-        val pokemonId =
-            SharedInformation.Instance.pokedexEntryService.getPokemonId(
-                threatData.otherEntry!!.nr
-            )
+
         val moves = getGoodMoves(threatData)
         threatData.otherMoves=moves
         if(moves.any()){
@@ -219,7 +212,7 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
         SharedInformation.Instance.getLoggerService().log("counter  " + counter, true)
         for (x in ratingMap) {
             SharedInformation.Instance.getLoggerService()
-                .log(x.key.toString() + " " + x.value.minWith {a,b->  a.createPokemon(mePokemon.level).statsSum().compareTo(b.createPokemon(mePokemon.level).statsSum()) }, true)
+                .log(x.key.toString() + "" + x.value.minWith {a,b->  a.createPokemon(mePokemon.level).statsSum().compareTo(b.createPokemon(mePokemon.level).statsSum()) }, true)
         }
         val weakestThreat=ratingMap[0]!!.minWith {a,b->  a.createPokemon(mePokemon.level).statsSum().compareTo(b.createPokemon(mePokemon.level).statsSum()) }
         val debugExecutor=DebugExecutor(mePokemon,weakestThreat.createPokemon(50))

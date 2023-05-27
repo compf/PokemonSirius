@@ -23,28 +23,23 @@ public class DefaultPokedexEntryService implements PokedexEntryService {
     }
     @Override
     public PokedexEntry get(int nr) {
-		return nrPokemon.get(nr );
+		return pokemonMap.get(String.valueOf(nr) );
 	}
     @Override
 	public PokedexEntry get(String name) {
-		return realNamePokemon.get(name);
+		return pokemonMap.get(name);
 	}
 
 	@Override
 	public int getCount() {
-		return nrPokemon.size();
+		return pokemonMap.size();
 	}
-	@Override
-	public String getPokemonId(int nr) {
-		return nrId.get(nr);
-	}
-	
-    private HashMap<Integer,PokedexEntry> nrPokemon = new HashMap<>();
-	private HashMap<String,PokedexEntry> realNamePokemon = new HashMap<>();
-	private HashMap<Integer,String> nrId=new HashMap<>();
+
+    private final HashMap<String,PokedexEntry> pokemonMap = new HashMap<>();
+
     @Override
     public Iterator<PokedexEntry> iterator() {
-       return nrPokemon.values().iterator();
+       return pokemonMap.values().iterator();
     }
     private boolean shallExclude(JsonObject object ){
 		return object.has("baseSpecies");
@@ -78,16 +73,26 @@ public class DefaultPokedexEntryService implements PokedexEntryService {
 			int nr=object.get("num").getAsInt();
 			if(nr<=0)continue;;
 			String realName=object.get("name").getAsString();
-			nrId.put(nr, id);
-			var entry=new PokedexEntry(nr, realName, type1, type2, height, weight, hp, att, def, satt, sdef, speed);
-			nrPokemon.put(nr,entry );
-			if(!realNamePokemon.containsKey(realName)){
-				realNamePokemon.put(realName,entry);
 
-			}
+			var entry=new PokedexEntry(nr, realName, type1, type2, height, weight, hp, att, def, satt, sdef, speed);
+			pokemonMap.put(String.valueOf(nr),entry);
+			pokemonMap.put(realName,entry);
+			pokemonMap.put(id,entry);
+
 		}
 
 	}
-   
-    
+
+
+	@Override
+	public int getNr(String key) {
+		return  pokemonMap.get(key).getNr();
+	}
+
+	@Override
+	public String getRealName(String key) {
+		return pokemonMap.get(key).getName();
+	}
+
+
 }

@@ -16,9 +16,7 @@ import compf.core.etc.services.SharedInformation;
 
 public class DefaultMoveService implements MoveService {
 
-    private HashMap<Integer,Move> nrMove =  new HashMap<>();
-	private HashMap<String,Move> realNameMove =  new HashMap<>();
-	private HashMap<String,String> idRealName=new HashMap<>();
+	private HashMap<String,Move> moveMap =  new HashMap<>();
     public DefaultMoveService(String resource) throws IOException{
         try(var reader=new InputStreamReader(SharedInformation.Instance.getResource(resource))){
             JsonObject convertedObject = new Gson().fromJson(reader, JsonObject.class);
@@ -29,22 +27,21 @@ public class DefaultMoveService implements MoveService {
 
 	@Override
 	public int getCount() {
-		return nrMove.size();
+		return moveMap.size();
 	}
 
     public Move get(int nr) {
-		return nrMove.get(nr);
+		return moveMap.get(String.valueOf(nr));
 	}
+
 	public Move get(String name) {
-		return realNameMove.get(name);
+		return moveMap.get(name);
 	}
-	@Override
-	public String getRealName(String id) {
-		return idRealName.get(id);
-	}
+
+
     @Override
     public Iterator<Move> iterator() {
-        return nrMove.values().iterator();
+        return moveMap.values().iterator();
     }
 
 	private void initMoves(JsonObject fullData)  {
@@ -73,10 +70,10 @@ public class DefaultMoveService implements MoveService {
 			Move.MoveKind kind = Enum.valueOf(MoveKind.class, damageClass);
 			int nr=object.get("num").getAsInt();
 			String realName=object.get("name").getAsString();
-			final Move mv = new Move(nr, realName, power, pp, accuracy, priority, type, kind, target);
-			nrMove.put(nr,factory.create(mv));
-			idRealName.put(id, realName);
-			realNameMove.put(realName,mv);
+			final Move mv = factory.create(new Move(nr, realName, power, pp, accuracy, priority, type, kind, target));
+			moveMap.put(String.valueOf(nr),mv);
+			moveMap.put(id,mv);
+			moveMap.put(realName,mv);
 		}
 	}
 }

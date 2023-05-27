@@ -33,6 +33,11 @@ public final class SharedInformation {
 		}
 		if(learnsetService!=null){
 			this.learnsetService=learnsetService;
+			try {
+				learnsetService.init();
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 		}
 		if(loggerService!=null){
 			this.loggerService=loggerService;

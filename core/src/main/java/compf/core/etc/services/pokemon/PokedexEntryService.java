@@ -4,5 +4,6 @@ import compf.core.engine.pokemon.PokedexEntry;
 import compf.core.etc.services.GeneralService;
 
 public interface PokedexEntryService  extends GeneralService<PokedexEntry> {
-    public String getPokemonId(int nr);
+    int getNr(String key);
+    String getRealName(String key);
 }
