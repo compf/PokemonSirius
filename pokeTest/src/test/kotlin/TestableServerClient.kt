@@ -38,15 +38,15 @@ public class TestableServer:BattleServer{
     val client1:BattleClient;
     val client2:BattleClient;
     private val nodes:Array<SteppableHost>
-    public val meIO:SimulationBattleIO
-    public val enemyIO:SimulationBattleIO
-    constructor(){
+     val meIO:SimulationBattleIO
+     val enemyIO:SimulationBattleIO
+
+    constructor( dummyMePokemon:Pokemon,  dummyEnemyPokemon:Pokemon)  {
         val rule=BattleRule(2,1,6,1)
         this._rules.put(0,rule)
         this._rules.put(1,rule)
 
-        val dummyMePokemon=Pokemon(25)
-        val dummyEnemyPokemon=Pokemon(25)
+
         val mePlayer=Player(0,"Me",arrayOf(dummyMePokemon,null,null,null,null,null))
         val enemyPlayer=Player(1,"Enemy",arrayOf(dummyEnemyPokemon,null,null,null,null,null))
         this._players.put(0,mePlayer)

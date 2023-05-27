@@ -1,5 +1,6 @@
 package compf.core.engine.pokemon.effects;
 
+import compf.core.engine.BattleAction;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.moves.DamageInformation;
 import compf.core.engine.pokemon.moves.Schedule;
@@ -53,6 +54,11 @@ public class FlyingEffect extends PokemonBattleEffect {
     @Override
     public boolean canReceiveCommand() {
         return !isFlying;
+    }
+
+    @Override
+    public BattleAction getBattleAction() {
+        return null;
     }
 
     @Override

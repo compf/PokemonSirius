@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import compf.core.engine.*;
 import compf.core.engine.pokemon.Pokemon;
+import compf.core.etc.CallerInformation;
 import compf.core.etc.MyObject;
 import compf.core.etc.services.SharedInformation;;
 
@@ -49,7 +50,7 @@ public class Schedule {
 			if (att.getMoveIndex(move) == -1) {
 				MyObject.nop();
 			}
-			if (SharedInformation.Instance.getRNG().checkPerc(accuracy,this.getClass())) {
+			if (SharedInformation.Instance.getRNG().checkPerc(accuracy, CallerInformation.Accuracy)) {
 				dmgInf = move.execute(this);
 				att.changeMovePP(att.getMoveIndex(move), -1);
 				_dmg = dmgInf;

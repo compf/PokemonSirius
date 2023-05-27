@@ -119,7 +119,8 @@ public class Move implements Serializable {
 	public void init(Schedule schedule, int attacker, int defender, int dr) {
 		schedule.addMove(attacker, defender, this, dr);
 	}
-	private final double  CRIT_FACTOR=1.5;
+	public static final double  CRIT_FACTOR=1.5;
+	public  static final int MAX_MOVE_STRENGTH_VARIATION=15;
 	private double getCriticalHitFactor() {
 		return SharedInformation.Instance.getRNG().checkPerc(15,CallerInformation.CriticalHit) ? CRIT_FACTOR : 1;
 	}
@@ -136,7 +137,7 @@ public class Move implements Serializable {
 		} else
 			return 0;
 		double d2 = d1 * _power * (attValue / defValue) / 50 + 2;
-		double d3 = d2 * (getCriticalHitFactor()) * (0.85 +SharedInformation.Instance.getRNG().randomNumber(16,CallerInformation.MoveStrengthVariation) / 100.0);
+		double d3 = d2 * (getCriticalHitFactor()) * (0.85 +SharedInformation.Instance.getRNG().randomNumber(MAX_MOVE_STRENGTH_VARIATION+1,CallerInformation.MoveStrengthVariation) / 100.0);
 		double d4 = d3 * getEffectiveness(def, _type)
 				* (att.getType1() == _type || att.getType2() == _type ? 1.5 : 1.0);
 		return (int) d4;

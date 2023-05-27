@@ -12,7 +12,7 @@ public abstract class ActionAssertion : Assertion {
 public class HPModifiedAssertion(val factor:Double):ActionAssertion() {
     protected override fun isDataValid(toCheck:Any):Boolean{
         val action =toCheck as BattleAction;
-        return action.Data!=null && action.Data is String && action.toString().contains(" ")
+        return action.Data!=null && action.Data.toString().contains(" ")
     }
     public override fun check(toCheck: Any): Boolean {
         if(!this.isDataValid(toCheck))return false
@@ -31,7 +31,7 @@ public class HPModifiedAssertion(val factor:Double):ActionAssertion() {
     }
 }
 
-public class DamageAssertion(val minDamage: Int, val maxDamage: Int) : ActionAssertion() {
+public class DamageAssertion(val damage:Int) : ActionAssertion() {
     protected override fun isDataValid(toCheck:Any):Boolean{
         val action =toCheck as BattleAction;
         return action.Data!=null && action.Data is DamageInformation
@@ -41,10 +41,10 @@ public class DamageAssertion(val minDamage: Int, val maxDamage: Int) : ActionAss
         val value = toCheck as BattleAction
         if (value!!.Data == null) return true
         val damage = (value!!.Data as DamageInformation).damage
-        return damage in minDamage..maxDamage
+        return damage ==this.damage
     }
     override fun toString(): String {
-        return "$minDamage to $maxDamage"
+        return damage.toString();
     }
 }
 public abstract class GroupedAssertion :Assertion{
@@ -57,40 +57,7 @@ public abstract class GroupedAssertion :Assertion{
     }
 
 }
-public class AnyOrderAssertion: GroupedAssertion(){
-    public override fun check(toCheck:Any):Boolean{
-        val compList=toCheck as ArrayList<Any>
-        val compAssertionsMap=HashMap<Any,HashSet<Assertion>>()
-        val assertionCompMap=HashMap<Assertion,HashSet<Any>>()
-        for(comp in compList){
-            for(assertion in assertionList){
-                if(assertion.check(comp)){
-                    SharedInformation.Instance.getLoggerService().log("Assertion " +assertion +" satisfied by "+(comp as BattleAction).Data,SimpleBattleSimulator::class )
-                    if(!compAssertionsMap.containsKey(comp)){
-                        compAssertionsMap.set(comp, HashSet())
-                    } 
-                    compAssertionsMap[comp]?.add(assertion);
-                    if(!assertionCompMap.containsKey(assertion)){
-                        assertionCompMap.set(assertion, HashSet())
-                    } 
-                    assertionCompMap[assertion]?.add(comp);
-                }
-                else{
-                    SharedInformation.Instance.getLoggerService().log("Assertion " +assertion +" failed by "+(comp as BattleAction).Data,SimpleBattleSimulator::class )
 
-                }
-            }
-        }
-        for(ass in assertionCompMap ){
-            if(ass.value.size ==0){
-                return false;
-            }
-        }
-        return true;
-       
-    }
-  
-}
 public class ThisOrderAssertion: GroupedAssertion(){
     public override fun check(toCheck:Any):Boolean{
         val compList=toCheck as ArrayList<Any>

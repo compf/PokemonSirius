@@ -184,27 +184,28 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 	public enum EffectTime {
 		ROUND_STARTING, ROUND_ENDING, ATTACK, DEFEND, POKEMON_SWITCHED, POKEMON_DEFEATED, DELAYED_ATTACK
 	}
+	public static class PokemonComparator implements  Comparator<Pokemon>{
+
+		@Override
+		public int compare(Pokemon arg0, Pokemon arg1) {
+			if (arg0.getStat(5) > arg1.getStat(5))
+				return -1;
+			if (arg0.getStat(5) < arg1.getStat(5))
+				return +1;
+			else{
+				// Randome choice if equal, will neve return 0
+				return SharedInformation.Instance.getRNG().checkPerc(50,PokemonComparator.class) ? +1 : -1;
+
+			}
+		}
+	}
 
 	private Iterable<Pokemon> sort() {
 		ArrayList<Pokemon> ls = new ArrayList<>();
 		for (var pkmn : this) {
 			ls.add(pkmn);
 		}
-		ls.sort(new Comparator<Pokemon>() {
-			@Override
-			public int compare(Pokemon arg0, Pokemon arg1) {
-				if (arg0.getStat(5) > arg1.getStat(5))
-					return -1;
-				if (arg0.getStat(5) < arg1.getStat(5))
-					return +1;
-				else{
-					// Randome choice if equal, will neve return 0
-					return SharedInformation.Instance.getRNG().checkPerc(50,Comparator.class) ? +1 : -1;
-
-				}
-			}
-
-		});
+		ls.sort(new PokemonComparator());
 		return ls;
 	}
 
@@ -267,7 +268,11 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 		executeEffects(EffectTime.ROUND_ENDING, null);
 		for(var pkmn:this) {
 			for(var effect:pkmn.getEffects()){
-				actions.add(effect.getBattleAction());
+				var battleAction=effect.getBattleAction();
+				if(battleAction!=null){
+					actions.add(battleAction);
+				}
+
 
 			}
 		}

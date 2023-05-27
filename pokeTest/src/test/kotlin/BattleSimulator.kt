@@ -79,8 +79,8 @@ public  class SimulationBattleIO : SimpleIOInterface {
        queue.addLast(input)
 
    }
-   public fun addInputDefault() {
-       queue.addLast(PlayerInput.AttackInput(0, 0, 1, 0, player!!.playerId))
+   public fun addInputDefault(targetPlayerId:Short) {
+       queue.addLast(PlayerInput.AttackInput(0, 0, targetPlayerId, 0, player!!.playerId))
 
    }
 
@@ -139,7 +139,8 @@ public class SimpleBattleSimulator {
     public fun attack(playerId:Int):SimpleBattleSimulator{
         MyLogger.debug("attack " +meAttacking)
         val io= if (playerId==0)  meIO else enemyIO;
-        io.addInputDefault()
+        val targetPlayerId:Short= if (playerId==0)  1 else 0;
+        io.addInputDefault(targetPlayerId)
         MyLogger.debug("attack finnished " +playerId)
         
         return this
@@ -156,23 +157,15 @@ public class SimpleBattleSimulator {
         return this
     }
     public fun assertNoDamage():SimpleBattleSimulator{
-        return assertDamage(0, 0)
+        return assertDamage(0)
     }
-    public fun assertDamage(min:Int,max:Int):SimpleBattleSimulator{
-        assert(DamageAssertion(min,max))
-        MyLogger.debug("assert damage "+min)
+    public fun assertDamage(exact:Int):SimpleBattleSimulator{
+        assert(DamageAssertion(exact))
+        MyLogger.debug("assert damage "+exact)
         return this
     }
-    public fun anyOrder():SimpleBattleSimulator{
-        rootAssertion.addAssertion(AnyOrderAssertion());
-        tempAssertion=rootAssertion.getLast();
-        return this;
-    }
-    public fun thisOrder():SimpleBattleSimulator{
-        rootAssertion.addAssertion(ThisOrderAssertion());
-        tempAssertion=rootAssertion.getLast();
-        return this;
-    }
+
+
    
     public fun execute(expectedNumberOfActions:Int){
        
