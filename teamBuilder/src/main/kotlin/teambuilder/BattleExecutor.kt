@@ -3,10 +3,11 @@ package teambuilder
 import compf.core.engine.*
 import compf.core.engine.pokemon.Pokemon
 import compf.core.etc.MyObject
+import compf.core.networking.BotAI
 import compf.core.networking.BotInterface
 import java.util.*
 
-open class BattleExecutor(val myPokemon:Pokemon,val otherPokemon:Pokemon){
+open class BattleExecutor(val myPokemon:Pokemon,val otherPokemon:Pokemon, val meAI:BotAI,val enemyAI:BotAI){
     private var stop=false
 
   private inner class SimpleInterrupt(val ioInterface1:BotInterface,val ioInterface2:BotInterface):Interrupt{
@@ -30,7 +31,7 @@ open class BattleExecutor(val myPokemon:Pokemon,val otherPokemon:Pokemon){
         battle.players.add(mePlayer)
         battle.players.add(enemyPlayer)
         var lastState:BattleState?=null
-        val ioInterfaces=arrayOf(BotInterface(mePlayer,SequentialMoveSelectorAI()),BotInterface(enemyPlayer,SequentialMoveSelectorAI()))
+        val ioInterfaces=arrayOf(BotInterface(mePlayer,meAI),BotInterface(enemyPlayer,enemyAI))
         for(io in ioInterfaces){
             io.update(BattleRoundResult(LinkedList<BattleAction>(),DetailedBattleState(listOf(mePlayer,enemyPlayer)),NetworkMessageKind.Update))
         }
@@ -51,7 +52,9 @@ open class BattleExecutor(val myPokemon:Pokemon,val otherPokemon:Pokemon){
         return lastState!!
     }
 }
-class DebugExecutor(myPokemon: Pokemon, otherPokemon: Pokemon) : BattleExecutor(myPokemon, otherPokemon) {
+class DebugExecutor(myPokemon: Pokemon, otherPokemon: Pokemon, meAI: BotAI,enemyAI: BotAI) : BattleExecutor(myPokemon, otherPokemon,
+    meAI,enemyAI
+) {
     private val roundResults= mutableListOf<BattleRoundResult>()
     override   fun debugResult(result:BattleRoundResult){
         roundResults.add(result)

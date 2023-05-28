@@ -193,7 +193,7 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
          }
          threatData.otherEffect!!.disable()
          return damageOtherToMe.toDouble() / mePokemon.maxHP> minDamageHPRatio*/
-        val executor = BattleExecutor(mePokemon, otherPokemon)
+        val executor = BattleExecutor(mePokemon, otherPokemon,SequentialMoveSelectorAI(),SequentialMoveSelectorAI())
         val state = executor.execute(5)
         val rater = BattleStateRater()
         val rating = rater.rate(state, 0)
@@ -215,7 +215,7 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
                 .log(x.key.toString() + "" + x.value.minWith {a,b->  a.createPokemon(mePokemon.level).statsSum().compareTo(b.createPokemon(mePokemon.level).statsSum()) }, true)
         }
         val weakestThreat=ratingMap[0]!!.minWith {a,b->  a.createPokemon(mePokemon.level).statsSum().compareTo(b.createPokemon(mePokemon.level).statsSum()) }
-        val debugExecutor=DebugExecutor(mePokemon,weakestThreat.createPokemon(50))
+        val debugExecutor=DebugExecutor(mePokemon,weakestThreat.createPokemon(50),SequentialMoveSelectorAI(),SequentialMoveSelectorAI())
         debugExecutor.execute(10)
 
         return resultMap
