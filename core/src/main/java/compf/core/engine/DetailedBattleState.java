@@ -54,7 +54,7 @@ public class DetailedBattleState implements BattleState {
     @Override
     public String getPokemonName(int playerId, int pkmnIndex) {
         Player p = findById(playerId);
-        if (p != null) {
+        if (p != null && p.getPokemon(pkmnIndex)!=null) {
             return p.getPokemon(pkmnIndex).getName();
         }
         return null;
@@ -81,6 +81,27 @@ public class DetailedBattleState implements BattleState {
         if (p != null)
             return p.getName();
         return null;
+    }
+
+    @Override
+    public int getPokemonNr(short playerId, short pokemonId) {
+        Player p=findById(playerId);
+        if(p!=null){
+            if(p.getPokemon(pokemonId)!=null){
+                return p.getPokemon(pokemonId).getNr();
+            }
+        }
+        return -1;
+    }
+    @Override
+    public int getPokemonLevel(short playerId, short pokemonId) {
+        Player p=findById(playerId);
+        if(p!=null){
+            if(p.getPokemon(pokemonId)!=null){
+                return p.getPokemon(pokemonId).getLevel();
+            }
+        }
+        return -1;
     }
 
     @Override

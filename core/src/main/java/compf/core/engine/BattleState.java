@@ -64,4 +64,23 @@ public interface BattleState extends Serializable {
 
     public Optional<Integer> getDefeatedPlayer();
 
+    /**
+     * returns the nr of a specific pokemon
+     * @param playerId A valid player id
+     * @param pokemonId A pokemon position id
+     * @return the nr of the given Pokemon, -1 if not present
+     */
+    int getPokemonNr(short playerId,short pokemonId);
+
+    default boolean isEnemy(short mePlayerId,short enemyPlayerId){
+            return  mePlayerId!=enemyPlayerId;
+    }
+    /**
+     * returns the nr of a specific pokemon
+     * @param playerId A valid player id
+     * @param pokemonId A pokemon position id
+     * @return the level of the given Pokemon, -1 if not present
+     */
+    int getPokemonLevel(short playerId,short pokemonId);
+
 }

@@ -1,5 +1,6 @@
 package compf.core.networking;
 
+import compf.core.engine.BattleRoundResult;
 import compf.core.engine.BattleState;
 import compf.core.engine.Player;
 import compf.core.engine.PlayerInput;
@@ -15,4 +16,5 @@ public interface BotAI {
     default short selectEnemyPokemonId(short playerId){
         return 0;
     }
+    default void update(BattleRoundResult result){}
 }
