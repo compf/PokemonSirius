@@ -28,16 +28,19 @@ abstract class CountingStyleIterator<T> : Iterator<T> {
     }
 
     override fun next(): T {
+        var previous=construct()
         for (i in numberIterators-1 downTo 0) {
             if (!iterators[i]!!.hasNext()) {
                 if(i==0){
-                    hasAnyNext=false
+                    hasAnyNext=false;
                 }
                 for(j in i until numberIterators){
                     reset(j)
                     if(iterators[j]!!.hasNext()){
                         assign(j,iterators[j]!!.next())
                     }
+
+
 
                 }
             }
@@ -46,6 +49,12 @@ abstract class CountingStyleIterator<T> : Iterator<T> {
                 break
             }
         }
-        return construct()
+        if(!hasAnyNext){
+            return previous
+        }
+        else{
+            return construct()
+        }
+
     }
 }

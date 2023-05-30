@@ -13,6 +13,7 @@ import compf.core.etc.services.logging.NoLoggerService
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.BeforeAll
+import util.CountingStyleIterator
 
 class LibraryTest {
     companion object{
@@ -53,4 +54,37 @@ Adamant Nature
        val result=finder.findThreats()
 
     }
+    @Test fun textDigitCountIterator(){
+    val counter=DigitCountIterator(3)
+        var count=0
+        var result=0
+        counter.resetAll()
+        while(counter.hasNext()){
+            result=counter.next()
+            count++
+        }
+        assertEquals(1000,count)
+        assertEquals(999,result)
+    }
+}
+class DigitCountIterator(private val numberDigits:Int): CountingStyleIterator<Int>(numberDigits) {
+    private val digits:IntArray =IntArray(numberDigits)
+    override fun reset(index: Int) {
+        iterators[index]=(0 until 10).iterator()
+    }
+
+    override fun assign(index: Int, value: Any) {
+        digits[index]=value as Int
+    }
+
+    override fun construct(): Int {
+        var power=1
+        var result=0
+        for(i in numberDigits-1 downTo  0){
+            result+=digits[i]*power
+            power*=10
+        }
+        return result
+    }
+
 }
