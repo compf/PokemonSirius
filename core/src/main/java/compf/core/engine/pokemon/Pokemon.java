@@ -10,6 +10,7 @@ import compf.core.engine.pokemon.effects.ItemEffect;
 import compf.core.engine.pokemon.effects.PokemonBattleEffect;
 import compf.core.engine.pokemon.moves.Move;
 import compf.core.etc.MyObject;
+import compf.core.etc.PokemonConstants;
 import compf.core.etc.services.SharedInformation;
 
 public class Pokemon extends PokedexEntry {
@@ -130,6 +131,9 @@ public class Pokemon extends PokedexEntry {
         _ivs = ivs;
         _nature = nature;
         _moves = moves;
+        if(_moves.length< PokemonConstants.MAX_MOVES_COUNT_POKEMON){
+            _moves=Arrays.copyOf(_moves,PokemonConstants.MAX_MOVES_COUNT_POKEMON);
+        }
         for (int i = 0; i < 6; i++) {
             updateStat(i);
             if (i < 4)

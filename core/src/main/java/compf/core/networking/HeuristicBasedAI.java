@@ -21,6 +21,7 @@ public class HeuristicBasedAI implements  BotAI{
                 for(short enemyPokemonId=0;enemyPokemonId < PokemonConstants.DEFAULT_TEAM_SIZE;enemyPokemonId++){
                     if(state.getPokemonName(enemyId,enemyPokemonId)==null)break;
                     for(int moveIndex=0;moveIndex<PokemonConstants.MAX_MOVES_COUNT_POKEMON; moveIndex++){
+                        if(mePlayer.getPokemon(pkmnIndex).getMoves()[moveIndex]==null)continue;;
                         int moveRating=rateMove(pkmnIndex,mePlayer,state,enemyId,enemyPokemonId,moveIndex);
                         if(moveRating>bestValue){
                             bestMoveIndex=moveIndex;
