@@ -9,6 +9,7 @@ import compf.core.engine.pokemon.effects.BattleEffect
 import compf.core.engine.pokemon.effects.ChoiceItemEffect
 import compf.core.engine.pokemon.effects.StubEffect
 import compf.core.engine.pokemon.moves.Move
+import compf.core.etc.PokemonConstants
 import compf.core.etc.services.SharedInformation
 import pokeclass.EVDistribution
 import pokeclass.PokedexEntryCategory
@@ -19,19 +20,16 @@ import util.CountingStyleIterator
 
 
 
-const val POKEDEX_ENTRY=0
-const val POKEMON_CATEGORY=1
-const val EV_SPREAD=2
-const val NATURE=3
-const val POKEMON_MOVE=4
-const val POKEMON_EFFECT=5
 
+
+const val NUMBER_ITERATORS= 7
 class ThreatData(
     var otherEntry: PokedexEntry?,
     var otherCategory: PokedexEntryCategory?,
     var otherNature: Nature?,
     var otherEV: IntArray?,
-    var otherEffect: BattleEffect?,
+    var otherAbilityEffect: BattleEffect?,
+    var otherItemEffect:BattleEffect?,
     var otherMoves: Array<Move>?
 ) {
     public override fun toString(): String {
@@ -49,7 +47,7 @@ class ThreatData(
                 " " +
                 statNames +
                 " " +
-                otherMoves?.joinToString(",")
+                otherMoves?.joinToString(",")+ otherAbilityEffect.toString() + " "+ otherItemEffect.toString()
     }
 
     fun createPokemon(level: Int): Pokemon {
@@ -66,22 +64,29 @@ class ThreatData(
     }
 
     fun clone(): ThreatData {
-        return ThreatData(otherEntry, otherCategory,otherNature, otherEV, otherEffect, otherMoves)
+        return ThreatData(otherEntry, otherCategory,otherNature, otherEV, otherAbilityEffect,otherItemEffect, otherMoves)
     }
 
     companion object {
         public fun allNull(): ThreatData {
-            return ThreatData(null, null, null, null, null,null)
+            return ThreatData(null, null, null, null, null,null,null)
         }
     }
 }
-class ThreatIterator(private val mePokemon: Pokemon): CountingStyleIterator<ThreatData>(6) {
+class ThreatIterator(private val mePokemon: Pokemon): CountingStyleIterator<ThreatData>(NUMBER_ITERATORS){
     private  val threatData=ThreatData.allNull()
+     val POKEDEX_ENTRY=0
+     val POKEMON_CATEGORY=1
+     val EV_SPREAD=2
+     val NATURE=3
+     val POKEMON_MOVE=4
+     val POKEMON_Ability_EFFECT=5
+     val POKEMON_ITEM_EFFECT=6
     public fun <T> sample(maxNumber: Int, prob: Int, seq: Iterable<T>): List<T> {
 
         var count = 0;
         val result = ArrayList<T>(maxNumber)
-        while(result.size<maxNumber){
+        while(result.size<maxNumber && seq.any()){
             for(s in seq){
                 if(SharedInformation.Instance.rng.checkPerc(prob,ThreatFinder::class)){
                     result.add(s)
@@ -111,9 +116,13 @@ class ThreatIterator(private val mePokemon: Pokemon): CountingStyleIterator<Thre
             POKEMON_MOVE->{
                 threatData.otherMoves=value as Array<Move>?
             }
-            POKEMON_EFFECT->{
+            POKEMON_Ability_EFFECT->{
 
-               threatData.otherEffect=value as BattleEffect
+               threatData.otherAbilityEffect=value as BattleEffect
+            }
+            POKEMON_ITEM_EFFECT->{
+
+                threatData.otherItemEffect=value as BattleEffect
             }
         }
     }
@@ -121,9 +130,9 @@ class ThreatIterator(private val mePokemon: Pokemon): CountingStyleIterator<Thre
         val NUMBER_MOVESETS=5
         val result= mutableListOf<Array<Move>>()
         for (i in 0 until  NUMBER_MOVESETS){
-            var seq = SharedInformation.Instance.learnsetService.getMoveNames(threatData.otherEntry!!.name).asSequence().map { it
-            }.map{SharedInformation.Instance.moveService.get(it)}.filter{threatData.otherCategory!!.isGoodMove(it)}.toList()
-            if (seq.any()) {
+            var seq = sample( PokemonConstants.MAX_MOVES_COUNT_POKEMON,50, SharedInformation.Instance.learnsetService.getMoveNames(threatData.otherEntry!!.name).asSequence().map { it
+            }.map{SharedInformation.Instance.moveService.get(it)}.filter{threatData.otherCategory!!.isGoodMove(it)}.asIterable())
+            if (seq.isNotEmpty()) {
                result.add(seq.toTypedArray())
             }
         }
@@ -150,16 +159,22 @@ class ThreatIterator(private val mePokemon: Pokemon): CountingStyleIterator<Thre
            POKEMON_MOVE->{
                getGoodMoves(threatData).iterator()
            }
-           POKEMON_EFFECT->{
+           POKEMON_Ability_EFFECT->{
 
                    arrayOf(
                        StubEffect(),
-                       ChoiceItemEffect(
-                           null,
-                           threatData.otherCategory!!.getBestOffensiveStat(threatData.otherEntry!!),
-                           1.5
-                       ),
+
                    ).iterator()
+           }
+           POKEMON_ITEM_EFFECT ->{
+               arrayOf(
+                   StubEffect(),
+                   ChoiceItemEffect(
+                       null,
+                       threatData.otherCategory!!.getBestOffensiveStat(threatData.otherEntry!!),
+                       1.5
+                   ),
+               ).iterator()
            }
            else -> null
         }

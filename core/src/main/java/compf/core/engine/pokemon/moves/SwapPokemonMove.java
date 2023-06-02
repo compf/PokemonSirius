@@ -14,7 +14,7 @@ public class SwapPokemonMove extends Move {
 	@Override
 	public void finishedMove(DamageInformation dmg) {
 		int nr = MyObject.indexOf(dmg.getDefender().getPlayer().getTeam(), dmg.getDefender());
-		throw new UnsupportedOperationException("Not implemented");
+		//throw new UnsupportedOperationException("Not implemented");
 		// dmg.getDefender().getPlayer().chooseNextPokemon(nr);
 	}
 

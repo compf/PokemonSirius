@@ -1,19 +1,11 @@
 package teambuilder
 
-import compf.core.engine.pokemon.Nature
-import compf.core.engine.pokemon.PokedexEntry
 import compf.core.engine.pokemon.Pokemon
-import compf.core.engine.pokemon.PokemonStat
 import compf.core.engine.pokemon.effects.BattleEffect
-import compf.core.engine.pokemon.effects.ChoiceItemEffect
 import compf.core.engine.pokemon.effects.PokemonBattleEffect
-import compf.core.engine.pokemon.effects.StubEffect
-import compf.core.engine.pokemon.moves.Move
 import compf.core.etc.services.SharedInformation
 import compf.core.networking.HeuristicBasedAI
-import pokeclass.PokedexEntryCategory
-import pokeclass.PokedexQuery
-import pokeclass.PokedexEntryClassifier
+import pokeclass.SmogonThreatIterable
 
 public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) {
 
@@ -35,31 +27,20 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
 
 
 
-
+    private  fun initEffect(pkmn:Pokemon,effect: BattleEffect){
+        applyEffect(effect,pkmn)
+        if (effect is PokemonBattleEffect) {
+            pkmn.addEffect(effect)
+        } else {
+            effect.init(null)
+        }
+    }
     private fun checkThreat(threatData: ThreatData): Boolean {
         var otherPokemon = threatData.createPokemon(mePokemon.level)
 
-        applyEffect(threatData.otherEffect!!, otherPokemon)
-        if (threatData.otherEffect is PokemonBattleEffect) {
-            otherPokemon.addEffect(threatData.otherEffect as PokemonBattleEffect)
-        } else {
-            threatData.otherEffect!!.init(null)
-        }
-        /*val damageOtherToMe = threatData.otherMove!!.calculateDamage(otherPokemon, mePokemon)
-         var bestMove:Move=mePokemon.moves[0]
-         var bestDamage=0
-         for(myMove in mePokemon.moves.filterNotNull()){
-             val dmg=myMove.calculateDamage(mePokemon, otherPokemon)
-             if(dmg>bestDamage){
-                 bestMove=myMove
-                 bestDamage=dmg
-             }
-         }
-         if(bestDamage.toDouble()/otherPokemon.maxHP>=minDamageHPRatio && mePokemon.getStat(PokemonStat.SPEED)>otherPokemon.getStat(PokemonStat.SPEED)){
-             return false
-         }
-         threatData.otherEffect!!.disable()
-         return damageOtherToMe.toDouble() / mePokemon.maxHP> minDamageHPRatio*/
+        initEffect(otherPokemon,threatData.otherAbilityEffect!!)
+        initEffect(otherPokemon,threatData.otherItemEffect!!)
+
         val executor = BattleExecutor(mePokemon, otherPokemon,HeuristicBasedAI(),HeuristicBasedAI())
         val state = executor.execute(5)
         val rater = BattleStateRater()
@@ -74,7 +55,7 @@ public class ThreatFinder(val mePokemon: Pokemon, val minDamageHPRatio: Double) 
     private val ratingMap = mutableMapOf<Int, MutableList<ThreatData>>()
     public fun findThreats(): Map<String, Double> {
         val resultMap = HashMap<String, Double>()
-        val threats=ThreatIterable(mePokemon)
+        val threats=SmogonThreatIterable(mePokemon,"gen9ou.json")
         var counter=0
         for( threatData in  threats){
             if(checkThreat(threatData)){
