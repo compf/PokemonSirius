@@ -14,7 +14,6 @@ import compf.core.etc.services.SharedInformation
 import teambuilder.ThreatData
 import util.CountingStyleIterator
 import java.io.InputStreamReader
-import java.lang.Integer.min
 
 public const val NUMBER_ITERATORS_SMOGON=5
 class SmogonStatsIterator(val mePokemon:Pokemon): CountingStyleIterator<ThreatData>(NUMBER_ITERATORS_SMOGON) {
@@ -93,7 +92,7 @@ class SmogonStatsIterator(val mePokemon:Pokemon): CountingStyleIterator<ThreatDa
                 for(offset in 0 until keys.size){
                     var counter=0
                     val array= arrayOfNulls<Move>(PokemonConstants.MAX_MOVES_COUNT_POKEMON)
-                    for (keyIndex in offset until min(offset+PokemonConstants.MAX_MOVES_COUNT_POKEMON,keys.size-PokemonConstants.MAX_MOVES_COUNT_POKEMON)){
+                    for (keyIndex in offset until keys.size-offset){
                         array[counter]=SharedInformation.Instance.moveService.get(keys[keyIndex])
                         counter++
                         if(counter>=PokemonConstants.MAX_MOVES_COUNT_POKEMON)break

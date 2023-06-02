@@ -160,7 +160,7 @@ public class Pokemon extends PokedexEntry {
 
     public int getMoveIndex(Move mv) {
         for (int i = 0; i < 4; i++)
-            if (_moves[i].getNr() == mv.getNr())
+            if (_moves[i]!=null && _moves[i].getNr() == mv.getNr())
                 return i;
         return -1;
     }
