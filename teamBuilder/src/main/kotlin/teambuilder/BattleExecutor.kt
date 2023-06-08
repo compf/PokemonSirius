@@ -2,12 +2,11 @@ package teambuilder
 
 import compf.core.engine.*
 import compf.core.engine.pokemon.Pokemon
-import compf.core.etc.MyObject
 import compf.core.networking.BotAI
 import compf.core.networking.BotInterface
 import java.util.*
 
-open class BattleExecutor(val myPokemon:Pokemon,val otherPokemon:Pokemon, val meAI:BotAI,val enemyAI:BotAI){
+open class BattleExecutor(val myPokemons:List<Pokemon>,val enemyPokemons:List<Pokemon>, val meAI:BotAI,val enemyAI:BotAI){
     private var stop=false
 
   private inner class SimpleInterrupt(val ioInterface1:BotInterface,val ioInterface2:BotInterface):Interrupt{
@@ -25,9 +24,9 @@ open class BattleExecutor(val myPokemon:Pokemon,val otherPokemon:Pokemon, val me
     }
     public fun execute(numberTimes:Int):BattleState{
         val battle=PokemonBattle(2)
-        val mePlayer=Player(0,"Me",arrayOf(Pokemon(myPokemon.nr, myPokemon.level, myPokemon.eVs, myPokemon.iVs, myPokemon.nature, myPokemon.moves)))
+        val mePlayer=Player(0,"Me",myPokemons.map{Pokemon(it.nr, it.level, it.eVs.clone(), it.iVs, it.nature, it.moves.clone())}.toTypedArray())
         
-        val enemyPlayer=Player(1,"Enemy",arrayOf(otherPokemon))
+        val enemyPlayer=Player(1,"Enemy",enemyPokemons.map{Pokemon(it.nr, it.level, it.eVs.clone(), it.iVs, it.nature, it.moves.clone())}.toTypedArray())
         battle.players.add(mePlayer)
         battle.players.add(enemyPlayer)
         var lastState:BattleState?=null
@@ -52,7 +51,7 @@ open class BattleExecutor(val myPokemon:Pokemon,val otherPokemon:Pokemon, val me
         return lastState!!
     }
 }
-class DebugExecutor(myPokemon: Pokemon, otherPokemon: Pokemon, meAI: BotAI,enemyAI: BotAI) : BattleExecutor(myPokemon, otherPokemon,
+class DebugExecutor( myPokemons:List<Pokemon>, enemyPokemons:List<Pokemon>, meAI: BotAI,enemyAI: BotAI) : BattleExecutor(myPokemons, enemyPokemons,
     meAI,enemyAI
 ) {
     private val roundResults= mutableListOf<BattleRoundResult>()

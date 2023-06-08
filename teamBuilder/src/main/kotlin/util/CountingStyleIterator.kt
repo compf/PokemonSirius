@@ -11,13 +11,7 @@ abstract class CountingStyleIterator<T> : Iterator<T> {
 
     }
      fun resetAll(){
-        for (i in 0 until numberIterators) {
-            reset(i)
-            if(iterators[i]!!.hasNext()){
-                assign(i,iterators[i]!!.next())
-            }
-
-        }
+        resetFrom(0)
     }
 
     public abstract fun reset(index: Int);
@@ -26,36 +20,33 @@ abstract class CountingStyleIterator<T> : Iterator<T> {
     override fun hasNext(): Boolean {
         return hasAnyNext
     }
+    private fun resetFrom(start:Int){
+        for (i in start until numberIterators ){
+            reset(i)
+            assign(i,iterators[i]!!.next())
+        }
+    }
 
     override fun next(): T {
-        var previous=construct()
         for (i in numberIterators-1 downTo 0) {
 
             if (!iterators[i]!!.hasNext()) {
                 if(i==0){
                     hasAnyNext=false;
                 }
-               reset(i)
+               resetFrom(i)
             }
-            if(iterators[i]!!.hasNext()){
+            else{
                 assign(i,iterators[i]!!.next())
-            }
-            for(j in i+1 until numberIterators){
-                reset(j)
-                if(iterators[j]!!.hasNext()){
-                    assign(j,iterators[j]!!.next())
-                }
-
+                resetFrom(i+1)
+                return construct()
             }
 
 
+
         }
-        if(!hasAnyNext){
-            return previous
-        }
-        else{
-            return construct()
-        }
+        return construct()
+
 
     }
 }

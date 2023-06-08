@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import compf.core.engine.pokemon.Nature
 import compf.core.engine.pokemon.PokedexEntry
-import compf.core.engine.pokemon.Pokemon
 import compf.core.engine.pokemon.effects.BattleEffect
 import compf.core.engine.pokemon.effects.BattleEffectFactory.AbilityEffectFactory
 import compf.core.engine.pokemon.effects.BattleEffectFactory.ItemEffectFactory
@@ -16,7 +15,7 @@ import util.CountingStyleIterator
 import java.io.InputStreamReader
 
 public const val NUMBER_ITERATORS_SMOGON=5
-class SmogonStatsIterator(val mePokemon:Pokemon): CountingStyleIterator<ThreatData>(NUMBER_ITERATORS_SMOGON) {
+class SmogonStatsIterator(val leadPokemon: String): CountingStyleIterator<ThreatData>(NUMBER_ITERATORS_SMOGON) {
 
     private var jsonData:MutableMap<String,JsonObject> = mutableMapOf();
     private var threatData:ThreatData=ThreatData.allNull()
@@ -138,21 +137,50 @@ class SmogonStatsIterator(val mePokemon:Pokemon): CountingStyleIterator<ThreatDa
     override fun construct(): ThreatData {
        return threatData
     }
-    constructor(mePokemon: Pokemon,resourceName:String):this(mePokemon){
+    constructor(leadPokemon: String,resourceName:String):this(leadPokemon){
         InputStreamReader(SharedInformation.Instance.getResource("stats/$resourceName")).use {
             var jsonObject= Gson().fromJson(it,JsonObject::class.java)
-            for( pkmnName in jsonObject.getAsJsonObject("pokemon").keySet()){
-                jsonData.put(pkmnName,jsonObject.getAsJsonObject("pokemon").getAsJsonObject(pkmnName))
-            }
+            jsonData.put(leadPokemon,jsonObject.getAsJsonObject("pokemon").getAsJsonObject(leadPokemon))
+
+
         }
 
     }
 }
-class SmogonThreatIterable(var mePokemon:Pokemon,val resourceName: String) :Iterable<ThreatData>{
-    override fun iterator(): Iterator<ThreatData> {
-        val iterator=SmogonStatsIterator(mePokemon, resourceName )
-        iterator.resetAll()
-        return iterator
+ class FullTeamIterator(val leadPokemon: String, val resourceName: String) :
+     CountingStyleIterator<Array<ThreatData>>(PokemonConstants.DEFAULT_TEAM_SIZE) {
+         private val teamMateNames:Iterable<String>
+    private var team= arrayOfNulls<ThreatData>(PokemonConstants.DEFAULT_TEAM_SIZE);
+     override fun reset(index: Int) {
+        /*val it=SmogonStatsIterator(teamMateNames.toList() [index],resourceName)
+         iterators[index]=it
+         it.resetAll()*/
 
-    }
-}
+     }
+
+     init {
+         teamMateNames=getTeamMates()
+         for((counter, name) in getTeamMates().withIndex()) {
+             val it=SmogonStatsIterator(name,resourceName)
+             iterators[counter]=it
+             it.resetAll()
+
+         }
+     }
+     private fun getTeamMates():Iterable<String> {
+          InputStreamReader(SharedInformation.Instance.getResource("stats/$resourceName")).use { stream ->
+             val jsonObject= Gson().fromJson(stream,JsonObject::class.java)
+             return  (arrayOf( leadPokemon)+jsonObject.getAsJsonObject("pokemon").getAsJsonObject(leadPokemon).getAsJsonObject("teammates").keySet().take(PokemonConstants.DEFAULT_TEAM_SIZE-1).toTypedArray()).asIterable()
+
+         }
+     }
+
+     override fun assign(index: Int, value: Any) {
+        team[index]=value as ThreatData
+     }
+
+     override fun construct(): Array<ThreatData> {
+         return team.requireNoNulls()
+     }
+ }
+
