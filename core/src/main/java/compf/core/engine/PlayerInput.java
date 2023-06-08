@@ -25,12 +25,19 @@ public abstract class PlayerInput implements Serializable {
 
 	}
 
-	public static class SwitchPokemonInput extends PlayerInput {
-		public final int PokemonIndex;
+	public static class SwitchPokemonInput extends PlayerInput implements  Interrupt {
+		public final short PokemonOldIndex;
+		public final short PokemonNewIndex;
 
-		public SwitchPokemonInput(short playerId, short pokemonIndex) {
+		public SwitchPokemonInput(short playerId, short oldIndex,short newIndex) {
 			super(playerId);
-			PokemonIndex = pokemonIndex;
+			PokemonOldIndex = oldIndex;
+			PokemonNewIndex=newIndex;
+		}
+
+		@Override
+		public short forceSwitch(short playerId, short pokemonIndex) {
+			return PokemonNewIndex;
 		}
 	}
 }

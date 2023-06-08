@@ -316,7 +316,17 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 			var move = new MoveFactory().create(getPokemon(attackerIndex).getMoves()[att.MoveIndex]);
 			move.init(_schedule, attackerIndex, defenderIndex);
 		}
+		else if(inp instanceof  PlayerInput.SwitchPokemonInput switch_inp){
+			Pokemon pkmn=getPlayerById(switch_inp.PlayerId).getPokemon(switch_inp.PokemonOldIndex);
+			switchPokemon(switch_inp,pkmn);
+		}
 
+	}
+	public Player getPlayerById(short playerId){
+		for(var p:_players){
+			if(p.getPlayerId()==playerId)return p;
+		}
+		return null;
 	}
 
 	public boolean allPlayerGaveInput(int maxNumberInputs) {
