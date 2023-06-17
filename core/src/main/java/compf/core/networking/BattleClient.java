@@ -74,15 +74,15 @@ public class BattleClient extends BaseServer implements Runnable,SteppableHost {
 		NetworkMessage msg = readObject(pipe);
 		SharedInformation.Instance.getLoggerService().log("Client received " + msg.Kind.name() + " " + _playerId,BattleClient.class);
 		switch (msg.Kind) {
-			case RequestInput:
+			case RequestInputToClient:
 				BufferList<PlayerInput> inputs = new BufferList<>(_rule.PokemonPerPlayerOnField);
 				short pokemonIndex = (short) msg.Data;
-				var inp = (PlayerInput)_io.sendAndHandle(NetworkMessageKind.RequestInput.createMessage(new Tuple<Short,BattleState>(pokemonIndex,_state))).Data;
+				var inp = (PlayerInput)_io.sendAndHandle(NetworkMessageKind.RequestInputToIO.createMessage(new Tuple<Short,BattleState>(pokemonIndex,_state))).Data;
 				if (inp == null)
 					return;
 				SharedInformation.Instance.getLoggerService().log("Input from " + inp.PlayerId + " " + _io.getClass(),BattleClient.class);
 				inputs.add(inp);
-				writeObject(pipe, NetworkMessageKind.ReplyInput.createMessage(inputs));
+				writeObject(pipe, NetworkMessageKind.ReplyInputToServer.createMessage(inputs));
 				break;
 			case Update:
 				var roundResult = (BattleRoundResult) msg.Data;

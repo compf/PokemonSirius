@@ -4,7 +4,10 @@ import compf.core.engine.BattleAction;
 import compf.core.engine.BattleRoundResult;
 import compf.core.engine.BattleRule;
 import compf.core.engine.BattleState;
+import compf.core.engine.NetworkMessage;
+import compf.core.engine.NetworkMessageKind;
 import compf.core.engine.PlayerInput;
+import compf.core.engine.Tuple;
 import compf.core.networking.IOInterface;
 import compf.core.networking.Pipe;
 
@@ -30,44 +33,41 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-/*public class MyClient implements IOInterface {
+public class MyClient implements IOInterface, Pipe {
 
     private BattleRule rule;
+    private ServerSocket serverSocket;
     private Socket socket;
 
-    public MyClient( BattleRule rule, Socket socket) {
+    public MyClient(BattleRule rule, ServerSocket serverSocket) {
 
         this.rule = rule;
         // this.serverSocket=
         // ServerSocketFactory.getDefault().createServerSocket(port,1,InetAddress.getLocalHost());
-        this.socket = socket;
+        this.serverSocket = serverSocket;
 
     }
 
-    private String sendData(String endpoint, String body, boolean wait) {
-        final int ENDPOINT_LENGTH_SIZE=2;
-        final int BODY_LENGTH_SIZE=4;
-        ByteBuffer buffer=ByteBuffer.allocate(endpoint.length()+body.length()+ENDPOINT_LENGTH_SIZE+BODY_LENGTH_SIZE);
-        buffer.putShort((short)endpoint.length());
+    private String sendData2(String endpoint, String body, boolean wait) {
+        final int ENDPOINT_LENGTH_SIZE = 2;
+        final int BODY_LENGTH_SIZE = 4;
+        ByteBuffer buffer = ByteBuffer
+                .allocate(endpoint.length() + body.length() + ENDPOINT_LENGTH_SIZE + BODY_LENGTH_SIZE);
+        buffer.putShort((short) endpoint.length());
         buffer.put(endpoint.getBytes());
         buffer.putInt(body.length());
         buffer.put(body.getBytes());
         try {
             socket.getOutputStream().write(buffer.array());
-            if(wait){
-                return new String( socket.getInputStream().readAllBytes());
+            if (wait) {
+                return new String(socket.getInputStream().readAllBytes());
             }
-           
+
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-     return null;
-    }
-
-    @Override
-    public void message(String msg) {
-        sendData("/message", msg, false);
+        return null;
     }
 
     private class UpdateWriter {
@@ -136,25 +136,22 @@ import com.google.gson.stream.JsonWriter;
         }
     }
 
-    @Override
     public void update(BattleRoundResult state) {
         String request = UpdateWriter.update(state, rule);
-        sendData("/Update", request, false);
+        write(NetworkMessageKind.Update.createMessage(request));
 
     }
 
-    @Override
-    public PlayerInput requestPlayerInput(short pkmnIndex, BattleState state) {
+    public PlayerInput requestPlayerInput(short pkmnIndex) {
 
         try {
             StringWriter writer = new StringWriter();
             JsonWriter jsonWriter = new JsonWriter(writer);
             jsonWriter.beginObject();
             jsonWriter.name("pokemonIndex").value(pkmnIndex);
-            UpdateWriter.writeState(state, jsonWriter, rule);
             jsonWriter.endObject();
-
-            String response = sendData("/RequestPlayerInput", writer.toString(), true);
+            write(NetworkMessageKind.RequestInputToIO.createMessage(writer.toString()));
+            String response = read().Data.toString();
 
             TypeToken<Map<String, String>> mapType = new TypeToken<Map<String, String>>() {
             };
@@ -170,7 +167,8 @@ import com.google.gson.stream.JsonWriter;
                 return new PlayerInput.AttackInput(pkmnIndex, moveIndex, targetPlayer, targetPokemonIndex, playerId);
             } else if (stringMap.get("Kind").contentEquals("SwitchPokemonInput")) {
                 return new PlayerInput.SwitchPokemonInput((short) Float.parseFloat(stringMap.get("PlayerId")),
-                        (short) Float.parseFloat(stringMap.get("PokemonIndex")));
+                        (short) Float.parseFloat(stringMap.get("OldIndex")),
+                        (short) Float.parseFloat(stringMap.get("NewIndex")));
             }
 
         } catch (IOException e) {
@@ -181,29 +179,111 @@ import com.google.gson.stream.JsonWriter;
 
     }
 
-    @Override
     public void battleEnded(int player) {
-        sendData("/battleEnded", String.valueOf(player), false);
+        write(NetworkMessageKind.BattleEnded.createMessage(String.valueOf(player)));
     }
 
     @Override
-    public short switchPokemon(BattleState state, short oldIndex) {
-        try {
-            StringWriter writer = new StringWriter();
-            JsonWriter jsonWriter = new JsonWriter(writer);
-            jsonWriter.beginObject();
-            jsonWriter.name("oldIndex").value(oldIndex);
-            UpdateWriter.writeState(state, jsonWriter, rule);
-            jsonWriter.endObject();
+    public Pipe getPipe() {
+        // TODO Auto-generated method stub
+        return this;
+    }
 
-            String response = sendData("/SwitchPokemon", writer.toString(), true);
-            return Short.valueOf(response);
+    @Override
+    public NetworkMessage handle(NetworkMessage msg) {
+        switch (msg.Kind) {
+            case RequestInputToIO:
+                return NetworkMessageKind.ReplyInputFromIO
+                        .createMessage(requestPlayerInput(((Tuple<Short, BattleState>) msg.Data).Item1));
+
+            case Update:
+                // update( msg.Data);
+                return null;
+            case BattleEnded:
+                // battleEnded( msg.Data.toString());
+            default:
+                return null;
+        }
+
+    }
+
+    final int ENDPOINT_LENGTH_SIZE = 2;
+    final int BODY_LENGTH_SIZE = 4;
+
+    @Override
+    public boolean write(NetworkMessage obj) {
+
+        String endpoint = obj.Kind.toString();
+        String body = obj.Data.toString();
+        ByteBuffer buffer = ByteBuffer
+                .allocate(endpoint.length() + body.length() + ENDPOINT_LENGTH_SIZE + BODY_LENGTH_SIZE);
+        buffer.putShort((short) endpoint.length());
+        buffer.put(endpoint.getBytes());
+        buffer.putInt(body.length());
+        buffer.put(body.getBytes());
+        try {
+            socket.getOutputStream().write(buffer.array());
+            return true;
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            return false;
         }
-        return -1;
     }
 
-}*/
+    @Override
+    public NetworkMessage read() {
+        ByteBuffer buffer;
+        try {
+            buffer = ByteBuffer.wrap(socket.getInputStream().readNBytes(ENDPOINT_LENGTH_SIZE));
+            short endPointLength = buffer.getShort();
+            buffer = ByteBuffer.wrap(socket.getInputStream().readNBytes(endPointLength));
+            NetworkMessageKind kind=NetworkMessageKind.valueOf(new String(buffer.array()));
+            buffer=ByteBuffer.wrap(socket.getInputStream().readNBytes(BODY_LENGTH_SIZE));
+            int bodyLength=buffer.getInt();
+            buffer = ByteBuffer.wrap(socket.getInputStream().readNBytes(bodyLength));
+            String body=new String(buffer.array());
+            return kind.createMessage(body);
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    @Override
+    public Pipe waitForConnection() {
+        try {
+            socket = serverSocket.accept();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    @Override
+    public Pipe connect() {
+        try {
+            socket = serverSocket.accept();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    @Override
+    public boolean avaliable() {
+        try {
+            return socket.getInputStream().available() > 0;
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return false;
+        }
+    }
+}

@@ -22,10 +22,10 @@ public class BotInterface extends SimpleIOInterface {
     @Override
     public NetworkMessage handle(NetworkMessage msg) {
         switch (msg.Kind) {
-            case RequestInput:
-                return NetworkMessageKind.ReplyInput.createMessage(requestPlayerInput(((short) msg.Data)));
+            case RequestInputToIO:
+                return NetworkMessageKind.ReplyInputFromIO.createMessage(requestPlayerInput(((short) msg.Data)));
             case SwitchPokemon:
-                return NetworkMessageKind.ReplyInput
+                return NetworkMessageKind.ReplyInputFromIO
                         .createMessage(switchPokemon(((Tuple<Short, BattleState>) msg.Data)));
             case Update:
                 update((BattleRoundResult) msg.Data);

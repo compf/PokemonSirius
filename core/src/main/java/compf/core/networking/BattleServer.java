@@ -103,7 +103,7 @@ public class BattleServer extends BaseServer implements SteppableHost {
         for (var playerId : playerIds) {
             for (short pkmId = 0; pkmId < rule.PokemonPerPlayerOnField; pkmId++) {
                 if (canPlayerAttack(playerId, pkmId)) {
-                    var inp_msg = NetworkMessageKind.RequestInput.createMessage(pkmId);
+                    var inp_msg = NetworkMessageKind.RequestInputToClient.createMessage(pkmId);
                     writeObject(_pipes.get(playerId), inp_msg);
                 }
             }
@@ -177,7 +177,7 @@ public class BattleServer extends BaseServer implements SteppableHost {
                     }
                 }
                     break;
-                case ReplyInput: {
+                case ReplyInputToServer: {
                     Interrupt interrupt = new NetworkInterrupt();
                     BufferList<PlayerInput> inputs = (BufferList<PlayerInput>) msg.Data;
                     for (var inp : inputs) {
