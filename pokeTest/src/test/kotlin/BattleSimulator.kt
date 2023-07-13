@@ -1,26 +1,14 @@
+
 import com.badlogic.gdx.utils.Queue
-import compf.core.engine.BattleRoundResult
-import compf.core.engine.BattleState
-import compf.core.engine.Player
-import compf.core.engine.PlayerInput
+import compf.core.engine.*
 import compf.core.engine.pokemon.Pokemon
-import compf.core.engine.BattleRule
-import compf.core.engine.BattleAction
-import compf.core.engine.NetworkMessage
-import compf.core.engine.NetworkMessageKind
-import compf.core.engine.Tuple
 import compf.core.etc.services.SharedInformation
-import compf.core.networking.IOInterface
 import compf.core.networking.BattleClient
-import compf.core.networking.SharedPipe
 import compf.core.networking.BattleServer
-import compf.core.networking.Pipe
 import compf.core.networking.SimpleIOInterface
+import org.apache.logging.log4j.LogManager
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import java.util.*
 
 public  class SimulationBattleIO : SimpleIOInterface {
     private val MyLogger=LogManager.getLogger()
@@ -33,12 +21,12 @@ public  class SimulationBattleIO : SimpleIOInterface {
    }
    override fun handle(msg: NetworkMessage) :NetworkMessage? {
     return when (msg.Kind) {
-         NetworkMessageKind.RequestInput -> {
-            return NetworkMessageKind.ReplyInput.createMessage(requestPlayerInput(( msg.Data as Tuple<Short,BattleState>)));
+         NetworkMessageKind.RequestInputToIO -> {
+            return NetworkMessageKind.ReplyInputFromIO .createMessage(requestPlayerInput(( msg.Data as Tuple<Short,BattleState>)));
 
          }
          NetworkMessageKind.SwitchPokemon->{
-            return NetworkMessageKind.ReplyInput
+            return NetworkMessageKind.SwitchPokemon
             .createMessage(switchPokemon(( msg.Data as Tuple<Short, BattleState> )));
          }
             

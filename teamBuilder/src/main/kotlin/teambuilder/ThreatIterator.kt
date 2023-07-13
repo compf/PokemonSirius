@@ -11,7 +11,7 @@ import compf.core.engine.pokemon.effects.StubEffect
 import compf.core.engine.pokemon.moves.Move
 import compf.core.etc.PokemonConstants
 import compf.core.etc.services.SharedInformation
-import pokeclass.EVDistribution
+import compf.core.engine.pokemon.EVDistribution
 import pokeclass.PokedexEntryCategory
 import pokeclass.PokedexEntryClassifier
 import pokeclass.PokedexQuery

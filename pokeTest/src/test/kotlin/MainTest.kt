@@ -1,22 +1,34 @@
 
 
 import compf.core.engine.PokemonBattle.PokemonComparator
-import compf.core.engine.pokemon.Nature
+import compf.core.engine.pokemon.EVDistribution
+import compf.core.engine.pokemon.Pokemon
 import compf.core.engine.pokemon.effects.BurnedStateCondition
 import compf.core.engine.pokemon.effects.ParalyzedStateCondition
 import compf.core.engine.pokemon.effects.ProtectionEffect
 import compf.core.engine.pokemon.moves.Move
 import compf.core.engine.pokemon.moves.PokemonEffectMove
 import compf.core.engine.pokemon.moves.Schedule
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
 import compf.core.etc.CallerInformation
-import compf.core.etc.services.pokemon.DefaultPokedexEntryService
-import compf.core.etc.services.move.DefaultMoveService
-import compf.core.etc.services.logging.NoLoggerService
 import compf.core.etc.services.SharedInformation
 import compf.core.etc.services.learnset.StubLearnsetService
+import compf.core.etc.services.logging.NoLoggerService
+import compf.core.etc.services.move.DefaultMoveService
+import compf.core.etc.services.pokemon.DefaultPokedexEntryService
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Test
+public class TestInstance(public val simulator: SimpleBattleSimulator,public val server: TestableServer,public val mePokemon:Pokemon,public val enemyPokemon: Pokemon){
+
+}
+public fun createInstance(mePokemon: Pokemon,enemyPokemon:Pokemon):TestInstance{
+        val server=TestableServer(mePokemon,enemyPokemon)
+        val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)
+        return TestInstance(simulator,server,mePokemon,enemyPokemon)
+}
+public fun createSimulator(mePokemon: Pokemon,enemyPokemon:Pokemon):SimpleBattleSimulator{
+        return createInstance(mePokemon, enemyPokemon).simulator
+}
 public class MainTest{
         companion object{
                 @BeforeAll
@@ -48,10 +60,10 @@ public class MainTest{
         @Test
         public fun testPokemonStats(){
 
-        val pkmn= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(252,252,6,0,0,0), Nature.ATT_ATT, 0, 0, 15)
+        val pkmn= PikachuCreator().create()
         assertEquals(274, pkmn.getStat(0))
         assertEquals(209, pkmn.getStat(1));
-        assertEquals(117, pkmn.getStat(2));
+        assertEquals(116, pkmn.getStat(2));
         assertEquals(136, pkmn.getStat(3));
         assertEquals(136, pkmn.getStat(4));
         assertEquals(216, pkmn.getStat(5));
@@ -60,59 +72,52 @@ public class MainTest{
         val SPLASH_ID=150;
         @Test
         public fun assertSimpleBattleRandomPriority(){
-                val gen= newGenerator()
-                val mePokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(252,252,6,0,0,0), Nature.ATT_ATT, 0, 0, CUT_ID)
-                val enemyPokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(252,252,6,0,0,0), Nature.ATT_ATT, 0, 0, SPLASH_ID)
-                val server=TestableServer(mePokemon,enemyPokemon)
-                val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)
-                simulator.attack().attack().assertNoDamage().assertDamage(77).execute(2)
+                newGenerator()
+                val mePokemon= PikachuCreator().cutMove().create()
+                val enemyPokemon= PikachuCreator().create()
+                createSimulator(mePokemon, enemyPokemon).attack().attack().assertNoDamage().assertDamage(77).execute(2)
         }
         @Test
         public fun assertBattleWithDifferentSpeed(){
-                val gen= newGenerator()
+               newGenerator()
+                val mePokemon= PikachuCreator().cutMove().create()
+                val enemyPokemon= PikachuCreator().setEV(EVDistribution.ATT_SPEED).create()
 
-                val mePokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,0), intArrayOf(252,252,6,0,0,0), Nature.ATT_ATT, 0, 0, CUT_ID)
-                val enemyPokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(0,252,6,0,0,252), Nature.ATT_ATT, 0, 0, SPLASH_ID)
-                val server=TestableServer(mePokemon,enemyPokemon)
-
-                val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)
+                 val simulator=createSimulator(mePokemon, enemyPokemon)
                 simulator.attack().attack().assertNoDamage().assertDamage(77).execute(2)
         }
         @Test
         public fun testBurning(){
-                val gen= newGenerator()
+                newGenerator()
 
-                val mePokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,0), intArrayOf(252,252,6,0,0,0), Nature.ATT_ATT, 0, 0, SPLASH_ID)
-                val enemyPokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(0,252,6,0,0,252), Nature.ATT_ATT, 0, 0, SPLASH_ID)
+                val mePokemon= PikachuCreator().create()
+                val enemyPokemon= PikachuCreator().create()
                 enemyPokemon.addEffect(BurnedStateCondition(enemyPokemon))
-                val server=TestableServer(mePokemon,enemyPokemon)
-
-                val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)
+                val simulator=createSimulator(mePokemon,enemyPokemon)
                 val factor=7.0/8.0
                 simulator.attack().attack().assertNoDamage().assertNoDamage().assert(HPModifiedAssertion(factor)).execute(3)
         }
         @Test
         public fun assertBattleWithFlying(){
-                val gen= newGenerator()
+                newGenerator()
 
                 val FLY_ID=19;
-                val mePokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(252,252,6,0,0,0), Nature.ATT_ATT, 0, 0, FLY_ID)
-                val enemyPokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,0), intArrayOf(252,252,6,0,0,0), Nature.ATT_ATT, 0, 0, CUT_ID)
-                val server=TestableServer(mePokemon,enemyPokemon)
+                val mePokemon= PikachuCreator().setEV(EVDistribution.ATT_SPEED).setMoveId(FLY_ID).create()
+                val enemyPokemon= PikachuCreator().cutMove().create()
 
-                val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)
-                simulator.attack().attack().attack().attack().assertNoDamage().assertNoDamage().assertDamage( 68).assertDamage(77).execute(4)
+                val simulator=createSimulator(mePokemon,enemyPokemon)
+                simulator.attack().attack().attack().attack().assertNoDamage().assertNoDamage().assertDamage( 69).assertDamage(77).execute(4)
         }
         @Test
         public fun assertBattleWithParalysis(){
                 val gen= newGenerator()
 
-                val mePokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(252,252,6,0,0,0), Nature.ATT_ATT, 0, 0, CUT_ID)
-                val enemyPokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(252,252,6,0,0,0), Nature.ATT_ATT, 0, 0, SPLASH_ID)
+                val mePokemon= PikachuCreator().cutMove().create()
+                val enemyPokemon= PikachuCreator().create()
                 gen.addDeterministicValue(ParalyzedStateCondition::class.java, true)
                 mePokemon.addEffect(ParalyzedStateCondition(mePokemon))
-                val server=TestableServer(mePokemon,enemyPokemon)
-                val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)
+
+                val simulator=createSimulator(mePokemon, enemyPokemon)
                 simulator.attack().attack().assertNoDamage().assertNoDamage().execute(2)
                         
 
@@ -122,13 +127,13 @@ public class MainTest{
         @Test
         public fun  assertBattleWithProtect(){
                 val  PROTECT_ID=182;
-                val mePokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,31), intArrayOf(252,252,6,0,0,0), Nature.ATT_ATT, 0, 0, PROTECT_ID)
-                val enemyPokemon= PokemonCreator.createPokemon(25, 100, intArrayOf(31,31,31,31,31,0), intArrayOf(252,252,6,0,0,0), Nature.ATT_ATT, 0, 0, CUT_ID)
+                val mePokemon= PikachuCreator().setMoveId(PROTECT_ID).setEV(EVDistribution.ATT_SPEED).create()
+                val enemyPokemon= PikachuCreator().cutMove().create()
                 val gen= newGenerator()
                 gen.addUnchangeableDeterminsticValue(ProtectionEffect::class.java,50)
                 gen.addUnchangeableDeterminsticValue(PokemonEffectMove::class.java,true)
-                val server=TestableServer(mePokemon,enemyPokemon)
-                val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)
+
+                val simulator=createSimulator(mePokemon, enemyPokemon)
                 val numberTurns=4
                 for(i in 1..numberTurns){
                         simulator.attack().attack().assertNoDamage().assertDamage(if (i==numberTurns) 77 else 0)

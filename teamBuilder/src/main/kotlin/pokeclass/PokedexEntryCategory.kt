@@ -1,5 +1,6 @@
 package pokeclass
 
+import compf.core.engine.pokemon.EVDistribution
 import compf.core.engine.pokemon.Nature
 import compf.core.engine.pokemon.PokedexEntry
 import compf.core.engine.pokemon.PokemonStat
@@ -30,7 +31,12 @@ public interface PokedexEntryCategory {
     }
 
     override fun getEvDistributions(): Array<EVDistribution> {
-       return arrayOf(EVDistribution.ATT_SPEED,EVDistribution.ATT_DEF,EVDistribution.ATT_SDEF,EVDistribution.HP_ATT,EVDistribution.ATT_SATT)
+       return arrayOf(
+           EVDistribution.ATT_SPEED,
+           EVDistribution.ATT_DEF,
+           EVDistribution.ATT_SDEF,
+           EVDistribution.HP_ATT,
+           EVDistribution.ATT_SATT)
     }
 
     override fun isGoodMove(mv: Move): Boolean {
@@ -49,7 +55,12 @@ public interface PokedexEntryCategory {
     }
 
     override fun getEvDistributions(): Array<EVDistribution> {
-        return arrayOf(EVDistribution.SATT_SPEED,EVDistribution.DEF_SATT,EVDistribution.SATT_SDEF,EVDistribution.HP_SATT,EVDistribution.ATT_SATT)
+        return arrayOf(
+            EVDistribution.SATT_SPEED,
+            EVDistribution.DEF_SATT,
+            EVDistribution.SATT_SDEF,
+            EVDistribution.HP_SATT,
+            EVDistribution.ATT_SATT)
     }
 
     override fun isGoodMove(mv: Move): Boolean {
@@ -67,7 +78,16 @@ class MixedSweeper:PokedexEntryCategory{
     }
 
     override fun getEvDistributions(): Array<EVDistribution> {
-       return  arrayOf(EVDistribution.ATT_SATT,EVDistribution.ATT_SPEED,EVDistribution.SATT_SPEED,EVDistribution.HP_ATT,EVDistribution.HP_SATT,EVDistribution.ATT_DEF,EVDistribution.ATT_SDEF,EVDistribution.SATT_SDEF,EVDistribution.DEF_SATT)
+       return  arrayOf(
+           EVDistribution.ATT_SATT,
+           EVDistribution.ATT_SPEED,
+           EVDistribution.SATT_SPEED,
+           EVDistribution.HP_ATT,
+           EVDistribution.HP_SATT,
+           EVDistribution.ATT_DEF,
+           EVDistribution.ATT_SDEF,
+           EVDistribution.SATT_SDEF,
+           EVDistribution.DEF_SATT)
     }
 
     override fun isGoodMove(mv: Move): Boolean {
@@ -83,7 +103,13 @@ class PhysicalTank:PokedexEntryCategory{
     }
 
     override fun getEvDistributions(): Array<EVDistribution> {
-       return  arrayOf(EVDistribution.DEF_SDEF,EVDistribution.HP_DEF,EVDistribution.DEF_SATT,EVDistribution.DEF_SPEED,EVDistribution.ATT_DEF,EVDistribution.HP_SDEF)
+       return  arrayOf(
+           EVDistribution.DEF_SDEF,
+           EVDistribution.HP_DEF,
+           EVDistribution.DEF_SATT,
+           EVDistribution.DEF_SPEED,
+           EVDistribution.ATT_DEF,
+           EVDistribution.HP_SDEF)
     }
 
     override fun isGoodMove(mv: Move): Boolean {
@@ -97,7 +123,13 @@ class SpecialTank:PokedexEntryCategory{
     }
 
     override fun getEvDistributions(): Array<EVDistribution> {
-        return  arrayOf(EVDistribution.DEF_SDEF,EVDistribution.HP_SDEF,EVDistribution.SATT_SDEF,EVDistribution.SDEF_SPEED,EVDistribution.ATT_SDEF,EVDistribution.HP_DEF)
+        return  arrayOf(
+            EVDistribution.DEF_SDEF,
+            EVDistribution.HP_SDEF,
+            EVDistribution.SATT_SDEF,
+            EVDistribution.SDEF_SPEED,
+            EVDistribution.ATT_SDEF,
+            EVDistribution.HP_DEF)
 
     }
 
@@ -112,7 +144,13 @@ class OtherCategory:PokedexEntryCategory{
     }
 
     override fun getEvDistributions(): Array<EVDistribution> {
-        return arrayOf(EVDistribution.DEF_SDEF,EVDistribution.HP_DEF,EVDistribution.HP_SDEF,EVDistribution.HP_SPEED,EVDistribution.DEF_SPEED,EVDistribution.SDEF_SPEED)
+        return arrayOf(
+            EVDistribution.DEF_SDEF,
+            EVDistribution.HP_DEF,
+            EVDistribution.HP_SDEF,
+            EVDistribution.HP_SPEED,
+            EVDistribution.DEF_SPEED,
+            EVDistribution.SDEF_SPEED)
     }
 
     override fun isGoodMove(mv: Move): Boolean {
