@@ -23,7 +23,7 @@ open class BattleExecutor(val myPokemons:List<Pokemon>,val enemyPokemons:List<Po
 
     }
     public fun execute(numberTimes:Int):BattleState{
-        val battle=PokemonBattle(2)
+        val battle=PokemonBattle(BattleRule.DEFAULT_RULE)
         val mePlayer=Player(0,"Me",myPokemons.map{Pokemon(it.nr, it.level, it.eVs.clone(), it.iVs, it.nature, it.moves.clone())}.toTypedArray())
         
         val enemyPlayer=Player(1,"Enemy",enemyPokemons.map{Pokemon(it.nr, it.level, it.eVs.clone(), it.iVs, it.nature, it.moves.clone())}.toTypedArray())

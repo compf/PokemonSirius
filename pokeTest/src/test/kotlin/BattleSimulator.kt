@@ -106,11 +106,14 @@ public class SimpleBattleSimulator {
         }
         private val MyLogger=LogManager.getLogger()
     }
+    constructor(server:TestableServer){
+        this.server=server
+        this.meIO=server.meIO
+        this.enemyIO=server.enemyIO
+    }
    
-    public constructor(server:TestableServer,me:Pokemon,enemy:Pokemon) {      
-         this.server=server
-         this.meIO=server.meIO
-         this.enemyIO=server.enemyIO
+    public constructor(server:TestableServer,me:Pokemon,enemy:Pokemon): this(server){
+
         this.meIO.player.team[0]=me
         this.enemyIO.player.team[0]=enemy
     }

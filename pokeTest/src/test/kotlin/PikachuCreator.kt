@@ -33,6 +33,11 @@ public class PikachuCreator {
     fun cutMove():PikachuCreator{
         return setMoveId(CUT_ID)
     }
+    fun setLevel(level:Int):PikachuCreator{
+        this.level=level
+        return this
+    }
+
 
 
 }

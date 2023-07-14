@@ -1,14 +1,10 @@
 
 
 import compf.core.engine.*
-import compf.core.networking.BattleServer
-import compf.core.networking.Pipe
-import compf.core.networking.PipeEndPoint
-import compf.core.networking.SteppableHost
-import compf.core.networking.BattleClient
-import compf.core.networking.IOInterface
 import compf.core.engine.pokemon.Pokemon
-import java.util.LinkedList
+import compf.core.networking.*
+import java.util.*
+import kotlin.collections.ArrayDeque
 class DefaultValuePipe:Pipe{
     private val buffer=ArrayDeque<NetworkMessage>()
     override fun write(p0: NetworkMessage): Boolean { 
@@ -40,22 +36,21 @@ public class TestableServer:BattleServer{
     private val nodes:Array<SteppableHost>
      val meIO:SimulationBattleIO
      val enemyIO:SimulationBattleIO
+    constructor( dummyMePokemon:Pokemon,  dummyEnemyPokemon:Pokemon): this(Player(0,"Me",arrayOf(dummyMePokemon,null,null,null,null,null)),Player(1,"Enemy",arrayOf(dummyEnemyPokemon,null,null,null,null,null))){
 
-    constructor( dummyMePokemon:Pokemon,  dummyEnemyPokemon:Pokemon)  {
+    }
+    constructor( mePlayer: Player,  enemyPlayer:Player)  {
         val rule=BattleRule(2,1,6,1)
         this._rules.put(0,rule)
         this._rules.put(1,rule)
 
-
-        val mePlayer=Player(0,"Me",arrayOf(dummyMePokemon,null,null,null,null,null))
-        val enemyPlayer=Player(1,"Enemy",arrayOf(dummyEnemyPokemon,null,null,null,null,null))
         this._players.put(0,mePlayer)
         this._players.put(1,enemyPlayer)
 
         this._playerIds.add(0)
         this._playerIds.add(1)
 
-        val battle=PokemonBattle(rule.NumberPlayers)
+        val battle=PokemonBattle(rule)
         this._battles.put(0, battle)
         this._battles.put(1, battle)
         battle.getPlayers().add(this._players.get(0));

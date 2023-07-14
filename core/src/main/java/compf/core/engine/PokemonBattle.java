@@ -27,17 +27,18 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 		var team = new Pokemon[6];
 		for (int i = 0; i < 6; i++) {
 			team[i] = new Pokemon(SharedInformation.Instance.getPokedexEntryService()
-			.get(1 + SharedInformation.Instance.getRNG().randomNumber(0,SharedInformation.Instance.getPokedexEntryService().getCount() - 1,PokemonBattle.class)));
+					.get(1 + SharedInformation.Instance.getRNG().randomNumber(0,SharedInformation.Instance.getPokedexEntryService().getCount() - 1,PokemonBattle.class)));
 		}
 		return team;
 	}
 
-	public PokemonBattle(int numPlayers) {
-		this._players = new ArrayList<Player>(numPlayers);
+	public PokemonBattle(BattleRule rule) {
+		this._players = new ArrayList<Player>(rule.NumberPlayers);
 		_schedule = new Schedule(this);
-		_numPlayeers=numPlayers;
+		_rule=rule;
 	}
-	private int _numPlayeers;
+
+	private BattleRule _rule;
 
 	public void init() {
 
@@ -57,7 +58,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 	}
 
 	public boolean hasEnoughPlayers() {
-		return _players.size()>=_numPlayeers;
+		return _players.size()>= _rule.NumberPlayers;
 	}
 
 	public class BattleIterator implements Iterator<Pokemon> {
@@ -137,12 +138,11 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 	}
 
 
-
 	protected boolean _run = true;
 	public static final byte PLAYER1 = -1;
 	public static final byte PLAYER2 = +1;
 
-	/*public void execute() {
+    /*public void execute() {
 
 		
 		 * Move mv = null;
@@ -184,6 +184,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 	public enum EffectTime {
 		ROUND_STARTING, ROUND_ENDING, ATTACK, DEFEND, POKEMON_SWITCHED, POKEMON_DEFEATED, DELAYED_ATTACK
 	}
+
 	public static class PokemonComparator implements  Comparator<Pokemon>{
 
 		@Override
@@ -215,7 +216,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 		executeEffects(EffectTime.ROUND_STARTING, null);
 		var pokemonSorted = sort();
 		for (var pkmn : pokemonSorted) {
-			executeEffects(pkmn, EffectTime.DELAYED_ATTACK, new EffectParam(null, null, _schedule));
+			executeEffects(pkmn, EffectTime.DELAYED_ATTACK, new EffectParam(null, null, _schedule,interrupt,_rule));
 		}
 		while (_schedule.any()) {
 			ScheduleItem item = _schedule.getNext();
@@ -234,15 +235,18 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 			}
 
 
-			EffectParam effectParam=new EffectParam(dmgInf, item, _schedule);
+			EffectParam effectParam=new EffectParam(dmgInf, item, _schedule,interrupt,_rule);
 			executeEffects(attacker, EffectTime.ATTACK, effectParam);
 			executeEffects(defender, EffectTime.DEFEND, effectParam);
 			dmgInf = effectParam.damageInf();
 			if (attacker.getCurrHP() <= 0) {
 
-				String msg = (switchPokemon(interrupt, attacker));
-				var action = new BattleAction(-1, msg, BattleAction.ActionKind.SwitchPokemon, null);
-				actions.add(action);
+				short oldIndex = (short) indexOf(defender.getPlayer().getTeam(), attacker);
+
+				short newIndex = interrupt.forceSwitch(attacker.getPlayer().getPlayerId(), oldIndex);
+				String msg = (switchPokemon( attacker.getPlayer(),oldIndex,newIndex));
+				var switchAction = new BattleAction(-1, msg, BattleAction.ActionKind.SwitchPokemon, attacker.getPlayer().getPlayerId() +" "+ oldIndex +" "+newIndex);
+				actions.add(switchAction);
 				continue;
 			}
 			defender.modifyCurrHp(dmgInf.getDamage());
@@ -253,14 +257,14 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 					dmgInf);
 			actions.add(action);
 			if (defender.getCurrHP() <= 0) {
-				String msg = (switchPokemon(interrupt, defender));
-				var switchAction = new BattleAction(-1, msg, BattleAction.ActionKind.SwitchPokemon, null);
+				short oldIndex = (short) indexOf(defender.getPlayer().getTeam(), defender);
+
+				short newIndex = interrupt.forceSwitch(defender.getPlayer().getPlayerId(), oldIndex);
+				String msg = (switchPokemon(defender.getPlayer(),oldIndex, newIndex));
+				var switchAction = new BattleAction(-1, msg, BattleAction.ActionKind.SwitchPokemon, defender.getPlayer().getPlayerId() +" "+ oldIndex +" "+newIndex);
 				actions.add(switchAction);
 
 			}
-
-
-			
 
 
 		}
@@ -276,27 +280,24 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 
 			}
 		}
-		
+
 		return new BattleRoundResult(actions, new DetailedBattleState(_players), NetworkMessageKind.Update);
 
 	}
 
-	private String switchPokemon(Interrupt interrupt, Pokemon pkmn) {
+	public String switchPokemon(Player player,short oldIndex,short newIndex) {
 
-		short oldIndex = (short) indexOf(pkmn.getPlayer().getTeam(), pkmn);
-
-		short newIndex = interrupt.forceSwitch(pkmn.getPlayer().getPlayerId(), oldIndex);
-		_schedule.clear(combine(pkmn.getPlayer().getPlayerId(),newIndex));
+		Pokemon pkmn=player.getPokemon(oldIndex);
+		_schedule.clear(combine(player.getPlayerId(),newIndex));
 		if(newIndex==-1)return "Could not switch";
-		var dummy = pkmn.getPlayer().getTeam()[oldIndex];
-		String msg = pkmn.getPlayer().getName() + " replaced " + pkmn.toString() + " with "
+		var dummy = player.getTeam()[oldIndex];
+		String msg = player.getName() + " replaced " + pkmn.toString() + " with "
 				+ pkmn.getPlayer().getPokemon(newIndex).getName();
-		pkmn.getPlayer().getTeam()[oldIndex] = pkmn.getPlayer().getTeam()[newIndex];
-		pkmn.getPlayer().getTeam()[newIndex] = dummy;
+		player.getTeam()[oldIndex] =player.getTeam()[newIndex];
+		player.getTeam()[newIndex] = dummy;
 		return msg;
 
 	}
-
 
 
 	/**
@@ -318,13 +319,13 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 			int defenderIndex = combine(att.TargetPlayer, att.TargetPokemonIndex);
 			var move = new MoveFactory().create(getPokemon(attackerIndex).getMoves()[att.MoveIndex]);
 			move.init(_schedule, attackerIndex, defenderIndex);
-		}
-		else if(inp instanceof  PlayerInput.SwitchPokemonInput switch_inp){
+		} else if(inp instanceof  PlayerInput.SwitchPokemonInput switch_inp){
 			Pokemon pkmn=getPlayerById(switch_inp.PlayerId).getPokemon(switch_inp.PokemonOldIndex);
-			switchPokemon(switch_inp,pkmn);
+			switchPokemon(getPlayerById(switch_inp.PlayerId),switch_inp.PokemonOldIndex,switch_inp.PokemonNewIndex);
 		}
 
 	}
+
 	public Player getPlayerById(short playerId){
 		for(var p:_players){
 			if(p.getPlayerId()==playerId)return p;

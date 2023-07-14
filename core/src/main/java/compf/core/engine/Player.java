@@ -7,6 +7,7 @@ import java.util.HashSet;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.moves.Move;
 import compf.core.etc.MyObject;
+import compf.core.etc.PokemonConstants;
 
 public class Player extends MyObject implements Serializable {
     /**
@@ -17,15 +18,17 @@ public class Player extends MyObject implements Serializable {
     protected Pokemon[] _team = new Pokemon[6];
     protected String _name;
     private HashSet<Player> _allies = new HashSet<>();
-    private int _pokemonCount = 1;
-    private short _id;
+    private final short _id;
 
     public Player(short id) {
         _id = id;
     }
 
     public int getPokemonCount() {
-        return _pokemonCount;
+        for(int i=0;i< PokemonConstants.DEFAULT_TEAM_SIZE;i++){
+            if(_team[i]==null)return i;
+        }
+        return PokemonConstants.DEFAULT_TEAM_SIZE;
     }
 
     public void addAlly(Player pl) {
@@ -44,9 +47,6 @@ public class Player extends MyObject implements Serializable {
         return 0;
     }
 
-    public void setPokemonCount(int val) {
-        _pokemonCount = val;
-    }
 
     public Pokemon getCurrPokemon() {
         return _team[0];

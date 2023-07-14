@@ -1,11 +1,13 @@
 
 
+import compf.core.engine.Player
 import compf.core.engine.PokemonBattle.PokemonComparator
 import compf.core.engine.pokemon.EVDistribution
 import compf.core.engine.pokemon.Pokemon
 import compf.core.engine.pokemon.effects.BurnedStateCondition
 import compf.core.engine.pokemon.effects.ParalyzedStateCondition
 import compf.core.engine.pokemon.effects.ProtectionEffect
+import compf.core.engine.pokemon.effects.RandomSwapPokemonEffect
 import compf.core.engine.pokemon.moves.Move
 import compf.core.engine.pokemon.moves.PokemonEffectMove
 import compf.core.engine.pokemon.moves.Schedule
@@ -26,8 +28,16 @@ public fun createInstance(mePokemon: Pokemon,enemyPokemon:Pokemon):TestInstance{
         val simulator=SimpleBattleSimulator(server,mePokemon,enemyPokemon)
         return TestInstance(simulator,server,mePokemon,enemyPokemon)
 }
+public fun createInstance(mePlayer: Player,enemPlayer:Player):TestInstance{
+        val server=TestableServer(mePlayer,enemPlayer)
+        val simulator=SimpleBattleSimulator(server)
+        return TestInstance(simulator,server,mePlayer.getPokemon(0),enemPlayer.getPokemon(0))
+}
 public fun createSimulator(mePokemon: Pokemon,enemyPokemon:Pokemon):SimpleBattleSimulator{
         return createInstance(mePokemon, enemyPokemon).simulator
+}
+public fun createSimulator(mePlayer: Player,enemPlayer:Player):SimpleBattleSimulator{
+        return createInstance(mePlayer, enemPlayer).simulator
 }
 public class MainTest{
         companion object{
@@ -139,6 +149,20 @@ public class MainTest{
                         simulator.attack().attack().assertNoDamage().assertDamage(if (i==numberTurns) 77 else 0)
                 }
               simulator.execute(2*numberTurns)
+        }
+
+        @Test
+        fun testForcedSwitching(){
+               var gen= newGenerator()
+                gen.addUnchangeableDeterminsticValue(PokemonEffectMove::class.java,true)
+                gen.addUnchangeableDeterminsticValue(RandomSwapPokemonEffect::class.java,1)
+                 val WHIRLWIND_ID=18
+                val me=Player(0,"Me", arrayOf(PikachuCreator().setMoveId(WHIRLWIND_ID).setEV(EVDistribution.ATT_SPEED).create(),null,null,null,null,null))
+
+                val enemyPokemons= arrayOf(PikachuCreator().create(),PikachuCreator().setLevel(1).create(),null,null,null,null)
+                val enemy=Player(1,"Enemy",enemyPokemons)
+                createSimulator(me,enemy).attack().attack().assertNoDamage().assertNoDamage().execute(2)
+                assertEquals(1,enemy.getPokemon(0).level)
         }
     
 }
