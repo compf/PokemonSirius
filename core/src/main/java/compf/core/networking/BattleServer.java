@@ -169,6 +169,7 @@ public class BattleServer extends BaseServer implements SteppableHost {
 
                     MyLogger.debug("Number of players " + battle.getPlayers().size());
                     if (battle.hasEnoughPlayers()) {
+                        battle.start();
                         MyLogger.debug("All players ready ");
                         informPlayerOfUpdate(gameId,
                                 new BattleRoundResult(null, new DetailedBattleState(battle.getPlayers()), null));

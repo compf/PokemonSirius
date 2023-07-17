@@ -14,7 +14,10 @@ public abstract class BattleEffect extends MyObject implements Serializable {
 	@Serial
     private static final long serialVersionUID = 1L;
 
-	public void init(EffectParam param) {
+	public void init() {
+	}
+	public void battleStarted(EffectParam param){
+
 	}
 
 	public void roundBeginning(EffectParam param) {

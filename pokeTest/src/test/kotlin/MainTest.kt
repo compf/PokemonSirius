@@ -39,17 +39,20 @@ public fun createSimulator(mePokemon: Pokemon,enemyPokemon:Pokemon):SimpleBattle
 public fun createSimulator(mePlayer: Player,enemPlayer:Player):SimpleBattleSimulator{
         return createInstance(mePlayer, enemPlayer).simulator
 }
-public class MainTest{
+fun initAll(){
+        SharedInformation.Instance.init(
+                DefaultPokedexEntryService("pikachu.json"),
+                DefaultMoveService("kanto_moves.json"),null,
+                StubLearnsetService(),
+                NoLoggerService()
+        )
+}
+public open class MainTest{
         companion object{
                 @BeforeAll
                 @JvmStatic
                 public fun init(){
-                        SharedInformation.Instance.init(
-                                DefaultPokedexEntryService("pikachu.json"),
-                                DefaultMoveService("kanto_moves.json"),null,
-                                StubLearnsetService(),
-                                NoLoggerService()
-                        )
+                       initAll()
 
                 }
                 public fun addDeterministicRandomResults(generator:DeterministicRandomGenerator){

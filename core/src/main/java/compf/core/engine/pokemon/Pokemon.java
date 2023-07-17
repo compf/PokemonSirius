@@ -54,15 +54,7 @@ public class Pokemon extends PokedexEntry {
         return _effects;
     }
 
-    private ItemEffect _itemEffect;
 
-    public ItemEffect getItemEffect() {
-        return _itemEffect;
-    }
-
-    public void setItemEffect(ItemEffect effect) {
-        _itemEffect = effect;
-    }
 
 
 
@@ -242,6 +234,9 @@ public class Pokemon extends PokedexEntry {
         // TODO Auto-generated method stub
         return _stats[i];
     }
+    public int[] getAllStats(){
+        return  _stats;
+    }
 
     public int getStatFactor(int i) {
         return _statsFactors[i - 1];
@@ -311,7 +306,7 @@ public class Pokemon extends PokedexEntry {
 
     public void addEffect(PokemonBattleEffect effect) {
         _effects.add(effect);
-        effect.init(null);
+        effect.init();
     }
 
 }

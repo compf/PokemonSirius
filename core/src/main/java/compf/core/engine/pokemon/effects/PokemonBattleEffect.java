@@ -20,5 +20,10 @@ public abstract class PokemonBattleEffect extends BattleEffect {
     public boolean canReceiveCommand() {
         return true;
     }
-
+    protected boolean isMeAttacking(EffectParam param){
+        return getPokemon()==param.damageInf().getAttacker();
+    }
+    protected boolean isMeDefending(EffectParam param){
+        return getPokemon()==param.damageInf().getDefender();
+    }
 }

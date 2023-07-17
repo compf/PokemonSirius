@@ -18,7 +18,7 @@ public class ChoiceItemEffect extends ItemEffect {
        this._by=by;
     }
     @Override
-    public void init(EffectParam param) {
+    public void init() {
         try {
             Field field=Pokemon.class.getDeclaredField("_stats");
             field.setAccessible(true);

@@ -11,7 +11,7 @@ public class SubstituteEffect extends PokemonBattleEffect {
     private int _cap = 45;
 
     @Override
-    public void init(EffectParam param) {
+    public void init() {
         if (getPokemon().getCurrHP() > 45) {
             getPokemon().modifyCurrHp(0.75);
         } else {

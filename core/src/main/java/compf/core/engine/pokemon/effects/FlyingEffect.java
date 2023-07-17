@@ -24,6 +24,7 @@ public class FlyingEffect extends PokemonBattleEffect {
 
     @Override
     public void attack(EffectParam param) {
+        if(!isMeAttacking(param))return;;
         SharedInformation.Instance.getLoggerService().log("Use attack fly",FlyingEffect.class);
         if (!(newRound)) {
             SharedInformation.Instance.getLoggerService().log("Flying killed",FlyingEffect.class);
@@ -63,6 +64,7 @@ public class FlyingEffect extends PokemonBattleEffect {
 
     @Override
     public void defend(EffectParam param) {
+        if(!isMeDefending(param))return;
         DamageInformation inf = param.damageInf();
         if (isEnabled()) {
             inf.kill();

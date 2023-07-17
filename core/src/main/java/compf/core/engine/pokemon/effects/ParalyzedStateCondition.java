@@ -8,7 +8,7 @@ import compf.core.etc.services.SharedInformation;
 public class ParalyzedStateCondition extends PokemonBattleEffect {
 
 	@Override
-	public void init(EffectParam param) {
+	public void init() {
 		getPokemon().changeStatStage(5, -1);
 
 	}
@@ -20,7 +20,7 @@ public class ParalyzedStateCondition extends PokemonBattleEffect {
 	@Override
 	public void attack(EffectParam param) {
 		DamageInformation dmg = param.damageInf();
-		if (SharedInformation.Instance.getRNG().checkPerc(20,this.getClass())) {
+		if (isMeAttacking(param) && SharedInformation.Instance.getRNG().checkPerc(20,this.getClass())) {
 			addMessage(dmg.getAttacker().toString() + " failed due to Paralysis");
 			dmg.modifyDamage(0);
 			disable();

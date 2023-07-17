@@ -8,7 +8,7 @@ import compf.core.engine.pokemon.moves.DamageInformation;
 public class BurnedStateCondition extends PokemonBattleEffect {
 
 	@Override
-	public void init(EffectParam param) {
+	public void init() {
 		getPokemon().changeStatStage(PokemonStat.ATT, -1);
 
 	}

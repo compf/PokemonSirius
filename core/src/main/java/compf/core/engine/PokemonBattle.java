@@ -61,6 +61,10 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 		return _players.size()>= _rule.NumberPlayers;
 	}
 
+	public void start() {
+		executeEffects(EffectTime.BATTLE_STARTED,new EffectParam(null,null,_schedule,null,_rule,_globalEffects));
+	}
+
 	public class BattleIterator implements Iterator<Pokemon> {
 		private int _iterator_player_index, _iterator_pkmn_index;
 
@@ -114,6 +118,8 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 				break;
 			case DELAYED_ATTACK:
 				effect.delayedAttack(param);
+			case BATTLE_STARTED:
+					effect.battleStarted(param);
 
 		}
 
@@ -130,6 +136,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 		for (Pokemon pkmn : this) {
 			executeEffects(pkmn.getEffects(), time, param);
 		}
+		executeEffects(_globalEffects,time,param);
 
 	}
 
@@ -182,7 +189,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 	}
 
 	public enum EffectTime {
-		ROUND_STARTING, ROUND_ENDING, ATTACK, DEFEND, POKEMON_SWITCHED, POKEMON_DEFEATED, DELAYED_ATTACK
+		ROUND_STARTING, ROUND_ENDING, ATTACK, DEFEND, POKEMON_SWITCHED, POKEMON_DEFEATED, BATTLE_STARTED, DELAYED_ATTACK
 	}
 
 	public static class PokemonComparator implements  Comparator<Pokemon>{
@@ -212,11 +219,10 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 
 	public BattleRoundResult executeSchedule(Interrupt interrupt) {
 		LinkedList<BattleAction> actions = new LinkedList<>();
-		executeEffects(_globalEffects, EffectTime.ROUND_STARTING, null);
-		executeEffects(EffectTime.ROUND_STARTING, null);
+		executeEffects(EffectTime.ROUND_STARTING, new EffectParam(null,null,_schedule,interrupt,_rule,_globalEffects));
 		var pokemonSorted = sort();
 		for (var pkmn : pokemonSorted) {
-			executeEffects(pkmn, EffectTime.DELAYED_ATTACK, new EffectParam(null, null, _schedule,interrupt,_rule));
+			executeEffects(pkmn, EffectTime.DELAYED_ATTACK, new EffectParam(null, null, _schedule,interrupt,_rule,_globalEffects));
 		}
 		while (_schedule.any()) {
 			ScheduleItem item = _schedule.getNext();
@@ -235,9 +241,9 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 			}
 
 
-			EffectParam effectParam=new EffectParam(dmgInf, item, _schedule,interrupt,_rule);
-			executeEffects(attacker, EffectTime.ATTACK, effectParam);
-			executeEffects(defender, EffectTime.DEFEND, effectParam);
+			EffectParam effectParam=new EffectParam(dmgInf, item, _schedule,interrupt,_rule,_globalEffects);
+			executeEffects( EffectTime.ATTACK, effectParam);
+			executeEffects(EffectTime.DEFEND, effectParam);
 			dmgInf = effectParam.damageInf();
 			if (attacker.getCurrHP() <= 0) {
 
