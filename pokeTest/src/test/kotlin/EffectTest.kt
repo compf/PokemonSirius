@@ -1,6 +1,6 @@
 import compf.core.engine.pokemon.PokemonStat
-import compf.core.engine.pokemon.effects.BoosterEnergyffect
-import compf.core.engine.pokemon.effects.ProtosynthesisEffect
+import compf.core.engine.pokemon.effects.offensive.BoosterEnergyffect
+import compf.core.engine.pokemon.effects.offensive.ProtosynthesisEffect
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals

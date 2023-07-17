@@ -1,8 +1,10 @@
-package compf.core.engine.pokemon.effects;
+package compf.core.engine.pokemon.effects.weather;
 
 import compf.core.engine.PokemonBattle;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.Type;
+import compf.core.engine.pokemon.effects.EffectParam;
+import compf.core.engine.pokemon.effects.GlobalBattleEffect;
 import compf.core.engine.pokemon.moves.DamageInformation;
 
 public class SandStormBattleEffect extends GlobalBattleEffect {

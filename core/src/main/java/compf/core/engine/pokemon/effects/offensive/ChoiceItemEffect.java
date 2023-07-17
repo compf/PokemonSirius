@@ -1,8 +1,10 @@
-package compf.core.engine.pokemon.effects;
+package compf.core.engine.pokemon.effects.offensive;
 
 import java.lang.reflect.Field;
 
 import compf.core.engine.pokemon.Pokemon;
+import compf.core.engine.pokemon.effects.EffectParam;
+import compf.core.engine.pokemon.effects.ItemEffect;
 import compf.core.engine.pokemon.moves.DamageInformation;
 import compf.core.engine.pokemon.moves.Move;
 

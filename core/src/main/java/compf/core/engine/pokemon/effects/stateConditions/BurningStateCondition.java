@@ -1,11 +1,11 @@
-package compf.core.engine.pokemon.effects;
+package compf.core.engine.pokemon.effects.stateConditions;
 
-import compf.core.engine.pokemon.PokedexEntry;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.PokemonStat;
-import compf.core.engine.pokemon.moves.DamageInformation;
+import compf.core.engine.pokemon.effects.EffectParam;
+import compf.core.engine.pokemon.effects.PokemonBattleEffect;
 
-public class BurnedStateCondition extends PokemonBattleEffect {
+public class BurningStateCondition extends PokemonBattleEffect {
 
 	@Override
 	public void init() {
@@ -13,7 +13,7 @@ public class BurnedStateCondition extends PokemonBattleEffect {
 
 	}
 
-	public BurnedStateCondition(Pokemon pkmn) {
+	public BurningStateCondition(Pokemon pkmn) {
 		super(pkmn);
 	}
 

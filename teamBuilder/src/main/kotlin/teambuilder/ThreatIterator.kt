@@ -6,7 +6,7 @@ import compf.core.engine.pokemon.PokedexEntry
 import compf.core.engine.pokemon.Pokemon
 import compf.core.engine.pokemon.PokemonStat
 import compf.core.engine.pokemon.effects.BattleEffect
-import compf.core.engine.pokemon.effects.ChoiceItemEffect
+import compf.core.engine.pokemon.effects.offensive.ChoiceItemEffect
 import compf.core.engine.pokemon.effects.StubEffect
 import compf.core.engine.pokemon.moves.Move
 import compf.core.etc.PokemonConstants

@@ -1,9 +1,12 @@
-package compf.core.engine.pokemon.effects;
+package compf.core.engine.pokemon.effects.offensive;
 
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.PokemonStat;
+import compf.core.engine.pokemon.effects.EffectParam;
+import compf.core.engine.pokemon.effects.PokemonBattleEffect;
+import compf.core.engine.pokemon.effects.weather.HarshSunlightEffect;
 
-public class ProtosynthesisEffect extends PokemonBattleEffect{
+public class ProtosynthesisEffect extends PokemonBattleEffect {
     public ProtosynthesisEffect(Pokemon pkmn) {
         super(pkmn);
     }

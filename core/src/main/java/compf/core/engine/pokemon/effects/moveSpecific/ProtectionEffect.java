@@ -1,7 +1,9 @@
-package compf.core.engine.pokemon.effects;
+package compf.core.engine.pokemon.effects.moveSpecific;
 
 import compf.core.engine.BattleAction;
 import compf.core.engine.pokemon.Pokemon;
+import compf.core.engine.pokemon.effects.EffectParam;
+import compf.core.engine.pokemon.effects.PokemonBattleEffect;
 import compf.core.engine.pokemon.moves.DamageInformation;
 import compf.core.etc.services.SharedInformation;
 

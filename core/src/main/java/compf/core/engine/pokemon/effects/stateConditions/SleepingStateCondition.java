@@ -1,14 +1,15 @@
-package compf.core.engine.pokemon.effects;
+package compf.core.engine.pokemon.effects.stateConditions;
 
 import compf.core.engine.pokemon.Pokemon;
+import compf.core.engine.pokemon.effects.EffectParam;
+import compf.core.engine.pokemon.effects.PokemonBattleEffect;
 import compf.core.engine.pokemon.moves.DamageInformation;
-import compf.core.etc.MyObject;
 import compf.core.etc.services.SharedInformation;
 
-public class SleepingEffect extends PokemonBattleEffect {
+public class SleepingStateCondition extends PokemonBattleEffect {
     int _rounds;
 
-    public SleepingEffect(Pokemon pkmn) {
+    public SleepingStateCondition(Pokemon pkmn) {
         super(pkmn);
         _rounds = SharedInformation.Instance.getRNG().randomNumber(2, 6,this.getClass());
 

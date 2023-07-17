@@ -1,6 +1,8 @@
-package compf.core.engine.pokemon.effects;
+package compf.core.engine.pokemon.effects.stateConditions;
 
 import compf.core.engine.pokemon.Pokemon;
+import compf.core.engine.pokemon.effects.EffectParam;
+import compf.core.engine.pokemon.effects.PokemonBattleEffect;
 import compf.core.engine.pokemon.moves.DamageInformation;
 
 import java.io.Serial;

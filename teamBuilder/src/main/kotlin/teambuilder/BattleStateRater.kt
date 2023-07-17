@@ -3,11 +3,11 @@ package teambuilder;
 import compf.core.engine.BattleState
 import compf.core.engine.DetailedBattleState
 import compf.core.engine.pokemon.Pokemon
-import compf.core.engine.pokemon.effects.BurnedStateCondition
-import compf.core.engine.pokemon.effects.FrozenStateCondition
-import compf.core.engine.pokemon.effects.ParalyzedStateCondition
-import compf.core.engine.pokemon.effects.PoisonedStateCondition
-import compf.core.engine.pokemon.effects.SleepingEffect
+import compf.core.engine.pokemon.effects.stateConditions.BurningStateCondition
+import compf.core.engine.pokemon.effects.stateConditions.FrozenStateCondition
+import compf.core.engine.pokemon.effects.stateConditions.ParalyzedStateCondition
+import compf.core.engine.pokemon.effects.stateConditions.PoisonedStateCondition
+import compf.core.engine.pokemon.effects.stateConditions.SleepingStateCondition
 public class BattleStateRater{
     public fun rate(state:BattleState,playerId:Short):Double{
         val converted=state as DetailedBattleState
@@ -24,7 +24,12 @@ public class BattleStateRater{
        return hpSum/totalHpSum
 
     }
-    private val visibleEffects=arrayOf(BurnedStateCondition::class.java,FrozenStateCondition::class.java,ParalyzedStateCondition::class.java,PoisonedStateCondition::class.java,SleepingEffect::class.java)
+    private val visibleEffects=arrayOf(
+        BurningStateCondition::class.java,
+        FrozenStateCondition::class.java,
+        ParalyzedStateCondition::class.java,
+        PoisonedStateCondition::class.java,
+        SleepingStateCondition::class.java)
     private fun hasVisibleEffect(pkmn:Pokemon):Boolean{
      return  visibleEffects.any { pkmn.effects.hasEffect(it) }
         

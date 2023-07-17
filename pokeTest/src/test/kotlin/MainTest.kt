@@ -4,9 +4,9 @@ import compf.core.engine.Player
 import compf.core.engine.PokemonBattle.PokemonComparator
 import compf.core.engine.pokemon.EVDistribution
 import compf.core.engine.pokemon.Pokemon
-import compf.core.engine.pokemon.effects.BurnedStateCondition
-import compf.core.engine.pokemon.effects.ParalyzedStateCondition
-import compf.core.engine.pokemon.effects.ProtectionEffect
+import compf.core.engine.pokemon.effects.stateConditions.BurningStateCondition
+import compf.core.engine.pokemon.effects.stateConditions.ParalyzedStateCondition
+import compf.core.engine.pokemon.effects.moveSpecific.ProtectionEffect
 import compf.core.engine.pokemon.effects.RandomSwapPokemonEffect
 import compf.core.engine.pokemon.moves.Move
 import compf.core.engine.pokemon.moves.PokemonEffectMove
@@ -105,7 +105,11 @@ public open class MainTest{
 
                 val mePokemon= PikachuCreator().create()
                 val enemyPokemon= PikachuCreator().create()
-                enemyPokemon.addEffect(BurnedStateCondition(enemyPokemon))
+                enemyPokemon.addEffect(
+                        BurningStateCondition(
+                                enemyPokemon
+                        )
+                )
                 val simulator=createSimulator(mePokemon,enemyPokemon)
                 val factor=7.0/8.0
                 simulator.attack().attack().assertNoDamage().assertNoDamage().assert(HPModifiedAssertion(factor)).execute(3)
@@ -128,7 +132,11 @@ public open class MainTest{
                 val mePokemon= PikachuCreator().cutMove().create()
                 val enemyPokemon= PikachuCreator().create()
                 gen.addDeterministicValue(ParalyzedStateCondition::class.java, true)
-                mePokemon.addEffect(ParalyzedStateCondition(mePokemon))
+                mePokemon.addEffect(
+                        ParalyzedStateCondition(
+                                mePokemon
+                        )
+                )
 
                 val simulator=createSimulator(mePokemon, enemyPokemon)
                 simulator.attack().attack().assertNoDamage().assertNoDamage().execute(2)

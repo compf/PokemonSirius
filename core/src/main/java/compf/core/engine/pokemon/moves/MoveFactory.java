@@ -2,6 +2,11 @@ package compf.core.engine.pokemon.moves;
 
 import compf.core.engine.pokemon.PokemonStat;
 import compf.core.engine.pokemon.effects.*;
+import compf.core.engine.pokemon.effects.moveSpecific.FlyingEffect;
+import compf.core.engine.pokemon.effects.moveSpecific.ProtectionEffect;
+import compf.core.engine.pokemon.effects.stateConditions.BurningStateCondition;
+import compf.core.engine.pokemon.effects.stateConditions.FrozenStateCondition;
+import compf.core.engine.pokemon.effects.stateConditions.ParalyzedStateCondition;
 
 // TODO Critical hit  quote for moves like Karateschlag is higher
 // TODO missing moves: 13
@@ -12,7 +17,7 @@ public class MoveFactory {
 			case 5: // Kometenhieb
 				return new MultipleAttacksMove(mv, 2, 5);
 			case 6: // Feuerschlag
-				return new PokemonEffectMove(mv, null, BurnedStateCondition.class, 10);
+				return new PokemonEffectMove(mv, null, BurningStateCondition.class, 10);
 			case 7: // Eishieb
 				return new PokemonEffectMove(mv, null, FrozenStateCondition.class, 10);
 			case 8: // Donnerschlag
