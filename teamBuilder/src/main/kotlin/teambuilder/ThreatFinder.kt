@@ -33,7 +33,7 @@ public class ThreatFinder(val meLeadPokemon:String,val enemyLeadPokemon: String,
         if (effect is PokemonBattleEffect) {
             pkmn.addEffect(effect)
         } else {
-            effect.init(null)
+            effect.init()
         }
     }
     private fun createTeam(threats: Array<ThreatData>):List<Pokemon>{
