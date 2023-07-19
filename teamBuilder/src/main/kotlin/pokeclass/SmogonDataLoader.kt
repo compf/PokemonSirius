@@ -19,7 +19,7 @@ class SmogonDataLoader:LearnsetService {
     }
     var resourceName:String
     fun randomPokemonName():String{
-        return  randomFromList(jsonData.keys.toList())
+        return  randomFromList(jsonData.keys.toList(),"Cut")
     }
     override fun getMoveNames(id: String?): Iterable<String> {
         if(id !in jsonData)return emptySet();
@@ -27,7 +27,7 @@ class SmogonDataLoader:LearnsetService {
     }
     fun randomMoveName(pokemonName:String):String{
         if(pokemonName !in jsonData)return "Cut"
-        return randomFromList(jsonData[pokemonName]!!.moves)
+        return randomFromList(jsonData[pokemonName]?.moves,"Cut")
     }
     fun randomUniqueMoves(pokemonName:String):Array<Move>{
         val moves= mutableSetOf<Move>()
@@ -39,21 +39,22 @@ class SmogonDataLoader:LearnsetService {
     }
     fun randomEv(pokemonName:String):IntArray{
         if(pokemonName !in jsonData)return EVDistribution.ATT_SPEED.evs
-        return randomFromList(jsonData[pokemonName]!!.evs)
+        return randomFromList(jsonData[pokemonName]!!.evs,EVDistribution.ATT_SPEED.evs)
     }
     fun randomNature(pokemonName:String):Nature{
         if(pokemonName !in jsonData)return Nature.ATT_ATT;
-        return randomFromList(jsonData[pokemonName]!!.natures)
+        return randomFromList(jsonData[pokemonName]!!.natures,Nature.ATT_ATT)
     }
     fun randomAbility(pokemonName:String):String{
         if(pokemonName !in jsonData)return ""
-        return randomFromList(jsonData[pokemonName]!!.abilities)
+        return randomFromList(jsonData[pokemonName]?.abilities,"")
     }
     fun randomItem(pokemonName:String):String{
         if(pokemonName !in jsonData)return ""
-        return randomFromList(jsonData[pokemonName]!!.items)
+        return randomFromList(jsonData[pokemonName]?.items,"")
     }
-    fun <T>randomFromList(arr:List<T>):T{
+    fun <T>randomFromList(arr:List<T>?,default:T):T{
+        if(arr==null)return default
         var index=SharedInformation.Instance.rng.randomNumber(arr.size,SmogonData::javaClass)
         while(arr[index].toString()=="Nothing"){
             index=SharedInformation.Instance.rng.randomNumber(arr.size,SmogonData::javaClass)
