@@ -10,6 +10,7 @@ import pokeclass.SmogonDataLoader
 import util.KotlinRandomService
 import util.Roulette
 import java.io.FileWriter
+import java.util.*
 
 
 interface MutationGenerator {
@@ -73,7 +74,7 @@ class PokemonTeam(val team: Array<ThreatData> = arrayOfNulls<Any>(6).map { Threa
         if (other == null) return false
         if (this.javaClass != other.javaClass) return false
         val converted = other as PokemonTeam
-        return team.zip(converted.team).all { it.first.equals(it.second) }
+        return team.zip(converted.team).all { it.first == it.second }
     }
 }
 
@@ -262,7 +263,7 @@ class SimpleOneTeamEvaluator : OneSolutionEvaluator {
 
 }
 
-class SimpleTwoTeamEvaluator(private val numberTimes: Int) : TwoSolutionsEvaluator {
+class SimpleTwoTeamEvaluator: TwoSolutionsEvaluator {
     override fun evaluate(
         team1: PokemonTeam,
         team2: PokemonTeam,
@@ -284,9 +285,16 @@ class SimpleTwoTeamEvaluator(private val numberTimes: Int) : TwoSolutionsEvaluat
 
 
     }
+    private val numberTimes:Int
+    private val startTime:Long
+    constructor( numberTimes: Int){
+        this.numberTimes=numberTimes
+        startTime=Calendar.getInstance().timeInMillis
+
+    }
 
     private fun writeResult(team1:PokemonTeam,team2:PokemonTeam,roundResults: MutableList<BattleRoundResult>) {
-            FileWriter("battlelog.txt",true).use {
+            FileWriter("battlelog_${startTime}.txt",true).use {
                 for(t in team1){
                     it.write(t.toString()+"\n")
 
@@ -414,14 +422,17 @@ class GeneticThreatFinder {
 
             val backupList=this.population.keys.shuffled(rnd)
             for(pair in backupList.chunked(2)){
+                if(pair.size<2){
+                    break;
+                }
                 var mother=pair[0]
                 var father=pair[1]
+
                 if(mother !in population || father !in population){
                     continue
                 }
-
-                val motherAge=population[mother]!!
-                val fatherAge=population[father]!!
+                val motherAge=population.getOrDefault(mother,0)
+                val fatherAge=population.getOrDefault(father,0)
                 population.remove(mother)
                 population.remove(father)
                 var child=crossover.random(GeneticThreatFinder::javaClass).crossOver(mother,father,smogonData)

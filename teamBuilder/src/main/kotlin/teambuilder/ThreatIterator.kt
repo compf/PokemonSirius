@@ -73,6 +73,9 @@ class ThreatData(
         return otherEntry==converted.otherEntry && otherNature==converted.otherNature && otherEV.contentEquals(converted.otherEV) && otherMoves?.toSet()==converted.otherMoves?.toSet()  && otherAbilityEffect?.javaClass==converted.otherAbilityEffect?.javaClass && otherItemEffect?.javaClass==converted?.otherItemEffect
     }
 
+    override fun hashCode(): Int {
+        return toString().hashCode()
+    }
     companion object {
         public fun allNull(): ThreatData {
             return ThreatData(null, null, null, null, null,null,null)

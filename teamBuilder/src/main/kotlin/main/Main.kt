@@ -19,5 +19,13 @@ import teambuilder.GeneticThreatFinder
             )
 
             val gen= GeneticThreatFinder()
-            gen.execute()
+            val result=gen.execute()
+            println("Single")
+            for(pkmn in result.first){
+                println(pkmn)
+            }
+            println("Competitive")
+             for(pkmn in result.second){
+                println(pkmn)
+            }
         }

@@ -14,7 +14,8 @@ class Roulette<T>(map: Map<T, Double>) {
             if(sum>SharedInformation.Instance.rng.randomNumber(weightSum,callerInfo)){
                 return k
             }
-            sum+=internDict[k]!!
+
+            sum+=internDict.getOrDefault(k,0.0)
         }
         return internDict.keys.last()
 

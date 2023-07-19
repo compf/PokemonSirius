@@ -18,7 +18,7 @@ public class ProtectionEffect extends PokemonBattleEffect {
     public void attack(EffectParam param) {
         if(param.damageInf().getAttacker()!=getPokemon())return;;
         final int PROTECTION_ID = 182;
-        if (SharedInformation.Instance.getRNG().randomNumber(_perc, this.getClass()) > _perc) {
+        if (_perc>0 && SharedInformation.Instance.getRNG().randomNumber(_perc, this.getClass()) > _perc) {
             this.disable();
         } else {
             if (param.damageInf().getMoveId() == PROTECTION_ID) {

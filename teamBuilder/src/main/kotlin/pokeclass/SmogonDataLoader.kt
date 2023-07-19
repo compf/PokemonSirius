@@ -2,6 +2,7 @@ package pokeclass
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import compf.core.engine.pokemon.EVDistribution
 import compf.core.engine.pokemon.Nature
 import compf.core.engine.pokemon.moves.Move
 import compf.core.etc.PokemonConstants
@@ -21,9 +22,11 @@ class SmogonDataLoader:LearnsetService {
         return  randomFromList(jsonData.keys.toList())
     }
     override fun getMoveNames(id: String?): Iterable<String> {
+        if(id !in jsonData)return emptySet();
        return jsonData[id!!]!!.moves
     }
     fun randomMoveName(pokemonName:String):String{
+        if(pokemonName !in jsonData)return "Cut"
         return randomFromList(jsonData[pokemonName]!!.moves)
     }
     fun randomUniqueMoves(pokemonName:String):Array<Move>{
@@ -35,15 +38,19 @@ class SmogonDataLoader:LearnsetService {
         return moves.toTypedArray()
     }
     fun randomEv(pokemonName:String):IntArray{
+        if(pokemonName !in jsonData)return EVDistribution.ATT_SPEED.evs
         return randomFromList(jsonData[pokemonName]!!.evs)
     }
     fun randomNature(pokemonName:String):Nature{
+        if(pokemonName !in jsonData)return Nature.ATT_ATT;
         return randomFromList(jsonData[pokemonName]!!.natures)
     }
     fun randomAbility(pokemonName:String):String{
+        if(pokemonName !in jsonData)return ""
         return randomFromList(jsonData[pokemonName]!!.abilities)
     }
     fun randomItem(pokemonName:String):String{
+        if(pokemonName !in jsonData)return ""
         return randomFromList(jsonData[pokemonName]!!.items)
     }
     fun <T>randomFromList(arr:List<T>):T{
