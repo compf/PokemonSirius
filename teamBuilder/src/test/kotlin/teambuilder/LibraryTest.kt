@@ -10,6 +10,7 @@ import compf.core.etc.services.learnset.DefaultLearnsetService
 import compf.core.etc.services.logging.NoLoggerService
 import compf.core.etc.services.move.DefaultMoveService
 import compf.core.etc.services.pokemon.DefaultPokedexEntryService
+import compf.core.etc.services.random.RealRandomGeneratorService
 import org.junit.jupiter.api.BeforeAll
 import util.CountingStyleIterator
 import kotlin.test.Test
@@ -22,7 +23,7 @@ class LibraryTest {
         public fun init(){
                 SharedInformation.Instance.init(
                     DefaultPokedexEntryService("pokedex.json"),
-                    DefaultMoveService("moves.json"),WorstCaseRandomGenerator(),
+                    DefaultMoveService("moves.json"),RealRandomGeneratorService(),
                     DefaultLearnsetService("learnsets.json"),
                     NoLoggerService()
                 )

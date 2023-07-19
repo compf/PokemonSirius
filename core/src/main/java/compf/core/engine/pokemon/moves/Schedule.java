@@ -48,7 +48,7 @@ public class Schedule {
 			var move = _move;
 			int accuracy = (int) (move.getAccuracy() * att.getStatStageFactor(6) * def.getStatStageFactor(7));
 			if (att.getMoveIndex(move) == -1) {
-				MyObject.nop();
+				return new DamageInformation(0,1,att,def,0);
 			}
 			if (SharedInformation.Instance.getRNG().checkPerc(accuracy, CallerInformation.Accuracy)) {
 				dmgInf = move.execute(this);

@@ -54,7 +54,7 @@ open class BattleExecutor(val myPokemons:List<Pokemon>,val enemyPokemons:List<Po
 class DebugExecutor( myPokemons:List<Pokemon>, enemyPokemons:List<Pokemon>, meAI: BotAI,enemyAI: BotAI) : BattleExecutor(myPokemons, enemyPokemons,
     meAI,enemyAI
 ) {
-    private val roundResults= mutableListOf<BattleRoundResult>()
+    public val roundResults= mutableListOf<BattleRoundResult>()
     override   fun debugResult(result:BattleRoundResult){
         roundResults.add(result)
     }

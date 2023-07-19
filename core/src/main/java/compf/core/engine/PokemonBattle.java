@@ -247,7 +247,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 			dmgInf = effectParam.damageInf();
 			if (attacker.getCurrHP() <= 0) {
 
-				short oldIndex = (short) indexOf(defender.getPlayer().getTeam(), attacker);
+				short oldIndex = (short) indexOf(attacker.getPlayer().getTeam(), attacker);
 
 				short newIndex = interrupt.forceSwitch(attacker.getPlayer().getPlayerId(), oldIndex);
 				String msg = (switchPokemon( attacker.getPlayer(),oldIndex,newIndex));

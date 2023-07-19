@@ -1,17 +1,13 @@
 package teambuilder
 
 
-import compf.core.engine.pokemon.Nature
-import compf.core.engine.pokemon.PokedexEntry
-import compf.core.engine.pokemon.Pokemon
-import compf.core.engine.pokemon.PokemonStat
+import compf.core.engine.pokemon.*
 import compf.core.engine.pokemon.effects.BattleEffect
-import compf.core.engine.pokemon.effects.offensive.ChoiceItemEffect
 import compf.core.engine.pokemon.effects.StubEffect
+import compf.core.engine.pokemon.effects.offensive.ChoiceItemEffect
 import compf.core.engine.pokemon.moves.Move
 import compf.core.etc.PokemonConstants
 import compf.core.etc.services.SharedInformation
-import compf.core.engine.pokemon.EVDistribution
 import pokeclass.PokedexEntryCategory
 import pokeclass.PokedexEntryClassifier
 import pokeclass.PokedexQuery
@@ -33,21 +29,24 @@ class ThreatData(
     var otherMoves: Array<Move>?
 ) {
     public override fun toString(): String {
-        var statNames =
+        if(otherEntry==null)return ""
+        var stats =
             otherEV?.mapIndexed { i, x ->
                 val H = 252
                 if (x == H) i else null
             }
-                ?.filterNotNull()!!
-                .map({ i -> PokemonStat.getName(i) })
-                .joinToString(",")
-        return otherEntry?.toString() +
+
+        var statNames= if(otherEV!=null)stats?.filterNotNull()!!
+        .map({ i -> PokemonStat.getName(i) })
+            .joinToString(",") else ""
+
+        return otherEntry!!.toString() +
                 " " +
-                otherNature?.toString() +
+                otherNature!!.toString() +
                 " " +
                 statNames +
                 " " +
-                otherMoves?.joinToString(",")+ otherAbilityEffect.toString() + " "+ otherItemEffect.toString()
+                otherMoves!!.joinToString(",")+ otherAbilityEffect!!.toString() + " "+ otherItemEffect!!.toString()
     }
 
     fun createPokemon(level: Int): Pokemon {
@@ -64,7 +63,14 @@ class ThreatData(
     }
 
     fun clone(): ThreatData {
-        return ThreatData(otherEntry, otherCategory,otherNature, otherEV, otherAbilityEffect,otherItemEffect, otherMoves)
+        return ThreatData(otherEntry, otherCategory,otherNature, otherEV, otherAbilityEffect,otherItemEffect, otherMoves?.copyOf())
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other == null) return false
+        if(other !is ThreatData)return false
+        val converted=other as ThreatData
+        return otherEntry==converted.otherEntry && otherNature==converted.otherNature && otherEV.contentEquals(converted.otherEV) && otherMoves?.toSet()==converted.otherMoves?.toSet()  && otherAbilityEffect?.javaClass==converted.otherAbilityEffect?.javaClass && otherItemEffect?.javaClass==converted?.otherItemEffect
     }
 
     companion object {
