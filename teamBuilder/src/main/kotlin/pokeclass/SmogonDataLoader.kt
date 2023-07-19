@@ -22,8 +22,7 @@ class SmogonDataLoader:LearnsetService {
         return  randomFromList(jsonData.keys.toList(),"Cut")
     }
     override fun getMoveNames(id: String?): Iterable<String> {
-        if(id !in jsonData)return emptySet();
-       return jsonData[id!!]!!.moves
+       return jsonData[id!!]?.moves?: emptyList()
     }
     fun randomMoveName(pokemonName:String):String{
         if(pokemonName !in jsonData)return "Cut"
@@ -31,7 +30,7 @@ class SmogonDataLoader:LearnsetService {
     }
     fun randomUniqueMoves(pokemonName:String):Array<Move>{
         val moves= mutableSetOf<Move>()
-        val learnsetSize=jsonData[pokemonName]!!.moves.filterNot { it=="Nothing" }.size
+        val learnsetSize=jsonData[pokemonName]?.moves?.filterNot { it=="Nothing" }?.size ?:-1
         while (moves.size<minOf(learnsetSize,PokemonConstants.MAX_MOVES_COUNT_POKEMON)){
             moves.add(SharedInformation.Instance.moveService.get(randomMoveName(pokemonName)))
         }
@@ -39,11 +38,11 @@ class SmogonDataLoader:LearnsetService {
     }
     fun randomEv(pokemonName:String):IntArray{
         if(pokemonName !in jsonData)return EVDistribution.ATT_SPEED.evs
-        return randomFromList(jsonData[pokemonName]!!.evs,EVDistribution.ATT_SPEED.evs)
+        return randomFromList(jsonData[pokemonName]?.evs,EVDistribution.ATT_SPEED.evs)
     }
     fun randomNature(pokemonName:String):Nature{
         if(pokemonName !in jsonData)return Nature.ATT_ATT;
-        return randomFromList(jsonData[pokemonName]!!.natures,Nature.ATT_ATT)
+        return randomFromList(jsonData[pokemonName]?.natures,Nature.ATT_ATT)
     }
     fun randomAbility(pokemonName:String):String{
         if(pokemonName !in jsonData)return ""
