@@ -13,7 +13,8 @@ import teambuilder.GeneticThreatFinder
             println(System.getProperty("user.dir"))
             SharedInformation.Instance.init(
                 DefaultPokedexEntryService("pokedex.json"),
-                DefaultMoveService("moves.json"), RealRandomGeneratorService(),
+                DefaultMoveService("moves.json"),
+                RealRandomGeneratorService(0), // determinstic results
                 DefaultLearnsetService("learnsets.json"),
                 NoLoggerService()
             )
