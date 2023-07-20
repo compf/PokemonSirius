@@ -1,0 +1,9 @@
+name: test_genetic_workflow
+on: push
+jobs:
+  test_genetic:
+   runs-on: ubuntu-latest
+   steps:
+      - uses: actions/checkout@v1
+      - name: My first step
+      - uses: ./.github/actions/test_genetic_action
