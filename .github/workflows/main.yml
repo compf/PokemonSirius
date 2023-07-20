@@ -4,7 +4,7 @@ jobs:
   test_genetic:
    runs-on: ubuntu-latest
    steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: My first step
         uses: ./.github/teambuilder_runner
       - name: git stuff
@@ -15,4 +15,8 @@ jobs:
           git checkout battlelog
           git add teamBuilder/*.txt
           git commit -m "added log"
-          git push
+        -name: Push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
