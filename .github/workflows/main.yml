@@ -12,6 +12,7 @@ jobs:
           git config --global --add safe.directory /github/workspace
           git config --local user.email "actions@github.com"
           git config --local user.name "Github Actions"
+          git pull
           git checkout battlelog
           git add teamBuilder/*.txt
           git commit -m "added log"
