@@ -15,7 +15,8 @@ jobs:
           git checkout battlelog
           git add teamBuilder/*.txt
           git commit -m "added log"
-        -name: Push
+
+      - name: Push
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
