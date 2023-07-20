@@ -6,4 +6,4 @@ jobs:
    steps:
       - uses: actions/checkout@v1
       - name: My first step
-      - uses: ./.github/actions/test_genetic_action
+      - uses: ./.github/teambuilder_runner

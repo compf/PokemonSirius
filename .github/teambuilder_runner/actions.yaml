@@ -1,0 +1,7 @@
+name: 'TeamBuilderRunner'
+description: 'A tool to generate random and test them to check whether the PokemonSirius-Teambuilder works'
+author: 'compf'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
