@@ -1,0 +1,26 @@
+name: Test_TeamBuilding_Random
+on: push
+jobs:
+  test_genetic_random:
+   runs-on: ubuntu-latest
+   steps:
+      - uses: actions/checkout@v3
+      - name: My first step
+        uses: ./.github/teambuilder_runner
+        with:
+          seed: "empty"
+      - name: git stuff
+        run: |
+          git config --global --add safe.directory /github/workspace
+          git config --local user.email "actions@github.com"
+          git config --local user.name "Github Actions"
+          git pull
+          git checkout battlelog_random
+          git add teamBuilder/*.txt
+          git commit -m "added log"
+
+      - name: Push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: battlelog_random

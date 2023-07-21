@@ -1,0 +1,26 @@
+name: Test_Teambuilding_Deterministic
+on: push
+jobs:
+  test_genetic_deterministic:
+   runs-on: ubuntu-latest
+   steps:
+      - uses: actions/checkout@v3
+      - name: My first step
+        uses: ./.github/teambuilder_runner
+        with:
+          seed: "0"
+      - name: git stuff
+        run: |
+          git config --global --add safe.directory /github/workspace
+          git config --local user.email "actions@github.com"
+          git config --local user.name "Github Actions"
+          git pull
+          git checkout battlelog
+          git add teamBuilder/*.txt
+          git commit -m "added log"
+
+      - name: Push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: battlelog

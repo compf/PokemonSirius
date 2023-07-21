@@ -10,7 +10,8 @@ import pokeclass.SmogonDataLoader
 import util.KotlinRandomService
 import util.Roulette
 import java.io.FileWriter
-import java.util.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 interface MutationGenerator {
@@ -286,10 +287,12 @@ class SimpleTwoTeamEvaluator: TwoSolutionsEvaluator {
 
     }
     private val numberTimes:Int
-    private val startTime:Long
+    private val startTime:String
+
     constructor( numberTimes: Int){
         this.numberTimes=numberTimes
-        startTime=Calendar.getInstance().timeInMillis
+        startTime=DateTimeFormatter.ISO_DATE_TIME.format(LocalDateTime.now())
+
 
     }
 
@@ -398,7 +401,7 @@ class GeneticThreatFinder {
         val populationFiller=SimplePopulationFiller(1000,10)
         populationFiller.fillPopulation(smogonData, population )
         val liveOrDieDecider=SimpleLiveOrDieDecider()
-        val competiveHeuristic=SimpleTwoTeamEvaluator(20)
+        val competiveHeuristic= SimpleTwoTeamEvaluator(20)
         val rnd= KotlinRandomService(GeneticThreatFinder::javaClass)
         val teamHeuristic=SimpleOneTeamEvaluator()
         val mutations=Roulette(mapOf(StubMutation() to 5.0 ,ShiftTeam() to 3.0,
@@ -480,6 +483,20 @@ class GeneticThreatFinder {
             }
 
 
+        }
+
+
+        FileWriter("best_team_${DateTimeFormatter.ISO_DATE_TIME.format(LocalDateTime.now())}").use {
+           it.write("Best single ${bestSingleScore}\n")
+            for(t in bestSingle!!){
+                it.write(t.toString()+"\n")
+
+            }
+            it.write("Best Competive ${bestCompetiveScore}\n")
+            for(t in bestCompetive!!){
+                it.write(t.toString()+"\n")
+
+            }
         }
        return Pair(bestSingle!!,bestCompetive!!)
     }
