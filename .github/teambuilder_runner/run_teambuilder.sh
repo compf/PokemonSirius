@@ -1,4 +1,4 @@
 #!/bin/sh -l
 
-gradle teamBuilder:run
+gradle teamBuilder:run --args "$1"
 

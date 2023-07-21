@@ -8,13 +8,19 @@ import compf.core.etc.services.pokemon.DefaultPokedexEntryService
 import compf.core.etc.services.random.RealRandomGeneratorService
 import teambuilder.GeneticThreatFinder
 
+fun isValidSeed(args:Array<String>):Boolean{
+    return args.isNotEmpty() && args[0].isNotBlank() && args[0].toLongOrNull() !=null
 
-        fun main(args:Array<String>){
+}
+fun main(args:Array<String>){
+
+            val rnd=if(isValidSeed(args))RealRandomGeneratorService(args[0].toLong())else RealRandomGeneratorService()
+
             println(System.getProperty("user.dir"))
             SharedInformation.Instance.init(
                 DefaultPokedexEntryService("pokedex.json"),
                 DefaultMoveService("moves.json"),
-                RealRandomGeneratorService(0), // determinstic results
+                rnd,
                 DefaultLearnsetService("learnsets.json"),
                 NoLoggerService()
             )

@@ -1,12 +1,14 @@
-name: test_genetic_workflow
+name: Test_Teambuilding_Deterministic
 on: push
 jobs:
-  test_genetic:
+  test_genetic_deterministic:
    runs-on: ubuntu-latest
    steps:
       - uses: actions/checkout@v3
       - name: My first step
         uses: ./.github/teambuilder_runner
+        with:
+          seed: "0"
       - name: git stuff
         run: |
           git config --global --add safe.directory /github/workspace

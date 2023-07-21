@@ -484,6 +484,20 @@ class GeneticThreatFinder {
 
 
         }
+
+
+        FileWriter("best_team_${DateTimeFormatter.ISO_DATE_TIME.format(LocalDateTime.now())}").use {
+           it.write("Best single ${bestSingleScore}\n")
+            for(t in bestSingle!!){
+                it.write(t.toString()+"\n")
+
+            }
+            it.write("Best Competive ${bestCompetiveScore}\n")
+            for(t in bestCompetive!!){
+                it.write(t.toString()+"\n")
+
+            }
+        }
        return Pair(bestSingle!!,bestCompetive!!)
     }
 }

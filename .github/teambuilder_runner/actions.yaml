@@ -1,7 +1,13 @@
 name: 'TeamBuilderRunner'
 description: 'A tool to generate random and test them to check whether the PokemonSirius-Teambuilder works'
 author: 'compf'
-
+inputs:
+  seed:
+    description: "A seed for randomness"
+    required: false
+    default: ""
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  args:
+    - ${{ inputs.seed }}
