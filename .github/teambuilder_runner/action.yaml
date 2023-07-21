@@ -5,7 +5,7 @@ inputs:
   seed:
     description: "A seed for randomness"
     required: false
-    default: ""
+    default: "texs"
 runs:
   using: 'docker'
   image: 'Dockerfile'
