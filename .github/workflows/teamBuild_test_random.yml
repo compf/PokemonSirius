@@ -8,7 +8,7 @@ jobs:
       - name: My first step
         uses: ./.github/teambuilder_runner
         with:
-          seed: " "
+          seed: "empty"
       - name: git stuff
         run: |
           git config --global --add safe.directory /github/workspace
