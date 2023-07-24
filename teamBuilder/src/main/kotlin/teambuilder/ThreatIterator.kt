@@ -2,7 +2,7 @@ package teambuilder
 
 
 import compf.core.engine.pokemon.*
-import compf.core.engine.pokemon.effects.BattleEffect
+import compf.core.engine.pokemon.effects.BattleEffectFactory
 import compf.core.engine.pokemon.effects.StubEffect
 import compf.core.engine.pokemon.effects.offensive.ChoiceItemEffect
 import compf.core.engine.pokemon.moves.Move
@@ -12,10 +12,7 @@ import pokeclass.PokedexEntryCategory
 import pokeclass.PokedexEntryClassifier
 import pokeclass.PokedexQuery
 import util.CountingStyleIterator
-
-
-
-
+import java.util.*
 
 
 const val NUMBER_ITERATORS= 7
@@ -24,8 +21,8 @@ class ThreatData(
     var otherCategory: PokedexEntryCategory?,
     var otherNature: Nature?,
     var otherEV: IntArray?,
-    var otherAbilityEffect: BattleEffect?,
-    var otherItemEffect:BattleEffect?,
+    var otherAbilityEffect: String?,
+    var otherItemEffect:String?,
     var otherMoves: Array<Move>?
 ) {
     public override fun toString(): String {
@@ -52,7 +49,7 @@ class ThreatData(
     fun createPokemon(level: Int): Pokemon {
         val ivs = intArrayOf(31, 31, 31, 31, 31, 31)
 
-        return Pokemon(
+        var pkmn= Pokemon(
             otherEntry!!.nr,
             level,
             otherEV!!,
@@ -60,6 +57,9 @@ class ThreatData(
             otherNature,
             otherMoves
         )
+        pkmn.addEffect(BattleEffectFactory.createItemEffect(otherItemEffect,pkmn))
+        pkmn.addEffect(BattleEffectFactory.createAbilityEffect(otherAbilityEffect,pkmn))
+        return pkmn
     }
 
     fun clone(): ThreatData {
@@ -70,7 +70,7 @@ class ThreatData(
         if (other == null) return false
         if(other !is ThreatData)return false
         val converted=other as ThreatData
-        return otherEntry==converted.otherEntry && otherNature==converted.otherNature && otherEV.contentEquals(converted.otherEV) && otherMoves?.toSet()==converted.otherMoves?.toSet()  && otherAbilityEffect?.javaClass==converted.otherAbilityEffect?.javaClass && otherItemEffect?.javaClass==converted?.otherItemEffect
+        return otherEntry==converted.otherEntry && otherNature==converted.otherNature && otherEV.contentEquals(converted.otherEV) && otherMoves?.toSet()==converted.otherMoves?.toSet()  && Objects.equals(otherAbilityEffect,converted.otherAbilityEffect) && Objects.equals(otherItemEffect,converted.otherItemEffect)
     }
 
     override fun hashCode(): Int {
@@ -127,11 +127,11 @@ class ThreatIterator(private val mePokemon: Pokemon): CountingStyleIterator<Thre
             }
             POKEMON_Ability_EFFECT->{
 
-               threatData.otherAbilityEffect=value as BattleEffect
+               threatData.otherAbilityEffect=value .toString()
             }
             POKEMON_ITEM_EFFECT->{
 
-                threatData.otherItemEffect=value as BattleEffect
+                threatData.otherItemEffect=value.toString()
             }
         }
     }

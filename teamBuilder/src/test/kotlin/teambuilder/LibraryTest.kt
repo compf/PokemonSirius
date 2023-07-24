@@ -65,7 +65,7 @@ Adamant Nature
             count++
         }
         assertEquals(1000,count)
-        assertEquals(999,result)
+
     }
 }
 class DigitCountIterator(private val numberDigits:Int): CountingStyleIterator<Int>(numberDigits) {

@@ -1,8 +1,6 @@
 package teambuilder
 
 import compf.core.engine.BattleRoundResult
-import compf.core.engine.pokemon.effects.BattleEffectFactory.AbilityEffectFactory
-import compf.core.engine.pokemon.effects.BattleEffectFactory.ItemEffectFactory
 import compf.core.etc.PokemonConstants
 import compf.core.etc.services.SharedInformation
 import compf.core.networking.HeuristicBasedAI
@@ -84,8 +82,6 @@ class SimplePopulationFiller(val initialNumber: Int, val increaseNumber: Int) : 
     override fun fillPopulation(smogonData: SmogonDataLoader, population: MutableMap<PokemonTeam, Int>) {
         val number = if (first) initialNumber else increaseNumber
         first = false
-        val abilityEffectFactory = AbilityEffectFactory()
-        val itemEffectFactory = ItemEffectFactory()
         for (iteration in 0 until number) {
 
             val team = PokemonTeam()
@@ -96,8 +92,8 @@ class SimplePopulationFiller(val initialNumber: Int, val increaseNumber: Int) : 
                     null,
                     smogonData.randomNature(name),
                     smogonData.randomEv(name),
-                    abilityEffectFactory.create(smogonData.randomAbility(name)),
-                    itemEffectFactory.create(smogonData.randomItem(name)),
+                    smogonData.randomAbility(name),
+                  smogonData.randomItem(name),
                     smogonData.randomUniqueMoves(name)
                 )
 
@@ -191,7 +187,7 @@ class ReplaceAbility : MutationGenerator {
 
             if (SharedInformation.Instance.rng.checkPerc(50, GeneticThreatFinder::javaClass)) {
                 pkmn.otherAbilityEffect =
-                    AbilityEffectFactory().create(smogonData.randomAbility(pkmn.otherEntry!!.name))
+                   smogonData.randomAbility(pkmn.otherEntry!!.name)
             }
 
         }
@@ -206,7 +202,7 @@ class ReplaceItem : MutationGenerator {
         for (pkmn in result) {
 
             if (SharedInformation.Instance.rng.checkPerc(50, GeneticThreatFinder::javaClass)) {
-                pkmn.otherItemEffect = ItemEffectFactory().create(smogonData.randomItem(pkmn.otherEntry!!.name))
+                pkmn.otherItemEffect = smogonData.randomItem(pkmn.otherEntry!!.name)
             }
 
         }

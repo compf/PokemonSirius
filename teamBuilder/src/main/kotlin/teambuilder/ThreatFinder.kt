@@ -3,6 +3,7 @@ package teambuilder
 import compf.core.engine.Tuple
 import compf.core.engine.pokemon.Pokemon
 import compf.core.engine.pokemon.effects.BattleEffect
+import compf.core.engine.pokemon.effects.BattleEffectFactory
 import compf.core.engine.pokemon.effects.PokemonBattleEffect
 import compf.core.etc.services.SharedInformation
 import compf.core.networking.HeuristicBasedAI
@@ -41,8 +42,8 @@ public class ThreatFinder(val meLeadPokemon:String,val enemyLeadPokemon: String,
         for(threatData in threats){
             val otherPokemon = threatData.createPokemon(level)
 
-            initEffect(otherPokemon,threatData.otherAbilityEffect!!)
-            initEffect(otherPokemon,threatData.otherItemEffect!!)
+            initEffect(otherPokemon,BattleEffectFactory.createAbilityEffect(threatData.otherAbilityEffect,otherPokemon))
+            initEffect(otherPokemon,BattleEffectFactory.createItemEffect(threatData.otherItemEffect,otherPokemon))
             team.add(otherPokemon)
        }
         return team

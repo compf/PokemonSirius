@@ -1,4 +1,6 @@
+
 import compf.core.engine.pokemon.PokemonStat
+import compf.core.engine.pokemon.effects.BattleEffectFactory
 import compf.core.engine.pokemon.effects.offensive.BoosterEnergyffect
 import compf.core.engine.pokemon.effects.offensive.ProtosynthesisEffect
 import org.junit.jupiter.api.BeforeAll
@@ -26,5 +28,15 @@ class EffectTest  {
         sim.attack().attack().execute(2)
         assertEquals(324,me.getStat(PokemonStat.SPEED))
 
+    }
+    @Test
+    fun testFocusSlash(){
+        MainTest.newGenerator()
+        val me=PikachuCreator().setLevel(1).create()
+        val enemy=PikachuCreator().cutMove().create()
+        me.addEffect(BattleEffectFactory.createItemEffect("Focus Slash",me) )
+        val sim=createSimulator(me,enemy)
+        sim.attack().attack().execute(2)
+        assertEquals(1,me.currHP)
     }
 }

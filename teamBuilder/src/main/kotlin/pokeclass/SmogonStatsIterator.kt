@@ -4,9 +4,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import compf.core.engine.pokemon.Nature
 import compf.core.engine.pokemon.PokedexEntry
-import compf.core.engine.pokemon.effects.BattleEffect
-import compf.core.engine.pokemon.effects.BattleEffectFactory.AbilityEffectFactory
-import compf.core.engine.pokemon.effects.BattleEffectFactory.ItemEffectFactory
 import compf.core.engine.pokemon.moves.Move
 import compf.core.etc.PokemonConstants
 import compf.core.etc.services.SharedInformation
@@ -72,15 +69,14 @@ class SmogonStatsIterator(val leadPokemon: String): CountingStyleIterator<Threat
             ITEM_EFFECT->{
                 val ITEM_EFFECT_THRESHOLD=0.5
                 val keys= getKeysUntilSumExceedsThreshold(jsonData[threatData.otherEntry!!.name]!!.getAsJsonObject("items"),ITEM_EFFECT_THRESHOLD)
-                val itemEffectFactory=ItemEffectFactory()
-               keys.map { itemEffectFactory.create(it) }.iterator()
+               keys.iterator()
 
             }
            ABILITY_EFFECT->{
                 val ABILITY_EFFECT_THRESHOLD=0.5
                 val keys= getKeysUntilSumExceedsThreshold(jsonData[threatData.otherEntry!!.name]!!.getAsJsonObject("abilities"),ABILITY_EFFECT_THRESHOLD)
-                val abilityEffectFactory=AbilityEffectFactory()
-                keys.map { abilityEffectFactory.create(it) }.iterator()
+
+                keys.iterator()
 
             }
             MOVE->{
@@ -123,10 +119,10 @@ class SmogonStatsIterator(val leadPokemon: String): CountingStyleIterator<Threat
 
           }
           ITEM_EFFECT->{
-              threatData.otherItemEffect=value as BattleEffect
+              threatData.otherItemEffect=value.toString()
           }
           ABILITY_EFFECT->{
-              threatData.otherAbilityEffect=value as BattleEffect
+              threatData.otherAbilityEffect=value.toString()
           }
           MOVE->{
               threatData.otherMoves=value as Array<Move>
