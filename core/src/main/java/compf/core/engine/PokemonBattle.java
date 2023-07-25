@@ -116,8 +116,10 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
 				break;
 			case DELAYED_ATTACK:
 				effect.delayedAttack(param);
+				break;
 			case BATTLE_STARTED:
 					effect.battleStarted(param);
+					break;
 			case STATS_MODIFIED:
 					effect.statsModified(param);
 
@@ -279,8 +281,8 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
 
 
 		}
-		executeEffects(_globalEffects, EffectTime.ROUND_ENDING, null);
-		executeEffects(EffectTime.ROUND_ENDING, null);
+		executeEffects(_globalEffects, EffectTime.ROUND_ENDING, new EffectParam(_schedule,interrupt,_rule,this,null));
+		executeEffects(EffectTime.ROUND_ENDING, new EffectParam(_schedule,interrupt,_rule,this,null));
 		for(var pkmn:this) {
 			for(var effect:pkmn.getEffects()){
 				var battleAction=effect.getBattleAction();

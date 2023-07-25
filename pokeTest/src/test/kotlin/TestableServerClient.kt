@@ -30,6 +30,17 @@ class DefaultValuePipe:Pipe{
 public  class TestableClient(player:Player,rule:BattleRule,io:SimulationBattleIO,pipe:Pipe):BattleClient(player,rule,io,pipe){
 
 }
+class TestableInterrupt(val rule:BattleRule,val battle: PokemonBattle):Interrupt{
+    override fun forceSwitch(playerId: Short, pokemonIndex: Short): Short {
+      for(i in 0 until rule.MaxPokemonInTeamPerPlayer){
+            if(i!=pokemonIndex.toInt() &&  battle.getPlayerById(playerId).getPokemon(i)!=null && battle.getPlayerById(playerId).getPokemon(i).currHP>0 && i > pokemonIndex){
+                return i.toShort()
+            }
+        }
+        return -1
+    }
+
+}
 public class TestableServer:BattleServer{
     val client1:BattleClient;
     val client2:BattleClient;
@@ -38,6 +49,10 @@ public class TestableServer:BattleServer{
      val enemyIO:SimulationBattleIO
     constructor( dummyMePokemon:Pokemon,  dummyEnemyPokemon:Pokemon): this(Player(0,"Me",arrayOf(dummyMePokemon,null,null,null,null,null)),Player(1,"Enemy",arrayOf(dummyEnemyPokemon,null,null,null,null,null))){
 
+    }
+
+    override fun getInterrupt(): Interrupt {
+        return TestableInterrupt(_rules[0]!!,_battles[0]!!)
     }
     constructor( mePlayer: Player,  enemyPlayer:Player)  {
         val rule=BattleRule(2,1,6,1)
@@ -55,6 +70,7 @@ public class TestableServer:BattleServer{
         this._battles.put(1, battle)
         battle.getPlayers().add(this._players.get(0));
         battle.getPlayers().add(this._players.get(1));
+        battle.start()
 
         this._gamePlayers.put(0, LinkedList())
         this._gamePlayers.get(0)!!.add(0)

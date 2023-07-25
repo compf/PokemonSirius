@@ -22,6 +22,7 @@ public class EffectName {
     //endregion
 
     //region  E
+    public static final String EjectPack="Eject Pack";
     //endregion
 
     //region  F

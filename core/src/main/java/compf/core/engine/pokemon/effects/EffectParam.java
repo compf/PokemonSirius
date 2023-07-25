@@ -43,6 +43,12 @@ public record EffectParam(Schedule schedule, Interrupt interrupt, BattleRule rul
         public Pokemon getAffectedPokemon() {
             return _affectedPokemon;
         }
+        public int getStat(){
+               return _stat;
+        }
+        public int getBy(){
+               return _by;
+        }
     }
     public static class AdditionalIndirectDamageData implements  AdditionalData{
         private Pokemon _causingPokemon;

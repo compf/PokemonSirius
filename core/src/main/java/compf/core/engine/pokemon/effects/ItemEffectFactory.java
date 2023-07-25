@@ -30,6 +30,12 @@ public class ItemEffectFactory {
     //endregion
 
     //region  E
+    @Scope("prototype")
+    @Bean(name = {EffectName.EjectPack})
+    public PokemonBattleEffect
+    ejectPack(Pokemon pkmn) {
+        return new EjectPackItemEffect(pkmn);
+    }
     //endregion
 
     //region  F

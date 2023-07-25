@@ -127,6 +127,9 @@ public class BattleServer extends BaseServer implements SteppableHost {
 
         return flag;
     }
+    protected Interrupt getInterrupt(){
+        return new NetworkInterrupt();
+    }
 
     private int getNumberEnabledActors(short gameId) {
         var playerIds = _gamePlayers.get(gameId);
@@ -179,7 +182,7 @@ public class BattleServer extends BaseServer implements SteppableHost {
                 }
                     break;
                 case ReplyInputToServer: {
-                    Interrupt interrupt = new NetworkInterrupt();
+                    Interrupt interrupt =getInterrupt();
                     BufferList<PlayerInput> inputs = (BufferList<PlayerInput>) msg.Data;
                     for (var inp : inputs) {
                         MyLogger.debug("input received from " + inp.PlayerId);
