@@ -12,7 +12,7 @@ public class FocusSashItemEffect extends ItemEffect {
 
     @Override
     public void defend(EffectParam param ) {
-        DamageInformation inf =param.damageInf();
+        DamageInformation inf =((EffectParam.AdditionalDirectDamageData)param.additionalData()).getDamageInformation();
         if (getPokemon().getCurrHP() == getPokemon().getStat(0) && inf.getDamage() >= getPokemon().getCurrHP()) {
             inf.modifyDamage(getPokemon().getCurrHP() - 1);
             addMessage("Focus sash works");

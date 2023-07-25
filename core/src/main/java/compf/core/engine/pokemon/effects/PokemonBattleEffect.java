@@ -21,9 +21,9 @@ public abstract class PokemonBattleEffect extends BattleEffect {
         return true;
     }
     protected boolean isMeAttacking(EffectParam param){
-        return getPokemon()==param.damageInf().getAttacker();
+        return getPokemon()==param.additionalData().getCausingPokemon();
     }
     protected boolean isMeDefending(EffectParam param){
-        return getPokemon()==param.damageInf().getDefender();
+        return getPokemon()==param.additionalData().getAffectedPokemon();
     }
 }

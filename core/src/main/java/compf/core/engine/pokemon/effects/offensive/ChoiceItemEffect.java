@@ -52,12 +52,13 @@ public class ChoiceItemEffect extends ItemEffect {
     }
     @Override
     public void attack(EffectParam param) {
-        var dmg=param.damageInf();
-        if(_lastMoveId==-1 || dmg.getMoveId()==_lastMoveId){
-            _lastMoveId=dmg.getMoveId();
+        if(!isMeAttacking(param))return;
+        var attData=(EffectParam.AdditionalDirectDamageData)param.additionalData();
+        if(_lastMoveId==-1 || attData.getDamageInformation().getMoveId()==_lastMoveId){
+            _lastMoveId=attData.getDamageInformation().getMoveId();
         }
         else{
-            dmg.kill();
+           attData.killFully();
         }
     }
     

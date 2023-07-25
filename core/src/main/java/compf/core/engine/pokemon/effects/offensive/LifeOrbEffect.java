@@ -10,18 +10,18 @@ public class LifeOrbEffect extends PokemonBattleEffect {
     public LifeOrbEffect(Pokemon pkmn) {
         super(pkmn);
     }
-    private boolean isDirectDamageMove(DamageInformation inf){
+    private boolean isDirectDamageMove(EffectParam param){
         return true; //TODO https://bulbapedia.bulbagarden.net/wiki/Category:Moves_that_deal_direct_damage
     }
 
     @Override
     public void attack(EffectParam param) {
-        if(isMeAttacking(param) && isDirectDamageMove(param.damageInf())){
-            param.damageInf().modifyDamage(1.3);
+        if(isMeAttacking(param) && isDirectDamageMove(param)){
+            ((EffectParam.AdditionalDirectDamageData)param.additionalData()).getDamageInformation().modifyDamage(1.3);
 
         }
-        if(param.damageInf().getDamage()>0){
-            getPokemon().modifyCurrHp((int)Math.ceil(getPokemon().getMaxHP()/10.0));
+        if(   ((EffectParam.AdditionalDirectDamageData)param.additionalData()).getDamageInformation().getDamage()>0){
+           this.dealIndirectDamage(param,getPokemon(),getPokemon(),0.9);
             addMessage(getPokemon().toString() +" lost HP due to "+ EffectName.LifeOrb);
         }
     }

@@ -16,7 +16,7 @@ public abstract class SwapPokemonEffect extends PokemonBattleEffect{
     public  abstract int getNewIndex(Player player, int oldIndex);
     @Override
     public void attack(EffectParam param) {
-        Player player=param.damageInf().getDefender().getPlayer();
+        Player player=param.additionalData().getAffectedPokemon().getPlayer();
         int oldIndex=indexOf(getPokemon().getPlayer().getTeam(),getPokemon());
         if(notPossible(oldIndex,param.rule())){
             return;

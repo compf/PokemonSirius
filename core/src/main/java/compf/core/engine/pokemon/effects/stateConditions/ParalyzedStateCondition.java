@@ -1,6 +1,7 @@
 package compf.core.engine.pokemon.effects.stateConditions;
 
 import compf.core.engine.pokemon.Pokemon;
+import compf.core.engine.pokemon.PokemonStat;
 import compf.core.engine.pokemon.effects.EffectParam;
 import compf.core.engine.pokemon.effects.PokemonBattleEffect;
 import compf.core.engine.pokemon.moves.DamageInformation;
@@ -21,10 +22,9 @@ public class ParalyzedStateCondition extends PokemonBattleEffect {
 
 	@Override
 	public void attack(EffectParam param) {
-		DamageInformation dmg = param.damageInf();
 		if (isMeAttacking(param) && SharedInformation.Instance.getRNG().checkPerc(20,this.getClass())) {
-			addMessage(dmg.getAttacker().toString() + " failed due to Paralysis");
-			dmg.modifyDamage(0);
+			addMessage(param.additionalData().getCausingPokemon().toString() + " failed due to Paralysis");
+			param.additionalData().killFully();
 			disable();
 		}
 
@@ -32,7 +32,7 @@ public class ParalyzedStateCondition extends PokemonBattleEffect {
 
 	@Override
 	public void pokemonSwitched(EffectParam param) {
-		getPokemon().changeStatStage(Pokemon.SPEED, +1);
+		modifyStats(param,getPokemon(),getPokemon(), PokemonStat.SPEED,+1);
 
 	}
 

@@ -30,8 +30,9 @@ public class FlyingEffect extends PokemonBattleEffect {
         SharedInformation.Instance.getLoggerService().log("Use attack fly",FlyingEffect.class);
         if (!(newRound)) {
             SharedInformation.Instance.getLoggerService().log("Flying killed",FlyingEffect.class);
-            DamageInformation inf = param.damageInf();
-            item = param.scheduleItem();
+            var additionData=(EffectParam.AdditionalDirectDamageData)param.additionalData() ;
+            DamageInformation inf = additionData.getDamageInformation();
+            item = additionData.getScheduleItem();
             this.dmg = inf.clone();
             inf.kill();
 
@@ -67,9 +68,8 @@ public class FlyingEffect extends PokemonBattleEffect {
     @Override
     public void defend(EffectParam param) {
         if(!isMeDefending(param))return;
-        DamageInformation inf = param.damageInf();
         if (isEnabled()) {
-            inf.kill();
+            param.additionalData().killFully();
             addMessage(getPokemon() + " is flying and thus not vulnerable");
         }
     }

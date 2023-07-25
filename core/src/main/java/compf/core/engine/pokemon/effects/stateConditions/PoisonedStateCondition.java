@@ -13,8 +13,7 @@ public class PoisonedStateCondition extends PokemonBattleEffect {
 
 	@Override
 	public void roundEnding(EffectParam param) {
-		DamageInformation inf = param.damageInf();
-		getPokemon().modifyCurrHp(0.875);
+		dealIndirectDamage(param,param.additionalData().getAffectedPokemon(),param.additionalData().getAffectedPokemon(),0.875);
 		addMessage(getPokemon().toString() + " lost a little bit HP due to poison");
 
 	}

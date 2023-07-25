@@ -24,11 +24,16 @@ public class SubstituteEffect extends PokemonBattleEffect {
     }
 
     @Override
+    public void statsModified(EffectParam param) {
+        if(!isMeDefending(param))return;
+    }
+
+    @Override
     public void defend(EffectParam param) {
-        DamageInformation inf = param.damageInf();
-        if (inf.getDamage() <= _cap && _cap > 0) {
-            _cap -= inf.getDamage();
-            inf.modifyDamage(0);
+        var additionalData=(EffectParam.AdditionalDirectDamageData)param.additionalData();
+        if (additionalData.getDamageInformation().getDamage() <= _cap && _cap > 0) {
+            _cap -= additionalData.getDamageInformation().getDamage();
+            additionalData.killFully();
             addMessage("Substitute works");
         } else {
             disable();

@@ -17,11 +17,11 @@ public class SleepingStateCondition extends PokemonBattleEffect {
 
     @Override
     public void attack(EffectParam param) {
+        if(!isMeAttacking(param))return;
         if (_rounds > 0) {
             _rounds--;
-            DamageInformation dmgInf = param.damageInf();
-            addMessage(dmgInf.getAttacker() + " sleeps");
-            dmgInf.kill();
+            addMessage(getPokemon() + " sleeps");
+           param.additionalData().killFully();;
         }
 
     }

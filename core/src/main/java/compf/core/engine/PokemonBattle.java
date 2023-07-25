@@ -1,18 +1,16 @@
 package compf.core.engine;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 import compf.core.engine.pokemon.*;
 import compf.core.engine.pokemon.effects.*;
 import compf.core.engine.pokemon.effects.BattleEffectCollection;
-import compf.core.engine.pokemon.moves.DamageInformation;
 import compf.core.engine.pokemon.moves.MoveFactory;
 import compf.core.engine.pokemon.moves.Schedule;
 import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
 import compf.core.etc.MyObject;
 import compf.core.etc.services.SharedInformation;
-public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
+public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventExecutor {
 
 	Schedule _schedule;
 	private BattleEffectCollection _globalEffects = new BattleEffectCollection();
@@ -62,7 +60,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 	}
 
 	public void start() {
-		executeEffects(EffectTime.BATTLE_STARTED,new EffectParam(null,null,_schedule,null,_rule,_globalEffects));
+		executeEffects(EffectTime.BATTLE_STARTED,new EffectParam(_schedule,null,_rule,this,null));
 	}
 
 	public class BattleIterator implements Iterator<Pokemon> {
@@ -94,7 +92,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 		return new BattleIterator();
 	}
 
-	private void executeEffect(BattleEffect effect, EffectTime time, EffectParam param) {
+	public void executeEffect(BattleEffect effect, EffectTime time, EffectParam param) {
 		if (!effect.isEnabled())
 			return;
 		switch (time) {
@@ -120,19 +118,21 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 				effect.delayedAttack(param);
 			case BATTLE_STARTED:
 					effect.battleStarted(param);
+			case STATS_MODIFIED:
+					effect.statsModified(param);
 
 		}
 
 	}
 
-	private void executeEffects(BattleEffectCollection effects, EffectTime time, EffectParam param) {
+	public void executeEffects(BattleEffectCollection effects, EffectTime time, EffectParam param) {
 		for (var effect : effects) {
 			executeEffect(effect, time, param);
 		}
 		effects.removeIf((obj) -> !obj.isEnabled());
 	}
 
-	private void executeEffects(EffectTime time, EffectParam param) {
+	public void executeEffects(EffectTime time, EffectParam param) {
 		for (Pokemon pkmn : this) {
 			executeEffects(pkmn.getEffects(), time, param);
 		}
@@ -188,10 +188,6 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 
 	}
 
-	public enum EffectTime {
-		ROUND_STARTING, ROUND_ENDING, ATTACK, DEFEND, POKEMON_SWITCHED, POKEMON_DEFEATED, BATTLE_STARTED, DELAYED_ATTACK
-	}
-
 	public static class PokemonComparator implements  Comparator<Pokemon>{
 
 		@Override
@@ -217,12 +213,21 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 		return ls;
 	}
 
+	@Override
+	public boolean hasEffect(Class<?> effectClass) {
+		boolean result= _globalEffects.hasEffect(effectClass);
+		for(var pkmn:this){
+			result=result | pkmn.getEffects().hasEffect(effectClass);
+		}
+		return  result;
+	}
+
 	public BattleRoundResult executeSchedule(Interrupt interrupt) {
 		LinkedList<BattleAction> actions = new LinkedList<>();
-		executeEffects(EffectTime.ROUND_STARTING, new EffectParam(null,null,_schedule,interrupt,_rule,_globalEffects));
+		executeEffects(EffectTime.ROUND_STARTING, new EffectParam(_schedule,interrupt,_rule,this,null));
 		var pokemonSorted = sort();
 		for (var pkmn : pokemonSorted) {
-			executeEffects(pkmn, EffectTime.DELAYED_ATTACK, new EffectParam(null, null, _schedule,interrupt,_rule,_globalEffects));
+			executeEffects(pkmn, EffectTime.DELAYED_ATTACK, new EffectParam( _schedule,interrupt,_rule,this,null));
 		}
 		while (_schedule.any()) {
 			ScheduleItem item = _schedule.getNext();
@@ -241,10 +246,10 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 			}
 
 
-			EffectParam effectParam=new EffectParam(dmgInf, item, _schedule,interrupt,_rule,_globalEffects);
+			EffectParam effectParam=new EffectParam(_schedule,interrupt,_rule,this,new EffectParam.AdditionalDirectDamageData(dmgInf,item));
 			executeEffects( EffectTime.ATTACK, effectParam);
 			executeEffects(EffectTime.DEFEND, effectParam);
-			dmgInf = effectParam.damageInf();
+			dmgInf = ((EffectParam.AdditionalDirectDamageData)effectParam.additionalData()).getDamageInformation();
 			if (attacker.getCurrHP() <= 0) {
 
 				short oldIndex = (short) indexOf(attacker.getPlayer().getTeam(), attacker);

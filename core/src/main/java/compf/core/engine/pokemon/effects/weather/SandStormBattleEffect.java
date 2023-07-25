@@ -14,7 +14,6 @@ public class SandStormBattleEffect extends GlobalBattleEffect {
 
     @Override
     public void roundEnding(EffectParam param) {
-        var inf =param.damageInf();
         for (Pokemon pkmn : getBattle()) {
             if (!(pkmn.isType(Type.Ground) || pkmn.isType(Type.Rock) || pkmn.isType(Type.Steel))) {
                 pkmn.modifyCurrHp(0.875);

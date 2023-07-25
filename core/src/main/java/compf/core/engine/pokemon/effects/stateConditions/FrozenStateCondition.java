@@ -22,9 +22,8 @@ public class FrozenStateCondition extends PokemonBattleEffect {
 
     @Override
     public void attack(EffectParam param) {
-        DamageInformation inf = param.damageInf();
+        param.additionalData().killFully();
         addMessage(getPokemon().toString() + " is frozen and cannot attack");
-        inf.kill();
     }
 
 }
