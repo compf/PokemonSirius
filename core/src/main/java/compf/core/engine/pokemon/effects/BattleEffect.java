@@ -17,19 +17,19 @@ public abstract class BattleEffect extends MyObject implements Serializable {
 	@Serial
     private static final long serialVersionUID = 1L;
 
-	public void init() {
-	}
-	public void battleStarted(EffectParam param){
+
+	public void init(EffectParam param){
 
 	}
 
 	public void roundBeginning(EffectParam param) {
 	}
 
-	public void pokemonSwitched(EffectParam param) {
+	public void pokemonSwitchedOut(EffectParam param) {
 	}
 
-
+	public void pokemonSwitchedIn(EffectParam param) {
+	}
 
 	public void attack(EffectParam param) {
 	}
@@ -91,6 +91,7 @@ public abstract class BattleEffect extends MyObject implements Serializable {
 		addMessage(affected.toString()+" lost HP" );
 
 	}
+
 
 
 }

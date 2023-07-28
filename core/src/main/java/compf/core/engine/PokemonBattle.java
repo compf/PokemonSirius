@@ -60,7 +60,6 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
 	}
 
 	public void start() {
-		executeEffects(EffectTime.BATTLE_STARTED,new EffectParam(_schedule,null,_rule,this,null));
 	}
 
 	public class BattleIterator implements Iterator<Pokemon> {
@@ -99,9 +98,12 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
 			case POKEMON_DEFEATED:
 				effect.pokemonDefeated(param);
 				break;
-			case POKEMON_SWITCHED:
-				effect.pokemonSwitched(param);
+			case POKEMON_SWITCHED_IN:
+				effect.pokemonSwitchedIn(param);
 				break;
+			case POKEMON_SWITCHED_OUT:
+					effect.pokemonSwitchedOut(param);
+					break;
 			case ROUND_STARTING:
 				effect.roundBeginning(param);
 				break;
@@ -117,9 +119,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
 			case DELAYED_ATTACK:
 				effect.delayedAttack(param);
 				break;
-			case BATTLE_STARTED:
-					effect.battleStarted(param);
-					break;
+
 			case STATS_MODIFIED:
 					effect.statsModified(param);
 
@@ -225,6 +225,12 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
 	}
 
 	public BattleRoundResult executeSchedule(Interrupt interrupt) {
+		EffectParam initParams=new EffectParam(_schedule,interrupt,_rule,this,null);
+
+		_globalEffects.initializeAllNotInitialized(initParams );
+		for(var pkmn:this){
+			pkmn.getEffects().initializeAllNotInitialized(initParams);
+		}
 		LinkedList<BattleAction> actions = new LinkedList<>();
 		executeEffects(EffectTime.ROUND_STARTING, new EffectParam(_schedule,interrupt,_rule,this,null));
 		var pokemonSorted = sort();
@@ -237,13 +243,16 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
 			var defender = (item.getDefender());
 
 			var dmgInf = item.execute();
+			_globalEffects.initializeAllNotInitialized(initParams );
 
 			for (var eff : dmgInf.getEffects()) {
 				if (eff instanceof GlobalBattleEffect) {
 					_globalEffects.add(eff);
+					_globalEffects.initializeAllNotInitialized(initParams);
 				} else if (eff instanceof PokemonBattleEffect) {
 					PokemonBattleEffect pkmneff = (PokemonBattleEffect) eff;
 					pkmneff.getPokemon().addEffect(pkmneff);
+					pkmneff.getPokemon().getEffects().initializeAllNotInitialized(initParams);
 				}
 			}
 
@@ -256,7 +265,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
 
 				short oldIndex = (short) indexOf(attacker.getPlayer().getTeam(), attacker);
 
-				short newIndex = interrupt.forceSwitch(attacker.getPlayer().getPlayerId(), oldIndex);
+				short newIndex = interrupt.forceSwitch(this,attacker.getPlayer(), oldIndex);
 				String msg = (switchPokemon( attacker.getPlayer(),oldIndex,newIndex));
 				var switchAction = new BattleAction(-1, msg, BattleAction.ActionKind.SwitchPokemon, attacker.getPlayer().getPlayerId() +" "+ oldIndex +" "+newIndex);
 				actions.add(switchAction);
@@ -272,7 +281,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
 			if (defender.getCurrHP() <= 0) {
 				short oldIndex = (short) indexOf(defender.getPlayer().getTeam(), defender);
 
-				short newIndex = interrupt.forceSwitch(defender.getPlayer().getPlayerId(), oldIndex);
+				short newIndex = interrupt.forceSwitch(this,defender.getPlayer(), oldIndex);
 				String msg = (switchPokemon(defender.getPlayer(),oldIndex, newIndex));
 				var switchAction = new BattleAction(-1, msg, BattleAction.ActionKind.SwitchPokemon, defender.getPlayer().getPlayerId() +" "+ oldIndex +" "+newIndex);
 				actions.add(switchAction);
@@ -303,11 +312,9 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
 		Pokemon pkmn=player.getPokemon(oldIndex);
 		_schedule.clear(combine(player.getPlayerId(),newIndex));
 		if(newIndex==-1)return "Could not switch";
-		var dummy = player.getTeam()[oldIndex];
 		String msg = player.getName() + " replaced " + pkmn.toString() + " with "
 				+ pkmn.getPlayer().getPokemon(newIndex).getName();
-		player.getTeam()[oldIndex] =player.getTeam()[newIndex];
-		player.getTeam()[newIndex] = dummy;
+
 		return msg;
 
 	}

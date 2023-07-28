@@ -11,7 +11,7 @@ import compf.core.etc.services.SharedInformation;
 public class ParalyzedStateCondition extends PokemonBattleEffect {
 
 	@Override
-	public void init() {
+	public void init(EffectParam param) {
 		getPokemon().changeStatStage(5, -1);
 
 	}
@@ -30,11 +30,7 @@ public class ParalyzedStateCondition extends PokemonBattleEffect {
 
 	}
 
-	@Override
-	public void pokemonSwitched(EffectParam param) {
-		modifyStats(param,getPokemon(),getPokemon(), PokemonStat.SPEED,+1);
 
-	}
 
 	@Override
 	public String toString() {

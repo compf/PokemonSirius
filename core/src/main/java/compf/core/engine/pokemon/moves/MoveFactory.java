@@ -28,7 +28,7 @@ public class MoveFactory {
 				return new StatModifyingMove(mv, StatModifyingMove.ME, PokemonStat.ATT, +2);
 			case 18:
 				// Wirbelwind
-				return new PokemonEffectMove(mv,  RandomSwapPokemonEffect.class,null,100);
+				return new PokemonEffectMove(mv, null, RandomSwapPokemonEffect.class,100);
 			case 19:
 				return new DelayedMove(mv, FlyingEffect.class);
 			case 20: // Klammergriff

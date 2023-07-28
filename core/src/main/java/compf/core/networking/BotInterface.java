@@ -60,8 +60,8 @@ public class BotInterface extends SimpleIOInterface {
     }
 
     public short switchPokemon(Tuple<Short, BattleState> inf) {
-        for(short i=0;i<_player.getPokemonCount();i++){
-            if(_player.getPokemon(i).getCurrHP()>0)return i;
+        for(int i=inf.Item1+1;i<_player.getPokemonCount();i++){
+            if(_player.getPokemon(i).getCurrHP()>0)return (short) i;
         }
         return -1;
     }

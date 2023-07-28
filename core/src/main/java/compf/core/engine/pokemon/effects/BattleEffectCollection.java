@@ -6,6 +6,7 @@ public class BattleEffectCollection extends ArrayList<BattleEffect> {
     public BattleEffectCollection() {
 
     }
+    ArrayDeque<BattleEffect> notInitialized=new ArrayDeque<>();
     public boolean hasEffect(Class<?> effectType){
         for (var eff : this) {
             if (eff.getClass() == effectType) {
@@ -14,10 +15,16 @@ public class BattleEffectCollection extends ArrayList<BattleEffect> {
         }
         return false;
     }
+    public void initializeAllNotInitialized(EffectParam param){
+        while(notInitialized.size()>0){
+            notInitialized.remove().init(param);
+        }
+    }
     @Override
     public boolean add(BattleEffect effect) {
         if(effect==null)return false;
         if(hasEffect(effect.getClass()))return false;
+        notInitialized.add(effect);
         return super.add(effect);
 
     }

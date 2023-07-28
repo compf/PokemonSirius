@@ -54,14 +54,8 @@ public class BattleServer extends BaseServer implements SteppableHost {
     }
 
     public class NetworkInterrupt implements Interrupt {
-        /**
-         * Forces the client to switch the pokemon
-         *
-         * @param playerId     The player that must switch the pokemon
-         * @param pokemonIndex The index of the Pokemon to be switched
-         * @return The index of the replaced pokemon in the team or -1 on errors
-         */
-        public short forceSwitch(short playerId, short pokemonIndex) {
+
+        public short getNewPokemonIndex(short playerId, short pokemonIndex) {
             writeObject(_pipes.get(playerId), NetworkMessageKind.RequestPokemonSwitch.createMessage(pokemonIndex));
             NetworkMessage msg = readObject(_pipes.get(playerId));
             if (msg.Kind == NetworkMessageKind.ReplyPokemonSwitch) {

@@ -10,13 +10,11 @@ open class BattleExecutor(val myPokemons:List<Pokemon>,val enemyPokemons:List<Po
     private var stop=false
 
   private inner class SimpleInterrupt(val ioInterface1:BotInterface,val ioInterface2:BotInterface):Interrupt{
-      override fun forceSwitch(playerId: Short, pokemonIndex: Short): Short {
-       var result = if(playerId.toInt()==0) ioInterface1.switchPokemon(Tuple(pokemonIndex,null)) else ioInterface2.switchPokemon(Tuple(pokemonIndex,null));
-        if(result.toInt()==-1){
-          stop=true
-        }
-        return result
-       }
+
+
+      override fun getNewPokemonIndex(playerId: Short, pokemonIndex: Short): Short {
+         return if(playerId.toInt()==0) ioInterface1.switchPokemon(Tuple(pokemonIndex,null)) else ioInterface2.switchPokemon(Tuple(pokemonIndex,null));
+      }
 
   }
     open fun debugResult(result:BattleRoundResult){

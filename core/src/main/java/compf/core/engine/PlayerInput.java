@@ -35,8 +35,10 @@ public abstract class PlayerInput implements Serializable {
 			PokemonNewIndex=newIndex;
 		}
 
+
+
 		@Override
-		public short forceSwitch(short playerId, short pokemonIndex) {
+		public short getNewPokemonIndex(short playerId, short pokemonIndex) {
 			return PokemonNewIndex;
 		}
 	}

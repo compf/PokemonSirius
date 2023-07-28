@@ -8,7 +8,7 @@ import compf.core.engine.pokemon.effects.PokemonBattleEffect;
 public class BurningStateCondition extends PokemonBattleEffect {
 
 	@Override
-	public void init() {
+	public void init(EffectParam param) {
 		getPokemon().changeStatStage(PokemonStat.ATT, -1);
 
 	}
@@ -27,10 +27,7 @@ public class BurningStateCondition extends PokemonBattleEffect {
 
 	}
 
-	@Override
-	public void pokemonSwitched(EffectParam param) {
-		getPokemon().changeStatStage(PokemonStat.ATT, +1);
-	}
+
 
 	@Override
 	public String toString() {

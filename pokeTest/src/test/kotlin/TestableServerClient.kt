@@ -31,14 +31,15 @@ public  class TestableClient(player:Player,rule:BattleRule,io:SimulationBattleIO
 
 }
 class TestableInterrupt(val rule:BattleRule,val battle: PokemonBattle):Interrupt{
-    override fun forceSwitch(playerId: Short, pokemonIndex: Short): Short {
-      for(i in 0 until rule.MaxPokemonInTeamPerPlayer){
+    override fun getNewPokemonIndex(playerId: Short, pokemonIndex: Short): Short {
+        for(i in 0 until rule.MaxPokemonInTeamPerPlayer){
             if(i!=pokemonIndex.toInt() &&  battle.getPlayerById(playerId).getPokemon(i)!=null && battle.getPlayerById(playerId).getPokemon(i).currHP>0 && i > pokemonIndex){
                 return i.toShort()
             }
         }
         return -1
     }
+
 
 }
 public class TestableServer:BattleServer{

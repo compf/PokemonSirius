@@ -112,4 +112,35 @@ public record EffectParam(Schedule schedule, Interrupt interrupt, BattleRule rul
         }
     }
 
+    public static class AdditionalPokemonSwitchedData implements  AdditionalData{
+        private Pokemon affected;
+        private int from,to;
+        public AdditionalPokemonSwitchedData(int from,int to,Pokemon pokemon) {
+            affected=pokemon;
+            this.from=from;
+            this.to=to;
+        }
+        public int getFrom(){
+            return from;
+        }
+
+        public int getTo() {
+            return to;
+        }
+
+        @Override
+        public Pokemon getCausingPokemon() {
+            return affected;
+        }
+
+        @Override
+        public Pokemon getAffectedPokemon() {
+            return affected;
+        }
+
+        @Override
+        public void killFully() {
+
+        }
+    }
 }

@@ -306,7 +306,6 @@ public class Pokemon extends PokedexEntry {
 
     public void addEffect(PokemonBattleEffect effect) {
         _effects.add(effect);
-        effect.init();
     }
 
 }
