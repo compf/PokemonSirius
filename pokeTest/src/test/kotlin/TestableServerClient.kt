@@ -86,8 +86,8 @@ public class TestableServer:BattleServer{
         val client2WritePipe=DefaultValuePipe()
         val client2ToServer=PipeEndPoint(client2ReadPipe,client2WritePipe)
         val serverToClient2=PipeEndPoint(client2WritePipe, client2ReadPipe)
-        this.meIO=SimulationBattleIO(mePlayer)
-        this.enemyIO=SimulationBattleIO(enemyPlayer)
+        this.meIO=SimulationBattleIO(mePlayer,battle)
+        this.enemyIO=SimulationBattleIO(enemyPlayer,battle)
 
         this._pipes.put(0,serverToClient1)
         this.client1=TestableClient(mePlayer,rule,meIO,client1ToServer)

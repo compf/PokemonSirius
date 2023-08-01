@@ -1,4 +1,3 @@
-
 import com.badlogic.gdx.utils.Queue
 import compf.core.engine.*
 import compf.core.engine.pokemon.Pokemon
@@ -10,167 +9,187 @@ import org.apache.logging.log4j.LogManager
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
 
-public  class SimulationBattleIO : SimpleIOInterface {
-    private val MyLogger=LogManager.getLogger()
+public class SimulationBattleIO : SimpleIOInterface {
+    private val MyLogger = LogManager.getLogger()
+    private val battle: PokemonBattle
+    val actions: ArrayList<BattleAction> = ArrayList<BattleAction>();
 
-    val actions: ArrayList<BattleAction> =ArrayList<BattleAction>();
-   constructor(player:Player){
-    this.player=player;
-       //TestFinishedSemaphore.acquireTimeout(1, 10, TimeUnit.SECONDS)
-       //BattleStartedSemaphore.acquireTimeout(1, 10, TimeUnit.SECONDS)
-   }
-   override fun handle(msg: NetworkMessage) :NetworkMessage? {
-    return when (msg.Kind) {
-         NetworkMessageKind.RequestInputToIO -> {
-            return NetworkMessageKind.ReplyInputFromIO .createMessage(requestPlayerInput(( msg.Data as Tuple<Short,BattleState>)));
+    constructor(player: Player, battle: PokemonBattle) {
+        this.player = player;
+        this.battle = battle
+        //TestFinishedSemaphore.acquireTimeout(1, 10, TimeUnit.SECONDS)
+        //BattleStartedSemaphore.acquireTimeout(1, 10, TimeUnit.SECONDS)
+    }
 
-         }
-         NetworkMessageKind.SwitchPokemon->{
-            return NetworkMessageKind.SwitchPokemon
-            .createMessage(switchPokemon(( msg.Data as Tuple<Short, BattleState> )));
-         }
-            
-         NetworkMessageKind.Update->{
-            update( msg.Data as BattleRoundResult);
-            return null;
-         }
-          
-         NetworkMessageKind.BattleEnded->{
-            battleEnded( msg.Data as Int);
-            return null;
-         }
-        else ->
-            return null;
+    override fun handle(msg: NetworkMessage): NetworkMessage? {
+        return when (msg.Kind) {
+            NetworkMessageKind.RequestInputToIO -> {
+                return NetworkMessageKind.ReplyInputFromIO.createMessage(requestPlayerInput((msg.Data as Tuple<Short, BattleState>)));
+
+            }
+
+            NetworkMessageKind.SwitchPokemon -> {
+                return NetworkMessageKind.SwitchPokemon
+                    .createMessage(switchPokemon((msg.Data as Tuple<Short, BattleState>)));
+            }
+
+            NetworkMessageKind.Update -> {
+                update(msg.Data as BattleRoundResult);
+                return null;
+            }
+
+            NetworkMessageKind.BattleEnded -> {
+                battleEnded(msg.Data as Int);
+                return null;
+            }
+
+            else ->
+                return null;
+
+        }
+    }
+
+    private val queue: Queue<PlayerInput> = Queue<PlayerInput>()
+    fun update(result: BattleRoundResult) {
+
+        MyLogger.debug("Received updates " + result.Actions?.size)
+        if (result.Actions == null) return;
+        for (act in result.Actions) {
+
+            SharedInformation.Instance.getLoggerService()
+                .log("added an action " + act.Kind + act.Data, SimulationBattleIO::class)
+            actions.add(act)
+            SharedInformation.Instance.getLoggerService()
+                .log("balance down " + balanceCounter + " " + player!!.playerId, SimulationBattleIO::class)
+            balanceCounter--
+        }
+
+
+        battleEnded(0)
+    }
+
+    public fun battleEnded(player: Int) {}
+    public val player: Player
+    public var balanceCounter = 0
+    public fun addInput(input: PlayerInput) {
+        queue.addLast(input)
 
     }
-   }
-   private val queue: Queue<PlayerInput> = Queue<PlayerInput>()
-    fun update(result: BattleRoundResult) {
-       
-       MyLogger.debug("Received updates "+result.Actions?.size)
-       if(result.Actions==null)return;
-       for(act in  result.Actions){
 
-           SharedInformation.Instance.getLoggerService().log("added an action " +act.Kind + act.Data,SimulationBattleIO::class)
-           actions.add(act)
-           SharedInformation.Instance.getLoggerService().log("balance down "+balanceCounter +" " +player!!.playerId,SimulationBattleIO::class)
-           balanceCounter--
-       }
+    public fun addInputDefault(targetPlayerId: Short) {
+        for(pkmn in battle.iterator(battle.getPlayerById(targetPlayerId),0,player.getPokemon(0).moves[0].target)){
+            queue.addLast(PlayerInput.AttackInput(0, 0, pkmn.player.playerId, 0, player!!.playerId))
+        }
 
 
-       battleEnded(0)
-   }
-   public  fun battleEnded(player:Int){}
-   public val player:Player
-   public var balanceCounter=0
-   public fun addInput(input: PlayerInput) {
-       queue.addLast(input)
 
-   }
-   public fun addInputDefault(targetPlayerId:Short) {
-       queue.addLast(PlayerInput.AttackInput(0, 0, targetPlayerId, 0, player!!.playerId))
+    }
 
-   }
+    fun requestPlayerInput(tuple: Tuple<Short, BattleState>): PlayerInput? {
+        MyLogger.debug("requestplayerinput  " + queue.size + " " + player!!.playerId)
 
-    fun requestPlayerInput(tuple:Tuple<Short, BattleState>): PlayerInput? {
-       MyLogger.debug("requestplayerinput  " + queue.size +" "+player!!.playerId)
+        if (queue.isEmpty) {
+            MyLogger.debug("empty queue " + player!!.playerId)
+            return null
+        } else {
+            return queue.removeLast()
+        }
+    }
 
-       if (queue.isEmpty) {
-           MyLogger.debug("empty queue "+player!!.playerId)
-           return null
-       } else {
-           return queue.removeLast()
-       }
-   }
 
-   
-
-    fun switchPokemon(tuple:Tuple<Short, BattleState> ): Short {
-       return 0
-   }
+    fun switchPokemon(tuple: Tuple<Short, BattleState>): Short {
+        return 0
+    }
 }
-public class TimeoutSemaphore(permits:Int):Semaphore(permits){
-    public fun acquireTimeout(permits:Int,timeout:Long,unit:TimeUnit){
-        val result=this.tryAcquire(permits,timeout, unit)
-        if(!result){
+
+public class TimeoutSemaphore(permits: Int) : Semaphore(permits) {
+    public fun acquireTimeout(permits: Int, timeout: Long, unit: TimeUnit) {
+        val result = this.tryAcquire(permits, timeout, unit)
+        if (!result) {
             throw IllegalStateException("Semaphore expired")
         }
     }
 }
+
 public class SimpleBattleSimulator {
-   
-    companion object{
-        private var lastPortNumber=0
-        private fun getNextPortNumber():Int{
+
+    companion object {
+        private var lastPortNumber = 0
+        private fun getNextPortNumber(): Int {
             return lastPortNumber++;
         }
-        private val MyLogger=LogManager.getLogger()
-    }
-    constructor(server:TestableServer){
-        this.server=server
-        this.meIO=server.meIO
-        this.enemyIO=server.enemyIO
-    }
-   
-    public constructor(server:TestableServer,me:Pokemon,enemy:Pokemon): this(server){
 
-        this.meIO.player.team[0]=me
-        this.enemyIO.player.team[0]=enemy
+        private val MyLogger = LogManager.getLogger()
     }
 
-    private val  rootAssertion:GroupedAssertion=ThisOrderAssertion()
-    private var tempAssertion=rootAssertion;
-   
-    private var meAttacking=true;
-    private var meClient:BattleClient?=null;
-    private var enemyClient:BattleClient?=null;
-    private val server:BattleServer;
-    private val meIO:SimulationBattleIO;
-    private val enemyIO:SimulationBattleIO;
-    public fun attack(playerId:Int):SimpleBattleSimulator{
-        MyLogger.debug("attack " +meAttacking)
-        val io= if (playerId==0)  meIO else enemyIO;
-        val targetPlayerId:Short= if (playerId==0)  1 else 0;
+    constructor(server: TestableServer) {
+        this.server = server
+        this.meIO = server.meIO
+        this.enemyIO = server.enemyIO
+    }
+
+    public constructor(server: TestableServer, me: Pokemon, enemy: Pokemon) : this(server) {
+
+        this.meIO.player.team[0] = me
+        this.enemyIO.player.team[0] = enemy
+    }
+
+    private val rootAssertion: GroupedAssertion = ThisOrderAssertion()
+    private var tempAssertion = rootAssertion;
+
+    private var meAttacking = true;
+    private var meClient: BattleClient? = null;
+    private var enemyClient: BattleClient? = null;
+    private val server: BattleServer;
+    private val meIO: SimulationBattleIO;
+    private val enemyIO: SimulationBattleIO;
+    public fun attack(playerId: Int): SimpleBattleSimulator {
+        MyLogger.debug("attack " + meAttacking)
+        val io = if (playerId == 0) meIO else enemyIO;
+        val targetPlayerId: Short = if (playerId == 0) 1 else 0;
         io.addInputDefault(targetPlayerId)
-        MyLogger.debug("attack finnished " +playerId)
-        
+        MyLogger.debug("attack finnished " + playerId)
+
         return this
     }
-    public fun attack():SimpleBattleSimulator{
-        attack( if (meAttacking)  0 else 1)
-        meAttacking=!meAttacking
+
+    public fun attack(): SimpleBattleSimulator {
+        attack(if (meAttacking) 0 else 1)
+        meAttacking = !meAttacking
         return this
     }
-    public fun assert(assertion:Assertion):SimpleBattleSimulator{
+
+    public fun assert(assertion: Assertion): SimpleBattleSimulator {
         tempAssertion.addAssertion(assertion)
         meIO.balanceCounter++;
         enemyIO.balanceCounter++;
         return this
     }
-    public fun assertNoDamage():SimpleBattleSimulator{
+
+    public fun assertNoDamage(): SimpleBattleSimulator {
         return assertDamage(0)
     }
-    public fun assertDamage(exact:Int):SimpleBattleSimulator{
+
+    public fun assertDamage(exact: Int): SimpleBattleSimulator {
         assert(DamageAssertion(exact))
-        MyLogger.debug("assert damage "+exact)
+        MyLogger.debug("assert damage " + exact)
         return this
     }
 
 
-   
-    public fun execute(expectedNumberOfActions:Int){
-       
-       while(meIO.actions.size<expectedNumberOfActions){
-        server.run(0)
-       }
-      
+    public fun execute(expectedNumberOfActions: Int) {
+
+        while (meIO.actions.size < expectedNumberOfActions) {
+            server.run(0)
+        }
+
         MyLogger.debug("test finnished");
-        val success=rootAssertion.check(meIO.actions)
-        if(!success){
+        val success = rootAssertion.check(meIO.actions)
+        if (!success) {
             throw Exception("Assertion not successful")
         }
-       
-        
+
+
     }
-    
+
 }
