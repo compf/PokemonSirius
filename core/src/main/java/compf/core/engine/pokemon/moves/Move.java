@@ -39,21 +39,21 @@ public class Move implements Serializable {
 	}
 
 	public enum TargetType {
-		adjacentAlly,
-		allySide,
-		allAdjacent,
-		any,
-		allies,
-		adjacentAllyOrSelf,
-		foeSide,
-		normal,
-		scripted,
-		all,
-		allyTeam,
-		self,
-		randomNormal,
-		adjacentFoe,
-		allAdjacentFoes;
+		AdjacentAlly,
+		AllySide,
+		AllAdjacent,
+		Any,
+		Allies,
+		AdjacentAllyOrSelf,
+		FoeSide,
+		Normal,
+		Scripted,
+		All,
+		AllyTeam,
+		Self,
+		RandomNormal,
+		AdjacentFoe,
+		AllAdjacentFoes;
 	}
 
 	public DamageInformation execute(Schedule.ScheduleItem item) {

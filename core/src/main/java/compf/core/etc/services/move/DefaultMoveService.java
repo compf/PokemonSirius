@@ -43,7 +43,14 @@ public class DefaultMoveService implements MoveService {
     public Iterator<Move> iterator() {
         return moveMap.values().iterator();
     }
-
+	private Move.TargetType getTargetType(String value){
+		for(var v: Move.TargetType.values()){
+			if(v.name().compareToIgnoreCase(value)==0){
+				return v;
+			}
+		}
+		return null;
+	}
 	private void initMoves(JsonObject fullData)  {
 		final MoveFactory factory = new MoveFactory();
 		for (String id:fullData.keySet()) {
@@ -60,7 +67,7 @@ public class DefaultMoveService implements MoveService {
 				accuracy=Byte.valueOf(accuracyStr);
 			}
 			int priority = object.get("priority").getAsInt();
-			Move.TargetType target = Enum.valueOf(Move.TargetType.class,object.get("target").getAsString());
+			Move.TargetType target = getTargetType(object.get("target").getAsString());
 			if (priority >= 0)
 				priority++; // Prevent Zero in priority
 			else

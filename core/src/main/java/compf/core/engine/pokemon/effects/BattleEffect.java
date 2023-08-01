@@ -22,6 +22,11 @@ public abstract class BattleEffect extends MyObject implements Serializable {
 
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return obj!=null && this.getClass()==obj.getClass();
+	}
+
 	public void roundBeginning(EffectParam param) {
 	}
 
