@@ -128,7 +128,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
             Player player = _players.get(_iterator_player_index);
             Pokemon pkmn = player.getPokemon(_iterator_pkmn_index);
             _iterator_pkmn_index++;
-            if (_iterator_pkmn_index >= player.getPokemonCount()) {
+            if (_iterator_pkmn_index >= _rule.PokemonPerPlayerOnField) {
                 _iterator_pkmn_index = 0;
                 _iterator_player_index++;
 
@@ -191,6 +191,15 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
     public void executeEffects(EffectTime time, EffectParam param) {
         for (Pokemon pkmn : this) {
             executeEffects(pkmn.getEffects(), time, param);
+        }
+        for(var eff:_globalEffects){
+            var global=(GlobalBattleEffect)eff;
+            var it=iterator(global.getSeenFromPlayer(),global.getSeenFromPosition(),global.getTargetType());
+            while(it.hasNext()){
+                global.setCurrPokemon(it.next());
+                executeEffects(_globalEffects, time, param);
+            }
+
         }
         executeEffects(_globalEffects, time, param);
 
@@ -386,7 +395,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
 
     }
 
-    public void addInput(PlayerInput inp) {
+    public BattleAction addInput(PlayerInput inp) {
         if (inp instanceof PlayerInput.AttackInput) {
             var att = (PlayerInput.AttackInput) inp;
             var player=getPlayerById(att.PlayerId);
@@ -398,11 +407,15 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
                 int defenderIndex = combine((short)pkmn.getPlayer().getPlayerId(), (short)indexOf(pkmn.getPlayer().getTeam(),pkmn));
                 move.init(_schedule, attackerIndex, defenderIndex);
             }
+            return null;
 
         } else if (inp instanceof PlayerInput.SwitchPokemonInput switch_inp) {
             Pokemon pkmn = getPlayerById(switch_inp.PlayerId).getPokemon(switch_inp.PokemonOldIndex);
-            switchPokemon(getPlayerById(switch_inp.PlayerId), switch_inp.PokemonOldIndex, switch_inp.PokemonNewIndex);
+            String message=switchPokemon(getPlayerById(switch_inp.PlayerId), switch_inp.PokemonOldIndex, switch_inp.PokemonNewIndex);
+            switch_inp.forceSwitch(this,pkmn.getPlayer(),switch_inp.PokemonOldIndex);
+            return new  BattleAction(1,message, BattleAction.ActionKind.SwitchPokemon,switch_inp.PokemonNewIndex);
         }
+        return  null;
 
     }
 

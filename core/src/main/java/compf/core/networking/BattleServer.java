@@ -28,6 +28,7 @@ public class BattleServer extends BaseServer implements SteppableHost {
     protected HashMap<Short, Player> _players = new HashMap<>();
     protected ArrayList<Short> _playerIds = new ArrayList<>();
     protected HashMap<Short, List<Short>> _gamePlayers = new HashMap<>();
+    protected HashMap<Short,Short> _inputCounter=new HashMap();
 
     public BattleServer() {
     }
@@ -85,6 +86,7 @@ public class BattleServer extends BaseServer implements SteppableHost {
                 _gamePlayers.get(gameId).add(id);
                 _battles.putIfAbsent((Short) idObj, battle);
                 _isPlaying.put(id, Boolean.TRUE);
+                _inputCounter.put(id,(short)0);
                 writeObject(_pipes.get(idObj),
                         new NetworkMessage(NetworkMessageKind.RequestPlayerInformation, null));
             }
@@ -181,10 +183,12 @@ public class BattleServer extends BaseServer implements SteppableHost {
                     for (var inp : inputs) {
                         MyLogger.debug("input received from " + inp.PlayerId);
                         var battle = _battles.get(inp.PlayerId);
+                        _inputCounter.put(gameId,(short)(_inputCounter.get(gameId)+1));
                         battle.addInput(inp);
                         var rule = _rules.get(inp.PlayerId);
                         // TODO what if pokemon field is vacant?
-                        if (battle.allPlayerGaveInput(getNumberEnabledActors(gameId))) {
+                        if ( _inputCounter.get(gameId)>=getNumberEnabledActors(gameId)) {
+                            _inputCounter.put(gameId,(short)0);
                             battle.incrementRound();
                             var state = battle.executeSchedule(interrupt);
                             MyLogger.debug("All players submitted input " + battle.getRound());

@@ -4,6 +4,7 @@ import compf.core.engine.pokemon.PokemonStat;
 import compf.core.engine.pokemon.effects.*;
 import compf.core.engine.pokemon.effects.moveSpecific.FlyingEffect;
 import compf.core.engine.pokemon.effects.moveSpecific.ProtectionEffect;
+import compf.core.engine.pokemon.effects.offensive.StealthRockEffect;
 import compf.core.engine.pokemon.effects.stateConditions.BurningStateCondition;
 import compf.core.engine.pokemon.effects.stateConditions.FrozenStateCondition;
 import compf.core.engine.pokemon.effects.stateConditions.ParalyzedStateCondition;
@@ -35,6 +36,8 @@ public class MoveFactory {
 				return new MultipleAttacksMove(mv, 3, 8);
 			case 182:
 				return new PokemonEffectMove(mv, ProtectionEffect.class,null,100);
+			case 446: // Tarnsteine
+				return new GlobalEffectMove(mv, StealthRockEffect.class);
 
 			default:
 				return mv;

@@ -1,16 +1,18 @@
 package compf.core.engine.pokemon.moves;
 
+import compf.core.engine.Player;
 import compf.core.engine.pokemon.effects.GlobalBattleEffect;
+import compf.core.etc.MyObject;
 
 import java.io.Serial;
 import java.lang.reflect.InvocationTargetException;
 
 public class GlobalEffectMove extends Move {
-	private Class<?>[] _types;
+	private Class<?> _gobalEffectType;
 
-	public GlobalEffectMove(Move copy, Class<?>... effectTypes) {
+	public GlobalEffectMove(Move copy, Class<?> effectType) {
 		super(copy);
-		_types = effectTypes;
+		this._gobalEffectType=effectType;
 	}
 
 	/**
@@ -22,18 +24,18 @@ public class GlobalEffectMove extends Move {
 	@Override
 	public DamageInformation execute(Schedule.ScheduleItem item) {
 		DamageInformation dmgInf = super.execute(item);
-		for (Class<?> type : _types) {
-			GlobalBattleEffect effect = null;
-			try {
-				var a = (Object) type.getDeclaredConstructor().newInstance();
-				effect = (GlobalBattleEffect) a;
-			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-				e.printStackTrace();
-			}
 
-			dmgInf.getEffects().add(effect);
+		GlobalBattleEffect effect = null;
+		try {
+			var a = (Object) _gobalEffectType.getDeclaredConstructor(Move.TargetType.class, Player.class, int.class).newInstance(this.getTarget(),dmgInf.getDefender().getPlayer(), MyObject.indexOf(dmgInf.getDefender().getPlayer().getTeam(), dmgInf.getDefender()));
+			effect = (GlobalBattleEffect) a;
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+				 | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
 		}
+
+		dmgInf.getEffects().add(effect);
+
 
 		return dmgInf;
 	}

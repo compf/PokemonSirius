@@ -1,5 +1,6 @@
 import com.badlogic.gdx.utils.Queue
 import compf.core.engine.*
+import compf.core.engine.PlayerInput.SwitchPokemonInput
 import compf.core.engine.pokemon.Pokemon
 import compf.core.etc.services.SharedInformation
 import compf.core.networking.BattleClient
@@ -92,7 +93,7 @@ public class SimulationBattleIO : SimpleIOInterface {
             MyLogger.debug("empty queue " + player!!.playerId)
             return null
         } else {
-            return queue.removeLast()
+            return queue.removeFirst()
         }
     }
 
@@ -157,6 +158,17 @@ public class SimpleBattleSimulator {
         attack(if (meAttacking) 0 else 1)
         meAttacking = !meAttacking
         return this
+    }
+    fun switch(to:Int):SimpleBattleSimulator{
+        if(meAttacking){
+           meIO.addInput(SwitchPokemonInput(0,0,1))
+        }else {
+            enemyIO.addInput(SwitchPokemonInput(1,0,1))
+        }
+        meAttacking = !meAttacking
+        return this
+
+
     }
 
     public fun assert(assertion: Assertion): SimpleBattleSimulator {

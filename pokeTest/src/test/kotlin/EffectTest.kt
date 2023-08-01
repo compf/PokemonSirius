@@ -77,4 +77,20 @@ class EffectTest  {
 
         Assertions.assertEquals(1, enemy.getPokemon(0).level)
     }
+
+    @Test
+    fun testStealthRock() {
+        var gen= newGenerator()
+        val STEALTH_ROCK_ID=446
+
+        val me= Player(0,"Me", arrayOf(PikachuCreator().setMoveId(STEALTH_ROCK_ID).setEV(EVDistribution.ATT_SPEED).create(),null,null,null,null,null))
+
+        val enemyPokemons= arrayOf(PikachuCreator().create(),PikachuCreator().setLevel(1).create(),null,null,null,null)
+        val enemy= Player(1,"Enemy",enemyPokemons)
+        val sim= createSimulator(me,enemy)
+
+        sim.attack().attack().attack().assertNoDamage().assertNoDamage().assertNoDamage().switch(1).execute(3)
+
+        assert(enemy.getPokemon(0).currHP<enemy.getPokemon(0).maxHP)
+    }
 }

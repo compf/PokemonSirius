@@ -65,6 +65,7 @@ public class TestableServer:BattleServer{
 
         this._playerIds.add(0)
         this._playerIds.add(1)
+        this._inputCounter[0]=0
 
         val battle=PokemonBattle(rule)
         this._battles.put(0, battle)

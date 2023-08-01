@@ -39,7 +39,7 @@ public class TeamRelationChecker {
                 onlyValid= seenFromPlayer.isAlly(otherPlayer) && Math.abs(seenFromPos-otherPokemonPos)<=1 ; ;;
                 break;
             case FoeSide:
-                oneValid= !seenFromPlayer.isAlly(otherPlayer);
+                oneValid= seenFromPlayer.isAlly(otherPlayer);
                 break;
             case Normal, Self:
                 onlyValid=seenFromPlayer==otherPlayer && seenFromPos==otherPokemonPos;

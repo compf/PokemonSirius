@@ -4,10 +4,10 @@ import compf.core.engine.Player
 import compf.core.engine.PokemonBattle.PokemonComparator
 import compf.core.engine.pokemon.EVDistribution
 import compf.core.engine.pokemon.Pokemon
+import compf.core.engine.pokemon.effects.RandomSwapPokemonEffect
+import compf.core.engine.pokemon.effects.moveSpecific.ProtectionEffect
 import compf.core.engine.pokemon.effects.stateConditions.BurningStateCondition
 import compf.core.engine.pokemon.effects.stateConditions.ParalyzedStateCondition
-import compf.core.engine.pokemon.effects.moveSpecific.ProtectionEffect
-import compf.core.engine.pokemon.effects.RandomSwapPokemonEffect
 import compf.core.engine.pokemon.moves.Move
 import compf.core.engine.pokemon.moves.PokemonEffectMove
 import compf.core.engine.pokemon.moves.Schedule
@@ -42,7 +42,7 @@ public fun createSimulator(mePlayer: Player,enemPlayer:Player):SimpleBattleSimul
 fun initAll(){
         SharedInformation.Instance.init(
                 DefaultPokedexEntryService("pikachu.json"),
-                DefaultMoveService("kanto_moves.json"),null,
+                DefaultMoveService("moves.json"),null,
                 StubLearnsetService(),
                 NoLoggerService()
         )
