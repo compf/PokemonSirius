@@ -77,8 +77,8 @@ public class SimulationBattleIO : SimpleIOInterface {
 
     }
 
-    public fun addInputDefault(targetPlayerId: Short) {
-        for(pkmn in battle.iterator(battle.getPlayerById(targetPlayerId),0,player.getPokemon(0).moves[0].target)){
+    public fun addInputDefault(sourcePlayerId: Short) {
+        for(pkmn in battle.iterator(battle.getPlayerById(sourcePlayerId),0,player.getPokemon(0).moves[0].target)){
             queue.addLast(PlayerInput.AttackInput(0, 0, pkmn.player.playerId, 0, player!!.playerId))
         }
 

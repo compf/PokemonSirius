@@ -71,12 +71,12 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
         private Pokemon nextPokemon;
         private boolean hasNextPokemon;
         private boolean stop=false;
-        private int targetTypePos;
+        private int attackerPos;
         private Move.TargetType targetType;
-        private Player targetTypePlayer;
-        public ConditionalBattleIterator(Player player, int pos, Move.TargetType targetType){
-            targetTypePlayer=player;
-            targetTypePos=pos;
+        private Player attackerPlayer;
+        public ConditionalBattleIterator(Player attackerPlayer, int attackerPos, Move.TargetType targetType){
+            this.attackerPlayer=attackerPlayer;
+            this.attackerPos=attackerPos;
             this.targetType=targetType;
         }
         @Override
@@ -92,7 +92,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
 
         public boolean isValid(Pokemon pkmn) {
 
-            var result=TeamRelationChecker.isTargetApplicable(targetType,targetTypePlayer,targetTypePos,pkmn);
+            var result=TeamRelationChecker.isTargetApplicable(targetType,attackerPlayer,attackerPos,pkmn);
             if(result== TeamRelationChecker.TeamRelationResult.Only){
                 stop=true;
             }
@@ -137,8 +137,8 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
         }
     }
 
-    public Iterator<Pokemon> iterator(Player targetPlayer,int targetPos, Move.TargetType type) {
-        return new ConditionalBattleIterator(targetPlayer,targetPos,type);
+    public Iterator<Pokemon> iterator(Player attackerPlayer,int attackerPos, Move.TargetType type) {
+        return new ConditionalBattleIterator(attackerPlayer,attackerPos,type);
     }
     public Iterator<Pokemon> iterator() {
         return new ConditionalBattleIterator(null,0,null);
@@ -194,7 +194,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
         }
         for(var eff:_globalEffects){
             var global=(GlobalBattleEffect)eff;
-            var it=iterator(global.getSeenFromPlayer(),global.getSeenFromPosition(),global.getTargetType());
+            var it=iterator(global.getAttackerPlayer(),global.getAttackerPos(),global.getTargetType());
             while(it.hasNext()){
                 global.setCurrPokemon(it.next());
                 executeEffects(_globalEffects, time, param);

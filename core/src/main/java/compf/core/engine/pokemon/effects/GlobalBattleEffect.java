@@ -1,15 +1,14 @@
 package compf.core.engine.pokemon.effects;
 
 import compf.core.engine.Player;
-import compf.core.engine.PokemonBattle;
 import compf.core.engine.TeamRelationChecker;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.moves.Move;
 
 public abstract class GlobalBattleEffect extends BattleEffect {
 
-    private Player seenFromPlayer;
-    private int seenFromPosition;
+    private Player attackerPlayer;
+    private int attackerPos;
     private Move.TargetType targetType;
     private Pokemon currPokemon;
 
@@ -21,12 +20,12 @@ public abstract class GlobalBattleEffect extends BattleEffect {
         currPokemon=pkmn;
     }
 
-    public Player getSeenFromPlayer() {
-        return seenFromPlayer;
+    public Player getAttackerPlayer() {
+        return attackerPlayer;
     }
 
-    public int getSeenFromPosition() {
-        return seenFromPosition;
+    public int getAttackerPos() {
+        return attackerPos;
     }
 
     public Move.TargetType getTargetType() {
@@ -34,8 +33,8 @@ public abstract class GlobalBattleEffect extends BattleEffect {
     }
 
     public GlobalBattleEffect(Move.TargetType type, Player player, int pokemonPos) {
-        seenFromPosition=pokemonPos;
-        seenFromPlayer=player;
+        attackerPos =pokemonPos;
+        attackerPlayer =player;
         targetType=type;
     }
 
@@ -44,7 +43,7 @@ public abstract class GlobalBattleEffect extends BattleEffect {
         if(obj==null)return false;
         if(!super.equals(obj))return false;
         var converted=(GlobalBattleEffect)obj;
-        return targetType==converted.targetType&& (TeamRelationChecker.isTargetApplicable(targetType,seenFromPlayer,seenFromPosition,converted.getCurrPokemon()))!= TeamRelationChecker.TeamRelationResult.None;
+        return targetType==converted.targetType&& (TeamRelationChecker.isTargetApplicable(targetType, attackerPlayer, attackerPos,converted.getCurrPokemon()))!= TeamRelationChecker.TeamRelationResult.None;
 
     }
 }

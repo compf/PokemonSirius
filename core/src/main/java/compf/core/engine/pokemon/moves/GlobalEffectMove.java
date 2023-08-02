@@ -27,7 +27,7 @@ public class GlobalEffectMove extends Move {
 
 		GlobalBattleEffect effect = null;
 		try {
-			var a = (Object) _gobalEffectType.getDeclaredConstructor(Move.TargetType.class, Player.class, int.class).newInstance(this.getTarget(),dmgInf.getDefender().getPlayer(), MyObject.indexOf(dmgInf.getDefender().getPlayer().getTeam(), dmgInf.getDefender()));
+			var a = (Object) _gobalEffectType.getDeclaredConstructor(Move.TargetType.class, Player.class, int.class).newInstance(this.getTarget(),dmgInf.getAttacker().getPlayer(), MyObject.indexOf(dmgInf.getAttacker().getPlayer().getTeam(), dmgInf.getAttacker()));
 			effect = (GlobalBattleEffect) a;
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 				 | InvocationTargetException | NoSuchMethodException | SecurityException e) {
