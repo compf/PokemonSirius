@@ -3,7 +3,7 @@ package teambuilder
 
 import compf.core.engine.pokemon.*
 import compf.core.engine.pokemon.effects.BattleEffectFactory
-import compf.core.engine.pokemon.effects.StubEffect
+import compf.core.engine.pokemon.effects.StubPokemonEffect
 import compf.core.engine.pokemon.effects.offensive.ChoiceItemEffect
 import compf.core.engine.pokemon.moves.Move
 import compf.core.etc.PokemonConstants
@@ -171,13 +171,13 @@ class ThreatIterator(private val mePokemon: Pokemon): CountingStyleIterator<Thre
            POKEMON_Ability_EFFECT->{
 
                    arrayOf(
-                       StubEffect(),
+                       StubPokemonEffect(null),
 
                    ).iterator()
            }
            POKEMON_ITEM_EFFECT ->{
                arrayOf(
-                   StubEffect(),
+                   StubPokemonEffect(null),
                    ChoiceItemEffect(
                        null,
                        threatData.otherCategory!!.getBestOffensiveStat(threatData.otherEntry!!),

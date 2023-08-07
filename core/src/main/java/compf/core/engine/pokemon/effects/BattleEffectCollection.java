@@ -17,7 +17,9 @@ public class BattleEffectCollection extends ArrayList<BattleEffect> {
     }
     public void initializeAllNotInitialized(EffectParam param){
         while(notInitialized.size()>0){
-            notInitialized.remove().init(param);
+            var item=notInitialized.remove();
+            item.initOrSwitchedIn(param);
+            item.init(param);
         }
     }
     @Override

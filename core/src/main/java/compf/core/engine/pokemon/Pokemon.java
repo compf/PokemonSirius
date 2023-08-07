@@ -62,6 +62,10 @@ public class Pokemon extends PokedexEntry {
         return _stats[PokemonStat.HP];
     }
 
+    public void resetStatChanges() {
+        Arrays.fill(_statsFactors, 0);
+    }
+
     public enum Gender {
         Male, Female
     }
@@ -261,8 +265,8 @@ public class Pokemon extends PokedexEntry {
     }
 
     public void changeStatStage(int index, int factor) {
-        if (_statsFactors[index - 1] > -6 && _statsFactors[index - 1] < 6)
-            _statsFactors[index - 1] += factor;
+        if (_statsFactors[index ] > -6 && _statsFactors[index] < 6)
+            _statsFactors[index ] += factor;
 
     }
 

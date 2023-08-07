@@ -15,6 +15,7 @@ public class DamageInformation implements Serializable, Cloneable {
 	private static final long serialVersionUID = 1L;
 	private int _dmg, _moveId;
 	private double _effectiveness;
+	private boolean _isEnabled=true;
 	private Pokemon _attacker, _defender;
 	private LinkedList<String> _messages = new LinkedList<>();
 	private BattleEffectCollection _effects = new BattleEffectCollection();
@@ -36,6 +37,7 @@ public class DamageInformation implements Serializable, Cloneable {
 	public void kill() {
 		_dmg = 0;
 		_effects.clear();
+		 _isEnabled = false;
 
 	}
 
@@ -110,4 +112,7 @@ public class DamageInformation implements Serializable, Cloneable {
 		return builder.toString();
 	}
 
+    public boolean isEnabled() {
+		return  _isEnabled;
+    }
 }

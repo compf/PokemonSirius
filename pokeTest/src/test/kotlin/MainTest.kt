@@ -155,7 +155,7 @@ public open class MainTest{
                 gen.addUnchangeableDeterminsticValue(PokemonEffectMove::class.java,true)
 
                 val simulator=createSimulator(mePokemon, enemyPokemon)
-                val numberTurns=4
+                val numberTurns=5
                 for(i in 1..numberTurns){
                         simulator.attack().attack().assertNoDamage().assertDamage(if (i==numberTurns) 77 else 0)
                 }

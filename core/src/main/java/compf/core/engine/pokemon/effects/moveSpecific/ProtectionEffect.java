@@ -9,6 +9,7 @@ import compf.core.etc.services.SharedInformation;
 
 public class ProtectionEffect extends PokemonBattleEffect {
     private int _perc = 255;
+    private boolean _protection_enabled=true;
 
     public ProtectionEffect(Pokemon pkmn) {
         super(pkmn);
@@ -20,13 +21,14 @@ public class ProtectionEffect extends PokemonBattleEffect {
         var additionalData=(EffectParam.AdditionalDirectDamageData)param.additionalData();
         final int PROTECTION_ID = 182;
         if (_perc>0 && SharedInformation.Instance.getRNG().randomNumber(_perc, this.getClass()) > _perc) {
-            this.disable();
+           _protection_enabled=false;
         } else {
             if (additionalData.getDamageInformation().getMoveId() == PROTECTION_ID) {
                 _perc /= 2;
             }
             else{
-                this.disable();
+                _protection_enabled=false;
+             this.disable();
             }
 
         }
@@ -40,7 +42,7 @@ public class ProtectionEffect extends PokemonBattleEffect {
     @Override
     public void defend(EffectParam param) {
 
-        if(isMeDefending(param)){
+        if(isMeDefending(param) && _protection_enabled){
             param.additionalData().killFully();
             addMessage("Protect prevents damage");
         }

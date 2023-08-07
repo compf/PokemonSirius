@@ -8,6 +8,8 @@ import compf.core.engine.pokemon.effects.BattleEffectFactory
 import compf.core.engine.pokemon.effects.EffectName
 import compf.core.engine.pokemon.effects.EffectParam
 import compf.core.engine.pokemon.effects.PokemonBattleEffect
+import compf.core.engine.pokemon.effects.defensive.AssaultVestItem
+import compf.core.engine.pokemon.effects.offensive.StealthRockEffect
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -92,5 +94,21 @@ class EffectTest  {
         sim.attack().attack().attack().assertNoDamage().assertNoDamage().assertNoDamage().switch(1).execute(3)
 
         assert(enemy.getPokemon(0).currHP<enemy.getPokemon(0).maxHP)
+    }
+
+    @Test
+    fun testAssaultVest() {
+        var gen= newGenerator()
+        val STEALTH_ROCK_ID=446
+        val THUNDERBOLT_ID=85
+        val me=PikachuCreator().setMoveId(THUNDERBOLT_ID).setEV(EVDistribution.ATT_SPEED).create()
+        val enemy=PikachuCreator().setMoveId( STEALTH_ROCK_ID).create()
+        enemy.addEffect(AssaultVestItem(enemy))
+        val sim= createSimulator(me,enemy)
+
+        sim.attack().attack().assertDamage(39).assertNoDamage().execute(2)
+         assert(!sim.hasEffect(StealthRockEffect::class.java), { "Stealth rock effect may not be activated" })
+
+
     }
 }

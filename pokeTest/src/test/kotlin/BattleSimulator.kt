@@ -1,10 +1,11 @@
+
 import com.badlogic.gdx.utils.Queue
 import compf.core.engine.*
 import compf.core.engine.PlayerInput.SwitchPokemonInput
 import compf.core.engine.pokemon.Pokemon
+import compf.core.engine.pokemon.effects.BattleEffect
 import compf.core.etc.services.SharedInformation
 import compf.core.networking.BattleClient
-import compf.core.networking.BattleServer
 import compf.core.networking.SimpleIOInterface
 import org.apache.logging.log4j.LogManager
 import java.util.concurrent.Semaphore
@@ -122,7 +123,9 @@ public class SimpleBattleSimulator {
 
         private val MyLogger = LogManager.getLogger()
     }
-
+    fun hasEffect(effect: Class<out BattleEffect>):Boolean{
+        return server.hasEffect(effect)
+    }
     constructor(server: TestableServer) {
         this.server = server
         this.meIO = server.meIO
@@ -141,7 +144,7 @@ public class SimpleBattleSimulator {
     private var meAttacking = true;
     private var meClient: BattleClient? = null;
     private var enemyClient: BattleClient? = null;
-    private val server: BattleServer;
+    private val server: TestableServer;
     private val meIO: SimulationBattleIO;
     private val enemyIO: SimulationBattleIO;
     public fun attack(playerId: Int): SimpleBattleSimulator {

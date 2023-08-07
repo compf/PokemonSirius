@@ -2,6 +2,7 @@
 
 import compf.core.engine.*
 import compf.core.engine.pokemon.Pokemon
+import compf.core.engine.pokemon.effects.BattleEffect
 import compf.core.networking.*
 import java.util.*
 import kotlin.collections.ArrayDeque
@@ -48,6 +49,9 @@ public class TestableServer:BattleServer{
     private val nodes:Array<SteppableHost>
      val meIO:SimulationBattleIO
      val enemyIO:SimulationBattleIO
+     fun hasEffect(effect:Class<out BattleEffect> ):Boolean{
+        return _battles.get(0)!!.globalEffects.hasEffect(effect)
+     }
     constructor( dummyMePokemon:Pokemon,  dummyEnemyPokemon:Pokemon): this(Player(0,"Me",arrayOf(dummyMePokemon,null,null,null,null,null)),Player(1,"Enemy",arrayOf(dummyEnemyPokemon,null,null,null,null,null))){
 
     }

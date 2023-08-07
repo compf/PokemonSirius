@@ -81,7 +81,8 @@ public abstract class BattleEffect extends MyObject implements Serializable {
 	}
 	public void statsModified(EffectParam param) {
 	}
-
+	public void initOrSwitchedIn(EffectParam param) {
+	}
 	protected void modifyStats(EffectParam param, Pokemon affected, Pokemon causing, int stat, int by){
 		param.eventExecutor().executeEffects(EffectTime.STATS_MODIFIED,new EffectParam(param.schedule(),param.interrupt(),param.rule(),param.eventExecutor(),new EffectParam.AdditionalStatsModifyingData(causing,affected,stat,by)));
 		affected.changeStatStage(stat,by);
