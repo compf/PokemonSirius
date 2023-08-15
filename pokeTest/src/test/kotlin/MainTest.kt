@@ -4,6 +4,9 @@ import compf.core.engine.Player
 import compf.core.engine.PokemonBattle.PokemonComparator
 import compf.core.engine.pokemon.EVDistribution
 import compf.core.engine.pokemon.Pokemon
+import compf.core.engine.pokemon.effects.AbilityEffectFactory
+import compf.core.engine.pokemon.effects.EffectName
+import compf.core.engine.pokemon.effects.ItemEffectFactory
 import compf.core.engine.pokemon.effects.RandomSwapPokemonEffect
 import compf.core.engine.pokemon.effects.moveSpecific.ProtectionEffect
 import compf.core.engine.pokemon.effects.stateConditions.BurningStateCondition
@@ -20,6 +23,8 @@ import compf.core.etc.services.pokemon.DefaultPokedexEntryService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import org.springframework.context.annotation.Bean
+
 public class TestInstance(public val simulator: SimpleBattleSimulator,public val server: TestableServer,public val mePokemon:Pokemon,public val enemyPokemon: Pokemon){
 
 }
@@ -36,8 +41,26 @@ public fun createInstance(mePlayer: Player,enemPlayer:Player):TestInstance{
 public fun createSimulator(mePokemon: Pokemon,enemyPokemon:Pokemon):SimpleBattleSimulator{
         return createInstance(mePokemon, enemyPokemon).simulator
 }
+const  val IGNORE="%IGNORE%"
 public fun createSimulator(mePlayer: Player,enemPlayer:Player):SimpleBattleSimulator{
         return createInstance(mePlayer, enemPlayer).simulator
+
+
+}
+fun loadAllEffectNames(classes:Array<Class<out Any>>):MutableSet<String> {
+        val result:MutableSet<String> = mutableSetOf()
+        for(cls in classes){
+               for(m in  cls.declaredMethods){
+                       if(m.name=="init" || m.name.startsWith("get"))continue
+                     val bean= m.getDeclaredAnnotation<Bean>(Bean::class.java) ?: throw Exception("Bean ${m.name} does not exists")
+                       for(n in  bean.name){
+                              if(n!=IGNORE){
+                                      result.add(n)
+                              }
+                      }
+                }
+        }
+        return result
 }
 fun initAll(){
         SharedInformation.Instance.init(
@@ -46,6 +69,16 @@ fun initAll(){
                 StubLearnsetService(),
                 NoLoggerService()
         )
+        testEffectImplementation()
+
+}
+fun testEffectImplementation(){
+        val implemented=loadAllEffectNames(arrayOf(AbilityEffectFactory::class.java,ItemEffectFactory::class.java))
+        val tested=loadAllEffectNames(arrayOf(MainTest::class.java,EffectTest::class.java))
+        if(!tested.containsAll( implemented)){
+                throw IllegalStateException("Not all implemented effects are tested or vice versa \n ${implemented-tested} ")
+        }
+
 }
 public open class MainTest{
         companion object{
@@ -71,6 +104,7 @@ public open class MainTest{
         }
         
         @Test
+        @Bean(IGNORE)
         public fun testPokemonStats(){
 
         val pkmn= PikachuCreator().create()
@@ -84,6 +118,7 @@ public open class MainTest{
         val CUT_ID=15;
         val SPLASH_ID=150;
         @Test
+        @Bean(name= [IGNORE])
         public fun assertSimpleBattleRandomPriority(){
                 newGenerator()
                 val mePokemon= PikachuCreator().cutMove().create()
@@ -91,6 +126,7 @@ public open class MainTest{
                 createSimulator(mePokemon, enemyPokemon).attack().attack().assertNoDamage().assertDamage(77).execute(2)
         }
         @Test
+        @Bean(name=[IGNORE])
         public fun assertBattleWithDifferentSpeed(){
                newGenerator()
                 val mePokemon= PikachuCreator().cutMove().create()
@@ -100,6 +136,7 @@ public open class MainTest{
                 simulator.attack().attack().assertNoDamage().assertDamage(77).execute(2)
         }
         @Test
+        @Bean(name=[IGNORE])
         public fun testBurning(){
                 newGenerator()
 
@@ -115,6 +152,7 @@ public open class MainTest{
                 simulator.attack().attack().assertNoDamage().assertNoDamage().assert(HPModifiedAssertion(factor)).execute(3)
         }
         @Test
+        @Bean(name=[EffectName.Fly])
         public fun assertBattleWithFlying(){
                 newGenerator()
 
@@ -126,6 +164,7 @@ public open class MainTest{
                 simulator.attack().attack().attack().attack().assertNoDamage().assertNoDamage().assertDamage( 69).assertDamage(77).execute(4)
         }
         @Test
+        @Bean(name=[IGNORE])
         public fun assertBattleWithParalysis(){
                 val gen= newGenerator()
 
@@ -146,6 +185,7 @@ public open class MainTest{
         }
 
         @Test
+        @Bean (name=[EffectName.Protect])
         public fun  assertBattleWithProtect(){
                 val  PROTECT_ID=182;
                 val mePokemon= PikachuCreator().setMoveId(PROTECT_ID).setEV(EVDistribution.ATT_SPEED).create()
@@ -163,6 +203,7 @@ public open class MainTest{
         }
 
         @Test
+        @Bean(name=[IGNORE])
         fun testForcedSwitching(){
                var gen= newGenerator()
                 gen.addUnchangeableDeterminsticValue(PokemonEffectMove::class.java,true)

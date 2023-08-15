@@ -12,7 +12,10 @@ public class LeftoverItemEffect extends ItemEffect {
 
     @Override
     public void roundBeginning(EffectParam param) {
+        int hpBefore=getPokemon().getCurrHP();
         getPokemon().modifyCurrHp(1.25);
+        int hpAfter=getPokemon().getCurrHP();
         addMessage("Leftover healed " + getPokemon());
+        _additionalData=hpBefore+" "+hpAfter;
     }
 }

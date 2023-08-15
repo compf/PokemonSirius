@@ -6,6 +6,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 public class EffectName {
     //region  A
+    public static final String AssaultVest="Assault Vest";
     //endregion
     //region  B
     public static final String BoosterEnergy = "Booster Energy";
@@ -74,6 +75,7 @@ public class EffectName {
 
     //region  S
     public static final String Sandstorm = "Sandstorm";
+    public static  final String StealthRock="Stealth Rock";
     //endregion
 
 

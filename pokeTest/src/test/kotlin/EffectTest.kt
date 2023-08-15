@@ -9,10 +9,12 @@ import compf.core.engine.pokemon.effects.EffectName
 import compf.core.engine.pokemon.effects.EffectParam
 import compf.core.engine.pokemon.effects.PokemonBattleEffect
 import compf.core.engine.pokemon.effects.defensive.AssaultVestItem
+import compf.core.engine.pokemon.effects.defensive.LeftoverItemEffect
 import compf.core.engine.pokemon.effects.offensive.StealthRockEffect
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import org.springframework.context.annotation.Bean
 import kotlin.test.assertEquals
 
 class EffectTest  {
@@ -25,6 +27,7 @@ class EffectTest  {
         }
     }
     @Test
+    @Bean(name=[EffectName.Protosynthesis,EffectName.BoosterEnergy])
     fun testProtosynthesis(){
         MainTest.newGenerator()
         val me=PikachuCreator().create()
@@ -38,6 +41,7 @@ class EffectTest  {
 
     }
     @Test
+    @Bean(name=[EffectName.FocusSlash])
     fun testFocusSlash(){
         MainTest.newGenerator()
         val me=PikachuCreator().setLevel(1).create()
@@ -48,6 +52,7 @@ class EffectTest  {
         assertEquals(1,me.currHP)
     }
     @Test
+    @Bean(name=[EffectName.LifeOrb])
     fun testLifeOrb(){
         MainTest.newGenerator()
         val me=PikachuCreator().cutMove().setEV(EVDistribution.ATT_SPEED).create();
@@ -58,6 +63,7 @@ class EffectTest  {
         assertEquals((0.9*me.maxHP).toInt(),me.currHP)
     }
     @Test
+    @Bean(name=[EffectName.EjectPack])
     fun testEjectPack(){
         class DelayedStatDecrease(pkmn: Pokemon?) : PokemonBattleEffect(pkmn) {
             override fun roundEnding(param: EffectParam?) {
@@ -81,6 +87,7 @@ class EffectTest  {
     }
 
     @Test
+    @Bean(name=[EffectName.StealthRock])
     fun testStealthRock() {
         var gen= newGenerator()
         val STEALTH_ROCK_ID=446
@@ -97,6 +104,7 @@ class EffectTest  {
     }
 
     @Test
+    @Bean(name=[EffectName.AssaultVest])
     fun testAssaultVest() {
         var gen= newGenerator()
         val STEALTH_ROCK_ID=446
@@ -108,6 +116,21 @@ class EffectTest  {
 
         sim.attack().attack().assertDamage(39).assertNoDamage().execute(2)
          assert(!sim.hasEffect(StealthRockEffect::class.java), { "Stealth rock effect may not be activated" })
+
+
+    }
+    @Test
+    @Bean(name=[EffectName.Leftovers])
+    fun testLeftOvers() {
+        var gen= newGenerator()
+        val me=PikachuCreator().create()
+        val enemy=PikachuCreator().create()
+        me.modifyCurrHp(me.currHP-1)
+        me.addEffect(LeftoverItemEffect(me))
+        val sim= createSimulator(me,enemy)
+
+        sim.attack().assertNoDamage().attack().assertNoDamage().assert(HPModifiedAssertion(1.175)) .execute(3)
+        assert(me.currHP>1) { "HP is ${me.currHP}" }
 
 
     }

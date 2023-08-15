@@ -255,8 +255,11 @@ public class Pokemon extends PokedexEntry {
 
     public void modifyCurrHp(double factor) {
 
-        if (factor > 1 && _cHp < getStat(HP) || factor < 1) {
-            _cHp *= factor;
+        if (factor > 1 && _cHp < getStat(HP) ) {
+            _cHp=Math.max((int)(_cHp * factor),_cHp+1);
+        }
+        else if(factor<1 && _cHp>0){
+            _cHp=Math.min((int)(_cHp * factor),_cHp-1);
         }
     }
 

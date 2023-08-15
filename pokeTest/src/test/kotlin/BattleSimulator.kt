@@ -1,5 +1,4 @@
 
-import com.badlogic.gdx.utils.Queue
 import compf.core.engine.*
 import compf.core.engine.PlayerInput.SwitchPokemonInput
 import compf.core.engine.pokemon.Pokemon
@@ -51,7 +50,7 @@ public class SimulationBattleIO : SimpleIOInterface {
         }
     }
 
-    private val queue: Queue<PlayerInput> = Queue<PlayerInput>()
+    private val queue: ArrayDeque<PlayerInput> = ArrayDeque<PlayerInput>()
     fun update(result: BattleRoundResult) {
 
         MyLogger.debug("Received updates " + result.Actions?.size)
@@ -90,7 +89,7 @@ public class SimulationBattleIO : SimpleIOInterface {
     fun requestPlayerInput(tuple: Tuple<Short, BattleState>): PlayerInput? {
         MyLogger.debug("requestplayerinput  " + queue.size + " " + player!!.playerId)
 
-        if (queue.isEmpty) {
+        if (queue.isEmpty()) {
             MyLogger.debug("empty queue " + player!!.playerId)
             return null
         } else {

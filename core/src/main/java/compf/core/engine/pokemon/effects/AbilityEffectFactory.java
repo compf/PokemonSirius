@@ -2,6 +2,8 @@ package compf.core.engine.pokemon.effects;
 
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.effects.offensive.ProtosynthesisEffect;
+import compf.core.engine.pokemon.effects.offensive.StealthRockEffect;
+import compf.core.engine.pokemon.moves.Move;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
@@ -69,7 +71,7 @@ public class AbilityEffectFactory {
             //region  R 
             //endregion 
             
-            //region  S 
+            //region  S
             //endregion 
             
             //region  T 
