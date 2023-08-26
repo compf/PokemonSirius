@@ -1,7 +1,7 @@
 plugins {
  id "kotlin"
 }
-sourceCompatibility = 19
+sourceCompatibility = "$javaVersion"
 
 version 'unspecified'
 repositories {
@@ -27,11 +27,11 @@ test {
 }
 compileKotlin {
     kotlinOptions {
-        jvmTarget = 19
+        jvmTarget = "$javaVersion"
     }
 }
 compileTestKotlin {
     kotlinOptions {
-        jvmTarget =19
+        jvmTarget ="$javaVersion"
     }
 }

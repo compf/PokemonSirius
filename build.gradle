@@ -47,10 +47,6 @@ dependencies {
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 kotlin {
-	jvmToolchain(11)
+	jvmToolchain($javaVersion)
 }
-java {
-    toolchain {
-        implementation = JvmImplementation.J9
-    }
-}
+
