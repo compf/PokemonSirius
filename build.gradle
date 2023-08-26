@@ -49,3 +49,8 @@ dependencies {
 kotlin {
 	jvmToolchain(11)
 }
+java {
+    toolchain {
+        implementation = JvmImplementation.J9
+    }
+}
