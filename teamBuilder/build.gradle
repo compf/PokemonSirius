@@ -10,7 +10,6 @@ plugins {
     id 'kotlin'
     id 'application'
 }
-sourceCompatibility="$javaVersion"
 
 repositories {
     // Use Maven Central for resolving dependencies.

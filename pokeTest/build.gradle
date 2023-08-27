@@ -1,7 +1,6 @@
 plugins {
  id "kotlin"
 }
-sourceCompatibility = "$javaVersion"
 
 version 'unspecified'
 repositories {
@@ -24,14 +23,4 @@ test {
         showStandardStreams = true
     }
     useJUnitPlatform()
-}
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "$javaVersion"
-    }
-}
-compileTestKotlin {
-    kotlinOptions {
-        jvmTarget ="$javaVersion"
-    }
 }
