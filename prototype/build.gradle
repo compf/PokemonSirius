@@ -2,7 +2,7 @@ apply plugin: 'application'
 
 [compileJava]*.options*.encoding = 'UTF-8'
 eclipse.project.name = appName + '-prototype'
-//mainClassName = 'compf.prototype.SinglePlayerAgainstBotProtytype'
+mainClassName = 'compf.prototype.SinglePlayerAgainstBotProtytype'
 
 
 dependencies {
@@ -38,4 +38,5 @@ jar {
 }
 	run {
     standardInput = System.in
+	workingDir = "../"
 }

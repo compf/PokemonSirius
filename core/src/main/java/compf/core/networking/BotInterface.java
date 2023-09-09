@@ -23,7 +23,7 @@ public class BotInterface extends SimpleIOInterface {
     public NetworkMessage handle(NetworkMessage msg) {
         switch (msg.Kind) {
             case RequestInputToIO:
-                return NetworkMessageKind.ReplyInputFromIO.createMessage(requestPlayerInput(((short) msg.Data)));
+                return NetworkMessageKind.ReplyInputFromIO.createMessage(requestPlayerInput(((Tuple<Short, BattleState>) msg.Data)));
             case SwitchPokemon:
                 return NetworkMessageKind.ReplyInputFromIO
                         .createMessage(switchPokemon(((Tuple<Short, BattleState>) msg.Data)));
@@ -55,8 +55,8 @@ public class BotInterface extends SimpleIOInterface {
         return 0;
     }
 
-    public PlayerInput requestPlayerInput(short pkmnIndex) {
-       return _ai.getPlayerInput(pkmnIndex,_player,_state);
+    public PlayerInput requestPlayerInput(Tuple<Short, BattleState> inf) {
+       return _ai.getPlayerInput(inf.Item1,_player,inf.Item2);
     }
 
     public short switchPokemon(Tuple<Short, BattleState> inf) {

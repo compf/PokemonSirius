@@ -102,7 +102,7 @@ public class Pokemon extends PokedexEntry {
             updateStat(i);
             if (i < 4) {
                 _moves[i] = SharedInformation.Instance.getMoveService()
-                        .get(1 + SharedInformation.Instance.getRNG().randomNumber(SharedInformation.Instance.getMoveService().getCount() - 1,this.getClass()));
+                        .get(1 + SharedInformation.Instance.getRNG().randomNumber(SharedInformation.Instance.getMoveService().getMaxIndex() - 1,this.getClass()));
                 if (_moves[i] == null) {
                     _moves[i] = SharedInformation.Instance.getMoveService().get(1);
                 }

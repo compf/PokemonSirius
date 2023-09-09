@@ -8,8 +8,9 @@ const GRASS_RECTS=[Rect2i(20,12,1,1)]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
-	pass # Replace with function body.
+	var args=[]
+	var err=OS.execute("/home/compf/.sdkman/candidates/gradle/8.0.2/bin/gradle",args)
+	print("Hello ",err)
 
 func get_collider_kind(coord:Vector2i)->TileKind:
 	for g in GRASS_RECTS:

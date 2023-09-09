@@ -31,12 +31,12 @@ public class DefaultPokedexEntryService implements PokedexEntryService {
 	}
 
 	@Override
-	public int getCount() {
-		return pokemonMap.size();
+	public int getMaxIndex() {
+		return maxNr;
 	}
 
     private final HashMap<String,PokedexEntry> pokemonMap = new HashMap<>();
-
+	private int maxNr;
     @Override
     public Iterator<PokedexEntry> iterator() {
        return pokemonMap.values().iterator();
@@ -71,6 +71,7 @@ public class DefaultPokedexEntryService implements PokedexEntryService {
 			sdef = baseStats.get("spd").getAsInt();
 			speed = baseStats.get("spe").getAsInt();
 			int nr=object.get("num").getAsInt();
+			maxNr=Math.max(nr,maxNr);
 			if(nr<=0)continue;;
 			String realName=object.get("name").getAsString();
 

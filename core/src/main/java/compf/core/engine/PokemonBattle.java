@@ -30,7 +30,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
         var team = new Pokemon[6];
         for (int i = 0; i < 6; i++) {
             team[i] = new Pokemon(SharedInformation.Instance.getPokedexEntryService()
-                    .get(1 + SharedInformation.Instance.getRNG().randomNumber(0, SharedInformation.Instance.getPokedexEntryService().getCount() - 1, PokemonBattle.class)));
+                    .get(1 + SharedInformation.Instance.getRNG().randomNumber(0, SharedInformation.Instance.getPokedexEntryService().getMaxIndex() - 1, PokemonBattle.class)));
         }
         return team;
     }

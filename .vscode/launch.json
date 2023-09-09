@@ -8,7 +8,7 @@
             "type": "java",
             "name": "Current File",
             "request": "launch",
-            "cwd": "${workspaceFolder}/assets",
+            "cwd": "${workspaceFolder}",
             "mainClass": "${file}"
         },
         {

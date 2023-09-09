@@ -26,8 +26,8 @@ public class DefaultMoveService implements MoveService {
     }
 
 	@Override
-	public int getCount() {
-		return moveMap.size();
+	public int getMaxIndex() {
+		return maxNr;
 	}
 
     public Move get(int nr) {
@@ -38,7 +38,7 @@ public class DefaultMoveService implements MoveService {
 		return moveMap.get(name);
 	}
 
-
+	private int maxNr;
     @Override
     public Iterator<Move> iterator() {
         return moveMap.values().iterator();
@@ -76,6 +76,7 @@ public class DefaultMoveService implements MoveService {
 			String damageClass = object.get("category").getAsString();
 			Move.MoveKind kind = Enum.valueOf(MoveKind.class, damageClass);
 			int nr=object.get("num").getAsInt();
+			maxNr=Math.max(maxNr, nr);
 			String realName=object.get("name").getAsString();
 			final Move mv = factory.create(new Move(nr, realName, power, pp, accuracy, priority, type, kind, target));
 			moveMap.put(String.valueOf(nr),mv);

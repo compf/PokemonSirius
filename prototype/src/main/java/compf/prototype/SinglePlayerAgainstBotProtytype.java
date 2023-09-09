@@ -23,6 +23,7 @@ public class SinglePlayerAgainstBotProtytype {
     private static  BattleServer server;
     private static BattleClient playerClient,botClient;
     public static void main(String[] args) throws IOException {
+        System.out.println(System.getProperty("user.dir"));
         SharedInformation.Instance.init(new DefaultPokedexEntryService("pokedex.json"), new DefaultMoveService("moves.json"), new RealRandomGeneratorService(),
         new StubLearnsetService(),new DefaultLoggerService());
 
