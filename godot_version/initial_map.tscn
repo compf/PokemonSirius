@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b84fa1a01on7d"]
+
+[ext_resource type="TileSet" uid="uid://chw6ytje3t4er" path="res://map.tres" id="1_r5hxn"]
+[ext_resource type="PackedScene" uid="uid://ddafj7m6xof21" path="res://player.tscn" id="1_y2d2p"]
+
+[node name="initial_map" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("1_r5hxn")
+format = 2
+layer_0/tile_data = PackedInt32Array(1966069, 786432, 0, 2031605, 786432, 1, 2097141, 786432, 2, 1966070, 851968, 0, 2031606, 851968, 1, 2097142, 851968, 2, 1966071, 917504, 0, 2031607, 917504, 1, 2097143, 917504, 2, 1835002, 1310720, 12, 1835003, 1310720, 12, 1900539, 1310720, 12, 1966075, 1310720, 12, 1966074, 1310720, 12, 1900538, 1310720, 12, 1835004, 1310720, 12, 1835005, 1310720, 12, 1900541, 1310720, 12, 1900540, 1310720, 12, 1966076, 1310720, 12, 1966077, 1310720, 12)
+
+[node name="Player" parent="TileMap" instance=ExtResource("1_y2d2p")]
+position = Vector2(-225, 473)
