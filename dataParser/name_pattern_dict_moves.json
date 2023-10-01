@@ -1,0 +1,2594 @@
+{
+    "10,000,000 Volt Thunderbolt": [
+        "critical hit"
+    ],
+    "Absorb": [
+        "recovers"
+    ],
+    "Accelerock": [
+        "No additional effect"
+    ],
+    "Acid": [
+        "Special Defense",
+        "\\d+% chance"
+    ],
+    "Acid Armor": [
+        "(?<!Special) Defense"
+    ],
+    "Acid Downpour": [],
+    "Acid Spray": [
+        "Special Defense",
+        "\\d+% chance"
+    ],
+    "Acrobatics": [],
+    "Acupressure": [
+        " stats? "
+    ],
+    "Aerial Ace": [],
+    "Aeroblast": [
+        "critical hit"
+    ],
+    "After You": [],
+    "Agility": [
+        "Speed"
+    ],
+    "Air Cutter": [
+        "critical hit"
+    ],
+    "Air Slash": [
+        "\\d+% chance"
+    ],
+    "All-Out Pummeling": [],
+    "Ally Switch": [],
+    "Amnesia": [
+        "Special Defense"
+    ],
+    "Anchor Shot": [
+        "(P| p)revent"
+    ],
+    "Ancient Power": [
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Special Attack",
+        "Special Defense",
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Apple Acid": [
+        "Special Defense",
+        "\\d+% chance"
+    ],
+    "Aqua Cutter": [
+        "critical hit"
+    ],
+    "Aqua Jet": [
+        "No additional effect"
+    ],
+    "Aqua Ring": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Aqua Step": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Aqua Tail": [
+        "No additional effect"
+    ],
+    "Armor Cannon": [
+        "(?<!Special) Defense",
+        "Special Defense"
+    ],
+    "Arm Thrust": [
+        "\\d+% chance",
+        "\\d(-\\d)? times"
+    ],
+    "Aromatherapy": [],
+    "Aromatic Mist": [
+        "Special Defense"
+    ],
+    "Assist": [],
+    "Assurance": [],
+    "Astonish": [
+        "\\d+% chance"
+    ],
+    "Astral Barrage": [
+        "No additional effect"
+    ],
+    "Attack Order": [
+        "critical hit"
+    ],
+    "Attract": [
+        "immun"
+    ],
+    "Aura Sphere": [],
+    "Aura Wheel": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Aurora Beam": [
+        "(?<!Special) Attack",
+        "\\d+% chance"
+    ],
+    "Aurora Veil": [
+        "\\d(-\\d)? turns"
+    ],
+    "Autotomize": [
+        "Speed"
+    ],
+    "Avalanche": [],
+    "Axe Kick": [
+        "\\d+% chance"
+    ],
+    "Baby-Doll Eyes": [
+        "(?<!Special) Attack"
+    ],
+    "Baddy Bad": [
+        "\\d(-\\d)? turns"
+    ],
+    "Baneful Bunker": [],
+    "Barb Barrage": [
+        "\\d+% chance"
+    ],
+    "Barrage": [
+        "\\d+% chance",
+        "\\d(-\\d)? times"
+    ],
+    "Barrier": [
+        "(?<!Special) Defense"
+    ],
+    "Baton Pass": [
+        " stats? "
+    ],
+    "Beak Blast": [],
+    "Beat Up": [
+        "(?<!Special) Attack"
+    ],
+    "Behemoth Bash": [
+        "No additional effect"
+    ],
+    "Behemoth Blade": [
+        "No additional effect"
+    ],
+    "Belch": [],
+    "Belly Drum": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Bestow": [],
+    "Bide": [
+        "immun",
+        "\\d(-\\d)? turns",
+        "(P| p)revent"
+    ],
+    "Bind": [
+        "\\d(-\\d)? turns",
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent"
+    ],
+    "Bite": [
+        "\\d+% chance"
+    ],
+    "Bitter Blade": [
+        "recovers"
+    ],
+    "Bitter Malice": [
+        "(?<!Special) Attack",
+        "\\d+% chance"
+    ],
+    "Black Hole Eclipse": [],
+    "Blast Burn": [],
+    "Blaze Kick": [
+        "\\d+% chance",
+        "critical hit"
+    ],
+    "Blazing Torque": [
+        "\\d+% chance"
+    ],
+    "Bleakwind Storm": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Blizzard": [
+        "\\d+% chance"
+    ],
+    "Block": [
+        "(P| p)revent"
+    ],
+    "Blood Moon": [],
+    "Bloom Doom": [],
+    "Blue Flare": [
+        "\\d+% chance"
+    ],
+    "Body Press": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "(?<!Special) Defense"
+    ],
+    "Body Slam": [
+        "\\d+% chance"
+    ],
+    "Bolt Beak": [],
+    "Bolt Strike": [
+        "\\d+% chance"
+    ],
+    "Bone Club": [
+        "\\d+% chance"
+    ],
+    "Bonemerang": [],
+    "Bone Rush": [
+        "\\d+% chance",
+        "\\d(-\\d)? times"
+    ],
+    "Boomburst": [
+        "No additional effect"
+    ],
+    "Bounce": [
+        "\\d+% chance"
+    ],
+    "Bouncy Bubble": [
+        "recovers"
+    ],
+    "Branch Poke": [
+        "No additional effect"
+    ],
+    "Brave Bird": [],
+    "Breaking Swipe": [
+        "(?<!Special) Attack",
+        "\\d+% chance"
+    ],
+    "Breakneck Blitz": [],
+    "Brick Break": [],
+    "Brine": [],
+    "Brutal Swing": [
+        "No additional effect"
+    ],
+    "Bubble": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Bubble Beam": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Bug Bite": [],
+    "Bug Buzz": [
+        "Special Defense",
+        "\\d+% chance"
+    ],
+    "Bulk Up": [
+        "(?<!Special) Attack",
+        "(?<!Special) Defense"
+    ],
+    "Bulldoze": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Bullet Punch": [
+        "No additional effect"
+    ],
+    "Bullet Seed": [
+        "\\d+% chance",
+        "\\d(-\\d)? times"
+    ],
+    "Burning Jealousy": [
+        " stats? ",
+        "\\d+% chance"
+    ],
+    "Burn Up": [],
+    "Buzzy Buzz": [
+        "\\d+% chance"
+    ],
+    "Calm Mind": [
+        "Special Attack",
+        "Special Defense"
+    ],
+    "Camouflage": [],
+    "Captivate": [
+        "Special Attack",
+        "immun"
+    ],
+    "Catastropika": [
+        "No additional effect"
+    ],
+    "Ceaseless Edge": [
+        "-type"
+    ],
+    "Celebrate": [],
+    "Charge": [
+        "Special Defense",
+        "-type"
+    ],
+    "Charge Beam": [
+        "Special Attack",
+        "\\d+% chance"
+    ],
+    "Charm": [
+        "(?<!Special) Attack"
+    ],
+    "Chatter": [
+        "\\d+% chance"
+    ],
+    "Chilling Water": [
+        "(?<!Special) Attack",
+        "\\d+% chance"
+    ],
+    "Chilly Reception": [
+        "\\d(-\\d)? turns"
+    ],
+    "Chip Away": [
+        " stats? "
+    ],
+    "Chloroblast": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Circle Throw": [],
+    "Clamp": [
+        "\\d(-\\d)? turns",
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent"
+    ],
+    "Clanging Scales": [
+        "(?<!Special) Defense"
+    ],
+    "Clangorous Soul": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Special Attack",
+        "Special Defense",
+        "Speed"
+    ],
+    "Clangorous Soulblaze": [
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Special Attack",
+        "Special Defense",
+        "Speed"
+    ],
+    "Clear Smog": [
+        " stats? "
+    ],
+    "Close Combat": [
+        "(?<!Special) Defense",
+        "Special Defense"
+    ],
+    "Coaching": [
+        "(?<!Special) Attack",
+        "(?<!Special) Defense"
+    ],
+    "Coil": [
+        "(?<!Special) Attack",
+        "(?<!Special) Defense"
+    ],
+    "Collision Course": [],
+    "Combat Torque": [
+        "\\d+% chance"
+    ],
+    "Comet Punch": [
+        "\\d+% chance",
+        "\\d(-\\d)? times"
+    ],
+    "Comeuppance": [
+        "\\d(-\\d)? times",
+        "(D|d)eals damage"
+    ],
+    "Confide": [
+        "Special Attack"
+    ],
+    "Confuse Ray": [],
+    "Confusion": [
+        "\\d+% chance"
+    ],
+    "Constrict": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Continental Crush": [],
+    "Conversion": [],
+    "Conversion 2": [
+        "immun"
+    ],
+    "Copycat": [],
+    "Core Enforcer": [],
+    "Corkscrew Crash": [],
+    "Corrosive Gas": [],
+    "Cosmic Power": [
+        "(?<!Special) Defense",
+        "Special Defense"
+    ],
+    "Cotton Guard": [
+        "(?<!Special) Defense"
+    ],
+    "Cotton Spore": [
+        "Speed"
+    ],
+    "Counter": [
+        "(D|d)eals damage"
+    ],
+    "Court Change": [],
+    "Covet": [],
+    "Crabhammer": [
+        "critical hit"
+    ],
+    "Crafty Shield": [],
+    "Cross Chop": [
+        "critical hit"
+    ],
+    "Cross Poison": [
+        "\\d+% chance",
+        "critical hit"
+    ],
+    "Crunch": [
+        "(?<!Special) Defense",
+        "\\d+% chance"
+    ],
+    "Crush Claw": [
+        "(?<!Special) Defense",
+        "\\d+% chance"
+    ],
+    "Crush Grip": [
+        "current HP"
+    ],
+    "Curse": [
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Speed",
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Cut": [
+        "No additional effect"
+    ],
+    "Darkest Lariat": [
+        " stats? "
+    ],
+    "Dark Pulse": [
+        "\\d+% chance"
+    ],
+    "Dark Void": [],
+    "Dazzling Gleam": [
+        "No additional effect"
+    ],
+    "Decorate": [
+        "(?<!Special) Attack",
+        "Special Attack"
+    ],
+    "Defend Order": [
+        "(?<!Special) Defense",
+        "Special Defense"
+    ],
+    "Defense Curl": [
+        "(?<!Special) Defense"
+    ],
+    "Defog": [],
+    "Destiny Bond": [],
+    "Detect": [],
+    "Devastating Drake": [],
+    "Diamond Storm": [
+        "(?<!Special) Defense",
+        "\\d+% chance"
+    ],
+    "Dig": [],
+    "Disable": [
+        "\\d(-\\d)? turns"
+    ],
+    "Disarming Voice": [],
+    "Discharge": [
+        "\\d+% chance"
+    ],
+    "Dire Claw": [
+        "\\d+% chance"
+    ],
+    "Dive": [],
+    "Dizzy Punch": [
+        "\\d+% chance"
+    ],
+    "Doodle": [],
+    "Doom Desire": [
+        "Special Attack",
+        "\\d(-\\d)? turns",
+        "(D|d)eals damage"
+    ],
+    "Double-Edge": [],
+    "Double Hit": [],
+    "Double Iron Bash": [
+        "\\d+% chance"
+    ],
+    "Double Kick": [],
+    "Double Shock": [],
+    "Double Slap": [
+        "\\d+% chance",
+        "\\d(-\\d)? times"
+    ],
+    "Double Team": [],
+    "Draco Meteor": [
+        "Special Attack"
+    ],
+    "Dragon Ascent": [
+        "(?<!Special) Defense",
+        "Special Defense"
+    ],
+    "Dragon Breath": [
+        "\\d+% chance"
+    ],
+    "Dragon Claw": [
+        "No additional effect"
+    ],
+    "Dragon Dance": [
+        "(?<!Special) Attack",
+        "Speed"
+    ],
+    "Dragon Darts": [
+        "immun",
+        "(P| p)revent"
+    ],
+    "Dragon Energy": [
+        "current HP"
+    ],
+    "Dragon Hammer": [
+        "No additional effect"
+    ],
+    "Dragon Pulse": [
+        "No additional effect"
+    ],
+    "Dragon Rage": [],
+    "Dragon Rush": [
+        "\\d+% chance"
+    ],
+    "Dragon Tail": [],
+    "Draining Kiss": [
+        "recovers"
+    ],
+    "Drain Punch": [
+        "recovers"
+    ],
+    "Dream Eater": [
+        "recovers"
+    ],
+    "Drill Peck": [
+        "No additional effect"
+    ],
+    "Drill Run": [
+        "critical hit"
+    ],
+    "Drum Beating": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Dual Chop": [],
+    "Dual Wingbeat": [],
+    "Dynamax Cannon": [
+        "No additional effect"
+    ],
+    "Dynamic Punch": [
+        "\\d+% chance"
+    ],
+    "Earth Power": [
+        "Special Defense",
+        "\\d+% chance"
+    ],
+    "Earthquake": [],
+    "Echoed Voice": [],
+    "Eerie Impulse": [
+        "Special Attack"
+    ],
+    "Eerie Spell": [],
+    "Egg Bomb": [
+        "No additional effect"
+    ],
+    "Electric Terrain": [
+        "\\d+% chance",
+        "\\d(-\\d)? turns",
+        "-type"
+    ],
+    "Electrify": [],
+    "Electro Ball": [
+        "Speed"
+    ],
+    "Electro Drift": [],
+    "Electroweb": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Embargo": [
+        "\\d(-\\d)? turns",
+        "(P| p)revent"
+    ],
+    "Ember": [
+        "\\d+% chance"
+    ],
+    "Encore": [
+        "\\d(-\\d)? turns"
+    ],
+    "Endeavor": [
+        "current HP",
+        "(D|d)eals damage"
+    ],
+    "Endure": [],
+    "Energy Ball": [
+        "Special Defense",
+        "\\d+% chance"
+    ],
+    "Entrainment": [],
+    "Eruption": [
+        "current HP"
+    ],
+    "Esper Wing": [
+        "Speed",
+        "\\d+% chance",
+        "critical hit"
+    ],
+    "Eternabeam": [],
+    "Expanding Force": [],
+    "Explosion": [
+        "(P| p)revent"
+    ],
+    "Extrasensory": [
+        "\\d+% chance"
+    ],
+    "Extreme Evoboost": [
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Special Attack",
+        "Special Defense",
+        "Speed"
+    ],
+    "Extreme Speed": [
+        "No additional effect"
+    ],
+    "Facade": [],
+    "Fairy Lock": [
+        "next turn",
+        "(P| p)revent"
+    ],
+    "Fairy Wind": [
+        "No additional effect"
+    ],
+    "Fake Out": [
+        "\\d+% chance"
+    ],
+    "Fake Tears": [
+        "Special Defense"
+    ],
+    "False Surrender": [],
+    "False Swipe": [],
+    "Feather Dance": [
+        "(?<!Special) Attack"
+    ],
+    "Feint": [],
+    "Feint Attack": [],
+    "Fell Stinger": [
+        "(?<!Special) Attack"
+    ],
+    "Fiery Dance": [
+        "Special Attack",
+        "\\d+% chance"
+    ],
+    "Fiery Wrath": [
+        "\\d+% chance"
+    ],
+    "Fillet Away": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "Special Attack",
+        "Speed",
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Final Gambit": [
+        "current HP",
+        "(D|d)eals damage"
+    ],
+    "Fire Blast": [
+        "\\d+% chance"
+    ],
+    "Fire Fang": [
+        "\\d+% chance"
+    ],
+    "Fire Lash": [
+        "(?<!Special) Defense",
+        "\\d+% chance"
+    ],
+    "Fire Pledge": [
+        "\\d(-\\d)? turns"
+    ],
+    "Fire Punch": [
+        "\\d+% chance"
+    ],
+    "Fire Spin": [
+        "\\d(-\\d)? turns",
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent"
+    ],
+    "First Impression": [],
+    "Fishious Rend": [],
+    "Fissure": [
+        "immun",
+        "(D|d)eals damage"
+    ],
+    "Flail": [
+        "current HP"
+    ],
+    "Flame Burst": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Flame Charge": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Flame Wheel": [
+        "\\d+% chance"
+    ],
+    "Flamethrower": [
+        "\\d+% chance"
+    ],
+    "Flare Blitz": [
+        "\\d+% chance"
+    ],
+    "Flash": [],
+    "Flash Cannon": [
+        "Special Defense",
+        "\\d+% chance"
+    ],
+    "Flatter": [
+        "Special Attack"
+    ],
+    "Fleur Cannon": [
+        "Special Attack"
+    ],
+    "Fling": [],
+    "Flip Turn": [],
+    "Floaty Fall": [
+        "\\d+% chance"
+    ],
+    "Floral Healing": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Flower Shield": [
+        "(?<!Special) Defense",
+        "-type"
+    ],
+    "Flower Trick": [
+        "critical hit"
+    ],
+    "Fly": [],
+    "Flying Press": [],
+    "Focus Blast": [
+        "Special Defense",
+        "\\d+% chance"
+    ],
+    "Focus Energy": [
+        "critical hit"
+    ],
+    "Focus Punch": [],
+    "Follow Me": [],
+    "Force Palm": [
+        "\\d+% chance"
+    ],
+    "Foresight": [
+        " stats? ",
+        "-type"
+    ],
+    "Forest's Curse": [],
+    "Foul Play": [
+        " stats? ",
+        "(?<!Special) Attack"
+    ],
+    "Freeze-Dry": [
+        "\\d+% chance"
+    ],
+    "Freeze Shock": [
+        "\\d+% chance"
+    ],
+    "Freezing Glare": [
+        "\\d+% chance"
+    ],
+    "Freezy Frost": [
+        " stats? "
+    ],
+    "Frenzy Plant": [],
+    "Frost Breath": [
+        "critical hit"
+    ],
+    "Frustration": [],
+    "Fury Attack": [
+        "\\d+% chance",
+        "\\d(-\\d)? times"
+    ],
+    "Fury Cutter": [],
+    "Fury Swipes": [
+        "\\d+% chance",
+        "\\d(-\\d)? times"
+    ],
+    "Fusion Bolt": [],
+    "Fusion Flare": [],
+    "Future Sight": [
+        "Special Attack",
+        "\\d(-\\d)? turns",
+        "(D|d)eals damage"
+    ],
+    "Gastro Acid": [],
+    "Gear Grind": [],
+    "Gear Up": [
+        "(?<!Special) Attack",
+        "Special Attack"
+    ],
+    "Genesis Supernova": [],
+    "Geomancy": [
+        "Special Attack",
+        "Special Defense",
+        "Speed"
+    ],
+    "Giga Drain": [
+        "recovers"
+    ],
+    "Giga Impact": [],
+    "Gigaton Hammer": [],
+    "Gigavolt Havoc": [],
+    "Glacial Lance": [
+        "No additional effect"
+    ],
+    "Glaciate": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Glaive Rush": [
+        "next turn"
+    ],
+    "Glare": [],
+    "Glitzy Glow": [
+        "\\d(-\\d)? turns"
+    ],
+    "G-Max Befuddle": [],
+    "G-Max Cannonade": [
+        "\\d(-\\d)? turns",
+        "\\d+/\\d+ of its maximum HP",
+        "-type"
+    ],
+    "G-Max Centiferno": [
+        "\\d(-\\d)? turns",
+        "(P| p)revent"
+    ],
+    "G-Max Chi Strike": [
+        "raised by \\d stages?",
+        "critical hit"
+    ],
+    "G-Max Cuddle": [],
+    "G-Max Depletion": [],
+    "G-Max Drum Solo": [],
+    "G-Max Finale": [],
+    "G-Max Fireball": [],
+    "G-Max Foam Burst": [
+        "lowered by \\d stages?",
+        "Speed"
+    ],
+    "G-Max Gold Rush": [],
+    "G-Max Gravitas": [],
+    "G-Max Hydrosnipe": [],
+    "G-Max Malodor": [],
+    "G-Max Meltdown": [],
+    "G-Max One Blow": [],
+    "G-Max Rapid Flow": [],
+    "G-Max Replenish": [
+        "\\d+% chance"
+    ],
+    "G-Max Resonance": [],
+    "G-Max Sandblast": [
+        "\\d(-\\d)? turns",
+        "(P| p)revent"
+    ],
+    "G-Max Smite": [],
+    "G-Max Snooze": [
+        "\\d+% chance"
+    ],
+    "G-Max Steelsurge": [],
+    "G-Max Stonesurge": [],
+    "G-Max Stun Shock": [],
+    "G-Max Sweetness": [],
+    "G-Max Tartness": [
+        "lowered by \\d stages?"
+    ],
+    "G-Max Terror": [
+        "(P| p)revent"
+    ],
+    "G-Max Vine Lash": [
+        "\\d(-\\d)? turns",
+        "\\d+/\\d+ of its maximum HP",
+        "-type"
+    ],
+    "G-Max Volcalith": [
+        "\\d(-\\d)? turns",
+        "\\d+/\\d+ of its maximum HP",
+        "-type"
+    ],
+    "G-Max Volt Crash": [],
+    "G-Max Wildfire": [
+        "\\d(-\\d)? turns",
+        "\\d+/\\d+ of its maximum HP",
+        "-type"
+    ],
+    "G-Max Wind Rage": [],
+    "Grass Knot": [],
+    "Grass Pledge": [
+        "Speed",
+        "\\d(-\\d)? turns"
+    ],
+    "Grass Whistle": [],
+    "Grassy Glide": [],
+    "Grassy Terrain": [
+        "\\d+% chance",
+        "\\d(-\\d)? turns",
+        "-type"
+    ],
+    "Grav Apple": [
+        "(?<!Special) Defense",
+        "\\d+% chance"
+    ],
+    "Gravity": [
+        "\\d(-\\d)? turns",
+        "(P| p)revent",
+        "-type"
+    ],
+    "Growl": [
+        "(?<!Special) Attack"
+    ],
+    "Growth": [
+        "(?<!Special) Attack",
+        "Special Attack"
+    ],
+    "Grudge": [
+        "next turn"
+    ],
+    "Guardian of Alola": [
+        "current HP",
+        "(D|d)eals damage"
+    ],
+    "Guard Split": [
+        " stats? ",
+        "(?<!Special) Defense",
+        "Special Defense"
+    ],
+    "Guard Swap": [
+        " stats? ",
+        "(?<!Special) Defense",
+        "Special Defense"
+    ],
+    "Guillotine": [
+        "immun",
+        "(D|d)eals damage"
+    ],
+    "Gunk Shot": [
+        "\\d+% chance"
+    ],
+    "Gust": [],
+    "Gyro Ball": [
+        "Speed"
+    ],
+    "Hail": [
+        "\\d(-\\d)? turns"
+    ],
+    "Hammer Arm": [
+        "Speed"
+    ],
+    "Happy Hour": [],
+    "Harden": [
+        "(?<!Special) Defense"
+    ],
+    "Haze": [
+        " stats? "
+    ],
+    "Headbutt": [
+        "\\d+% chance"
+    ],
+    "Head Charge": [],
+    "Headlong Rush": [
+        "(?<!Special) Defense",
+        "Special Defense"
+    ],
+    "Head Smash": [],
+    "Heal Bell": [],
+    "Heal Block": [
+        "\\d(-\\d)? turns",
+        "(P| p)revent"
+    ],
+    "Healing Wish": [],
+    "Heal Order": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Heal Pulse": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Heart Stamp": [
+        "\\d+% chance"
+    ],
+    "Heart Swap": [
+        " stats? "
+    ],
+    "Heat Crash": [],
+    "Heat Wave": [
+        "\\d+% chance"
+    ],
+    "Heavy Slam": [],
+    "Helping Hand": [],
+    "Hex": [],
+    "Hidden Power": [],
+    "High Horsepower": [
+        "No additional effect"
+    ],
+    "High Jump Kick": [],
+    "Hold Back": [],
+    "Hold Hands": [],
+    "Hone Claws": [
+        "(?<!Special) Attack"
+    ],
+    "Horn Attack": [
+        "No additional effect"
+    ],
+    "Horn Drill": [
+        "immun",
+        "(D|d)eals damage"
+    ],
+    "Horn Leech": [
+        "recovers"
+    ],
+    "Howl": [
+        "(?<!Special) Attack"
+    ],
+    "Hurricane": [
+        "\\d+% chance"
+    ],
+    "Hydro Cannon": [],
+    "Hydro Pump": [
+        "No additional effect"
+    ],
+    "Hydro Steam": [],
+    "Hydro Vortex": [],
+    "Hyper Beam": [],
+    "Hyper Drill": [],
+    "Hyper Fang": [
+        "\\d+% chance"
+    ],
+    "Hyperspace Fury": [
+        "(?<!Special) Defense"
+    ],
+    "Hyperspace Hole": [],
+    "Hyper Voice": [
+        "No additional effect"
+    ],
+    "Hypnosis": [],
+    "Ice Ball": [
+        "(?<!Special) Defense",
+        "\\d(-\\d)? turns"
+    ],
+    "Ice Beam": [
+        "\\d+% chance"
+    ],
+    "Ice Burn": [
+        "\\d+% chance"
+    ],
+    "Ice Fang": [
+        "\\d+% chance"
+    ],
+    "Ice Hammer": [
+        "Speed"
+    ],
+    "Ice Punch": [
+        "\\d+% chance"
+    ],
+    "Ice Shard": [
+        "No additional effect"
+    ],
+    "Ice Spinner": [],
+    "Icicle Crash": [
+        "\\d+% chance"
+    ],
+    "Icicle Spear": [
+        "\\d+% chance",
+        "\\d(-\\d)? times"
+    ],
+    "Icy Wind": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Imprison": [
+        "(P| p)revent"
+    ],
+    "Incinerate": [],
+    "Infernal Parade": [
+        "\\d+% chance"
+    ],
+    "Inferno": [
+        "\\d+% chance"
+    ],
+    "Inferno Overdrive": [],
+    "Infestation": [
+        "\\d(-\\d)? turns",
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent"
+    ],
+    "Ingrain": [
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent",
+        "-type"
+    ],
+    "Instruct": [],
+    "Ion Deluge": [
+        "-type"
+    ],
+    "Iron Defense": [
+        "(?<!Special) Defense"
+    ],
+    "Iron Head": [
+        "\\d+% chance"
+    ],
+    "Iron Tail": [
+        "(?<!Special) Defense",
+        "\\d+% chance"
+    ],
+    "Ivy Cudgel": [
+        "critical hit"
+    ],
+    "Jaw Lock": [
+        "(P| p)revent"
+    ],
+    "Jet Punch": [
+        "No additional effect"
+    ],
+    "Judgment": [],
+    "Jump Kick": [],
+    "Jungle Healing": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Karate Chop": [
+        "critical hit"
+    ],
+    "Kinesis": [],
+    "King's Shield": [
+        "lowered by \\d stages?",
+        "(?<!Special) Attack"
+    ],
+    "Knock Off": [],
+    "Kowtow Cleave": [],
+    "Land's Wrath": [
+        "No additional effect"
+    ],
+    "Laser Focus": [
+        "next turn",
+        "critical hit"
+    ],
+    "Lash Out": [
+        " stats? "
+    ],
+    "Last Resort": [],
+    "Last Respects": [],
+    "Lava Plume": [
+        "\\d+% chance"
+    ],
+    "Leafage": [
+        "No additional effect"
+    ],
+    "Leaf Blade": [
+        "critical hit"
+    ],
+    "Leaf Storm": [
+        "Special Attack"
+    ],
+    "Leaf Tornado": [
+        "\\d+% chance"
+    ],
+    "Leech Life": [
+        "recovers"
+    ],
+    "Leech Seed": [
+        "immun",
+        "-type"
+    ],
+    "Leer": [
+        "(?<!Special) Defense"
+    ],
+    "Let's Snuggle Forever": [
+        "No additional effect"
+    ],
+    "Lick": [
+        "\\d+% chance"
+    ],
+    "Life Dew": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Light of Ruin": [],
+    "Light Screen": [
+        "\\d(-\\d)? turns"
+    ],
+    "Light That Burns the Sky": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "Special Attack"
+    ],
+    "Liquidation": [
+        "(?<!Special) Defense",
+        "\\d+% chance"
+    ],
+    "Lock-On": [
+        "next turn"
+    ],
+    "Lovely Kiss": [],
+    "Low Kick": [],
+    "Low Sweep": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Lucky Chant": [
+        "\\d(-\\d)? turns",
+        "critical hit"
+    ],
+    "Lumina Crash": [
+        "Special Defense",
+        "\\d+% chance"
+    ],
+    "Lunar Blessing": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Lunar Dance": [],
+    "Lunge": [
+        "(?<!Special) Attack",
+        "\\d+% chance"
+    ],
+    "Luster Purge": [
+        "Special Defense",
+        "\\d+% chance"
+    ],
+    "Mach Punch": [
+        "No additional effect"
+    ],
+    "Magical Leaf": [],
+    "Magical Torque": [
+        "\\d+% chance"
+    ],
+    "Magic Coat": [],
+    "Magic Powder": [],
+    "Magic Room": [
+        "\\d(-\\d)? turns",
+        "(P| p)revent"
+    ],
+    "Magma Storm": [
+        "\\d(-\\d)? turns",
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent"
+    ],
+    "Magnet Bomb": [],
+    "Magnetic Flux": [
+        "(?<!Special) Defense",
+        "Special Defense"
+    ],
+    "Magnet Rise": [
+        "immun",
+        "\\d(-\\d)? turns",
+        "-type"
+    ],
+    "Magnitude": [
+        "\\d+% chance"
+    ],
+    "Make It Rain": [
+        "Special Attack"
+    ],
+    "Malicious Moonsault": [],
+    "Mat Block": [],
+    "Matcha Gotcha": [
+        "\\d+% chance",
+        "recovers"
+    ],
+    "Max Airstream": [
+        "raised by \\d stages?",
+        "Speed",
+        "(D|d)eals damage"
+    ],
+    "Max Darkness": [
+        "lowered by \\d stages?",
+        "Special Defense",
+        "(D|d)eals damage"
+    ],
+    "Max Flare": [
+        "(D|d)eals damage"
+    ],
+    "Max Flutterby": [
+        "lowered by \\d stages?",
+        "Special Attack",
+        "(D|d)eals damage"
+    ],
+    "Max Geyser": [
+        "(D|d)eals damage"
+    ],
+    "Max Guard": [],
+    "Max Hailstorm": [
+        "(D|d)eals damage"
+    ],
+    "Max Knuckle": [
+        "(?<!Special) Attack",
+        "(D|d)eals damage"
+    ],
+    "Max Lightning": [
+        "(D|d)eals damage"
+    ],
+    "Max Mindstorm": [
+        "(D|d)eals damage"
+    ],
+    "Max Ooze": [
+        "raised by \\d stages?",
+        "Special Attack",
+        "(D|d)eals damage"
+    ],
+    "Max Overgrowth": [
+        "(D|d)eals damage"
+    ],
+    "Max Phantasm": [
+        "lowered by \\d stages?",
+        "(?<!Special) Defense",
+        "(D|d)eals damage"
+    ],
+    "Max Quake": [
+        "raised by \\d stages?",
+        "Special Defense",
+        "(D|d)eals damage"
+    ],
+    "Max Rockfall": [
+        "(D|d)eals damage"
+    ],
+    "Max Starfall": [
+        "(D|d)eals damage"
+    ],
+    "Max Steelspike": [
+        "raised by \\d stages?",
+        "(?<!Special) Defense",
+        "(D|d)eals damage"
+    ],
+    "Max Strike": [
+        "lowered by \\d stages?",
+        "Speed",
+        "(D|d)eals damage"
+    ],
+    "Max Wyrmwind": [
+        "lowered by \\d stages?",
+        "(?<!Special) Attack",
+        "(D|d)eals damage"
+    ],
+    "Mean Look": [
+        "(P| p)revent"
+    ],
+    "Meditate": [
+        "(?<!Special) Attack"
+    ],
+    "Me First": [],
+    "Mega Drain": [
+        "recovers"
+    ],
+    "Megahorn": [
+        "No additional effect"
+    ],
+    "Mega Kick": [
+        "No additional effect"
+    ],
+    "Mega Punch": [
+        "No additional effect"
+    ],
+    "Memento": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "Special Attack"
+    ],
+    "Menacing Moonraze Maelstrom": [],
+    "Metal Burst": [
+        "\\d(-\\d)? times",
+        "(D|d)eals damage"
+    ],
+    "Metal Claw": [
+        "(?<!Special) Attack",
+        "\\d+% chance"
+    ],
+    "Metal Sound": [
+        "Special Defense"
+    ],
+    "Meteor Assault": [],
+    "Meteor Beam": [
+        "Special Attack"
+    ],
+    "Meteor Mash": [
+        "(?<!Special) Attack",
+        "\\d+% chance"
+    ],
+    "Metronome": [],
+    "Milk Drink": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Mimic": [],
+    "Mind Blown": [
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent"
+    ],
+    "Mind Reader": [
+        "next turn"
+    ],
+    "Minimize": [],
+    "Miracle Eye": [
+        " stats? ",
+        "-type"
+    ],
+    "Mirror Coat": [
+        "(D|d)eals damage"
+    ],
+    "Mirror Move": [],
+    "Mirror Shot": [
+        "\\d+% chance"
+    ],
+    "Mist": [
+        " stats? ",
+        "\\d(-\\d)? turns"
+    ],
+    "Mist Ball": [
+        "Special Attack",
+        "\\d+% chance"
+    ],
+    "Misty Explosion": [
+        "(P| p)revent"
+    ],
+    "Misty Terrain": [
+        "Special Attack",
+        "\\d+% chance",
+        "\\d(-\\d)? turns",
+        "-type"
+    ],
+    "Moonblast": [
+        "Special Attack",
+        "\\d+% chance"
+    ],
+    "Moongeist Beam": [],
+    "Moonlight": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Morning Sun": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Mortal Spin": [
+        "\\d+% chance"
+    ],
+    "Mountain Gale": [
+        "\\d+% chance"
+    ],
+    "Mud Bomb": [
+        "\\d+% chance"
+    ],
+    "Mud Shot": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Mud-Slap": [
+        "\\d+% chance"
+    ],
+    "Mud Sport": [
+        "\\d(-\\d)? turns",
+        "-type"
+    ],
+    "Muddy Water": [
+        "\\d+% chance"
+    ],
+    "Multi-Attack": [],
+    "Mystical Fire": [
+        "Special Attack",
+        "\\d+% chance"
+    ],
+    "Mystical Power": [
+        "Special Attack",
+        "\\d+% chance"
+    ],
+    "Nasty Plot": [
+        "Special Attack"
+    ],
+    "Natural Gift": [],
+    "Nature Power": [
+        "(?<!Special) Attack"
+    ],
+    "Nature's Madness": [
+        "current HP",
+        "(D|d)eals damage"
+    ],
+    "Needle Arm": [
+        "\\d+% chance"
+    ],
+    "Never-Ending Nightmare": [],
+    "Night Daze": [
+        "\\d+% chance"
+    ],
+    "Nightmare": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Night Shade": [
+        "(D|d)eals damage"
+    ],
+    "Night Slash": [
+        "critical hit"
+    ],
+    "Noble Roar": [
+        "(?<!Special) Attack",
+        "Special Attack"
+    ],
+    "No Retreat": [
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Special Attack",
+        "Special Defense",
+        "Speed",
+        "(P| p)revent"
+    ],
+    "Noxious Torque": [
+        "\\d+% chance"
+    ],
+    "Nuzzle": [
+        "\\d+% chance"
+    ],
+    "Oblivion Wing": [
+        "recovers"
+    ],
+    "Obstruct": [
+        "lowered by \\d stages?",
+        "(?<!Special) Defense"
+    ],
+    "Oceanic Operetta": [
+        "No additional effect"
+    ],
+    "Octazooka": [
+        "\\d+% chance"
+    ],
+    "Octolock": [
+        "lowered by \\d stages?",
+        "(?<!Special) Defense",
+        "Special Defense",
+        "(P| p)revent"
+    ],
+    "Odor Sleuth": [
+        " stats? ",
+        "-type"
+    ],
+    "Ominous Wind": [
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Special Attack",
+        "Special Defense",
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Order Up": [
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Speed"
+    ],
+    "Origin Pulse": [
+        "No additional effect"
+    ],
+    "Outrage": [
+        "\\d(-\\d)? turns",
+        "(P| p)revent"
+    ],
+    "Overdrive": [
+        "No additional effect"
+    ],
+    "Overheat": [
+        "Special Attack"
+    ],
+    "Pain Split": [
+        "current HP"
+    ],
+    "Paleo Wave": [
+        "(?<!Special) Attack",
+        "\\d+% chance"
+    ],
+    "Parabolic Charge": [
+        "recovers"
+    ],
+    "Parting Shot": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "Special Attack"
+    ],
+    "Payback": [],
+    "Pay Day": [
+        "No additional effect"
+    ],
+    "Peck": [
+        "No additional effect"
+    ],
+    "Perish Song": [],
+    "Petal Blizzard": [
+        "No additional effect"
+    ],
+    "Petal Dance": [
+        "\\d(-\\d)? turns",
+        "(P| p)revent"
+    ],
+    "Phantom Force": [],
+    "Photon Geyser": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "Special Attack"
+    ],
+    "Pika Papow": [],
+    "Pin Missile": [
+        "\\d+% chance",
+        "\\d(-\\d)? times"
+    ],
+    "Plasma Fists": [
+        "-type"
+    ],
+    "Play Nice": [
+        "(?<!Special) Attack"
+    ],
+    "Play Rough": [
+        "(?<!Special) Attack",
+        "\\d+% chance"
+    ],
+    "Pluck": [],
+    "Poison Fang": [
+        "\\d+% chance"
+    ],
+    "Poison Gas": [],
+    "Poison Jab": [
+        "\\d+% chance"
+    ],
+    "Poison Powder": [],
+    "Poison Sting": [
+        "\\d+% chance"
+    ],
+    "Poison Tail": [
+        "\\d+% chance",
+        "critical hit"
+    ],
+    "Pollen Puff": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Poltergeist": [],
+    "Population Bomb": [
+        "\\d(-\\d)? times"
+    ],
+    "Pounce": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Pound": [
+        "No additional effect"
+    ],
+    "Powder": [
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent",
+        "-type"
+    ],
+    "Powder Snow": [
+        "\\d+% chance"
+    ],
+    "Power Gem": [
+        "No additional effect"
+    ],
+    "Power Shift": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "(?<!Special) Defense"
+    ],
+    "Power Split": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "Special Attack"
+    ],
+    "Power Swap": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "Special Attack"
+    ],
+    "Power Trick": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "(?<!Special) Defense"
+    ],
+    "Power Trip": [
+        " stats? "
+    ],
+    "Power-Up Punch": [
+        "(?<!Special) Attack",
+        "\\d+% chance"
+    ],
+    "Power Whip": [
+        "No additional effect"
+    ],
+    "Precipice Blades": [
+        "No additional effect"
+    ],
+    "Present": [
+        "\\d+% chance",
+        "\\d+/\\d+ of its maximum HP",
+        "(D|d)eals damage"
+    ],
+    "Prismatic Laser": [],
+    "Protect": [],
+    "Psybeam": [
+        "\\d+% chance"
+    ],
+    "Psyblade": [],
+    "Psych Up": [
+        " stats? "
+    ],
+    "Psychic": [
+        "Special Defense",
+        "\\d+% chance"
+    ],
+    "Psychic Fangs": [],
+    "Psychic Terrain": [
+        "Speed",
+        "\\d+% chance",
+        "\\d(-\\d)? turns",
+        "-type"
+    ],
+    "Psycho Boost": [
+        "Special Attack"
+    ],
+    "Psycho Cut": [
+        "critical hit"
+    ],
+    "Psycho Shift": [],
+    "Psyshield Bash": [
+        "(?<!Special) Defense",
+        "\\d+% chance"
+    ],
+    "Psyshock": [
+        "(?<!Special) Defense",
+        "Special Defense",
+        "(D|d)eals damage"
+    ],
+    "Psystrike": [
+        "(?<!Special) Defense",
+        "Special Defense",
+        "(D|d)eals damage"
+    ],
+    "Psywave": [
+        "(D|d)eals damage"
+    ],
+    "Pulverizing Pancake": [
+        "No additional effect"
+    ],
+    "Punishment": [
+        " stats? "
+    ],
+    "Purify": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Pursuit": [],
+    "Pyro Ball": [
+        "\\d+% chance"
+    ],
+    "Quash": [],
+    "Quick Attack": [
+        "No additional effect"
+    ],
+    "Quick Guard": [],
+    "Quiver Dance": [
+        "Special Attack",
+        "Special Defense",
+        "Speed"
+    ],
+    "Rage": [
+        "raised by \\d stages?",
+        "(?<!Special) Attack"
+    ],
+    "Rage Fist": [],
+    "Rage Powder": [],
+    "Raging Bull": [],
+    "Raging Fury": [
+        "\\d(-\\d)? turns",
+        "(P| p)revent"
+    ],
+    "Rain Dance": [
+        "\\d(-\\d)? turns",
+        "-type"
+    ],
+    "Rapid Spin": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Razor Leaf": [
+        "critical hit"
+    ],
+    "Razor Shell": [
+        "(?<!Special) Defense",
+        "\\d+% chance"
+    ],
+    "Razor Wind": [
+        "critical hit"
+    ],
+    "Recover": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Recycle": [],
+    "Reflect": [
+        "\\d(-\\d)? turns"
+    ],
+    "Reflect Type": [],
+    "Refresh": [],
+    "Relic Song": [
+        "\\d+% chance"
+    ],
+    "Rest": [
+        "\\d(-\\d)? turns",
+        "(P| p)revent"
+    ],
+    "Retaliate": [],
+    "Return": [],
+    "Revelation Dance": [],
+    "Revenge": [],
+    "Reversal": [
+        "current HP"
+    ],
+    "Revival Blessing": [],
+    "Rising Voltage": [],
+    "Roar": [],
+    "Roar of Time": [],
+    "Rock Blast": [
+        "\\d+% chance",
+        "\\d(-\\d)? times"
+    ],
+    "Rock Climb": [
+        "\\d+% chance"
+    ],
+    "Rock Polish": [
+        "Speed"
+    ],
+    "Rock Slide": [
+        "\\d+% chance"
+    ],
+    "Rock Smash": [
+        "(?<!Special) Defense",
+        "\\d+% chance"
+    ],
+    "Rock Throw": [
+        "No additional effect"
+    ],
+    "Rock Tomb": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Rock Wrecker": [],
+    "Role Play": [],
+    "Rolling Kick": [
+        "\\d+% chance"
+    ],
+    "Rollout": [
+        "(?<!Special) Defense",
+        "\\d(-\\d)? turns"
+    ],
+    "Roost": [
+        "\\d+/\\d+ of its maximum HP",
+        "-type"
+    ],
+    "Rototiller": [
+        "(?<!Special) Attack",
+        "Special Attack",
+        "-type"
+    ],
+    "Round": [
+        "Speed"
+    ],
+    "Ruination": [
+        "current HP",
+        "(D|d)eals damage"
+    ],
+    "Sacred Fire": [
+        "\\d+% chance"
+    ],
+    "Sacred Sword": [
+        " stats? "
+    ],
+    "Safeguard": [
+        "\\d(-\\d)? turns"
+    ],
+    "Salt Cure": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Sand Attack": [],
+    "Sandsear Storm": [
+        "\\d+% chance"
+    ],
+    "Sandstorm": [
+        "Special Defense",
+        "\\d(-\\d)? turns",
+        "-type"
+    ],
+    "Sand Tomb": [
+        "\\d(-\\d)? turns",
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent"
+    ],
+    "Sappy Seed": [],
+    "Savage Spin-Out": [],
+    "Scald": [
+        "\\d+% chance"
+    ],
+    "Scale Shot": [
+        "(?<!Special) Defense",
+        "Speed",
+        "\\d+% chance",
+        "\\d(-\\d)? times"
+    ],
+    "Scary Face": [
+        "Speed"
+    ],
+    "Scorching Sands": [
+        "\\d+% chance"
+    ],
+    "Scratch": [
+        "No additional effect"
+    ],
+    "Screech": [
+        "(?<!Special) Defense"
+    ],
+    "Searing Shot": [
+        "\\d+% chance"
+    ],
+    "Searing Sunraze Smash": [],
+    "Secret Power": [
+        "Special Attack",
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Secret Sword": [
+        "(?<!Special) Defense",
+        "Special Defense",
+        "(D|d)eals damage"
+    ],
+    "Seed Bomb": [
+        "No additional effect"
+    ],
+    "Seed Flare": [
+        "Special Defense",
+        "\\d+% chance"
+    ],
+    "Seismic Toss": [
+        "(D|d)eals damage"
+    ],
+    "Self-Destruct": [
+        "(P| p)revent"
+    ],
+    "Shadow Ball": [
+        "Special Defense",
+        "\\d+% chance"
+    ],
+    "Shadow Bone": [
+        "(?<!Special) Defense",
+        "\\d+% chance"
+    ],
+    "Shadow Claw": [
+        "critical hit"
+    ],
+    "Shadow Force": [],
+    "Shadow Punch": [],
+    "Shadow Sneak": [
+        "No additional effect"
+    ],
+    "Shadow Strike": [
+        "(?<!Special) Defense",
+        "\\d+% chance"
+    ],
+    "Sharpen": [
+        "(?<!Special) Attack"
+    ],
+    "Shattered Psyche": [],
+    "Shed Tail": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Sheer Cold": [
+        "immun",
+        "(D|d)eals damage",
+        "-type"
+    ],
+    "Shell Side Arm": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Special Attack",
+        "Special Defense",
+        "\\d+% chance"
+    ],
+    "Shell Smash": [
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Special Attack",
+        "Special Defense",
+        "Speed"
+    ],
+    "Shell Trap": [],
+    "Shelter": [
+        "(?<!Special) Defense"
+    ],
+    "Shift Gear": [
+        "(?<!Special) Attack",
+        "Speed"
+    ],
+    "Shock Wave": [],
+    "Shore Up": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Signal Beam": [
+        "\\d+% chance"
+    ],
+    "Silk Trap": [
+        "lowered by \\d stages?",
+        "Speed"
+    ],
+    "Silver Wind": [
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Special Attack",
+        "Special Defense",
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Simple Beam": [],
+    "Sing": [],
+    "Sinister Arrow Raid": [
+        "No additional effect"
+    ],
+    "Sizzly Slide": [
+        "\\d+% chance"
+    ],
+    "Sketch": [],
+    "Skill Swap": [],
+    "Skitter Smack": [
+        "Special Attack",
+        "\\d+% chance"
+    ],
+    "Skull Bash": [
+        "(?<!Special) Defense"
+    ],
+    "Sky Attack": [
+        "\\d+% chance",
+        "critical hit"
+    ],
+    "Sky Drop": [
+        "-type"
+    ],
+    "Sky Uppercut": [],
+    "Slack Off": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Slam": [
+        "No additional effect"
+    ],
+    "Slash": [
+        "critical hit"
+    ],
+    "Sleep Powder": [],
+    "Sleep Talk": [],
+    "Sludge": [
+        "\\d+% chance"
+    ],
+    "Sludge Bomb": [
+        "\\d+% chance"
+    ],
+    "Sludge Wave": [
+        "\\d+% chance"
+    ],
+    "Smack Down": [
+        "immun",
+        "-type"
+    ],
+    "Smart Strike": [],
+    "Smelling Salts": [],
+    "Smog": [
+        "\\d+% chance"
+    ],
+    "Smokescreen": [],
+    "Snap Trap": [
+        "\\d(-\\d)? turns",
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent"
+    ],
+    "Snarl": [
+        "Special Attack",
+        "\\d+% chance"
+    ],
+    "Snatch": [],
+    "Snipe Shot": [
+        "critical hit"
+    ],
+    "Snore": [
+        "\\d+% chance"
+    ],
+    "Snowscape": [
+        "(?<!Special) Defense",
+        "\\d(-\\d)? turns",
+        "-type"
+    ],
+    "Soak": [],
+    "Soft-Boiled": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Solar Beam": [],
+    "Solar Blade": [],
+    "Sonic Boom": [],
+    "Soul-Stealing 7-Star Strike": [
+        "No additional effect"
+    ],
+    "Spacial Rend": [
+        "critical hit"
+    ],
+    "Spark": [
+        "\\d+% chance"
+    ],
+    "Sparkling Aria": [],
+    "Sparkly Swirl": [],
+    "Spectral Thief": [
+        " stats? "
+    ],
+    "Speed Swap": [
+        " stats? ",
+        "Speed"
+    ],
+    "Spicy Extract": [
+        "(?<!Special) Attack",
+        "(?<!Special) Defense"
+    ],
+    "Spider Web": [
+        "(P| p)revent"
+    ],
+    "Spike Cannon": [
+        "\\d+% chance",
+        "\\d(-\\d)? times"
+    ],
+    "Spikes": [
+        "\\d(-\\d)? times",
+        "-type"
+    ],
+    "Spiky Shield": [],
+    "Spin Out": [
+        "Speed"
+    ],
+    "Spirit Break": [
+        "Special Attack",
+        "\\d+% chance"
+    ],
+    "Spirit Shackle": [
+        "(P| p)revent"
+    ],
+    "Spit Up": [
+        "(?<!Special) Defense",
+        "Special Defense",
+        "\\d(-\\d)? times"
+    ],
+    "Spite": [],
+    "Splash": [],
+    "Splintered Stormshards": [],
+    "Splishy Splash": [
+        "\\d+% chance"
+    ],
+    "Spore": [],
+    "Spotlight": [],
+    "Springtide Storm": [
+        "(?<!Special) Attack",
+        "\\d+% chance"
+    ],
+    "Stealth Rock": [],
+    "Steam Eruption": [
+        "\\d+% chance"
+    ],
+    "Steamroller": [
+        "\\d+% chance"
+    ],
+    "Steel Beam": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Steel Roller": [],
+    "Steel Wing": [
+        "(?<!Special) Defense",
+        "\\d+% chance"
+    ],
+    "Sticky Web": [
+        "Speed",
+        "-type"
+    ],
+    "Stockpile": [
+        "(?<!Special) Defense",
+        "Special Defense"
+    ],
+    "Stoked Sparksurfer": [
+        "\\d+% chance"
+    ],
+    "Stomp": [
+        "\\d+% chance"
+    ],
+    "Stomping Tantrum": [
+        "(P| p)revent"
+    ],
+    "Stone Axe": [],
+    "Stone Edge": [
+        "critical hit"
+    ],
+    "Stored Power": [
+        " stats? "
+    ],
+    "Storm Throw": [
+        "critical hit"
+    ],
+    "Strange Steam": [
+        "\\d+% chance"
+    ],
+    "Strength": [
+        "No additional effect"
+    ],
+    "Strength Sap": [
+        " stats? ",
+        "(?<!Special) Attack"
+    ],
+    "String Shot": [
+        "Speed"
+    ],
+    "Struggle": [
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent"
+    ],
+    "Struggle Bug": [
+        "Special Attack",
+        "\\d+% chance"
+    ],
+    "Stuff Cheeks": [
+        "(?<!Special) Defense",
+        "(P| p)revent"
+    ],
+    "Stun Spore": [],
+    "Submission": [],
+    "Substitute": [
+        " stats? ",
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Subzero Slammer": [],
+    "Sucker Punch": [],
+    "Sunny Day": [
+        "\\d(-\\d)? turns",
+        "-type"
+    ],
+    "Sunsteel Strike": [],
+    "Super Fang": [
+        "current HP",
+        "(D|d)eals damage"
+    ],
+    "Superpower": [
+        "(?<!Special) Attack",
+        "(?<!Special) Defense"
+    ],
+    "Supersonic": [],
+    "Supersonic Skystrike": [],
+    "Surf": [],
+    "Surging Strikes": [
+        "\\d(-\\d)? times",
+        "critical hit"
+    ],
+    "Swagger": [
+        "(?<!Special) Attack"
+    ],
+    "Swallow": [
+        "(?<!Special) Defense",
+        "Special Defense",
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Sweet Kiss": [],
+    "Sweet Scent": [],
+    "Swift": [],
+    "Switcheroo": [
+        "immun"
+    ],
+    "Swords Dance": [
+        "(?<!Special) Attack"
+    ],
+    "Synchronoise": [
+        "immun"
+    ],
+    "Synthesis": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Syrup Bomb": [
+        "lowered by \\d stages?",
+        "Speed",
+        "\\d(-\\d)? turns"
+    ],
+    "Tackle": [
+        "No additional effect"
+    ],
+    "Tail Glow": [
+        "Special Attack"
+    ],
+    "Tail Slap": [
+        "\\d+% chance",
+        "\\d(-\\d)? times"
+    ],
+    "Tail Whip": [
+        "(?<!Special) Defense"
+    ],
+    "Tailwind": [
+        "Speed",
+        "\\d(-\\d)? turns"
+    ],
+    "Take Down": [],
+    "Take Heart": [
+        "Special Attack",
+        "Special Defense"
+    ],
+    "Tar Shot": [
+        "Speed",
+        "-type"
+    ],
+    "Taunt": [
+        "immun",
+        "\\d(-\\d)? turns",
+        "(P| p)revent"
+    ],
+    "Tearful Look": [
+        "(?<!Special) Attack",
+        "Special Attack"
+    ],
+    "Teatime": [
+        "(P| p)revent"
+    ],
+    "Techno Blast": [],
+    "Tectonic Rage": [],
+    "Teeter Dance": [],
+    "Telekinesis": [
+        "immun",
+        "\\d(-\\d)? turns",
+        "-type"
+    ],
+    "Teleport": [],
+    "Tera Blast": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "Special Attack"
+    ],
+    "Terrain Pulse": [],
+    "Thief": [],
+    "Thousand Arrows": [
+        "immun",
+        "-type"
+    ],
+    "Thousand Waves": [
+        "(P| p)revent"
+    ],
+    "Thrash": [
+        "\\d(-\\d)? turns",
+        "(P| p)revent"
+    ],
+    "Throat Chop": [
+        "\\d(-\\d)? turns"
+    ],
+    "Thunder": [
+        "\\d+% chance"
+    ],
+    "Thunderbolt": [
+        "\\d+% chance"
+    ],
+    "Thunder Cage": [
+        "\\d(-\\d)? turns",
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent"
+    ],
+    "Thunder Fang": [
+        "\\d+% chance"
+    ],
+    "Thunderous Kick": [
+        "(?<!Special) Defense",
+        "\\d+% chance"
+    ],
+    "Thunder Punch": [
+        "\\d+% chance"
+    ],
+    "Thunder Shock": [
+        "\\d+% chance"
+    ],
+    "Thunder Wave": [
+        "immun"
+    ],
+    "Tickle": [
+        "(?<!Special) Attack",
+        "(?<!Special) Defense"
+    ],
+    "Tidy Up": [
+        "(?<!Special) Attack",
+        "Speed"
+    ],
+    "Topsy-Turvy": [
+        " stats? "
+    ],
+    "Torch Song": [
+        "Special Attack",
+        "\\d+% chance"
+    ],
+    "Torment": [
+        "\\d(-\\d)? turns",
+        "(P| p)revent"
+    ],
+    "Toxic": [
+        "-type"
+    ],
+    "Toxic Spikes": [
+        "\\d(-\\d)? times",
+        "(O| o)n switch",
+        "(P| p)revent",
+        "-type"
+    ],
+    "Toxic Thread": [
+        "Speed"
+    ],
+    "Trailblaze": [
+        "Speed",
+        "\\d+% chance"
+    ],
+    "Transform": [
+        " stats? "
+    ],
+    "Tri Attack": [
+        "\\d+% chance"
+    ],
+    "Trick": [
+        "immun"
+    ],
+    "Trick-or-Treat": [],
+    "Trick Room": [
+        "Speed",
+        "\\d(-\\d)? turns"
+    ],
+    "Triple Arrows": [
+        "(?<!Special) Defense",
+        "\\d+% chance",
+        "critical hit"
+    ],
+    "Triple Axel": [
+        "\\d(-\\d)? times"
+    ],
+    "Triple Dive": [
+        "\\d(-\\d)? times"
+    ],
+    "Triple Kick": [
+        "\\d(-\\d)? times"
+    ],
+    "Trop Kick": [
+        "(?<!Special) Attack",
+        "\\d+% chance"
+    ],
+    "Trump Card": [],
+    "Twin Beam": [],
+    "Twineedle": [
+        "\\d+% chance"
+    ],
+    "Twinkle Tackle": [],
+    "Twister": [
+        "\\d+% chance"
+    ],
+    "U-turn": [],
+    "Uproar": [
+        "\\d(-\\d)? turns",
+        "(P| p)revent"
+    ],
+    "Vacuum Wave": [
+        "No additional effect"
+    ],
+    "V-create": [
+        "(?<!Special) Defense",
+        "Special Defense",
+        "Speed"
+    ],
+    "Veevee Volley": [],
+    "Venom Drench": [
+        "(?<!Special) Attack",
+        "Special Attack",
+        "Speed"
+    ],
+    "Venoshock": [],
+    "Victory Dance": [
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Speed"
+    ],
+    "Vine Whip": [
+        "No additional effect"
+    ],
+    "Vise Grip": [
+        "No additional effect"
+    ],
+    "Vital Throw": [],
+    "Volt Switch": [],
+    "Volt Tackle": [
+        "\\d+% chance"
+    ],
+    "Wake-Up Slap": [],
+    "Waterfall": [
+        "\\d+% chance"
+    ],
+    "Water Gun": [
+        "No additional effect"
+    ],
+    "Water Pledge": [
+        "Speed",
+        "\\d(-\\d)? turns"
+    ],
+    "Water Pulse": [
+        "\\d+% chance"
+    ],
+    "Water Shuriken": [
+        "\\d+% chance",
+        "\\d(-\\d)? times"
+    ],
+    "Water Sport": [
+        "\\d(-\\d)? turns",
+        "-type"
+    ],
+    "Water Spout": [
+        "current HP"
+    ],
+    "Wave Crash": [],
+    "Weather Ball": [],
+    "Whirlpool": [
+        "\\d(-\\d)? turns",
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent"
+    ],
+    "Whirlwind": [],
+    "Wicked Blow": [
+        "critical hit"
+    ],
+    "Wicked Torque": [
+        "\\d+% chance"
+    ],
+    "Wide Guard": [],
+    "Wildbolt Storm": [
+        "\\d+% chance"
+    ],
+    "Wild Charge": [],
+    "Will-O-Wisp": [],
+    "Wing Attack": [
+        "No additional effect"
+    ],
+    "Wish": [
+        "next turn"
+    ],
+    "Withdraw": [
+        "(?<!Special) Defense"
+    ],
+    "Wonder Room": [
+        " stats? ",
+        "(?<!Special) Defense",
+        "Special Defense",
+        "\\d(-\\d)? turns"
+    ],
+    "Wood Hammer": [],
+    "Work Up": [
+        "(?<!Special) Attack",
+        "Special Attack"
+    ],
+    "Worry Seed": [],
+    "Wrap": [
+        "\\d(-\\d)? turns",
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent"
+    ],
+    "Wring Out": [
+        "current HP"
+    ],
+    "X-Scissor": [
+        "No additional effect"
+    ],
+    "Yawn": [
+        "next turn",
+        "(P| p)revent"
+    ],
+    "Zap Cannon": [
+        "\\d+% chance"
+    ],
+    "Zen Headbutt": [
+        "\\d+% chance"
+    ],
+    "Zing Zap": [
+        "\\d+% chance"
+    ],
+    "Zippy Zap": [
+        "\\d+% chance"
+    ]
+}

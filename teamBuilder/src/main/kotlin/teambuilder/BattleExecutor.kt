@@ -27,7 +27,7 @@ open class BattleExecutor(val myPokemons:List<Pokemon>,val enemyPokemons:List<Po
         val enemyPlayer=Player(1,"Enemy",enemyPokemons.map{Pokemon(it.nr, it.level, it.eVs.clone(), it.iVs, it.nature, it.moves.clone())}.toTypedArray())
         battle.players.add(mePlayer)
         battle.players.add(enemyPlayer)
-        var lastState:BattleState?=null
+        var lastState:BattleState=DetailedBattleState(listOf(mePlayer,enemyPlayer))
         val ioInterfaces=arrayOf(BotInterface(mePlayer,meAI),BotInterface(enemyPlayer,enemyAI))
         for(io in ioInterfaces){
             io.update(BattleRoundResult(LinkedList<BattleAction>(),DetailedBattleState(listOf(mePlayer,enemyPlayer)),NetworkMessageKind.Update))
@@ -37,7 +37,7 @@ open class BattleExecutor(val myPokemons:List<Pokemon>,val enemyPokemons:List<Po
             if(stop)break
             var s:Short=0
             for(io in ioInterfaces){
-                val input=io.requestPlayerInput(0)
+                val input=io.requestPlayerInput(Tuple(0,lastState))
                 battle.addInput(input)
             }
             val result=battle.executeSchedule(simpleInterrupt)

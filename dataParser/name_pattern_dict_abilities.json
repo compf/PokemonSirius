@@ -1,0 +1,866 @@
+{
+    "No Ability": [],
+    "Adaptability": [
+        "-type"
+    ],
+    "Aerilate": [
+        "-type"
+    ],
+    "Aftermath": [
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent"
+    ],
+    "Air Lock": [],
+    "Analytic": [],
+    "Anger Point": [
+        "(?<!Special) Attack",
+        "critical hit"
+    ],
+    "Anger Shell": [
+        "raised by \\d stages?",
+        "lowered by \\d stages?",
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Special Attack",
+        "Special Defense",
+        "Speed",
+        "(P| p)revent"
+    ],
+    "Anticipation": [
+        "(O| o)n switch",
+        "-type"
+    ],
+    "Arena Trap": [
+        "(P| p)revent"
+    ],
+    "Armor Tail": [
+        "(P| p)revent"
+    ],
+    "Aroma Veil": [],
+    "As One (Glastrier)": [],
+    "As One (Spectrier)": [],
+    "Aura Break": [
+        "-type"
+    ],
+    "Bad Dreams": [],
+    "Ball Fetch": [],
+    "Battery": [],
+    "Battle Armor": [
+        "critical hit"
+    ],
+    "Battle Bond": [
+        "raised by \\d stages?",
+        "(?<!Special) Attack",
+        "Special Attack",
+        "Speed"
+    ],
+    "Beads of Ruin": [
+        "Special Defense"
+    ],
+    "Beast Boost": [
+        " stats? ",
+        "raised by \\d stages?",
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Special Attack",
+        "Special Defense",
+        "Speed"
+    ],
+    "Berserk": [
+        "raised by \\d stages?",
+        "Special Attack",
+        "(P| p)revent"
+    ],
+    "Big Pecks": [
+        " stats? ",
+        "(?<!Special) Defense",
+        "(P| p)revent"
+    ],
+    "Blaze": [
+        " stats? ",
+        "-type"
+    ],
+    "Bulletproof": [
+        "immun"
+    ],
+    "Cheek Pouch": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Chilling Neigh": [
+        "raised by \\d stages?",
+        "(?<!Special) Attack"
+    ],
+    "Chlorophyll": [
+        "Speed",
+        "(P| p)revent"
+    ],
+    "Clear Body": [
+        " stats? ",
+        "(P| p)revent"
+    ],
+    "Cloud Nine": [],
+    "Color Change": [
+        "(P| p)revent"
+    ],
+    "Comatose": [],
+    "Commander": [
+        "raised by \\d stages?",
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Special Attack",
+        "Special Defense",
+        "Speed"
+    ],
+    "Competitive": [
+        " stats? ",
+        "raised by \\d stages?",
+        "Special Attack"
+    ],
+    "Compound Eyes": [],
+    "Contrary": [
+        " stats? "
+    ],
+    "Corrosion": [],
+    "Costar": [
+        " stats? ",
+        "(O| o)n switch"
+    ],
+    "Cotton Down": [
+        "lowered by \\d stages?",
+        "Speed"
+    ],
+    "Cud Chew": [
+        "next turn"
+    ],
+    "Curious Medicine": [
+        " stats? ",
+        "(O| o)n switch"
+    ],
+    "Cursed Body": [
+        "\\d+% chance"
+    ],
+    "Cute Charm": [
+        "\\d+% chance"
+    ],
+    "Damp": [
+        "(P| p)revent"
+    ],
+    "Dancer": [
+        "(P| p)revent"
+    ],
+    "Dark Aura": [
+        "-type"
+    ],
+    "Dauntless Shield": [
+        "raised by \\d stages?",
+        "(?<!Special) Defense",
+        "(O| o)n switch"
+    ],
+    "Dazzling": [
+        "(P| p)revent"
+    ],
+    "Defeatist": [
+        "(?<!Special) Attack",
+        "Special Attack"
+    ],
+    "Defiant": [
+        " stats? ",
+        "raised by \\d stages?",
+        "(?<!Special) Attack"
+    ],
+    "Delta Stream": [
+        "(O| o)n switch",
+        "-type"
+    ],
+    "Desolate Land": [
+        "(O| o)n switch",
+        "(P| p)revent",
+        "-type"
+    ],
+    "Disguise": [],
+    "Download": [
+        " stats? ",
+        "raised by \\d stages?",
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Special Attack",
+        "Special Defense",
+        "(O| o)n switch"
+    ],
+    "Dragon's Maw": [
+        " stats? ",
+        "-type"
+    ],
+    "Drizzle": [
+        "(O| o)n switch"
+    ],
+    "Drought": [
+        "(O| o)n switch"
+    ],
+    "Dry Skin": [
+        "immun",
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent",
+        "-type"
+    ],
+    "Early Bird": [],
+    "Earth Eater": [
+        "immun",
+        "\\d+/\\d+ of its maximum HP",
+        "-type"
+    ],
+    "Effect Spore": [
+        "\\d+% chance"
+    ],
+    "Electric Surge": [
+        "(O| o)n switch"
+    ],
+    "Electromorphosis": [],
+    "Embody Aspect (Cornerstone)": [
+        "raised by \\d stages?",
+        "(?<!Special) Defense",
+        "(O| o)n switch"
+    ],
+    "Embody Aspect (Hearthflame)": [
+        "raised by \\d stages?",
+        "(?<!Special) Attack",
+        "(O| o)n switch"
+    ],
+    "Embody Aspect (Teal)": [
+        "raised by \\d stages?",
+        "Speed",
+        "(O| o)n switch"
+    ],
+    "Embody Aspect (Wellspring)": [
+        "raised by \\d stages?",
+        "Special Defense",
+        "(O| o)n switch"
+    ],
+    "Emergency Exit": [
+        "(P| p)revent"
+    ],
+    "Fairy Aura": [
+        "-type"
+    ],
+    "Filter": [],
+    "Flame Body": [
+        "\\d+% chance"
+    ],
+    "Flare Boost": [],
+    "Flash Fire": [
+        " stats? ",
+        "immun",
+        "-type"
+    ],
+    "Flower Gift": [
+        "(?<!Special) Attack",
+        "Special Defense",
+        "(P| p)revent"
+    ],
+    "Flower Veil": [
+        " stats? ",
+        "-type"
+    ],
+    "Fluffy": [],
+    "Forecast": [
+        "(P| p)revent"
+    ],
+    "Forewarn": [
+        "(O| o)n switch"
+    ],
+    "Friend Guard": [],
+    "Frisk": [
+        "(O| o)n switch"
+    ],
+    "Full Metal Body": [
+        " stats? ",
+        "(P| p)revent"
+    ],
+    "Fur Coat": [
+        "(?<!Special) Defense"
+    ],
+    "Gale Wings": [
+        "-type"
+    ],
+    "Galvanize": [
+        "-type"
+    ],
+    "Gluttony": [],
+    "Good as Gold": [
+        "immun"
+    ],
+    "Gooey": [
+        "lowered by \\d stages?",
+        "Speed"
+    ],
+    "Gorilla Tactics": [
+        "(?<!Special) Attack",
+        "(P| p)revent"
+    ],
+    "Grass Pelt": [
+        "(?<!Special) Defense"
+    ],
+    "Grassy Surge": [
+        "(O| o)n switch"
+    ],
+    "Grim Neigh": [
+        "raised by \\d stages?",
+        "Special Attack"
+    ],
+    "Guard Dog": [
+        "(?<!Special) Attack",
+        "immun"
+    ],
+    "Gulp Missile": [
+        "(?<!Special) Defense",
+        "\\d+/\\d+ of its maximum HP",
+        "(D|d)eals damage"
+    ],
+    "Guts": [
+        "(?<!Special) Attack"
+    ],
+    "Hadron Engine": [
+        "(O| o)n switch"
+    ],
+    "Harvest": [
+        "\\d+% chance"
+    ],
+    "Healer": [
+        "\\d+% chance"
+    ],
+    "Heatproof": [
+        " stats? ",
+        "-type"
+    ],
+    "Heavy Metal": [],
+    "Honey Gather": [],
+    "Hospitality": [
+        "(O| o)n switch"
+    ],
+    "Huge Power": [
+        "(?<!Special) Attack"
+    ],
+    "Hunger Switch": [],
+    "Hustle": [
+        "(?<!Special) Attack"
+    ],
+    "Hydration": [
+        "(P| p)revent"
+    ],
+    "Hyper Cutter": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "(P| p)revent"
+    ],
+    "Ice Body": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Ice Face": [],
+    "Ice Scales": [],
+    "Illuminate": [
+        " stats? ",
+        "(P| p)revent"
+    ],
+    "Illusion": [],
+    "Immunity": [],
+    "Imposter": [
+        "(O| o)n switch"
+    ],
+    "Infiltrator": [],
+    "Innards Out": [],
+    "Inner Focus": [
+        "immun"
+    ],
+    "Insomnia": [],
+    "Intimidate": [
+        "(?<!Special) Attack",
+        "immun",
+        "(O| o)n switch"
+    ],
+    "Intrepid Sword": [
+        "raised by \\d stages?",
+        "(?<!Special) Attack",
+        "(O| o)n switch"
+    ],
+    "Iron Barbs": [],
+    "Iron Fist": [],
+    "Justified": [
+        "raised by \\d stages?",
+        "(?<!Special) Attack",
+        "-type"
+    ],
+    "Keen Eye": [
+        " stats? ",
+        "(P| p)revent"
+    ],
+    "Klutz": [],
+    "Leaf Guard": [
+        "(P| p)revent"
+    ],
+    "Levitate": [
+        "immun",
+        "-type"
+    ],
+    "Libero": [],
+    "Light Metal": [],
+    "Lightning Rod": [
+        "Special Attack",
+        "Speed",
+        "immun",
+        "-type"
+    ],
+    "Limber": [],
+    "Lingering Aroma": [],
+    "Liquid Ooze": [],
+    "Liquid Voice": [
+        "-type"
+    ],
+    "Long Reach": [],
+    "Magic Bounce": [],
+    "Magic Guard": [],
+    "Magician": [],
+    "Magma Armor": [],
+    "Magnet Pull": [
+        "(P| p)revent",
+        "-type"
+    ],
+    "Marvel Scale": [
+        "(?<!Special) Defense"
+    ],
+    "Mega Launcher": [],
+    "Merciless": [
+        "critical hit"
+    ],
+    "Mimicry": [],
+    "Mind's Eye": [
+        " stats? ",
+        "(P| p)revent",
+        "-type"
+    ],
+    "Minus": [
+        "Special Attack"
+    ],
+    "Mirror Armor": [
+        " stats? "
+    ],
+    "Misty Surge": [
+        "(O| o)n switch"
+    ],
+    "Mold Breaker": [],
+    "Moody": [
+        " stats? ",
+        "raised by \\d stages?",
+        "lowered by \\d stages?"
+    ],
+    "Motor Drive": [
+        "Speed",
+        "immun",
+        "-type"
+    ],
+    "Moxie": [
+        "raised by \\d stages?",
+        "(?<!Special) Attack"
+    ],
+    "Multiscale": [],
+    "Multitype": [],
+    "Mummy": [],
+    "Mycelium Might": [],
+    "Natural Cure": [],
+    "Neuroforce": [],
+    "Neutralizing Gas": [],
+    "No Guard": [],
+    "Normalize": [],
+    "Oblivious": [
+        "immun"
+    ],
+    "Opportunist": [
+        " stats? "
+    ],
+    "Orichalcum Pulse": [
+        "(?<!Special) Attack",
+        "(O| o)n switch"
+    ],
+    "Overcoat": [
+        "immun"
+    ],
+    "Overgrow": [
+        " stats? ",
+        "-type"
+    ],
+    "Own Tempo": [
+        "immun"
+    ],
+    "Parental Bond": [],
+    "Pastel Veil": [],
+    "Perish Body": [],
+    "Pickpocket": [
+        "(P| p)revent"
+    ],
+    "Pickup": [],
+    "Pixilate": [
+        "-type"
+    ],
+    "Plus": [
+        "Special Attack"
+    ],
+    "Poison Heal": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Poison Point": [
+        "\\d+% chance"
+    ],
+    "Poison Touch": [
+        "\\d+% chance"
+    ],
+    "Power Construct": [],
+    "Power of Alchemy": [],
+    "Power Spot": [],
+    "Prankster": [
+        "immun",
+        "-type"
+    ],
+    "Pressure": [],
+    "Primordial Sea": [
+        "(O| o)n switch",
+        "(P| p)revent",
+        "-type"
+    ],
+    "Prism Armor": [],
+    "Propeller Tail": [],
+    "Protean": [],
+    "Protosynthesis": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Special Attack",
+        "Special Defense",
+        "Speed"
+    ],
+    "Psychic Surge": [
+        "(O| o)n switch"
+    ],
+    "Punk Rock": [],
+    "Pure Power": [
+        "(?<!Special) Attack"
+    ],
+    "Purifying Salt": [
+        " stats? ",
+        "-type"
+    ],
+    "Quark Drive": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Special Attack",
+        "Special Defense",
+        "Speed"
+    ],
+    "Queenly Majesty": [
+        "(P| p)revent"
+    ],
+    "Quick Draw": [
+        "\\d+% chance"
+    ],
+    "Quick Feet": [
+        "Speed"
+    ],
+    "Rain Dish": [
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent"
+    ],
+    "Rattled": [
+        "raised by \\d stages?",
+        "Speed",
+        "-type"
+    ],
+    "Receiver": [],
+    "Reckless": [],
+    "Refrigerate": [
+        "-type"
+    ],
+    "Regenerator": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Ripen": [
+        " stats? ",
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Rivalry": [],
+    "RKS System": [],
+    "Rock Head": [],
+    "Rocky Payload": [
+        " stats? ",
+        "-type"
+    ],
+    "Rough Skin": [],
+    "Run Away": [],
+    "Sand Force": [
+        "-type"
+    ],
+    "Sand Rush": [
+        "Speed"
+    ],
+    "Sand Spit": [],
+    "Sand Stream": [
+        "(O| o)n switch"
+    ],
+    "Sand Veil": [],
+    "Sap Sipper": [
+        "(?<!Special) Attack",
+        "immun",
+        "-type"
+    ],
+    "Schooling": [
+        "\\d+/\\d+ of its maximum HP",
+        "(O| o)n switch"
+    ],
+    "Scrappy": [
+        "immun",
+        "-type"
+    ],
+    "Screen Cleaner": [
+        "(O| o)n switch"
+    ],
+    "Seed Sower": [],
+    "Serene Grace": [],
+    "Shadow Shield": [],
+    "Shadow Tag": [
+        "(P| p)revent"
+    ],
+    "Sharpness": [],
+    "Shed Skin": [
+        "\\d+% chance"
+    ],
+    "Sheer Force": [
+        "(P| p)revent"
+    ],
+    "Shell Armor": [
+        "critical hit"
+    ],
+    "Shield Dust": [],
+    "Shields Down": [
+        "(O| o)n switch"
+    ],
+    "Simple": [
+        " stats? "
+    ],
+    "Skill Link": [],
+    "Slow Start": [
+        "(?<!Special) Attack",
+        "Speed",
+        "\\d(-\\d)? turns",
+        "(O| o)n switch"
+    ],
+    "Slush Rush": [
+        "Speed"
+    ],
+    "Sniper": [
+        "critical hit"
+    ],
+    "Snow Cloak": [],
+    "Snow Warning": [
+        "(O| o)n switch"
+    ],
+    "Solar Power": [
+        "Special Attack",
+        "\\d+/\\d+ of its maximum HP",
+        "(P| p)revent"
+    ],
+    "Solid Rock": [],
+    "Soul-Heart": [
+        "raised by \\d stages?",
+        "Special Attack"
+    ],
+    "Soundproof": [
+        "immun"
+    ],
+    "Speed Boost": [
+        "raised by \\d stages?",
+        "Speed"
+    ],
+    "Stakeout": [
+        " stats? "
+    ],
+    "Stall": [],
+    "Stalwart": [],
+    "Stamina": [
+        "raised by \\d stages?",
+        "(?<!Special) Defense"
+    ],
+    "Stance Change": [],
+    "Static": [
+        "\\d+% chance"
+    ],
+    "Steadfast": [
+        "raised by \\d stages?",
+        "Speed"
+    ],
+    "Steam Engine": [
+        "raised by \\d stages?",
+        "Speed",
+        "-type"
+    ],
+    "Steelworker": [
+        " stats? ",
+        "-type"
+    ],
+    "Steely Spirit": [
+        "-type"
+    ],
+    "Stench": [
+        "\\d+% chance"
+    ],
+    "Sticky Hold": [],
+    "Storm Drain": [
+        "Special Attack",
+        "Speed",
+        "immun",
+        "-type"
+    ],
+    "Strong Jaw": [],
+    "Sturdy": [],
+    "Suction Cups": [],
+    "Super Luck": [
+        "raised by \\d stages?",
+        "critical hit"
+    ],
+    "Supersweet Syrup": [
+        "(O| o)n switch"
+    ],
+    "Supreme Overlord": [],
+    "Surge Surfer": [
+        "Speed"
+    ],
+    "Swarm": [
+        " stats? ",
+        "-type"
+    ],
+    "Sweet Veil": [],
+    "Swift Swim": [
+        "Speed",
+        "(P| p)revent"
+    ],
+    "Symbiosis": [],
+    "Synchronize": [],
+    "Sword of Ruin": [
+        "(?<!Special) Defense"
+    ],
+    "Tablets of Ruin": [
+        "(?<!Special) Attack"
+    ],
+    "Tangled Feet": [],
+    "Tangling Hair": [
+        "lowered by \\d stages?",
+        "Speed"
+    ],
+    "Technician": [],
+    "Telepathy": [],
+    "Teravolt": [],
+    "Thermal Exchange": [
+        "(?<!Special) Attack",
+        "-type"
+    ],
+    "Thick Fat": [
+        " stats? ",
+        "-type"
+    ],
+    "Tinted Lens": [],
+    "Torrent": [
+        " stats? ",
+        "-type"
+    ],
+    "Tough Claws": [],
+    "Toxic Boost": [],
+    "Toxic Chain": [
+        "\\d+% chance"
+    ],
+    "Toxic Debris": [],
+    "Trace": [
+        "(O| o)n switch"
+    ],
+    "Transistor": [
+        " stats? ",
+        "-type"
+    ],
+    "Triage": [],
+    "Truant": [],
+    "Turboblaze": [],
+    "Unaware": [
+        " stats? ",
+        "(?<!Special) Attack",
+        "(?<!Special) Defense",
+        "Special Attack",
+        "Special Defense"
+    ],
+    "Unburden": [
+        "Speed"
+    ],
+    "Unnerve": [
+        "(P| p)revent"
+    ],
+    "Unseen Fist": [],
+    "Vessel of Ruin": [
+        "Special Attack"
+    ],
+    "Victory Star": [],
+    "Vital Spirit": [],
+    "Volt Absorb": [
+        "immun",
+        "\\d+/\\d+ of its maximum HP",
+        "-type"
+    ],
+    "Wandering Spirit": [],
+    "Water Absorb": [
+        "immun",
+        "\\d+/\\d+ of its maximum HP",
+        "-type"
+    ],
+    "Water Bubble": [
+        " stats? ",
+        "-type"
+    ],
+    "Water Compaction": [
+        "(?<!Special) Defense",
+        "-type"
+    ],
+    "Water Veil": [],
+    "Weak Armor": [
+        "raised by \\d stages?",
+        "lowered by \\d stages?",
+        "(?<!Special) Defense",
+        "Speed"
+    ],
+    "Well-Baked Body": [
+        "(?<!Special) Defense",
+        "immun",
+        "-type"
+    ],
+    "White Smoke": [
+        " stats? ",
+        "(P| p)revent"
+    ],
+    "Wimp Out": [
+        "(P| p)revent"
+    ],
+    "Wind Power": [],
+    "Wind Rider": [
+        "(?<!Special) Attack",
+        "immun"
+    ],
+    "Wonder Guard": [],
+    "Wonder Skin": [],
+    "Zen Mode": [
+        "\\d+/\\d+ of its maximum HP"
+    ],
+    "Zero to Hero": [],
+    "Mountaineer": [
+        "(O| o)n switch",
+        "-type"
+    ],
+    "Rebound": [
+        "(O| o)n switch"
+    ],
+    "Persistent": [
+        "\\d(-\\d)? turns"
+    ]
+}
