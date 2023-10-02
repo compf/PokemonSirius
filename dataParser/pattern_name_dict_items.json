@@ -1,0 +1,442 @@
+{
+    " stats? ": {
+        "type": null,
+        "desc": "Stats are changed",
+        "names": [
+            "Bottle Cap",
+            "Clear Amulet",
+            "Eject Pack",
+            "Gold Bottle Cap",
+            "Mirror Herb",
+            "Starf Berry",
+            "White Herb"
+        ]
+    },
+    "raised by \\d stages?": {
+        "type": null,
+        "desc": "Stats are raised",
+        "names": [
+            "Blunder Policy",
+            "Leek",
+            "Lucky Punch",
+            "Razor Claw",
+            "Scope Lens",
+            "Stick"
+        ]
+    },
+    "lowered by \\d stages?": {
+        "type": null,
+        "desc": "Stats are lowered",
+        "names": [
+            "Room Service"
+        ]
+    },
+    "(?<!Special) Attack": {
+        "type": null,
+        "desc": "Physical  attack, not special affected",
+        "names": [
+            "Cell Battery",
+            "Choice Band",
+            "Liechi Berry",
+            "Light Ball",
+            "Snowball",
+            "Thick Club",
+            "TR19",
+            "Weakness Policy",
+            "Berserk Gene"
+        ]
+    },
+    "(?<!Special) Defense": {
+        "type": null,
+        "desc": "Physical  defense, not special affected",
+        "names": [
+            "Electric Seed",
+            "Eviolite",
+            "Ganlon Berry",
+            "Grassy Seed",
+            "Kee Berry",
+            "Metal Powder",
+            "TR46"
+        ]
+    },
+    "Special Attack": {
+        "type": null,
+        "desc": "Special attack affected ",
+        "names": [
+            "Throat Spray"
+        ]
+    },
+    "Special Defense": {
+        "type": null,
+        "desc": "Special defense affected ",
+        "names": []
+    },
+    "Speed": {
+        "type": null,
+        "desc": "speed affected ",
+        "names": [
+            "Adrenaline Orb",
+            "Blunder Policy",
+            "Choice Scarf",
+            "Iron Ball",
+            "Macho Brace",
+            "Power Anklet",
+            "Power Band",
+            "Power Belt",
+            "Power Bracer",
+            "Power Lens",
+            "Power Weight",
+            "Quick Powder",
+            "Room Service",
+            "Salac Berry"
+        ]
+    },
+    "immun": {
+        "type": null,
+        "desc": "Immunity",
+        "names": [
+            "Air Balloon",
+            "Ring Target",
+            "Safety Goggles"
+        ]
+    },
+    "\\d+% chance": {
+        "type": null,
+        "desc": "Probability",
+        "names": [
+            "Focus Band",
+            "King's Rock",
+            "Quick Claw",
+            "Razor Fang"
+        ]
+    },
+    "next turn": {
+        "type": null,
+        "desc": "next turn",
+        "names": []
+    },
+    "\\d(-\\d)? turns": {
+        "type": null,
+        "desc": "multiple turns",
+        "names": [
+            "Damp Rock",
+            "Grip Claw",
+            "Heat Rock",
+            "Icy Rock",
+            "Light Clay",
+            "Metronome",
+            "Smooth Rock",
+            "Terrain Extender"
+        ]
+    },
+    "\\d(-\\d)? times": {
+        "type": null,
+        "desc": "multiple times",
+        "names": [
+            "Loaded Dice"
+        ]
+    },
+    "\\d+/\\d+ of its maximum HP": {
+        "type": null,
+        "desc": "Dependent on maximum HP",
+        "names": []
+    },
+    "current HP": {
+        "type": null,
+        "desc": "Dependent on current HP",
+        "names": []
+    },
+    "(D|d)eals damage": {
+        "type": null,
+        "desc": "Specific damage",
+        "names": []
+    },
+    "critical hit": {
+        "type": null,
+        "desc": "critical hit",
+        "names": [
+            "Leek",
+            "Lucky Punch",
+            "Razor Claw",
+            "Scope Lens",
+            "Stick"
+        ]
+    },
+    "recovers": {
+        "type": null,
+        "desc": "HP recovering",
+        "names": []
+    },
+    "(O| o)n switch": {
+        "type": null,
+        "desc": "If switching",
+        "names": [
+            "Berserk Gene"
+        ]
+    },
+    "(P| p)revent": {
+        "type": null,
+        "desc": "Prevents something",
+        "names": [
+            "Clear Amulet"
+        ]
+    },
+    "-type": {
+        "type": null,
+        "desc": "depends on type",
+        "names": [
+            "Absorb Bulb",
+            "Adamant Crystal",
+            "Adamant Orb",
+            "Air Balloon",
+            "Babiri Berry",
+            "Black Belt",
+            "Black Glasses",
+            "Bug Gem",
+            "Cell Battery",
+            "Charcoal",
+            "Charti Berry",
+            "Chilan Berry",
+            "Chople Berry",
+            "Coba Berry",
+            "Colbur Berry",
+            "Dark Gem",
+            "Draco Plate",
+            "Dragon Fang",
+            "Dragon Gem",
+            "Dread Plate",
+            "Earth Plate",
+            "Electric Gem",
+            "Fairy Feather",
+            "Fairy Gem",
+            "Fighting Gem",
+            "Fire Gem",
+            "Fist Plate",
+            "Flame Plate",
+            "Flying Gem",
+            "Ghost Gem",
+            "Grass Gem",
+            "Griseous Core",
+            "Griseous Orb",
+            "Ground Gem",
+            "Haban Berry",
+            "Hard Stone",
+            "Ice Gem",
+            "Icicle Plate",
+            "Insect Plate",
+            "Iron Plate",
+            "Kasib Berry",
+            "Kebia Berry",
+            "Luminous Moss",
+            "Lustrous Globe",
+            "Lustrous Orb",
+            "Magnet",
+            "Meadow Plate",
+            "Metal Coat",
+            "Mind Plate",
+            "Miracle Seed",
+            "Mystic Water",
+            "Net Ball",
+            "Never-Melt Ice",
+            "Normal Gem",
+            "Occa Berry",
+            "Odd Incense",
+            "Passho Berry",
+            "Payapa Berry",
+            "Pixie Plate",
+            "Poison Barb",
+            "Poison Gem",
+            "Psychic Gem",
+            "Rindo Berry",
+            "Rock Gem",
+            "Rock Incense",
+            "Rose Incense",
+            "Roseli Berry",
+            "Sea Incense",
+            "Sharp Beak",
+            "Shuca Berry",
+            "Silk Scarf",
+            "Silver Powder",
+            "Sky Plate",
+            "Snowball",
+            "Soft Sand",
+            "Soul Dew",
+            "Spell Tag",
+            "Splash Plate",
+            "Spooky Plate",
+            "Steel Gem",
+            "Stone Plate",
+            "Tanga Berry",
+            "Toxic Plate",
+            "Twisted Spoon",
+            "Wacan Berry",
+            "Water Gem",
+            "Wave Incense",
+            "Yache Berry",
+            "Zap Plate",
+            "Pink Bow",
+            "Polkadot Bow",
+            "Vile Vial"
+        ]
+    },
+    "No additional effect": {
+        "type": null,
+        "desc": "no additional effects",
+        "names": []
+    },
+    "paralyze": {
+        "type": null,
+        "desc": "Something with paralysis",
+        "names": [
+            "Cheri Berry",
+            "PRZ Cure Berry"
+        ]
+    },
+    "(p|P)oison( |ed|s)": {
+        "type": null,
+        "desc": "Something with poison",
+        "names": [
+            "Black Sludge",
+            "Pecha Berry",
+            "Poison Memory",
+            "Poisonium Z",
+            "Toxic Orb",
+            "Toxic Plate",
+            "TR57",
+            "PSN Cure Berry"
+        ]
+    },
+    "(a)?sleep": {
+        "type": null,
+        "desc": "Something with sleep",
+        "names": [
+            "Chesto Berry",
+            "Dream Ball",
+            "Mint Berry"
+        ]
+    },
+    "(c|C)onfus": {
+        "type": null,
+        "desc": "Something with confusion",
+        "names": [
+            "Aguav Berry",
+            "Figy Berry",
+            "Iapapa Berry",
+            "Lum Berry",
+            "Mago Berry",
+            "Persim Berry",
+            "Wiki Berry",
+            "Berserk Gene",
+            "Bitter Berry",
+            "Miracle Berry"
+        ]
+    },
+    "(B|b)urn": {
+        "type": null,
+        "desc": "Something with burn",
+        "names": [
+            "Flame Orb",
+            "Rawst Berry",
+            "Ice Berry"
+        ]
+    },
+    "(F|f)reeze": {
+        "type": null,
+        "desc": "Something with freeze",
+        "names": []
+    },
+    "recoil": {
+        "type": null,
+        "desc": "Something with recoil damage",
+        "names": []
+    },
+    "held item": {
+        "type": null,
+        "desc": "Something to do with the held item",
+        "names": []
+    },
+    "(((p|P)ower)|(D|d)amage)? doubled?": {
+        "type": null,
+        "desc": "Sometimes the power doubles",
+        "names": [
+            "Deep Sea Scale",
+            "Deep Sea Tooth",
+            "Light Ball",
+            "Metal Powder",
+            "Quick Powder",
+            "Thick Club"
+        ]
+    },
+    "(A|a)ccuracy": {
+        "type": null,
+        "desc": "Something with Accuracy",
+        "names": [
+            "Blunder Policy",
+            "Bright Powder",
+            "Lax Incense",
+            "Micle Berry",
+            "Utility Umbrella",
+            "Wide Lens",
+            "Zoom Lens"
+        ]
+    },
+    "(E|e)vasiveness": {
+        "type": null,
+        "desc": "Something to do with evasiveness",
+        "names": []
+    },
+    "(I|i)f the target": {
+        "type": null,
+        "desc": "Conditional about target",
+        "names": []
+    },
+    "(I|i)f the user": {
+        "type": null,
+        "desc": "Conditional about user",
+        "names": []
+    },
+    "multiplied": {
+        "type": null,
+        "desc": "Something is multiplied",
+        "names": []
+    },
+    "stats": {
+        "0": 66.35514018691589,
+        "1": 30.46728971962617,
+        "2": 2.803738317757009,
+        "3": 0.37383177570093457,
+        "4": 0.0,
+        "5": 0.0,
+        "6": 0.0,
+        "7": 0.0,
+        "8": 0.0,
+        "9": 0.0,
+        "10": 0.0,
+        "11": 0.0,
+        "12": 0.0,
+        "13": 0.0,
+        "14": 0.0,
+        "15": 0.0,
+        "16": 0.0,
+        "17": 0.0,
+        "18": 0.0,
+        "19": 0.0,
+        "20": 0.0,
+        "21": 0.0,
+        "22": 0.0,
+        "23": 0.0,
+        "24": 0.0,
+        "25": 0.0,
+        "26": 0.0,
+        "27": 0.0,
+        "28": 0.0,
+        "29": 0.0,
+        "30": 0.0,
+        "31": 0.0,
+        "32": 0.0,
+        "33": 0.0,
+        "34": 0.0,
+        "35": 0.0,
+        "36": 0.0
+    }
+}

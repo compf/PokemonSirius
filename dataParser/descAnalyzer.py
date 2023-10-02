@@ -1,4 +1,8 @@
 import sys,json
+import spacy
+
+nlp = spacy.load('en_core_web_sm')
+
 import nltk,re
 def create_name_info_object(typ,desc):
     return {"type":typ,"desc":desc,"names":[]}
@@ -52,7 +56,22 @@ pattern_name_dict={
         "(P| p)revent":create_name_info_object(None,"Prevents something"),
         "-type":create_name_info_object(None,"depends on type"),
         #"(T| t)he (user)|(holder)":create_name_info_object(None,"Affect the  user"),
-        "No additional effect":create_name_info_object(None,"no additional effects")
+        "No additional effect":create_name_info_object(None,"no additional effects"),
+        "paralyze":create_name_info_object(None,"Something with paralysis"),
+        "(p|P)oison( |ed|s)":create_name_info_object(None,"Something with poison"),
+        "(a)?sleep":create_name_info_object(None,"Something with sleep"),
+        "(c|C)onfus":create_name_info_object(None,"Something with confusion"),
+        "(B|b)urn":create_name_info_object(None,"Something with burn"),
+        "(F|f)reeze":create_name_info_object(None,"Something with freeze"),
+        "recoil":create_name_info_object(None,"Something with recoil damage"),
+        "held item":create_name_info_object(None,"Something to do with the held item"),
+        "(((p|P)ower)|(D|d)amage)? doubled?":create_name_info_object(None,"Sometimes the power doubles"),
+        "(A|a)ccuracy":create_name_info_object(None,"Something with Accuracy"),
+        "(E|e)vasiveness":create_name_info_object(None,"Something to do with evasiveness"),
+        "(I|i)f the target":create_name_info_object(None,"Conditional about target"),
+        "(I|i)f the user":create_name_info_object(None,"Conditional about user"),
+        "multiplied":create_name_info_object(None,"Something is multiplied")
+
 
 
 
@@ -69,42 +88,54 @@ def load_desc():
             if "desc" in json_data[key]:
                  
                 name=json_data[key]["name"]
-                if name not in name_pattern_dict:
-                    name_pattern_dict[name]=[]
                 name_desc[name]=json_data[key]["desc"]
                 desc=json_data[key]["desc"]
                 for r in replace:
                     desc=desc.replace(r,replace[r])
+               
+                annotated=nlp(desc)
+                if name not in name_pattern_dict:
+                    name_pattern_dict[name]={"desc":desc,"dep":"<HEAD>"+" ".join(["<"+a.dep_+">"+a.text+"</"+a.dep_+">" for a in annotated])+"</HEAD>","patterns":[]}
+               
+                
+             
                 for pattern in pattern_name_dict:
                     match=re.search(pattern,desc)
                     if match:
                      
                         pattern_name_dict[pattern]["names"].append(name)
                        
-                        name_pattern_dict[name].append(pattern)
+                        name_pattern_dict[name]["patterns"].append(pattern)
+          
 
                
-  
+
     #return name_desc
 
 
+if __name__=="__main__":
+  
+    desc=load_desc()
+    total=len(name_pattern_dict)
+    pattern_name_dict["stats"]={}
+    name_pattern_dict["stats"]={}
+    for i in range(len(pattern_name_dict)):
+        number=len([x for x in name_pattern_dict if x!="stats" and len(name_pattern_dict[x]["patterns"] )==i])
+        pattern_name_dict["stats"][i]=number*100/total
 
-desc=load_desc()
-with open("pattern_name_dict_"+sys.argv[1],"w+") as f:
-    json.dump(pattern_name_dict,f,indent=4)
-with open("name_pattern_dict_"+sys.argv[1],"w+") as f:
-    json.dump(name_pattern_dict,f,indent=4)
-
-total=len(name_pattern_dict)
-for i in range(len(pattern_name_dict)):
-    number=len([x for x in name_pattern_dict if len(name_pattern_dict[x])==i])
-    print(i,number*100/total,"%")
-
-
-
- #tokens= nltk.word_tokenize(desc)
-                #tagged = nltk.pos_tag(tokens)
-                #entities = nltk.chunk.ne_chunk(tagged)
+    totalSum=sum([len(pattern_name_dict[x]["names"]) for x in pattern_name_dict if x!="stats"])
+    for key in pattern_name_dict:
+        if key=="stats":
+            continue
+        name_pattern_dict["stats"][key]=len(pattern_name_dict[key]["names"])*100/totalSum
+       
+    with open("pattern_name_dict_"+sys.argv[1],"w+") as f:
+        json.dump(pattern_name_dict,f,indent=4)
+    with open("name_pattern_dict_"+sys.argv[1],"w+") as f:
+        json.dump(name_pattern_dict,f,indent=4)
+     #tokens= nltk.word_tokenize(desc)
+                    #tagged = nltk.pos_tag(tokens)
+                    #entities = nltk.chunk.ne_chunk(tagged)
                # print(desc)
                # json_data[key]["descAnnotated"]=[]#str(entities).replace("\n","")
                 #nltk.Tree.fromstring(str(entities)).pretty_print()

@@ -481,5 +481,273 @@
             "Well-Baked Body",
             "Mountaineer"
         ]
+    },
+    "No additional effect": {
+        "type": null,
+        "desc": "no additional effects",
+        "names": []
+    },
+    "paralyze": {
+        "type": null,
+        "desc": "Something with paralysis",
+        "names": [
+            "Effect Spore",
+            "Gulp Missile",
+            "Limber",
+            "Static",
+            "Synchronize"
+        ]
+    },
+    "(p|P)oison( |ed|s)": {
+        "type": null,
+        "desc": "Something with poison",
+        "names": [
+            "Corrosion",
+            "Effect Spore",
+            "Immunity",
+            "Merciless",
+            "Pastel Veil",
+            "Poison Heal",
+            "Poison Point",
+            "Synchronize",
+            "Toxic Boost"
+        ]
+    },
+    "(a)?sleep": {
+        "type": null,
+        "desc": "Something with sleep",
+        "names": [
+            "Bad Dreams",
+            "Comatose",
+            "Early Bird",
+            "Effect Spore",
+            "Insomnia",
+            "Sweet Veil",
+            "Vital Spirit"
+        ]
+    },
+    "(c|C)onfus": {
+        "type": null,
+        "desc": "Something with confusion",
+        "names": [
+            "Disguise",
+            "Emergency Exit",
+            "Ice Face",
+            "Magic Guard",
+            "Own Tempo",
+            "Tangled Feet",
+            "Wimp Out"
+        ]
+    },
+    "(B|b)urn": {
+        "type": null,
+        "desc": "Something with burn",
+        "names": [
+            "Flame Body",
+            "Flare Boost",
+            "Guts",
+            "Heatproof",
+            "Synchronize",
+            "Thermal Exchange",
+            "Water Bubble",
+            "Water Veil"
+        ]
+    },
+    "(F|f)reeze": {
+        "type": null,
+        "desc": "Something with freeze",
+        "names": []
+    },
+    "recoil": {
+        "type": null,
+        "desc": "Something with recoil damage",
+        "names": [
+            "Magic Guard",
+            "Reckless",
+            "Rock Head",
+            "Sheer Force"
+        ]
+    },
+    "held item": {
+        "type": null,
+        "desc": "Something to do with the held item",
+        "names": [
+            "Frisk",
+            "Klutz",
+            "Sticky Hold",
+            "Unburden"
+        ]
+    },
+    "(((p|P)ower)|(D|d)amage)? doubled?": {
+        "type": null,
+        "desc": "Sometimes the power doubles",
+        "names": [
+            "Chlorophyll",
+            "Fluffy",
+            "Fur Coat",
+            "Heavy Metal",
+            "Huge Power",
+            "Pure Power",
+            "Ripen",
+            "Sand Rush",
+            "Serene Grace",
+            "Simple",
+            "Slush Rush",
+            "Stakeout",
+            "Surge Surfer",
+            "Swift Swim",
+            "Tangled Feet",
+            "Tinted Lens",
+            "Unburden",
+            "Water Bubble"
+        ]
+    },
+    "(A|a)ccuracy": {
+        "type": null,
+        "desc": "Something with Accuracy",
+        "names": [
+            "Compound Eyes",
+            "Hustle",
+            "Illuminate",
+            "Keen Eye",
+            "Mind's Eye",
+            "Moody",
+            "Sand Veil",
+            "Skill Link",
+            "Snow Cloak",
+            "Unaware",
+            "Victory Star",
+            "Wonder Skin"
+        ]
+    },
+    "(E|e)vasiveness": {
+        "type": null,
+        "desc": "Something to do with evasiveness",
+        "names": [
+            "Illuminate",
+            "Keen Eye",
+            "Mind's Eye",
+            "Moody",
+            "Supersweet Syrup",
+            "Tangled Feet",
+            "Unaware"
+        ]
+    },
+    "(I|i)f the target": {
+        "type": null,
+        "desc": "Conditional about target",
+        "names": [
+            "Merciless"
+        ]
+    },
+    "(I|i)f the user": {
+        "type": null,
+        "desc": "Conditional about user",
+        "names": [
+            "Power Spot",
+            "Steely Spirit"
+        ]
+    },
+    "multiplied": {
+        "type": null,
+        "desc": "Something is multiplied",
+        "names": [
+            "Aerilate",
+            "Analytic",
+            "Battery",
+            "Beads of Ruin",
+            "Blaze",
+            "Compound Eyes",
+            "Dark Aura",
+            "Dragon's Maw",
+            "Dry Skin",
+            "Fairy Aura",
+            "Flare Boost",
+            "Flash Fire",
+            "Flower Gift",
+            "Galvanize",
+            "Gorilla Tactics",
+            "Grass Pelt",
+            "Guts",
+            "Hustle",
+            "Iron Fist",
+            "Marvel Scale",
+            "Mega Launcher",
+            "Minus",
+            "Neuroforce",
+            "Normalize",
+            "Overgrow",
+            "Pixilate",
+            "Plus",
+            "Power Spot",
+            "Protosynthesis",
+            "Punk Rock",
+            "Quark Drive",
+            "Quick Feet",
+            "Reckless",
+            "Refrigerate",
+            "Rivalry",
+            "Rocky Payload",
+            "Sand Force",
+            "Sand Veil",
+            "Sharpness",
+            "Sheer Force",
+            "Sniper",
+            "Snow Cloak",
+            "Solar Power",
+            "Steelworker",
+            "Steely Spirit",
+            "Strong Jaw",
+            "Supreme Overlord",
+            "Swarm",
+            "Sword of Ruin",
+            "Tablets of Ruin",
+            "Technician",
+            "Torrent",
+            "Tough Claws",
+            "Toxic Boost",
+            "Transistor",
+            "Vessel of Ruin",
+            "Victory Star"
+        ]
+    },
+    "stats": {
+        "0": 22.580645161290324,
+        "1": 30.322580645161292,
+        "2": 25.161290322580644,
+        "3": 14.516129032258064,
+        "4": 4.193548387096774,
+        "5": 0.967741935483871,
+        "6": 0.3225806451612903,
+        "7": 1.6129032258064515,
+        "8": 0.3225806451612903,
+        "9": 0.0,
+        "10": 0.0,
+        "11": 0.0,
+        "12": 0.0,
+        "13": 0.0,
+        "14": 0.0,
+        "15": 0.0,
+        "16": 0.0,
+        "17": 0.0,
+        "18": 0.0,
+        "19": 0.0,
+        "20": 0.0,
+        "21": 0.0,
+        "22": 0.0,
+        "23": 0.0,
+        "24": 0.0,
+        "25": 0.0,
+        "26": 0.0,
+        "27": 0.0,
+        "28": 0.0,
+        "29": 0.0,
+        "30": 0.0,
+        "31": 0.0,
+        "32": 0.0,
+        "33": 0.0,
+        "34": 0.0,
+        "35": 0.0,
+        "36": 0.0
     }
 }
