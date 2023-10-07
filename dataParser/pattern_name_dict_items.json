@@ -1,7 +1,6 @@
 {
     " stats? ": {
-        "type": null,
-        "desc": "Stats are changed",
+        "desc": null,
         "names": [
             "Bottle Cap",
             "Clear Amulet",
@@ -12,28 +11,36 @@
             "White Herb"
         ]
     },
-    "raised by \\d stages?": {
-        "type": null,
-        "desc": "Stats are raised",
+    "by \\d+ stages?": {
+        "desc": null,
         "names": [
+            "Absorb Bulb",
+            "Adrenaline Orb",
+            "Apicot Berry",
             "Blunder Policy",
+            "Electric Seed",
+            "Ganlon Berry",
+            "Grassy Seed",
+            "Kee Berry",
             "Leek",
+            "Liechi Berry",
             "Lucky Punch",
+            "Luminous Moss",
+            "Maranga Berry",
+            "Misty Seed",
+            "Petaya Berry",
+            "Psychic Seed",
             "Razor Claw",
+            "Room Service",
+            "Salac Berry",
             "Scope Lens",
-            "Stick"
-        ]
-    },
-    "lowered by \\d stages?": {
-        "type": null,
-        "desc": "Stats are lowered",
-        "names": [
-            "Room Service"
+            "Stick",
+            "Throat Spray",
+            "Weakness Policy"
         ]
     },
     "(?<!Special) Attack": {
-        "type": null,
-        "desc": "Physical  attack, not special affected",
+        "desc": null,
         "names": [
             "Cell Battery",
             "Choice Band",
@@ -47,8 +54,7 @@
         ]
     },
     "(?<!Special) Defense": {
-        "type": null,
-        "desc": "Physical  defense, not special affected",
+        "desc": null,
         "names": [
             "Electric Seed",
             "Eviolite",
@@ -60,20 +66,17 @@
         ]
     },
     "Special Attack": {
-        "type": null,
-        "desc": "Special attack affected ",
+        "desc": null,
         "names": [
             "Throat Spray"
         ]
     },
     "Special Defense": {
-        "type": null,
-        "desc": "Special defense affected ",
+        "desc": null,
         "names": []
     },
     "Speed": {
-        "type": null,
-        "desc": "speed affected ",
+        "desc": null,
         "names": [
             "Adrenaline Orb",
             "Blunder Policy",
@@ -92,8 +95,7 @@
         ]
     },
     "immun": {
-        "type": null,
-        "desc": "Immunity",
+        "desc": null,
         "names": [
             "Air Balloon",
             "Ring Target",
@@ -101,8 +103,7 @@
         ]
     },
     "\\d+% chance": {
-        "type": null,
-        "desc": "Probability",
+        "desc": null,
         "names": [
             "Focus Band",
             "King's Rock",
@@ -111,13 +112,11 @@
         ]
     },
     "next turn": {
-        "type": null,
-        "desc": "next turn",
+        "desc": null,
         "names": []
     },
     "\\d(-\\d)? turns": {
-        "type": null,
-        "desc": "multiple turns",
+        "desc": null,
         "names": [
             "Damp Rock",
             "Grip Claw",
@@ -130,30 +129,25 @@
         ]
     },
     "\\d(-\\d)? times": {
-        "type": null,
-        "desc": "multiple times",
+        "desc": null,
         "names": [
             "Loaded Dice"
         ]
     },
     "\\d+/\\d+ of its maximum HP": {
-        "type": null,
-        "desc": "Dependent on maximum HP",
+        "desc": null,
         "names": []
     },
     "current HP": {
-        "type": null,
-        "desc": "Dependent on current HP",
+        "desc": null,
         "names": []
     },
     "(D|d)eals damage": {
-        "type": null,
-        "desc": "Specific damage",
+        "desc": null,
         "names": []
     },
     "critical hit": {
-        "type": null,
-        "desc": "critical hit",
+        "desc": null,
         "names": [
             "Leek",
             "Lucky Punch",
@@ -163,27 +157,23 @@
         ]
     },
     "recovers": {
-        "type": null,
-        "desc": "HP recovering",
+        "desc": null,
         "names": []
     },
     "(O| o)n switch": {
-        "type": null,
-        "desc": "If switching",
+        "desc": null,
         "names": [
             "Berserk Gene"
         ]
     },
     "(P| p)revent": {
-        "type": null,
-        "desc": "Prevents something",
+        "desc": null,
         "names": [
             "Clear Amulet"
         ]
     },
     "-type": {
-        "type": null,
-        "desc": "depends on type",
+        "desc": null,
         "names": [
             "Absorb Bulb",
             "Adamant Crystal",
@@ -280,21 +270,18 @@
         ]
     },
     "No additional effect": {
-        "type": null,
-        "desc": "no additional effects",
+        "desc": null,
         "names": []
     },
     "paralyze": {
-        "type": null,
-        "desc": "Something with paralysis",
+        "desc": null,
         "names": [
             "Cheri Berry",
             "PRZ Cure Berry"
         ]
     },
     "(p|P)oison( |ed|s)": {
-        "type": null,
-        "desc": "Something with poison",
+        "desc": null,
         "names": [
             "Black Sludge",
             "Pecha Berry",
@@ -307,8 +294,7 @@
         ]
     },
     "(a)?sleep": {
-        "type": null,
-        "desc": "Something with sleep",
+        "desc": null,
         "names": [
             "Chesto Berry",
             "Dream Ball",
@@ -316,8 +302,7 @@
         ]
     },
     "(c|C)onfus": {
-        "type": null,
-        "desc": "Something with confusion",
+        "desc": null,
         "names": [
             "Aguav Berry",
             "Figy Berry",
@@ -332,8 +317,7 @@
         ]
     },
     "(B|b)urn": {
-        "type": null,
-        "desc": "Something with burn",
+        "desc": null,
         "names": [
             "Flame Orb",
             "Rawst Berry",
@@ -341,23 +325,19 @@
         ]
     },
     "(F|f)reeze": {
-        "type": null,
-        "desc": "Something with freeze",
+        "desc": null,
         "names": []
     },
     "recoil": {
-        "type": null,
-        "desc": "Something with recoil damage",
+        "desc": null,
         "names": []
     },
     "held item": {
-        "type": null,
-        "desc": "Something to do with the held item",
+        "desc": null,
         "names": []
     },
     "(((p|P)ower)|(D|d)amage)? doubled?": {
-        "type": null,
-        "desc": "Sometimes the power doubles",
+        "desc": null,
         "names": [
             "Deep Sea Scale",
             "Deep Sea Tooth",
@@ -368,8 +348,7 @@
         ]
     },
     "(A|a)ccuracy": {
-        "type": null,
-        "desc": "Something with Accuracy",
+        "desc": null,
         "names": [
             "Blunder Policy",
             "Bright Powder",
@@ -381,29 +360,25 @@
         ]
     },
     "(E|e)vasiveness": {
-        "type": null,
-        "desc": "Something to do with evasiveness",
+        "desc": null,
         "names": []
     },
     "(I|i)f the target": {
-        "type": null,
-        "desc": "Conditional about target",
+        "desc": null,
         "names": []
     },
     "(I|i)f the user": {
-        "type": null,
-        "desc": "Conditional about user",
+        "desc": null,
         "names": []
     },
     "multiplied": {
-        "type": null,
-        "desc": "Something is multiplied",
+        "desc": null,
         "names": []
     },
     "stats": {
-        "0": 66.35514018691589,
-        "1": 30.46728971962617,
-        "2": 2.803738317757009,
+        "0": 65.42056074766356,
+        "1": 29.345794392523363,
+        "2": 4.859813084112149,
         "3": 0.37383177570093457,
         "4": 0.0,
         "5": 0.0,
@@ -436,7 +411,6 @@
         "32": 0.0,
         "33": 0.0,
         "34": 0.0,
-        "35": 0.0,
-        "36": 0.0
+        "35": 0.0
     }
 }

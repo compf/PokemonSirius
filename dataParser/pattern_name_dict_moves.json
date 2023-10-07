@@ -1,7 +1,6 @@
 {
     " stats? ": {
-        "type": null,
-        "desc": "Stats are changed",
+        "desc": null,
         "names": [
             "Acupressure",
             "Baton Pass",
@@ -48,39 +47,227 @@
             "Wonder Room"
         ]
     },
-    "raised by \\d stages?": {
-        "type": null,
-        "desc": "Stats are raised",
+    "by \\d+ stages?": {
+        "desc": null,
         "names": [
+            "Acid",
+            "Acid Armor",
+            "Acid Spray",
+            "Acupressure",
+            "Agility",
+            "Amnesia",
+            "Ancient Power",
+            "Apple Acid",
+            "Aqua Step",
+            "Armor Cannon",
+            "Aromatic Mist",
+            "Aura Wheel",
+            "Aurora Beam",
+            "Autotomize",
+            "Baby-Doll Eyes",
+            "Barrier",
+            "Belly Drum",
+            "Bitter Malice",
+            "Bleakwind Storm",
+            "Breaking Swipe",
+            "Bubble",
+            "Bubble Beam",
+            "Bug Buzz",
+            "Bulk Up",
+            "Bulldoze",
+            "Calm Mind",
+            "Captivate",
+            "Charge",
+            "Charge Beam",
+            "Charm",
+            "Chilling Water",
+            "Clanging Scales",
+            "Clangorous Soul",
+            "Clangorous Soulblaze",
+            "Close Combat",
+            "Coaching",
+            "Coil",
+            "Confide",
+            "Constrict",
+            "Cosmic Power",
+            "Cotton Guard",
+            "Cotton Spore",
+            "Crunch",
+            "Crush Claw",
+            "Curse",
+            "Decorate",
+            "Defend Order",
+            "Defense Curl",
+            "Defog",
+            "Diamond Storm",
+            "Double Team",
+            "Draco Meteor",
+            "Dragon Ascent",
+            "Dragon Dance",
+            "Drum Beating",
+            "Earth Power",
+            "Eerie Impulse",
+            "Electroweb",
+            "Energy Ball",
+            "Esper Wing",
+            "Extreme Evoboost",
+            "Fake Tears",
+            "Feather Dance",
+            "Fell Stinger",
+            "Fiery Dance",
+            "Fillet Away",
+            "Fire Lash",
+            "Flame Charge",
+            "Flash",
+            "Flash Cannon",
+            "Flatter",
+            "Fleur Cannon",
+            "Flower Shield",
+            "Focus Blast",
+            "Focus Energy",
+            "Gear Up",
+            "Geomancy",
+            "Glaciate",
             "G-Max Chi Strike",
-            "Max Airstream",
-            "Max Ooze",
-            "Max Quake",
-            "Max Steelspike",
-            "Rage"
-        ]
-    },
-    "lowered by \\d stages?": {
-        "type": null,
-        "desc": "Stats are lowered",
-        "names": [
             "G-Max Foam Burst",
             "G-Max Tartness",
+            "Grav Apple",
+            "Growl",
+            "Growth",
+            "Hammer Arm",
+            "Harden",
+            "Headlong Rush",
+            "Hone Claws",
+            "Hyperspace Fury",
+            "Ice Hammer",
+            "Icy Wind",
+            "Iron Defense",
+            "Iron Tail",
+            "Kinesis",
             "King's Shield",
+            "Leaf Storm",
+            "Leaf Tornado",
+            "Leer",
+            "Liquidation",
+            "Low Sweep",
+            "Lumina Crash",
+            "Lunge",
+            "Luster Purge",
+            "Magnetic Flux",
+            "Make It Rain",
+            "Max Airstream",
             "Max Darkness",
             "Max Flutterby",
+            "Max Knuckle",
+            "Max Ooze",
             "Max Phantasm",
+            "Max Quake",
+            "Max Steelspike",
             "Max Strike",
             "Max Wyrmwind",
+            "Meditate",
+            "Memento",
+            "Metal Claw",
+            "Metal Sound",
+            "Meteor Beam",
+            "Meteor Mash",
+            "Minimize",
+            "Mirror Shot",
+            "Mist Ball",
+            "Misty Terrain",
+            "Moonblast",
+            "Mud Bomb",
+            "Mud Shot",
+            "Mud-Slap",
+            "Muddy Water",
+            "Mystical Fire",
+            "Mystical Power",
+            "Nasty Plot",
+            "Night Daze",
+            "Noble Roar",
+            "No Retreat",
             "Obstruct",
+            "Octazooka",
             "Octolock",
+            "Ominous Wind",
+            "Order Up",
+            "Overheat",
+            "Paleo Wave",
+            "Parting Shot",
+            "Play Nice",
+            "Play Rough",
+            "Pounce",
+            "Power-Up Punch",
+            "Psychic",
+            "Psychic Terrain",
+            "Psycho Boost",
+            "Psyshield Bash",
+            "Quiver Dance",
+            "Rage",
+            "Rapid Spin",
+            "Razor Shell",
+            "Rock Polish",
+            "Rock Smash",
+            "Rock Tomb",
+            "Rototiller",
+            "Sand Attack",
+            "Scale Shot",
+            "Scary Face",
+            "Screech",
+            "Secret Power",
+            "Seed Flare",
+            "Shadow Ball",
+            "Shadow Bone",
+            "Shadow Strike",
+            "Sharpen",
+            "Shell Smash",
+            "Shelter",
+            "Shift Gear",
             "Silk Trap",
-            "Syrup Bomb"
+            "Silver Wind",
+            "Skitter Smack",
+            "Skull Bash",
+            "Smokescreen",
+            "Snarl",
+            "Spicy Extract",
+            "Spin Out",
+            "Spirit Break",
+            "Springtide Storm",
+            "Steel Wing",
+            "Sticky Web",
+            "Stockpile",
+            "Strength Sap",
+            "String Shot",
+            "Struggle Bug",
+            "Stuff Cheeks",
+            "Superpower",
+            "Swagger",
+            "Sweet Scent",
+            "Swords Dance",
+            "Syrup Bomb",
+            "Tail Glow",
+            "Tail Whip",
+            "Take Heart",
+            "Tar Shot",
+            "Tearful Look",
+            "Thunderous Kick",
+            "Tickle",
+            "Tidy Up",
+            "Torch Song",
+            "Toxic Thread",
+            "Trailblaze",
+            "Triple Arrows",
+            "Trop Kick",
+            "V-create",
+            "Venom Drench",
+            "Victory Dance",
+            "Withdraw",
+            "Work Up",
+            "Zippy Zap"
         ]
     },
     "(?<!Special) Attack": {
-        "type": null,
-        "desc": "Physical  attack, not special affected",
+        "desc": null,
         "names": [
             "Ancient Power",
             "Aurora Beam",
@@ -158,8 +345,7 @@
         ]
     },
     "(?<!Special) Defense": {
-        "type": null,
-        "desc": "Physical  defense, not special affected",
+        "desc": null,
         "names": [
             "Acid Armor",
             "Ancient Power",
@@ -241,8 +427,7 @@
         ]
     },
     "Special Attack": {
-        "type": null,
-        "desc": "Special attack affected ",
+        "desc": null,
         "names": [
             "Ancient Power",
             "Calm Mind",
@@ -306,8 +491,7 @@
         ]
     },
     "Special Defense": {
-        "type": null,
-        "desc": "Special defense affected ",
+        "desc": null,
         "names": [
             "Acid",
             "Acid Spray",
@@ -364,8 +548,7 @@
         ]
     },
     "Speed": {
-        "type": null,
-        "desc": "speed affected ",
+        "desc": null,
         "names": [
             "Agility",
             "Ancient Power",
@@ -436,8 +619,7 @@
         ]
     },
     "immun": {
-        "type": null,
-        "desc": "Immunity",
+        "desc": null,
         "names": [
             "Attract",
             "Bide",
@@ -461,8 +643,7 @@
         ]
     },
     "\\d+% chance": {
-        "type": null,
-        "desc": "Probability",
+        "desc": null,
         "names": [
             "Acid",
             "Acid Spray",
@@ -685,8 +866,7 @@
         ]
     },
     "next turn": {
-        "type": null,
-        "desc": "next turn",
+        "desc": null,
         "names": [
             "Fairy Lock",
             "Glaive Rush",
@@ -699,8 +879,7 @@
         ]
     },
     "\\d(-\\d)? turns": {
-        "type": null,
-        "desc": "multiple turns",
+        "desc": null,
         "names": [
             "Aurora Veil",
             "Baddy Bad",
@@ -770,8 +949,7 @@
         ]
     },
     "\\d(-\\d)? times": {
-        "type": null,
-        "desc": "multiple times",
+        "desc": null,
         "names": [
             "Arm Thrust",
             "Barrage",
@@ -801,8 +979,7 @@
         ]
     },
     "\\d+/\\d+ of its maximum HP": {
-        "type": null,
-        "desc": "Dependent on maximum HP",
+        "desc": null,
         "names": [
             "Aqua Ring",
             "Belly Drum",
@@ -855,8 +1032,7 @@
         ]
     },
     "current HP": {
-        "type": null,
-        "desc": "Dependent on current HP",
+        "desc": null,
         "names": [
             "Crush Grip",
             "Dragon Energy",
@@ -875,8 +1051,7 @@
         ]
     },
     "(D|d)eals damage": {
-        "type": null,
-        "desc": "Specific damage",
+        "desc": null,
         "names": [
             "Comeuppance",
             "Counter",
@@ -922,8 +1097,7 @@
         ]
     },
     "critical hit": {
-        "type": null,
-        "desc": "critical hit",
+        "desc": null,
         "names": [
             "10,000,000 Volt Thunderbolt",
             "Aeroblast",
@@ -963,8 +1137,7 @@
         ]
     },
     "recovers": {
-        "type": null,
-        "desc": "HP recovering",
+        "desc": null,
         "names": [
             "Absorb",
             "Bitter Blade",
@@ -982,15 +1155,13 @@
         ]
     },
     "(O| o)n switch": {
-        "type": null,
-        "desc": "If switching",
+        "desc": null,
         "names": [
             "Toxic Spikes"
         ]
     },
     "(P| p)revent": {
-        "type": null,
-        "desc": "Prevents something",
+        "desc": null,
         "names": [
             "Anchor Shot",
             "Bide",
@@ -1045,8 +1216,7 @@
         ]
     },
     "-type": {
-        "type": null,
-        "desc": "depends on type",
+        "desc": null,
         "names": [
             "Ceaseless Edge",
             "Charge",
@@ -1090,8 +1260,7 @@
         ]
     },
     "No additional effect": {
-        "type": null,
-        "desc": "no additional effects",
+        "desc": null,
         "names": [
             "Accelerock",
             "Aqua Jet",
@@ -1158,8 +1327,7 @@
         ]
     },
     "paralyze": {
-        "type": null,
-        "desc": "Something with paralysis",
+        "desc": null,
         "names": [
             "Body Slam",
             "Bolt Strike",
@@ -1194,8 +1362,7 @@
         ]
     },
     "(p|P)oison( |ed|s)": {
-        "type": null,
-        "desc": "Something with poison",
+        "desc": null,
         "names": [
             "Baneful Bunker",
             "Barb Barrage",
@@ -1229,8 +1396,7 @@
         ]
     },
     "(a)?sleep": {
-        "type": null,
-        "desc": "Something with sleep",
+        "desc": null,
         "names": [
             "Dark Void",
             "Dire Claw",
@@ -1263,8 +1429,7 @@
         ]
     },
     "(c|C)onfus": {
-        "type": null,
-        "desc": "Something with confusion",
+        "desc": null,
         "names": [
             "Assurance",
             "Axe Kick",
@@ -1298,8 +1463,7 @@
         ]
     },
     "(B|b)urn": {
-        "type": null,
-        "desc": "Something with burn",
+        "desc": null,
         "names": [
             "Beak Blast",
             "Blaze Kick",
@@ -1337,8 +1501,7 @@
         ]
     },
     "(F|f)reeze": {
-        "type": null,
-        "desc": "Something with freeze",
+        "desc": null,
         "names": [
             "Blizzard",
             "Freeze-Dry",
@@ -1352,8 +1515,7 @@
         ]
     },
     "recoil": {
-        "type": null,
-        "desc": "Something with recoil damage",
+        "desc": null,
         "names": [
             "Brave Bird",
             "Double-Edge",
@@ -1370,8 +1532,7 @@
         ]
     },
     "held item": {
-        "type": null,
-        "desc": "Something to do with the held item",
+        "desc": null,
         "names": [
             "Acrobatics",
             "Bestow",
@@ -1391,8 +1552,7 @@
         ]
     },
     "(((p|P)ower)|(D|d)amage)? doubled?": {
-        "type": null,
-        "desc": "Sometimes the power doubles",
+        "desc": null,
         "names": [
             "Acrobatics",
             "Assurance",
@@ -1450,8 +1610,7 @@
         ]
     },
     "(A|a)ccuracy": {
-        "type": null,
-        "desc": "Something with Accuracy",
+        "desc": null,
         "names": [
             "Aerial Ace",
             "Aura Sphere",
@@ -1512,8 +1671,7 @@
         ]
     },
     "(E|e)vasiveness": {
-        "type": null,
-        "desc": "Something to do with evasiveness",
+        "desc": null,
         "names": [
             "Chip Away",
             "Darkest Lariat",
@@ -1534,8 +1692,7 @@
         ]
     },
     "(I|i)f the target": {
-        "type": null,
-        "desc": "Conditional about target",
+        "desc": null,
         "names": [
             "After You",
             "Anchor Shot",
@@ -1667,8 +1824,7 @@
         ]
     },
     "(I|i)f the user": {
-        "type": null,
-        "desc": "Conditional about user",
+        "desc": null,
         "names": [
             "Acrobatics",
             "Ally Switch",
@@ -1860,8 +2016,7 @@
         ]
     },
     "multiplied": {
-        "type": null,
-        "desc": "Something is multiplied",
+        "desc": null,
         "names": [
             "Collision Course",
             "Echoed Voice",
@@ -1889,14 +2044,14 @@
     },
     "stats": {
         "0": 11.943539630836048,
-        "1": 34.85342019543974,
-        "2": 30.618892508143322,
-        "3": 11.943539630836048,
-        "4": 5.4288816503800215,
-        "5": 3.9087947882736156,
-        "6": 0.760043431053203,
-        "7": 0.5428881650380022,
-        "8": 0.0,
+        "1": 29.315960912052116,
+        "2": 24.5385450597177,
+        "3": 21.498371335504885,
+        "4": 6.948968512486428,
+        "5": 3.800217155266015,
+        "6": 0.8686210640608035,
+        "7": 0.760043431053203,
+        "8": 0.3257328990228013,
         "9": 0.0,
         "10": 0.0,
         "11": 0.0,
@@ -1923,7 +2078,6 @@
         "32": 0.0,
         "33": 0.0,
         "34": 0.0,
-        "35": 0.0,
-        "36": 0.0
+        "35": 0.0
     }
 }

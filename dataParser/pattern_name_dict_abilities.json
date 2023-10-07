@@ -1,7 +1,6 @@
 {
     " stats? ": {
-        "type": null,
-        "desc": "Stats are changed",
+        "desc": null,
         "names": [
             "Beast Boost",
             "Big Pecks",
@@ -43,10 +42,10 @@
             "White Smoke"
         ]
     },
-    "raised by \\d stages?": {
-        "type": null,
-        "desc": "Stats are raised",
+    "by \\d+ stages?": {
+        "desc": null,
         "names": [
+            "Anger Point",
             "Anger Shell",
             "Battle Bond",
             "Beast Boost",
@@ -54,6 +53,7 @@
             "Chilling Neigh",
             "Commander",
             "Competitive",
+            "Cotton Down",
             "Dauntless Shield",
             "Defiant",
             "Download",
@@ -61,36 +61,34 @@
             "Embody Aspect (Hearthflame)",
             "Embody Aspect (Teal)",
             "Embody Aspect (Wellspring)",
+            "Gooey",
             "Grim Neigh",
+            "Guard Dog",
+            "Gulp Missile",
+            "Intimidate",
             "Intrepid Sword",
             "Justified",
+            "Lightning Rod",
             "Moody",
+            "Motor Drive",
             "Moxie",
             "Rattled",
+            "Sap Sipper",
             "Soul-Heart",
             "Speed Boost",
             "Stamina",
             "Steadfast",
             "Steam Engine",
+            "Storm Drain",
             "Super Luck",
-            "Weak Armor"
-        ]
-    },
-    "lowered by \\d stages?": {
-        "type": null,
-        "desc": "Stats are lowered",
-        "names": [
-            "Anger Shell",
-            "Cotton Down",
-            "Gooey",
-            "Moody",
             "Tangling Hair",
-            "Weak Armor"
+            "Weak Armor",
+            "Well-Baked Body",
+            "Wind Rider"
         ]
     },
     "(?<!Special) Attack": {
-        "type": null,
-        "desc": "Physical  attack, not special affected",
+        "desc": null,
         "names": [
             "Anger Point",
             "Anger Shell",
@@ -126,8 +124,7 @@
         ]
     },
     "(?<!Special) Defense": {
-        "type": null,
-        "desc": "Physical  defense, not special affected",
+        "desc": null,
         "names": [
             "Anger Shell",
             "Beast Boost",
@@ -151,8 +148,7 @@
         ]
     },
     "Special Attack": {
-        "type": null,
-        "desc": "Special attack affected ",
+        "desc": null,
         "names": [
             "Anger Shell",
             "Battle Bond",
@@ -176,8 +172,7 @@
         ]
     },
     "Special Defense": {
-        "type": null,
-        "desc": "Special defense affected ",
+        "desc": null,
         "names": [
             "Anger Shell",
             "Beads of Ruin",
@@ -192,8 +187,7 @@
         ]
     },
     "Speed": {
-        "type": null,
-        "desc": "speed affected ",
+        "desc": null,
         "names": [
             "Anger Shell",
             "Battle Bond",
@@ -224,8 +218,7 @@
         ]
     },
     "immun": {
-        "type": null,
-        "desc": "Immunity",
+        "desc": null,
         "names": [
             "Bulletproof",
             "Dry Skin",
@@ -253,8 +246,7 @@
         ]
     },
     "\\d+% chance": {
-        "type": null,
-        "desc": "Probability",
+        "desc": null,
         "names": [
             "Cursed Body",
             "Cute Charm",
@@ -272,28 +264,24 @@
         ]
     },
     "next turn": {
-        "type": null,
-        "desc": "next turn",
+        "desc": null,
         "names": [
             "Cud Chew"
         ]
     },
     "\\d(-\\d)? turns": {
-        "type": null,
-        "desc": "multiple turns",
+        "desc": null,
         "names": [
             "Slow Start",
             "Persistent"
         ]
     },
     "\\d(-\\d)? times": {
-        "type": null,
-        "desc": "multiple times",
+        "desc": null,
         "names": []
     },
     "\\d+/\\d+ of its maximum HP": {
-        "type": null,
-        "desc": "Dependent on maximum HP",
+        "desc": null,
         "names": [
             "Aftermath",
             "Cheek Pouch",
@@ -313,20 +301,17 @@
         ]
     },
     "current HP": {
-        "type": null,
-        "desc": "Dependent on current HP",
+        "desc": null,
         "names": []
     },
     "(D|d)eals damage": {
-        "type": null,
-        "desc": "Specific damage",
+        "desc": null,
         "names": [
             "Gulp Missile"
         ]
     },
     "critical hit": {
-        "type": null,
-        "desc": "critical hit",
+        "desc": null,
         "names": [
             "Anger Point",
             "Battle Armor",
@@ -337,13 +322,11 @@
         ]
     },
     "recovers": {
-        "type": null,
-        "desc": "HP recovering",
+        "desc": null,
         "names": []
     },
     "(O| o)n switch": {
-        "type": null,
-        "desc": "If switching",
+        "desc": null,
         "names": [
             "Anticipation",
             "Costar",
@@ -384,8 +367,7 @@
         ]
     },
     "(P| p)revent": {
-        "type": null,
-        "desc": "Prevents something",
+        "desc": null,
         "names": [
             "Aftermath",
             "Anger Shell",
@@ -427,8 +409,7 @@
         ]
     },
     "-type": {
-        "type": null,
-        "desc": "depends on type",
+        "desc": null,
         "names": [
             "Adaptability",
             "Aerilate",
@@ -483,13 +464,11 @@
         ]
     },
     "No additional effect": {
-        "type": null,
-        "desc": "no additional effects",
+        "desc": null,
         "names": []
     },
     "paralyze": {
-        "type": null,
-        "desc": "Something with paralysis",
+        "desc": null,
         "names": [
             "Effect Spore",
             "Gulp Missile",
@@ -499,8 +478,7 @@
         ]
     },
     "(p|P)oison( |ed|s)": {
-        "type": null,
-        "desc": "Something with poison",
+        "desc": null,
         "names": [
             "Corrosion",
             "Effect Spore",
@@ -514,8 +492,7 @@
         ]
     },
     "(a)?sleep": {
-        "type": null,
-        "desc": "Something with sleep",
+        "desc": null,
         "names": [
             "Bad Dreams",
             "Comatose",
@@ -527,8 +504,7 @@
         ]
     },
     "(c|C)onfus": {
-        "type": null,
-        "desc": "Something with confusion",
+        "desc": null,
         "names": [
             "Disguise",
             "Emergency Exit",
@@ -540,8 +516,7 @@
         ]
     },
     "(B|b)urn": {
-        "type": null,
-        "desc": "Something with burn",
+        "desc": null,
         "names": [
             "Flame Body",
             "Flare Boost",
@@ -554,13 +529,11 @@
         ]
     },
     "(F|f)reeze": {
-        "type": null,
-        "desc": "Something with freeze",
+        "desc": null,
         "names": []
     },
     "recoil": {
-        "type": null,
-        "desc": "Something with recoil damage",
+        "desc": null,
         "names": [
             "Magic Guard",
             "Reckless",
@@ -569,8 +542,7 @@
         ]
     },
     "held item": {
-        "type": null,
-        "desc": "Something to do with the held item",
+        "desc": null,
         "names": [
             "Frisk",
             "Klutz",
@@ -579,8 +551,7 @@
         ]
     },
     "(((p|P)ower)|(D|d)amage)? doubled?": {
-        "type": null,
-        "desc": "Sometimes the power doubles",
+        "desc": null,
         "names": [
             "Chlorophyll",
             "Fluffy",
@@ -603,8 +574,7 @@
         ]
     },
     "(A|a)ccuracy": {
-        "type": null,
-        "desc": "Something with Accuracy",
+        "desc": null,
         "names": [
             "Compound Eyes",
             "Hustle",
@@ -621,8 +591,7 @@
         ]
     },
     "(E|e)vasiveness": {
-        "type": null,
-        "desc": "Something to do with evasiveness",
+        "desc": null,
         "names": [
             "Illuminate",
             "Keen Eye",
@@ -634,23 +603,20 @@
         ]
     },
     "(I|i)f the target": {
-        "type": null,
-        "desc": "Conditional about target",
+        "desc": null,
         "names": [
             "Merciless"
         ]
     },
     "(I|i)f the user": {
-        "type": null,
-        "desc": "Conditional about user",
+        "desc": null,
         "names": [
             "Power Spot",
             "Steely Spirit"
         ]
     },
     "multiplied": {
-        "type": null,
-        "desc": "Something is multiplied",
+        "desc": null,
         "names": [
             "Aerilate",
             "Analytic",
@@ -714,13 +680,13 @@
     "stats": {
         "0": 22.580645161290324,
         "1": 30.322580645161292,
-        "2": 25.161290322580644,
+        "2": 24.193548387096776,
         "3": 14.516129032258064,
-        "4": 4.193548387096774,
-        "5": 0.967741935483871,
+        "4": 4.516129032258065,
+        "5": 1.6129032258064515,
         "6": 0.3225806451612903,
-        "7": 1.6129032258064515,
-        "8": 0.3225806451612903,
+        "7": 1.935483870967742,
+        "8": 0.0,
         "9": 0.0,
         "10": 0.0,
         "11": 0.0,
@@ -747,7 +713,6 @@
         "32": 0.0,
         "33": 0.0,
         "34": 0.0,
-        "35": 0.0,
-        "36": 0.0
+        "35": 0.0
     }
 }

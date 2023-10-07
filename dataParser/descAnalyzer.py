@@ -1,147 +1,167 @@
-import sys,json
-import spacy
+from constants import NameConstants
+from typing import List
+import re,sys
+import json
+from xml.etree.ElementTree import  Element
+from bisect import bisect_right
+def find_le(a, x):
+    'Find rightmost value less than or equal to x'
+    i = bisect_right(a, x)
+    if i:
+        return i-1
+    raise ValueError
+class AbstractAnalyzer:
+    WholeSentence="\."
+    SentencesAndClauses=WholeSentence+"|,\(|\)"
+    def fill_facts(self,text:str, facts:dict,xml:Element):
+        pass
+    def generate_code(self,text:str,facts:dict)->str:
+        pass
+    def get_regex(self)->str:
+        pass
+    def split_sentence(self,text:str,where:str)->List[str]:
+        return re.split(where,text)
+    def find_mentions(self,text:str,regex:str)->List[int]:
+        result=[]
+        for m in re.finditer(regex,text):
+            if m:
+                print(m)
+                result.append(m.start())
+        return result
+    def find_my_mentions(self,text:str)->List[str]:
+        return self.find_mentions(text,self.get_regex())
 
-nlp = spacy.load('en_core_web_sm')
+    def find_xml_indices(self,text:str,regex:str,positions:List[int])->List[int]:
+        mentions=self.find_mentions(text,regex)
+        result=[]
+        for m in mentions:
+            result.append(find_le(positions,m))
+        return result
 
-import nltk,re
-def create_name_info_object(typ,desc):
-    return {"type":typ,"desc":desc,"names":[]}
-class StatsLowered:
-    pass
-
-
-
-
+    def find_my_xml_indices(self,text:str, positions:List[int])->List[int]:
+        return self.find_xml_indices(text,self.get_regex(),positions)
 
 
-
-
-replace={
-    " one ":" 1 ",
-    " two ":" 2 ",
-    " three ":" 3 ",
-    " four ":" 4 ",
-    " five ":" 5 ",
-    " six ":" 6 ",
-    " seven ":" 7 ",
-    " eight ":" 8 ",
-    " nine ":" 9 ",
-    " ten ":" 10 ",
     
 
-}
+class ByStages(AbstractAnalyzer):
+    def fill_facts(self,text:str, facts:dict,positions:List[int],xml:Element):
+        indices=self.find_my_xml_indices(text,positions)
+        print(text)
+        print(indices)
+        facts[NameConstants.NumberStages]=int(xml[indices[0]+1].text)
+        print(facts)
+    def generate_code(self,text:str,facts:dict)->str:
+        pass
+    def get_regex(self) -> str:
+        return NameConstants.ByStages
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def create_name_info_object(typ,desc):
+    return {"type":typ,"desc":desc,"names":[]}
 pattern_name_dict={
-    " stats? ":create_name_info_object(None,"Stats are changed"),
-    r"raised by \d stages?":create_name_info_object(None,"Stats are raised"),
-    r"lowered by \d stages?":create_name_info_object(None,"Stats are lowered"),
-
-    "(?<!Special) Attack":create_name_info_object(None,"Physical  attack, not special affected"),
-    "(?<!Special) Defense":create_name_info_object(None,"Physical  defense, not special affected"),
-     "Special Attack":create_name_info_object(None,"Special attack affected "),
-     "Special Defense":create_name_info_object(None,"Special defense affected "),
-     "Speed":create_name_info_object(None,"speed affected "),
-
-     "immun":create_name_info_object(None,"Immunity"),
-     r"\d+% chance":create_name_info_object(None,"Probability"),
-      r"next turn":create_name_info_object(None,"next turn"),
-      r"\d(-\d)? turns":create_name_info_object(None,"multiple turns"),
-    r"\d(-\d)? times":create_name_info_object(None,"multiple times"),
-      r"\d+/\d+ of its maximum HP":create_name_info_object(None,"Dependent on maximum HP"),
-        r"current HP":create_name_info_object(None,"Dependent on current HP"),
-        "(D|d)eals damage":create_name_info_object(None,"Specific damage"),
-        "critical hit":create_name_info_object(None,"critical hit"),
-        "recovers":create_name_info_object(None,"HP recovering"),
-        "(O| o)n switch":create_name_info_object(None,"If switching"),
-        "(P| p)revent":create_name_info_object(None,"Prevents something"),
-        "-type":create_name_info_object(None,"depends on type"),
-        #"(T| t)he (user)|(holder)":create_name_info_object(None,"Affect the  user"),
-        "No additional effect":create_name_info_object(None,"no additional effects"),
-        "paralyze":create_name_info_object(None,"Something with paralysis"),
-        "(p|P)oison( |ed|s)":create_name_info_object(None,"Something with poison"),
-        "(a)?sleep":create_name_info_object(None,"Something with sleep"),
-        "(c|C)onfus":create_name_info_object(None,"Something with confusion"),
-        "(B|b)urn":create_name_info_object(None,"Something with burn"),
-        "(F|f)reeze":create_name_info_object(None,"Something with freeze"),
-        "recoil":create_name_info_object(None,"Something with recoil damage"),
-        "held item":create_name_info_object(None,"Something to do with the held item"),
-        "(((p|P)ower)|(D|d)amage)? doubled?":create_name_info_object(None,"Sometimes the power doubles"),
-        "(A|a)ccuracy":create_name_info_object(None,"Something with Accuracy"),
-        "(E|e)vasiveness":create_name_info_object(None,"Something to do with evasiveness"),
-        "(I|i)f the target":create_name_info_object(None,"Conditional about target"),
-        "(I|i)f the user":create_name_info_object(None,"Conditional about user"),
-        "multiplied":create_name_info_object(None,"Something is multiplied")
+NameConstants.Stats:create_name_info_object(None,None),
+  NameConstants.ByStages :create_name_info_object(ByStages,None),
+  NameConstants.PhysicalAttack :create_name_info_object(None,None),
+  NameConstants.PhysicalDefense:create_name_info_object(None,None),
+  NameConstants.SpecialAttack:create_name_info_object(None,None),
+  NameConstants.SpecialDefense:create_name_info_object(None,None),
+  NameConstants.Speed:create_name_info_object(None,None),
+  NameConstants.Immune:create_name_info_object(None,None),
+  NameConstants.Chance:create_name_info_object(None,None),
+  NameConstants.NextTurn:create_name_info_object(None,None),
+  NameConstants.MultipleTurns:create_name_info_object(None,None),
+  NameConstants.MultipleTimes:create_name_info_object(None,None),
+  NameConstants.DependentOnMaxHP:create_name_info_object(None,None),
+  NameConstants.DependentOnCurrHP:create_name_info_object(None,None),
+  NameConstants.DealsDamage:create_name_info_object(None,None),
+  NameConstants.CriticalHit:create_name_info_object(None,None),
+  NameConstants.Recovers:create_name_info_object(None,None),
+  NameConstants.OnSwitch:create_name_info_object(None,None),
+  NameConstants.Prevent:create_name_info_object(None,None),
+  NameConstants.BasedOnType:create_name_info_object(None,None),
+  NameConstants.NoEffect:create_name_info_object(None,None),
+  NameConstants.Paraylzed:create_name_info_object(None,None),
+  NameConstants.Poisoned:create_name_info_object(None,None),
+  NameConstants.Asleep:create_name_info_object(None,None),
+  NameConstants.Confused:create_name_info_object(None,None),
+  NameConstants.Burn:create_name_info_object(None,None),
+  NameConstants.Freeze:create_name_info_object(None,None),
+  NameConstants.Recoil:create_name_info_object(None,None),
+  NameConstants.HeldItem:create_name_info_object(None,None),
+  NameConstants.PowerOrDamageDoubled :create_name_info_object(None,None),
+  NameConstants.Accuracy:create_name_info_object(None,None),
+  NameConstants.Evasiveness:create_name_info_object(None,None),
+  NameConstants.IfTarget:create_name_info_object(None,None),
+  NameConstants.IfUser:create_name_info_object(None,None),
+  NameConstants.Multiplied:create_name_info_object(None,None),
 
 
 
 
 }
-name_pattern_dict={
 
-}
-
-def load_desc():
-    name_desc=dict()
-    with open(sys.argv[1]) as f:
-        json_data=json.load(f)
-        for key in json_data:
-            if "desc" in json_data[key]:
-                 
-                name=json_data[key]["name"]
-                name_desc[name]=json_data[key]["desc"]
-                desc=json_data[key]["desc"]
-                for r in replace:
-                    desc=desc.replace(r,replace[r])
-               
-                annotated=nlp(desc)
-                if name not in name_pattern_dict:
-                    name_pattern_dict[name]={"desc":desc,"dep":"<HEAD>"+" ".join(["<"+a.dep_+">"+a.text+"</"+a.dep_+">" for a in annotated])+"</HEAD>","patterns":[]}
-               
-                
-             
-                for pattern in pattern_name_dict:
-                    match=re.search(pattern,desc)
-                    if match:
-                     
-                        pattern_name_dict[pattern]["names"].append(name)
-                       
-                        name_pattern_dict[name]["patterns"].append(pattern)
-          
-
-               
-
-    #return name_desc
-
+import xml.etree.ElementTree as ET
 
 if __name__=="__main__":
-  
-    desc=load_desc()
-    total=len(name_pattern_dict)
-    pattern_name_dict["stats"]={}
-    name_pattern_dict["stats"]={}
-    for i in range(len(pattern_name_dict)):
-        number=len([x for x in name_pattern_dict if x!="stats" and len(name_pattern_dict[x]["patterns"] )==i])
-        pattern_name_dict["stats"][i]=number*100/total
-
-    totalSum=sum([len(pattern_name_dict[x]["names"]) for x in pattern_name_dict if x!="stats"])
-    for key in pattern_name_dict:
-        if key=="stats":
-            continue
-        name_pattern_dict["stats"][key]=len(pattern_name_dict[key]["names"])*100/totalSum
-       
-    with open("pattern_name_dict_"+sys.argv[1],"w+") as f:
-        json.dump(pattern_name_dict,f,indent=4)
-    with open("name_pattern_dict_"+sys.argv[1],"w+") as f:
-        json.dump(name_pattern_dict,f,indent=4)
-     #tokens= nltk.word_tokenize(desc)
-                    #tagged = nltk.pos_tag(tokens)
-                    #entities = nltk.chunk.ne_chunk(tagged)
-               # print(desc)
-               # json_data[key]["descAnnotated"]=[]#str(entities).replace("\n","")
-                #nltk.Tree.fromstring(str(entities)).pretty_print()
-                #for e in entities:
-                    #print(e)
-                #print(entities)
-                #print()
-               
-                #entities.draw()
+    with open("name_pattern_dict_"+sys.argv[1]) as f:
+        json_obj=json.load(f)
+    del json_obj["stats"]
+    for key in json_obj:
+        facts={}
+        obj=json_obj[key]
+        tree=ET.fromstring(obj["dep"])
+        for pattern in obj["patterns"]:
+            if pattern_name_dict[pattern]["type"]!=None:
+                anaylzer=pattern_name_dict[pattern]["type"]()
+                print("found")
+            else:
+                continue
+            anaylzer.fill_facts(obj["desc"],facts,obj["positions"],tree)
+            #print(mentions)
+        
+        #print(tree)
