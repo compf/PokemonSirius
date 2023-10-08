@@ -155,7 +155,7 @@ NameConstants.Stats:create_name_info_object(None,None),
 
 }
 def make_valid_identifier(name:str)->str:
-    name= name.replace(" ","_").replace("-","_").replace("(","_").replace(")","_")
+    name= name.replace(" ","_").replace("-","_").replace("(","_").replace(")","_").replace("'","_")
     if re.match("\d",name):
         name="_"+name
 
