@@ -13,9 +13,9 @@ def find_le(a, x):
 class AbstractAnalyzer:
     WholeSentence="\."
     SentencesAndClauses=WholeSentence+"|,\(|\)"
-    def fill_facts(self,text:str, facts:dict,xml:Element):
+    def fill_facts(self,text:str, facts:dict,positions:List[int],xml:Element,index:int,prev_index:int):
         pass
-    def generate_code(self,text:str,facts:dict)->str:
+    def generate_code(self,text:str,facts:dict,code:str)->str:
         pass
     def get_regex(self)->str:
         pass
@@ -25,7 +25,6 @@ class AbstractAnalyzer:
         result=[]
         for m in re.finditer(regex,text):
             if m:
-                print(m)
                 result.append(m.start())
         return result
     def find_my_mentions(self,text:str)->List[str]:
@@ -45,14 +44,25 @@ class AbstractAnalyzer:
     
 
 class ByStages(AbstractAnalyzer):
-    def fill_facts(self,text:str, facts:dict,positions:List[int],xml:Element):
-        indices=self.find_my_xml_indices(text,positions)
-        print(text)
-        print(indices)
-        facts[NameConstants.NumberStages]=int(xml[indices[0]+1].text)
-        print(facts)
-    def generate_code(self,text:str,facts:dict)->str:
-        pass
+    NumberStages="NumberStages"
+    StatsToChange="StatsToChange"
+    statsRegex=[NameConstants.PhysicalAttack,NameConstants.PhysicalDefense,NameConstants.SpecialAttack,NameConstants.SpecialDefense,NameConstants.Speed]
+
+    def fill_facts(self,text:str, facts:dict,positions:List[int],xml:Element,index:int,prev_index:int):
+        
+        for s in ByStages.statsRegex:
+            nextIndex=max([i for i in self.find_xml_indices(text,s,positions) if i <index and i>prev_index ],default=None)
+            factorIndex=max([i for i in self.find_xml_indices(text,"lower|raise",positions) if i <index and i>prev_index ],default=None)
+            if nextIndex and factorIndex:
+               facts[ByStages.StatsToChange+"_"+s]=int(xml[index+1].text)*(-1 if tree[factorIndex].text.startswith("lower")else +1)
+    def generate_code(self,text:str,facts:dict,code:str)->str:
+        statCodes=["ATT","DEF","SATT","SDEF","INIT"]
+        for i in range(len(statCodes)):
+            if (ByStages.StatsToChange+"_"+ByStages.statsRegex[i]) in facts:
+
+                replace=f"param.additionalData().getCausingPokemon()changeStatStage(PokemonStat.{statCodes[i]}, {facts[(ByStages.StatsToChange+'_'+ByStages.statsRegex[i])]});"
+                code=code.replace("//%code",replace+"\n//%code")
+        return code
     def get_regex(self) -> str:
         return NameConstants.ByStages
 
@@ -144,24 +154,41 @@ NameConstants.Stats:create_name_info_object(None,None),
 
 
 }
-
+def make_valid_identifier(name:str)->str:
+    name= name.replace(" ","_").replace("-","_")
+    if re.match("\d",name):
+        name="_"+name
+    return name
 import xml.etree.ElementTree as ET
-
+code=""
 if __name__=="__main__":
+    with open("template.java") as f:
+        code=f.read()
     with open("name_pattern_dict_"+sys.argv[1]) as f:
         json_obj=json.load(f)
     del json_obj["stats"]
     for key in json_obj:
         facts={}
         obj=json_obj[key]
+        code_duplicate=code.replace("%Name",make_valid_identifier(key))
+        
+        code_duplicate=code_duplicate.replace("%Description",obj["desc"])
+        code_duplicate=code_duplicate.replace("%Original_Name",key)
+
+       
         tree=ET.fromstring(obj["dep"])
         for pattern in obj["patterns"]:
             if pattern_name_dict[pattern]["type"]!=None:
                 anaylzer=pattern_name_dict[pattern]["type"]()
-                print("found")
             else:
                 continue
-            anaylzer.fill_facts(obj["desc"],facts,obj["positions"],tree)
+            indices=anaylzer.find_my_xml_indices(obj["desc"],obj["positions"])
+            prev_index=-1
+            for i in indices:
+                anaylzer.fill_facts(obj["desc"],facts,obj["positions"],tree,i,prev_index)
+                code_duplicate=anaylzer.generate_code(obj["desc"],facts,code_duplicate)
+                prev_index=i
+        
             #print(mentions)
         
         #print(tree)
