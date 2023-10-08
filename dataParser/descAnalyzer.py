@@ -190,9 +190,8 @@ if __name__=="__main__":
                 prev_index=i
         
             #print(mentions)
-        
-        with open(f"../core/src/main/java/compf/core/engine/pokemon/effects/newEffects/{sys.argv[1].replace('.json','')}/"+make_valid_identifier(key)+".java","w+") as f:
-            print(f.name)
-            if not  re.search("TR\d+",f.name):
-                print("is")
-                f.write(code_duplicate)
+        f_name=f"../core/src/main/java/compf/core/engine/pokemon/effects/newEffects/{sys.argv[1].replace('.json','')}/"+make_valid_identifier(key)+".java"
+        if not  re.search("TR\d+",f.name):
+            with open(f_name,"w+") as f:
+                if not  re.search("TR\d+",f.name):
+                    f.write(code_duplicate)
