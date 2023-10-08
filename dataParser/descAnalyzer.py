@@ -60,7 +60,7 @@ class ByStages(AbstractAnalyzer):
         for i in range(len(statCodes)):
             if (ByStages.StatsToChange+"_"+ByStages.statsRegex[i]) in facts:
 
-                replace=f"param.additionalData().getCausingPokemon()changeStatStage(PokemonStat.{statCodes[i]}, {facts[(ByStages.StatsToChange+'_'+ByStages.statsRegex[i])]});"
+                replace=f"param.additionalData().getCausingPokemon().changeStatStage(PokemonStat.{statCodes[i]}, {facts[(ByStages.StatsToChange+'_'+ByStages.statsRegex[i])]});"
                 code=code.replace("//%code",replace+"\n//%code")
         return code
     def get_regex(self) -> str:
@@ -155,9 +155,10 @@ NameConstants.Stats:create_name_info_object(None,None),
 
 }
 def make_valid_identifier(name:str)->str:
-    name= name.replace(" ","_").replace("-","_")
+    name= name.replace(" ","_").replace("-","_").replace("(","_").replace(")","_")
     if re.match("\d",name):
         name="_"+name
+
     return name
 import xml.etree.ElementTree as ET
 code=""
@@ -171,7 +172,6 @@ if __name__=="__main__":
         facts={}
         obj=json_obj[key]
         code_duplicate=code.replace("%Name",make_valid_identifier(key))
-        
         code_duplicate=code_duplicate.replace("%Description",obj["desc"])
         code_duplicate=code_duplicate.replace("%Original_Name",key)
 

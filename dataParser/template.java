@@ -4,6 +4,7 @@
 package compf.core.engine.pokemon.effects.newEffects;
 
 import compf.core.engine.BattleAction;
+import compf.core.engine.pokemon.PokemonStat;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.effects.EffectParam;
 import compf.core.engine.pokemon.effects.PokemonBattleEffect;
