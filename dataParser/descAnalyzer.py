@@ -191,4 +191,8 @@ if __name__=="__main__":
         
             #print(mentions)
         
-        #print(tree)
+        with open(f"../core/src/main/java/compf/core/engine/pokemon/effects/newEffects/{sys.argv[1].replace('.json','')}/"+make_valid_identifier(key)+".java","w+") as f:
+            print(f.name)
+            if not  re.search("TR\d+",f.name):
+                print("is")
+                f.write(code_duplicate)
