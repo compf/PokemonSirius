@@ -56,7 +56,7 @@ class ByStages(AbstractAnalyzer):
             if nextIndex and factorIndex:
                facts[ByStages.StatsToChange+"_"+s]=int(xml[index+1].text)*(-1 if tree[factorIndex].text.startswith("lower")else +1)
     def generate_code(self,text:str,facts:dict,code:str)->str:
-        statCodes=["ATT","DEF","SATT","SDEF","INIT"]
+        statCodes=["ATT","DEF","SATT","SDEF","SPEED"]
         for i in range(len(statCodes)):
             if (ByStages.StatsToChange+"_"+ByStages.statsRegex[i]) in facts:
 
@@ -163,6 +163,7 @@ def make_valid_identifier(name:str)->str:
 import xml.etree.ElementTree as ET
 code=""
 if __name__=="__main__":
+    pkg=sys.argv[1].replace(".json","")
     with open("template.java") as f:
         code=f.read()
     with open("name_pattern_dict_"+sys.argv[1]) as f:
@@ -174,6 +175,7 @@ if __name__=="__main__":
         code_duplicate=code.replace("%Name",make_valid_identifier(key))
         code_duplicate=code_duplicate.replace("%Description",obj["desc"])
         code_duplicate=code_duplicate.replace("%Original_Name",key)
+        code_duplicate=code_duplicate.replace("%package",pkg)
 
        
         tree=ET.fromstring(obj["dep"])
@@ -190,7 +192,7 @@ if __name__=="__main__":
                 prev_index=i
         
             #print(mentions)
-        f_name=f"../core/src/main/java/compf/core/engine/pokemon/effects/newEffects/{sys.argv[1].replace('.json','')}/"+make_valid_identifier(key)+".java"
+        f_name=f"../core/src/main/java/compf/core/engine/pokemon/effects/newEffects/{pkg}/"+make_valid_identifier(key)+".java"
         if not  re.search("TR\d+",f.name):
             with open(f_name,"w+") as f:
                 if not  re.search("TR\d+",f.name):

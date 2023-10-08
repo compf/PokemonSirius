@@ -1,7 +1,7 @@
 
 
 
-package compf.core.engine.pokemon.effects.newEffects;
+package compf.core.engine.pokemon.effects.newEffects.%package;
 
 import compf.core.engine.BattleAction;
 import compf.core.engine.pokemon.PokemonStat;
@@ -19,11 +19,7 @@ public class %Name extends PokemonBattleEffect{
 
 public %Name(Pokemon pkmn){super(pkmn);}
 
-public void code(EffectParam param){
 
-}
-
-@Override public void roundEnding(EffectParam param){}
 
 public void code(EffectParam param){
     //%code
