@@ -1,94 +1,35 @@
-
-
-
 package compf.core.engine.pokemon.effects.newEffects.moves;
 
 import compf.core.engine.BattleAction;
-import compf.core.engine.pokemon.PokemonStat;
-import compf.core.engine.pokemon.Pokemon;
-import compf.core.engine.pokemon.effects.EffectParam;
-import compf.core.engine.pokemon.effects.PokemonBattleEffect;
-import compf.core.engine.pokemon.moves.DamageInformation;
-import compf.core.engine.pokemon.moves.Schedule;
-import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
-import compf.core.etc.services.SharedInformation;
+    import compf.core.engine.pokemon.PokemonStat;
+    import compf.core.engine.pokemon.Pokemon;
+    import compf.core.engine.pokemon.effects.EffectParam;
+    import compf.core.engine.pokemon.effects.PokemonBattleEffect;
+    import compf.core.engine.pokemon.moves.DamageInformation;
+    import compf.core.engine.pokemon.moves.Schedule;
+    import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
+    import compf.core.etc.services.SharedInformation;
+/*Once this move is successfully used, the user's Attack is raised by 1 stage every time it is hit by another Pokemon's attack as long as this move is chosen for use.*/
+ public class Rage extends PokemonBattleEffect{
 
-/*Rage */
-/*Once this move is successfully used, the user's Attack is raised by 1 stage every time it is hit by another Pokemon's attack as long as this move is chosen for use. */
-public class Rage extends PokemonBattleEffect{
-
-public Rage(Pokemon pkmn){super(pkmn);}
-
-
-
-public void code(EffectParam param){
-    param.additionalData().getCausingPokemon().changeStatStage(PokemonStat.ATT, 1);
-//%code
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public void init(EffectParam param){
-
-	}
-
-	
-
-	public void roundBeginning(EffectParam param) {
-	}
-
-	public void pokemonSwitchedOut(EffectParam param) {
-	}
-
-	public void pokemonSwitchedIn(EffectParam param) {
-	}
-
-	public void attack(EffectParam param) {
-	}
-
-	public void defend(EffectParam param) {
-	}
-
-	public void roundEnding(EffectParam param) {
-	}
-
-	public void delayedAttack(EffectParam param) {
-
-	}
-
-
-
-
-
-
-
-	public void pokemonDefeated(EffectParam param) {
-	}
-	public void statsModified(EffectParam param) {
-	}
-	public void initOrSwitchedIn(EffectParam param) {
-	}
+/*@Override
+ void onStart(pokemon) {
+        this.add("-singlemove", pokemon, "Rage");
+      }*/
+/*@Override
+ void onHit(Pokemon target, Pokemon source, move) {
+        if (target !== source && move.category !== "Status") {
+          this.boost({ atk: 1 });
+        }
+      }*/
+/*@Override
+ void 100*/
+/*@Override
+ void onBeforeMove(pokemon) {
+        this.debug("removing Rage before attack");
+        pokemon.removeVolatile("rage");
+      }*/
+public Rage(Pokemon pkmn) {
+        super(pkmn);
+    }
 }

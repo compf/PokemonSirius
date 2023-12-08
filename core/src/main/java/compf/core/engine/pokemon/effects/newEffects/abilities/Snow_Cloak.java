@@ -1,93 +1,32 @@
-
-
-
 package compf.core.engine.pokemon.effects.newEffects.abilities;
 
 import compf.core.engine.BattleAction;
-import compf.core.engine.pokemon.PokemonStat;
-import compf.core.engine.pokemon.Pokemon;
-import compf.core.engine.pokemon.effects.EffectParam;
-import compf.core.engine.pokemon.effects.PokemonBattleEffect;
-import compf.core.engine.pokemon.moves.DamageInformation;
-import compf.core.engine.pokemon.moves.Schedule;
-import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
-import compf.core.etc.services.SharedInformation;
+    import compf.core.engine.pokemon.PokemonStat;
+    import compf.core.engine.pokemon.Pokemon;
+    import compf.core.engine.pokemon.effects.EffectParam;
+    import compf.core.engine.pokemon.effects.PokemonBattleEffect;
+    import compf.core.engine.pokemon.moves.DamageInformation;
+    import compf.core.engine.pokemon.moves.Schedule;
+    import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
+    import compf.core.etc.services.SharedInformation;
+/*If Snow is active, the accuracy of moves used against this Pokemon is multiplied by 0.8.*/
+ public class Snow_Cloak extends PokemonBattleEffect{
 
-/*Snow Cloak */
-/*If Snow is active, the accuracy of moves used against this Pokemon is multiplied by 0.8. */
-public class Snow_Cloak extends PokemonBattleEffect{
-
-public Snow_Cloak(Pokemon pkmn){super(pkmn);}
-
-
-
-public void code(EffectParam param){
-    //%code
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public void init(EffectParam param){
-
-	}
-
-	
-
-	public void roundBeginning(EffectParam param) {
-	}
-
-	public void pokemonSwitchedOut(EffectParam param) {
-	}
-
-	public void pokemonSwitchedIn(EffectParam param) {
-	}
-
-	public void attack(EffectParam param) {
-	}
-
-	public void defend(EffectParam param) {
-	}
-
-	public void roundEnding(EffectParam param) {
-	}
-
-	public void delayedAttack(EffectParam param) {
-
-	}
-
-
-
-
-
-
-
-	public void pokemonDefeated(EffectParam param) {
-	}
-	public void statsModified(EffectParam param) {
-	}
-	public void initOrSwitchedIn(EffectParam param) {
-	}
+/*@Override
+ void onImmunity(type, pokemon) {
+      if (type === "hail")
+        return false;
+    }*/
+/*@Override
+ void onModifyAccuracy(accuracy) {
+      if (typeof accuracy !== "number")
+        return;
+      if (this.field.isWeather(["hail", "snow"])) {
+        this.debug("Snow Cloak - decreasing accuracy");
+        return this.chainModify([3277, 4096]);
+      }
+    }*/
+public Snow_Cloak(Pokemon pkmn) {
+        super(pkmn);
+    }
 }

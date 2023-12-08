@@ -1,93 +1,33 @@
-
-
-
 package compf.core.engine.pokemon.effects.newEffects.items;
 
 import compf.core.engine.BattleAction;
-import compf.core.engine.pokemon.PokemonStat;
-import compf.core.engine.pokemon.Pokemon;
-import compf.core.engine.pokemon.effects.EffectParam;
-import compf.core.engine.pokemon.effects.PokemonBattleEffect;
-import compf.core.engine.pokemon.moves.DamageInformation;
-import compf.core.engine.pokemon.moves.Schedule;
-import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
-import compf.core.etc.services.SharedInformation;
+    import compf.core.engine.pokemon.PokemonStat;
+    import compf.core.engine.pokemon.Pokemon;
+    import compf.core.engine.pokemon.effects.EffectParam;
+    import compf.core.engine.pokemon.effects.PokemonBattleEffect;
+    import compf.core.engine.pokemon.moves.DamageInformation;
+    import compf.core.engine.pokemon.moves.Schedule;
+    import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
+    import compf.core.etc.services.SharedInformation;
+/*Holder's attacks without a chance to make the target flinch gain a 10% chance to make the target flinch. Evolves Poliwhirl into Politoed and Slowpoke into Slowking when traded.*/
+ public class King_s_Rock extends PokemonBattleEffect{
 
-/*King's Rock */
-/*Holder's attacks without a chance to make the target flinch gain a 10% chance to make the target flinch. Evolves Poliwhirl into Politoed and Slowpoke into Slowking, if traded. */
-public class King_s_Rock extends PokemonBattleEffect{
-
-public King_s_Rock(Pokemon pkmn){super(pkmn);}
-
-
-
-public void code(EffectParam param){
-    //%code
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public void init(EffectParam param){
-
-	}
-
-	
-
-	public void roundBeginning(EffectParam param) {
-	}
-
-	public void pokemonSwitchedOut(EffectParam param) {
-	}
-
-	public void pokemonSwitchedIn(EffectParam param) {
-	}
-
-	public void attack(EffectParam param) {
-	}
-
-	public void defend(EffectParam param) {
-	}
-
-	public void roundEnding(EffectParam param) {
-	}
-
-	public void delayedAttack(EffectParam param) {
-
-	}
-
-
-
-
-
-
-
-	public void pokemonDefeated(EffectParam param) {
-	}
-	public void statsModified(EffectParam param) {
-	}
-	public void initOrSwitchedIn(EffectParam param) {
-	}
+/*@Override
+ void onModifyMove(move) {
+      if (move.category !== "Status") {
+        if (!move.secondaries)
+          move.secondaries = [];
+        for (const secondary of move.secondaries) {
+          if (secondary.volatileStatus === "flinch")
+            return;
+        }
+        move.secondaries.push({
+          chance: 10,
+          volatileStatus: "flinch"
+        });
+      }
+    }*/
+public King_s_Rock(Pokemon pkmn) {
+        super(pkmn);
+    }
 }

@@ -1,93 +1,22 @@
-
-
-
 package compf.core.engine.pokemon.effects.newEffects.moves;
 
 import compf.core.engine.BattleAction;
-import compf.core.engine.pokemon.PokemonStat;
-import compf.core.engine.pokemon.Pokemon;
-import compf.core.engine.pokemon.effects.EffectParam;
-import compf.core.engine.pokemon.effects.PokemonBattleEffect;
-import compf.core.engine.pokemon.moves.DamageInformation;
-import compf.core.engine.pokemon.moves.Schedule;
-import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
-import compf.core.etc.services.SharedInformation;
+    import compf.core.engine.pokemon.PokemonStat;
+    import compf.core.engine.pokemon.Pokemon;
+    import compf.core.engine.pokemon.effects.EffectParam;
+    import compf.core.engine.pokemon.effects.PokemonBattleEffect;
+    import compf.core.engine.pokemon.moves.DamageInformation;
+    import compf.core.engine.pokemon.moves.Schedule;
+    import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
+    import compf.core.etc.services.SharedInformation;
+/*undefined*/
+ public class Happy_Hour extends PokemonBattleEffect{
 
-/*Happy Hour */
-/*No competitive use. */
-public class Happy_Hour extends PokemonBattleEffect{
-
-public Happy_Hour(Pokemon pkmn){super(pkmn);}
-
-
-
-public void code(EffectParam param){
-    //%code
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public void init(EffectParam param){
-
-	}
-
-	
-
-	public void roundBeginning(EffectParam param) {
-	}
-
-	public void pokemonSwitchedOut(EffectParam param) {
-	}
-
-	public void pokemonSwitchedIn(EffectParam param) {
-	}
-
-	public void attack(EffectParam param) {
-	}
-
-	public void defend(EffectParam param) {
-	}
-
-	public void roundEnding(EffectParam param) {
-	}
-
-	public void delayedAttack(EffectParam param) {
-
-	}
-
-
-
-
-
-
-
-	public void pokemonDefeated(EffectParam param) {
-	}
-	public void statsModified(EffectParam param) {
-	}
-	public void initOrSwitchedIn(EffectParam param) {
-	}
+/*@Override
+ void onTryHit(Pokemon target, source) {
+      this.add("-activate", target, "move: Happy Hour");
+    }*/
+public Happy_Hour(Pokemon pkmn) {
+        super(pkmn);
+    }
 }

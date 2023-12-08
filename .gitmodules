@@ -1,0 +1,3 @@
+[submodule "dataParser/pokemon-showdown"]
+	path = dataParser/pokemon-showdown
+	url = git@github.com:compf/pokemon-showdown.git

@@ -1,93 +1,27 @@
-
-
-
 package compf.core.engine.pokemon.effects.newEffects.abilities;
 
 import compf.core.engine.BattleAction;
-import compf.core.engine.pokemon.PokemonStat;
-import compf.core.engine.pokemon.Pokemon;
-import compf.core.engine.pokemon.effects.EffectParam;
-import compf.core.engine.pokemon.effects.PokemonBattleEffect;
-import compf.core.engine.pokemon.moves.DamageInformation;
-import compf.core.engine.pokemon.moves.Schedule;
-import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
-import compf.core.etc.services.SharedInformation;
+    import compf.core.engine.pokemon.PokemonStat;
+    import compf.core.engine.pokemon.Pokemon;
+    import compf.core.engine.pokemon.effects.EffectParam;
+    import compf.core.engine.pokemon.effects.PokemonBattleEffect;
+    import compf.core.engine.pokemon.moves.DamageInformation;
+    import compf.core.engine.pokemon.moves.Schedule;
+    import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
+    import compf.core.etc.services.SharedInformation;
+/*undefined*/
+ public class Toxic_Debris extends PokemonBattleEffect{
 
-/*Toxic Debris */
-/*If this Pokemon is hit by a physical attack, Toxic Spikes are set on the opposing side. */
-public class Toxic_Debris extends PokemonBattleEffect{
-
-public Toxic_Debris(Pokemon pkmn){super(pkmn);}
-
-
-
-public void code(EffectParam param){
-    //%code
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public void init(EffectParam param){
-
-	}
-
-	
-
-	public void roundBeginning(EffectParam param) {
-	}
-
-	public void pokemonSwitchedOut(EffectParam param) {
-	}
-
-	public void pokemonSwitchedIn(EffectParam param) {
-	}
-
-	public void attack(EffectParam param) {
-	}
-
-	public void defend(EffectParam param) {
-	}
-
-	public void roundEnding(EffectParam param) {
-	}
-
-	public void delayedAttack(EffectParam param) {
-
-	}
-
-
-
-
-
-
-
-	public void pokemonDefeated(EffectParam param) {
-	}
-	public void statsModified(EffectParam param) {
-	}
-	public void initOrSwitchedIn(EffectParam param) {
-	}
+/*@Override
+ void onDamagingHit(DamageInformation damage, Pokemon target, Pokemon source, move) {
+      const side = source.isAlly(target) ? source.side.foe : source.side;
+      const toxicSpikes = side.sideConditions["toxicspikes"];
+      if (move.category === "Physical" && (!toxicSpikes || toxicSpikes.layers < 2)) {
+        this.add("-activate", target, "ability: Toxic Debris");
+        side.addSideCondition("toxicspikes", target);
+      }
+    }*/
+public Toxic_Debris(Pokemon pkmn) {
+        super(pkmn);
+    }
 }

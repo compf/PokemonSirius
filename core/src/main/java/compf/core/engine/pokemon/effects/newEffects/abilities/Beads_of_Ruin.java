@@ -1,93 +1,36 @@
-
-
-
 package compf.core.engine.pokemon.effects.newEffects.abilities;
 
 import compf.core.engine.BattleAction;
-import compf.core.engine.pokemon.PokemonStat;
-import compf.core.engine.pokemon.Pokemon;
-import compf.core.engine.pokemon.effects.EffectParam;
-import compf.core.engine.pokemon.effects.PokemonBattleEffect;
-import compf.core.engine.pokemon.moves.DamageInformation;
-import compf.core.engine.pokemon.moves.Schedule;
-import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
-import compf.core.etc.services.SharedInformation;
+    import compf.core.engine.pokemon.PokemonStat;
+    import compf.core.engine.pokemon.Pokemon;
+    import compf.core.engine.pokemon.effects.EffectParam;
+    import compf.core.engine.pokemon.effects.PokemonBattleEffect;
+    import compf.core.engine.pokemon.moves.DamageInformation;
+    import compf.core.engine.pokemon.moves.Schedule;
+    import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
+    import compf.core.etc.services.SharedInformation;
+/*undefined*/
+ public class Beads_of_Ruin extends PokemonBattleEffect{
 
-/*Beads of Ruin */
-/*Active Pokemon without this Ability have their Special Defense multiplied by 0.75. */
-public class Beads_of_Ruin extends PokemonBattleEffect{
-
-public Beads_of_Ruin(Pokemon pkmn){super(pkmn);}
-
-
-
-public void code(EffectParam param){
-    //%code
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public void init(EffectParam param){
-
-	}
-
-	
-
-	public void roundBeginning(EffectParam param) {
-	}
-
-	public void pokemonSwitchedOut(EffectParam param) {
-	}
-
-	public void pokemonSwitchedIn(EffectParam param) {
-	}
-
-	public void attack(EffectParam param) {
-	}
-
-	public void defend(EffectParam param) {
-	}
-
-	public void roundEnding(EffectParam param) {
-	}
-
-	public void delayedAttack(EffectParam param) {
-
-	}
-
-
-
-
-
-
-
-	public void pokemonDefeated(EffectParam param) {
-	}
-	public void statsModified(EffectParam param) {
-	}
-	public void initOrSwitchedIn(EffectParam param) {
-	}
+/*@Override
+ void onStart(pokemon) {
+      if (this.suppressingAbility(pokemon))
+        return;
+      this.add("-ability", pokemon, "Beads of Ruin");
+    }*/
+/*@Override
+ void onAnyModifySpD(spd, Pokemon target, Pokemon source, move) {
+      const abilityHolder = this.effectState.target;
+      if (target.hasAbility("Beads of Ruin"))
+        return;
+      if (!move.ruinedSpD?.hasAbility("Beads of Ruin"))
+        move.ruinedSpD = abilityHolder;
+      if (move.ruinedSpD !== abilityHolder)
+        return;
+      this.debug("Beads of Ruin SpD drop");
+      return this.chainModify(0.75);
+    }*/
+public Beads_of_Ruin(Pokemon pkmn) {
+        super(pkmn);
+    }
 }

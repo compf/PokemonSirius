@@ -1,93 +1,34 @@
-
-
-
 package compf.core.engine.pokemon.effects.newEffects.abilities;
 
 import compf.core.engine.BattleAction;
-import compf.core.engine.pokemon.PokemonStat;
-import compf.core.engine.pokemon.Pokemon;
-import compf.core.engine.pokemon.effects.EffectParam;
-import compf.core.engine.pokemon.effects.PokemonBattleEffect;
-import compf.core.engine.pokemon.moves.DamageInformation;
-import compf.core.engine.pokemon.moves.Schedule;
-import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
-import compf.core.etc.services.SharedInformation;
+    import compf.core.engine.pokemon.PokemonStat;
+    import compf.core.engine.pokemon.Pokemon;
+    import compf.core.engine.pokemon.effects.EffectParam;
+    import compf.core.engine.pokemon.effects.PokemonBattleEffect;
+    import compf.core.engine.pokemon.moves.DamageInformation;
+    import compf.core.engine.pokemon.moves.Schedule;
+    import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
+    import compf.core.etc.services.SharedInformation;
+/*undefined*/
+ public class Full_Metal_Body extends PokemonBattleEffect{
 
-/*Full Metal Body */
-/*Prevents other Pokemon from lowering this Pokemon's stat stages. */
-public class Full_Metal_Body extends PokemonBattleEffect{
-
-public Full_Metal_Body(Pokemon pkmn){super(pkmn);}
-
-
-
-public void code(EffectParam param){
-    //%code
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public void init(EffectParam param){
-
-	}
-
-	
-
-	public void roundBeginning(EffectParam param) {
-	}
-
-	public void pokemonSwitchedOut(EffectParam param) {
-	}
-
-	public void pokemonSwitchedIn(EffectParam param) {
-	}
-
-	public void attack(EffectParam param) {
-	}
-
-	public void defend(EffectParam param) {
-	}
-
-	public void roundEnding(EffectParam param) {
-	}
-
-	public void delayedAttack(EffectParam param) {
-
-	}
-
-
-
-
-
-
-
-	public void pokemonDefeated(EffectParam param) {
-	}
-	public void statsModified(EffectParam param) {
-	}
-	public void initOrSwitchedIn(EffectParam param) {
-	}
+/*@Override
+ void onTryBoost(boost, Pokemon target, Pokemon source, effect) {
+      if (source && target === source)
+        return;
+      let showMsg = false;
+      let i;
+      for (i in boost) {
+        if (boost[i] < 0) {
+          delete boost[i];
+          showMsg = true;
+        }
+      }
+      if (showMsg && !effect.secondaries && effect.id !== "octolock") {
+        this.add("-fail", target, "unboost", "[from] ability: Full Metal Body", "[of] " + target);
+      }
+    }*/
+public Full_Metal_Body(Pokemon pkmn) {
+        super(pkmn);
+    }
 }

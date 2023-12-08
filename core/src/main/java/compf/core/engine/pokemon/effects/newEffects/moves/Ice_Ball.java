@@ -1,93 +1,68 @@
-
-
-
 package compf.core.engine.pokemon.effects.newEffects.moves;
 
 import compf.core.engine.BattleAction;
-import compf.core.engine.pokemon.PokemonStat;
-import compf.core.engine.pokemon.Pokemon;
-import compf.core.engine.pokemon.effects.EffectParam;
-import compf.core.engine.pokemon.effects.PokemonBattleEffect;
-import compf.core.engine.pokemon.moves.DamageInformation;
-import compf.core.engine.pokemon.moves.Schedule;
-import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
-import compf.core.etc.services.SharedInformation;
+    import compf.core.engine.pokemon.PokemonStat;
+    import compf.core.engine.pokemon.Pokemon;
+    import compf.core.engine.pokemon.effects.EffectParam;
+    import compf.core.engine.pokemon.effects.PokemonBattleEffect;
+    import compf.core.engine.pokemon.moves.DamageInformation;
+    import compf.core.engine.pokemon.moves.Schedule;
+    import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
+    import compf.core.etc.services.SharedInformation;
+/*If this move is successful, the user is locked into this move and cannot make another move until it misses, 5 turns have passed, or the attack cannot be used. Power doubles with each successful hit of this move and doubles again if Defense Curl was used previously by the user. If this move is called by Sleep Talk, the move is used for one turn.*/
+ public class Ice_Ball extends PokemonBattleEffect{
 
-/*Ice Ball */
-/*If this move is successful, the user is locked into this move and cannot make another move until it misses, 5 turns have passed, or the attack cannot be used. Power doubles with each successful hit of this move and doubles again if Defense Curl was used previously by the user. If this move is called by Sleep Talk, the move is used for 1 turn. */
-public class Ice_Ball extends PokemonBattleEffect{
-
-public Ice_Ball(Pokemon pkmn){super(pkmn);}
-
-
-
-public void code(EffectParam param){
-    //%code
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public void init(EffectParam param){
-
-	}
-
-	
-
-	public void roundBeginning(EffectParam param) {
-	}
-
-	public void pokemonSwitchedOut(EffectParam param) {
-	}
-
-	public void pokemonSwitchedIn(EffectParam param) {
-	}
-
-	public void attack(EffectParam param) {
-	}
-
-	public void defend(EffectParam param) {
-	}
-
-	public void roundEnding(EffectParam param) {
-	}
-
-	public void delayedAttack(EffectParam param) {
-
-	}
-
-
-
-
-
-
-
-	public void pokemonDefeated(EffectParam param) {
-	}
-	public void statsModified(EffectParam param) {
-	}
-	public void initOrSwitchedIn(EffectParam param) {
-	}
+/*@Override
+ void basePowerCallback(pokemon, Pokemon target, move) {
+      let bp = move.basePower;
+      const iceballData = pokemon.volatiles["iceball"];
+      if (iceballData?.hitCount) {
+        bp *= Math.pow(2, iceballData.contactHitCount);
+      }
+      if (iceballData && pokemon.status !== "slp") {
+        iceballData.hitCount++;
+        iceballData.contactHitCount++;
+        if (iceballData.hitCount < 5) {
+          iceballData.duration = 2;
+        }
+      }
+      if (pokemon.volatiles["defensecurl"]) {
+        bp *= 2;
+      }
+      this.debug("BP: " + bp);
+      return bp;
+    }*/
+/*@Override
+ void onModifyMove(Move move, pokemon, target) {
+      if (pokemon.volatiles["iceball"] || pokemon.status === "slp" || !target)
+        return;
+      pokemon.addVolatile("iceball");
+      pokemon.volatiles["iceball"].targetSlot = move.sourceEffect ? pokemon.lastMoveTargetLoc : pokemon.getLocOf(target);
+    }*/
+/*@Override
+ void onAfterMove(Pokemon source, Pokemon target, move) {
+      const iceballData = source.volatiles["iceball"];
+      if (iceballData && iceballData.hitCount === 5 && iceballData.contactHitCount < 5) {
+        source.addVolatile("rolloutstorage");
+        source.volatiles["rolloutstorage"].contactHitCount = iceballData.contactHitCount;
+      }
+    }*/
+/*@Override
+ void 1*/
+/*@Override
+ void iceball*/
+/*@Override
+ void onStart() {
+        this.effectState.hitCount = 0;
+        this.effectState.contactHitCount = 0;
+      }*/
+/*@Override
+ void onResidual(target) {
+        if (target.lastMove && target.lastMove.id === "struggle") {
+          delete target.volatiles["iceball"];
+        }
+      }*/
+public Ice_Ball(Pokemon pkmn) {
+        super(pkmn);
+    }
 }
