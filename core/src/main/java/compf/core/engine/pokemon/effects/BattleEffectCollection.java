@@ -2,7 +2,9 @@ package compf.core.engine.pokemon.effects;
 
 import java.util.*;
 
-public class BattleEffectCollection extends ArrayList<BattleEffect> {
+import compf.core.etc.Box;
+
+public class BattleEffectCollection extends ArrayList<BattleEffect> implements BattleEffectService {
     public BattleEffectCollection() {
 
     }
@@ -27,6 +29,8 @@ public class BattleEffectCollection extends ArrayList<BattleEffect> {
         if(effect==null)return false;
         if(hasEffect(effect.getClass()))return false;
         notInitialized.add(effect);
+        var param=new EffectParam(null,null,null,null,new EffectParam.AdditionalBattleEffectAddedData(effect));
+        this.battleEffectAdded(param);
         return super.add(effect);
 
     }
@@ -43,5 +47,84 @@ public class BattleEffectCollection extends ArrayList<BattleEffect> {
 
     public BattleEffect removeFirst() {
         return this.remove(0);
+    }
+    @Override
+    public void init(EffectParam param) {
+        for(var eff:this){
+            eff.init(param);
+        }
+     
+    }
+    @Override
+    public void roundBeginning(EffectParam param) {
+        for(var eff:this){
+            eff.roundBeginning(param);
+        }
+    }
+    @Override
+    public void pokemonSwitchedOut(EffectParam param) {
+        for(var eff:this){
+            eff.pokemonSwitchedOut(param);
+        }
+    }
+    @Override
+    public void pokemonSwitchedIn(EffectParam param) {
+        for(var eff:this){
+            eff.pokemonSwitchedIn(param);
+        }
+    }
+    @Override
+    public void attack(EffectParam param) {
+        for(var eff:this){
+            eff.attack(param);
+        }
+    }
+    @Override
+    public void defend(EffectParam param) {
+        for(var eff:this){
+            eff.defend(param);
+        }
+    }
+    @Override
+    public void roundEnding(EffectParam param) {
+        for(var eff:this){
+            eff.roundEnding(param);
+        }
+    }
+    @Override
+    public void delayedAttack(EffectParam param) {
+        for(var eff:this){
+            eff.delayedAttack(param);
+        }
+    }
+    @Override
+    public void pokemonDefeated(EffectParam param) {
+        for(var eff:this){
+            eff.pokemonDefeated(param);
+        }
+    }
+    @Override
+    public void statsModified(EffectParam param) {
+        for(var eff:this){
+            eff.statsModified(param);
+        }
+    }
+    @Override
+    public void initOrSwitchedIn(EffectParam param) {
+        for(var eff:this){
+            eff.initOrSwitchedIn(param);
+        }
+    }
+    @Override
+    public void modifyBasePower(EffectParam param, Box<Double> basePower) {
+        for(var eff:this){
+            eff.modifyBasePower(param,basePower);
+        }
+    }
+    @Override
+    public void battleEffectAdded(EffectParam param) {
+        for(var eff:this){
+            eff.battleEffectAdded(param);
+        }
     }
 }

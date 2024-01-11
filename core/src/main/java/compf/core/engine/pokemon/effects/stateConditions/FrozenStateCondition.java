@@ -3,11 +3,12 @@ package compf.core.engine.pokemon.effects.stateConditions;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.effects.EffectParam;
 import compf.core.engine.pokemon.effects.PokemonBattleEffect;
+import compf.core.engine.pokemon.effects.stateConditions.StateConditionsMarkers.NonVolatileStatusMarker;
 import compf.core.engine.pokemon.moves.DamageInformation;
 
 import java.io.Serial;
 
-public class FrozenStateCondition extends PokemonBattleEffect {
+public class FrozenStateCondition extends PokemonBattleEffect implements NonVolatileStatusMarker {
 
     public FrozenStateCondition(Pokemon pkmn) {
         super(pkmn);

@@ -4,8 +4,9 @@ import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.PokemonStat;
 import compf.core.engine.pokemon.effects.EffectParam;
 import compf.core.engine.pokemon.effects.PokemonBattleEffect;
+import compf.core.engine.pokemon.effects.stateConditions.StateConditionsMarkers.NonVolatileStatusMarker;
 
-public class BurningStateCondition extends PokemonBattleEffect {
+public class BurningStateCondition extends PokemonBattleEffect implements NonVolatileStatusMarker {
 
 	@Override
 	public void init(EffectParam param) {

@@ -8,7 +8,8 @@ import compf.core.engine.BattleAction;
     import compf.core.engine.pokemon.moves.DamageInformation;
     import compf.core.engine.pokemon.moves.Schedule;
     import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
-    import compf.core.etc.services.SharedInformation;
+import compf.core.etc.Box;
+import compf.core.etc.services.SharedInformation;
 /*undefined*/
  public class Acrobatics extends PokemonBattleEffect{
 
@@ -20,6 +21,12 @@ import compf.core.engine.BattleAction;
       }
       return move.basePower;
     }*/
+@Override
+public void modifyBasePower(EffectParam param,Box<Double> basePower){
+  if(param.additionalData().getCausingPokemon().hasItem()){
+    basePower.set(basePower.get()*2);
+  }
+}
 public Acrobatics(Pokemon pkmn) {
         super(pkmn);
     }

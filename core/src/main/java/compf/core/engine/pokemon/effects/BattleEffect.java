@@ -8,9 +8,10 @@ import compf.core.engine.BattleAction;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.PokemonStat;
 import compf.core.engine.pokemon.moves.DamageInformation;
+import compf.core.etc.Box;
 import compf.core.etc.MyObject;
 
-public abstract class BattleEffect extends MyObject implements Serializable {
+public abstract class BattleEffect extends MyObject implements Serializable,BattleEffectService {
 	/**
 		 *
 		 */
@@ -83,6 +84,10 @@ public abstract class BattleEffect extends MyObject implements Serializable {
 	}
 	public void initOrSwitchedIn(EffectParam param) {
 	}
+	public void modifyBasePower(EffectParam param,Box<Double> basePower){
+		
+	}
+	public void battleEffectAdded(EffectParam param) {}
 	protected void modifyStats(EffectParam param, Pokemon affected, Pokemon causing, int stat, int by){
 		param.eventExecutor().executeEffects(EffectTime.STATS_MODIFIED,new EffectParam(param.schedule(),param.interrupt(),param.rule(),param.eventExecutor(),new EffectParam.AdditionalStatsModifyingData(causing,affected,stat,by)));
 		affected.changeStatStage(stat,by);

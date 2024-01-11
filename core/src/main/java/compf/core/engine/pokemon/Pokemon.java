@@ -31,6 +31,7 @@ public class Pokemon extends PokedexEntry {
     private Nature _nature;
     private Gender _gender;
     private Player _player;
+    private boolean hasItem;
 
     public Player getPlayer() {
         return _player;
@@ -47,6 +48,9 @@ public class Pokemon extends PokedexEntry {
     }
     public Nature getNature(){
         return _nature;
+    }
+    public boolean hasItem(){
+        return hasItem;
     }
     private BattleEffectCollection _effects = new BattleEffectCollection();
 

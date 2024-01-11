@@ -3,10 +3,11 @@ package compf.core.engine.pokemon.effects.stateConditions;
 import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.effects.EffectParam;
 import compf.core.engine.pokemon.effects.PokemonBattleEffect;
+import compf.core.engine.pokemon.effects.stateConditions.StateConditionsMarkers.NonVolatileStatusMarker;
 import compf.core.engine.pokemon.moves.DamageInformation;
 import compf.core.etc.services.SharedInformation;
 
-public class SleepingStateCondition extends PokemonBattleEffect {
+public class SleepingStateCondition extends PokemonBattleEffect implements NonVolatileStatusMarker {
     int _rounds;
 
     public SleepingStateCondition(Pokemon pkmn) {

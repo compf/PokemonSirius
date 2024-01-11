@@ -4,11 +4,12 @@ import compf.core.engine.pokemon.Pokemon;
 import compf.core.engine.pokemon.PokemonStat;
 import compf.core.engine.pokemon.effects.EffectParam;
 import compf.core.engine.pokemon.effects.PokemonBattleEffect;
+import compf.core.engine.pokemon.effects.stateConditions.StateConditionsMarkers.NonVolatileStatusMarker;
 import compf.core.engine.pokemon.moves.DamageInformation;
 import compf.core.etc.MyObject;
 import compf.core.etc.services.SharedInformation;
 
-public class ParalyzedStateCondition extends PokemonBattleEffect {
+public class ParalyzedStateCondition extends PokemonBattleEffect implements NonVolatileStatusMarker {
 
 	@Override
 	public void init(EffectParam param) {

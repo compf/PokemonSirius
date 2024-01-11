@@ -9,6 +9,13 @@ public interface PokemonStat {
 	public static final int SPEED = 5;
 	public static final int ACCURACY = 6;
 	public static final int EVASION = 7;
+	public static final int[] STAT_WITHOUT_ACC_EVA ={
+		HP,ATT,DEF,SATT,SDEF,SPEED
+	};
+	public static final int[] STAT_WITH_ACC_EVA ={
+		HP,ATT,DEF,SATT,SDEF,SPEED,ACCURACY,EVASION
+	};
+	
 	public static String getName(int index){
 		switch(index){
 			case 0:

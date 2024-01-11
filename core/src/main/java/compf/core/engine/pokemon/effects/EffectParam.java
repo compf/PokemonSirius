@@ -143,4 +143,27 @@ public record EffectParam(Schedule schedule, Interrupt interrupt, BattleRule rul
 
         }
     }
+    public static class AdditionalBattleEffectAddedData implements AdditionalData{
+        private BattleEffect addedEffect;
+        public BattleEffect getAddedEffect() {
+            return addedEffect;
+        }
+        public Pokemon getCausingPokemon(){
+           return null;
+        }
+        public Pokemon getAffectedPokemon(){
+            if(addedEffect instanceof PokemonBattleEffect){
+                return ((PokemonBattleEffect)addedEffect).getPokemon();
+            }
+            return null;
+        }
+        public AdditionalBattleEffectAddedData(BattleEffect addedEffect) {
+            this.addedEffect=addedEffect;
+        }
+        @Override
+        public void killFully() {
+            addedEffect.disable();
+            
+        }
+    }
 }
