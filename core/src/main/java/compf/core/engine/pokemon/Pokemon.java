@@ -4,6 +4,7 @@ import java.io.Serial;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
+import compf.core.engine.BattleAction;
 import compf.core.engine.Player;
 import compf.core.engine.pokemon.effects.BattleEffect;
 import compf.core.engine.pokemon.effects.BattleEffectCollection;
@@ -42,6 +43,9 @@ public class Pokemon extends PokedexEntry {
         for(BattleEffect effect:_battleEffects){
             target.add(effect);
         }
+    }
+    public  boolean hasEffect(Class<?> effect){
+        return _battleEffects.hasEffect(effect);
     }
     public Player getPlayer() {
         return _player;
