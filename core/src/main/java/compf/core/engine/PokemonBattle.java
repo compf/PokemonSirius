@@ -12,12 +12,12 @@ import compf.core.engine.pokemon.moves.Schedule.ScheduleItem;
 import compf.core.etc.MyObject;
 import compf.core.etc.services.SharedInformation;
 
-public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventExecutor {
+public class PokemonBattle extends MyObject implements Iterable<Pokemon> {
 
     Schedule _schedule;
-    private BattleEffectCollection _globalEffects = new BattleEffectCollection();
+    private BattleEffectCollection _effects = new BattleEffectCollection();
     public BattleEffectCollection getGlobalEffects(){
-        return _globalEffects;
+        return _effects;
     }
     private static int _uid;
     public static PokemonBattle Battle;
@@ -151,70 +151,12 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
     }
 
 
-    public void executeEffect(BattleEffect effect, EffectTime time, EffectParam param) {
-        if (!effect.isEnabled())
-            return;
-        switch (time) {
-            case POKEMON_DEFEATED:
-                effect.pokemonDefeated(param);
-                break;
-            case POKEMON_SWITCHED_IN:
-                effect.initOrSwitchedIn(param);
-                effect.pokemonSwitchedIn(param);
-                break;
-            case POKEMON_SWITCHED_OUT:
-                effect.pokemonSwitchedOut(param);
-                break;
-            case ROUND_STARTING:
-                effect.roundBeginning(param);
-                break;
-            case ROUND_ENDING:
-                effect.roundEnding(param);
-                break;
-            case ATTACK:
-                effect.attack(param);
-                break;
-            case DEFEND:
-                effect.defend(param);
-                break;
-            case DELAYED_ATTACK:
-                effect.delayedAttack(param);
-                break;
+  
 
-            case STATS_MODIFIED:
-                effect.statsModified(param);
+  
 
-        }
 
-    }
 
-    public void executeEffects(BattleEffectCollection effects, EffectTime time, EffectParam param) {
-        for (var effect : effects) {
-            executeEffect(effect, time, param);
-        }
-        effects.removeIf((obj) -> !obj.isEnabled());
-    }
-
-    public void executeEffects(EffectTime time, EffectParam param) {
-        for (Pokemon pkmn : this) {
-            executeEffects(pkmn.getEffects(), time, param);
-        }
-        for(var eff:_globalEffects){
-            var global=(GlobalBattleEffect)eff;
-            var it=iterator(global.getAttackerPlayer(),global.getAttackerPos(),global.getTargetType());
-            while(it.hasNext()){
-                global.setCurrPokemon(it.next());
-                executeEffects(_globalEffects, time, param);
-            }
-
-        }
-        executeEffects(_globalEffects, time, param);
-
-    }
-
-    private void executeEffects(Pokemon pkmn, EffectTime time, EffectParam param) {
-        executeEffects(pkmn.getEffects(), time, param);
-    }
 
 
     protected boolean _run = true;
@@ -285,51 +227,44 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
         return ls;
     }
 
-    @Override
-    public boolean hasEffect(Class<?> effectClass) {
-        boolean result = _globalEffects.hasEffect(effectClass);
-        for (var pkmn : this) {
-            result = result | pkmn.getEffects().hasEffect(effectClass);
-        }
-        return result;
-    }
+ 
 
     public BattleRoundResult executeSchedule(Interrupt interrupt) {
-        EffectParam initParams = new EffectParam(_schedule, interrupt, _rule, this, null);
+        EffectParam initParams = new EffectParam(_schedule, interrupt, _rule, this._effects, null);
 
-        _globalEffects.initializeAllNotInitialized(initParams);
-        for (var pkmn : this) {
-            pkmn.getEffects().initializeAllNotInitialized(initParams);
-        }
+        _effects.initializeAllNotInitialized(initParams);
+      
         LinkedList<BattleAction> actions = new LinkedList<>();
-        executeEffects(EffectTime.ROUND_STARTING, new EffectParam(_schedule, interrupt, _rule, this, null));
-        var pokemonSorted = sort();
-        for (var pkmn : pokemonSorted) {
-            executeEffects(pkmn, EffectTime.DELAYED_ATTACK, new EffectParam(_schedule, interrupt, _rule, this, null));
+        for(var pkmn:this){
+            pkmn.transferEffectsTo(_effects);
         }
+        _effects.init(initParams);
+        _effects.initOrSwitchedIn(initParams);
+       _effects.roundBeginning( new EffectParam(_schedule, interrupt, _rule, this._effects, null));
+
         while (_schedule.any()) {
+            for(var pkmn:this){
+                pkmn.transferEffectsTo(_effects);
+            }
+            _effects.initializeAllNotInitialized(initParams);
             ScheduleItem item = _schedule.getNext();
             var attacker = (item.getAttacker());
             var defender = (item.getDefender());
 
             var dmgInf = item.execute();
-            _globalEffects.initializeAllNotInitialized(initParams);
 
 
 
 
-            EffectParam effectParam = new EffectParam(_schedule, interrupt, _rule, this, new EffectParam.AdditionalDirectDamageData(dmgInf, item));
-            executeEffects(EffectTime.ATTACK, effectParam);
-            executeEffects(EffectTime.DEFEND, effectParam);
+
+            EffectParam effectParam = new EffectParam(_schedule, interrupt, _rule, this._effects, new EffectParam.AdditionalDirectDamageData(dmgInf, item));
+            _effects.attack(effectParam);
+            _effects.defend( effectParam);
             if(dmgInf.isEnabled()){
                 for (var eff : dmgInf.getEffects()) {
-                    if (eff instanceof GlobalBattleEffect) {
-                        _globalEffects.add(eff);
-                        _globalEffects.initializeAllNotInitialized(initParams);
-                    } else if (eff instanceof PokemonBattleEffect) {
-                        PokemonBattleEffect pkmneff = (PokemonBattleEffect) eff;
-                        pkmneff.getPokemon().addEffect(pkmneff);
-                        pkmneff.getPokemon().getEffects().initializeAllNotInitialized(initParams);
+                   
+                        _effects.add(eff);
+                        _effects.initializeAllNotInitialized(initParams);
                     }
                 }
                 dmgInf = ((EffectParam.AdditionalDirectDamageData) effectParam.additionalData()).getDamageInformation();
@@ -337,7 +272,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
 
                     short oldIndex = (short) indexOf(attacker.getPlayer().getTeam(), attacker);
 
-                    short newIndex = interrupt.forceSwitch(this, attacker.getPlayer(), oldIndex);
+                    short newIndex = interrupt.forceSwitch(this._effects, attacker.getPlayer(), oldIndex);
                     String msg = (switchPokemon(attacker.getPlayer(), oldIndex, newIndex));
                     var switchAction = new BattleAction(-1, msg, BattleAction.ActionKind.SwitchPokemon, attacker.getPlayer().getPlayerId() + " " + oldIndex + " " + newIndex);
                     actions.add(switchAction);
@@ -351,31 +286,30 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
                 if (defender.getCurrHP() <= 0) {
                     short oldIndex = (short) indexOf(defender.getPlayer().getTeam(), defender);
 
-                    short newIndex = interrupt.forceSwitch(this, defender.getPlayer(), oldIndex);
+                    short newIndex = interrupt.forceSwitch(this._effects, defender.getPlayer(), oldIndex);
                     String msg = (switchPokemon(defender.getPlayer(), oldIndex, newIndex));
                     var switchAction = new BattleAction(-1, msg, BattleAction.ActionKind.SwitchPokemon, defender.getPlayer().getPlayerId() + " " + oldIndex + " " + newIndex);
                     actions.add(switchAction);
 
                 }
-            }
+            
             var action = new BattleAction(item.getID(), dmgInf.getMessages(), BattleAction.ActionKind.Move,
                     dmgInf);
             actions.add(action);
 
 
 
-        }
-        executeEffects(_globalEffects, EffectTime.ROUND_ENDING, new EffectParam(_schedule, interrupt, _rule, this, null));
-        executeEffects(EffectTime.ROUND_ENDING, new EffectParam(_schedule, interrupt, _rule, this, null));
-        for (var pkmn : this) {
-            for (var effect : pkmn.getEffects()) {
+    }
+        _effects.roundEnding(new EffectParam(_schedule, interrupt, _rule, this._effects, null));
+        for (var effect : _effects) {
+           
                 var battleAction = effect.getBattleAction();
                 if (battleAction != null) {
                     actions.add(battleAction);
                 }
 
 
-            }
+            
         }
 
         return new BattleRoundResult(actions, new DetailedBattleState(_players), NetworkMessageKind.Update);
@@ -424,7 +358,7 @@ public class PokemonBattle extends MyObject implements Iterable<Pokemon>, EventE
         } else if (inp instanceof PlayerInput.SwitchPokemonInput switch_inp) {
             Pokemon pkmn = getPlayerById(switch_inp.PlayerId).getPokemon(switch_inp.PokemonOldIndex);
             String message=switchPokemon(getPlayerById(switch_inp.PlayerId), switch_inp.PokemonOldIndex, switch_inp.PokemonNewIndex);
-            switch_inp.forceSwitch(this,pkmn.getPlayer(),switch_inp.PokemonOldIndex);
+            switch_inp.forceSwitch(this._effects,pkmn.getPlayer(),switch_inp.PokemonOldIndex);
             return new  BattleAction(1,message, BattleAction.ActionKind.SwitchPokemon,switch_inp.PokemonNewIndex);
         }
         return  null;

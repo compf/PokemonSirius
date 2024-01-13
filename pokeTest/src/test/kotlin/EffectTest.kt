@@ -98,7 +98,7 @@ class EffectTest  {
         val enemy= Player(1,"Enemy",enemyPokemons)
         val sim= createSimulator(me,enemy)
 
-        sim.attack().attack().attack().assertNoDamage().assertNoDamage().assertNoDamage().switch(1).execute(3)
+        sim.attack().attack().attack().assertNoDamage().assertNoDamage().assert(HPModifiedAssertion(0.8333)).switch(1).execute(3)
 
         assert(enemy.getPokemon(0).currHP<enemy.getPokemon(0).maxHP)
     }

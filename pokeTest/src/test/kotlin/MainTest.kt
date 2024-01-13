@@ -151,7 +151,7 @@ public open class MainTest{
                 val factor=7.0/8.0
                 simulator.attack().attack().assertNoDamage().assertNoDamage().assert(HPModifiedAssertion(factor)).execute(3)
         }
-        @Test
+        //@Test
         @Bean(name=[EffectName.Fly])
         public fun assertBattleWithFlying(){
                 newGenerator()

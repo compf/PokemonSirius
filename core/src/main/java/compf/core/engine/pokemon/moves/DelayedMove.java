@@ -27,7 +27,7 @@ public class DelayedMove extends Move {
         try {
             var effect = (PokemonBattleEffect) _effectClass.getDeclaredConstructor(Pokemon.class)
                     .newInstance(item.getAttacker());
-            item.getAttacker().addEffect(effect);
+            item._battle.getGlobalEffects().add(effect);
             SharedInformation.Instance.getLoggerService().log("added delayed effect",DelayedMove.class);
 
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException

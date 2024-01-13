@@ -16,7 +16,7 @@ public class EjectPackItemEffect extends ItemEffect {
         var data=(EffectParam.AdditionalStatsModifyingData)param.additionalData();
         if(data.getBy()<0){
             short index= (short)MyObject.indexOf(getPokemon().getPlayer().getTeam(),getPokemon());
-            param.interrupt().forceSwitch(param.eventExecutor(), getPokemon().getPlayer(),index);
+            param.interrupt().forceSwitch(param.effectCollection(), getPokemon().getPlayer(),index);
 
         }
 

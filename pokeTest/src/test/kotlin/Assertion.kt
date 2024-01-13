@@ -61,6 +61,7 @@ public abstract class GroupedAssertion :Assertion{
 public class ThisOrderAssertion: GroupedAssertion(){
     public override fun check(toCheck:Any):Boolean{
         val compList=toCheck as ArrayList<Any>
+        if( assertionList.size >compList.size)return false;
         for(i in 0 until assertionList.size){
             if(assertionList[i] is GroupedAssertion && !assertionList[i].check(compList)) {
                 SharedInformation.Instance.getLoggerService().log("Assertion " +assertionList[i] +" failed by list" ,ThisOrderAssertion::class)

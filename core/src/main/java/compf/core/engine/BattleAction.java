@@ -14,7 +14,7 @@ public class BattleAction implements Serializable {
 	public final LinkedList<String> Messages;
 	public final int ActionId;
 	public final ActionKind Kind;
-	public final Object Data;
+	public  Object Data;
 
 	/**
 	 * @param message  A text message to describe the action
@@ -35,5 +35,6 @@ public class BattleAction implements Serializable {
 		Kind = kind;
 		Data = data;
 	}
+
 
 }

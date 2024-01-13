@@ -40,7 +40,7 @@ public interface BattleEffectService  {
 	public void modifyBasePower(EffectParam param,Box<Double> basePower);
 
 	public void battleEffectAdded(EffectParam param) ;
-
+	public void indirectDamageReceived(EffectParam param);
 
 
 

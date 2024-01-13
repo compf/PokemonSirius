@@ -98,7 +98,7 @@ public class BattleServer extends BaseServer implements SteppableHost {
         var playerIds = _gamePlayers.get(gameId);
         for (var playerId : playerIds) {
             for (short pkmId = 0; pkmId < rule.PokemonPerPlayerOnField; pkmId++) {
-                if (canPlayerAttack(playerId, pkmId)) {
+                if (canPlayerAttack(gameId,playerId, pkmId)) {
                     var inp_msg = NetworkMessageKind.RequestInputToClient.createMessage(pkmId);
                     writeObject(_pipes.get(playerId), inp_msg);
                 }
@@ -115,10 +115,11 @@ public class BattleServer extends BaseServer implements SteppableHost {
         }
     }
 
-    private boolean canPlayerAttack(short playerId, short pkmnId) {
+    private boolean canPlayerAttack(short gameId,short playerId, short pkmnId) {
         Pokemon pkmn = _players.get(playerId).getPokemon(pkmnId);
+        var battle=_battles.get(gameId);
         boolean flag = pkmn.getCurrHP() > 0
-                && pkmn.getEffects().stream().allMatch((e) -> ((PokemonBattleEffect) e).canReceiveCommand());
+                && battle.getGlobalEffects().filterOnPokemon(pkmn).allMatch((e) -> ((PokemonBattleEffect) e).canReceiveCommand());
         SharedInformation.Instance.getLoggerService().log("can player attack " + playerId + " " + pkmnId + " " + flag,BattleServer.class);
 
         return flag;
@@ -133,7 +134,7 @@ public class BattleServer extends BaseServer implements SteppableHost {
         int result = 0;
         for (var playerId : playerIds) {
             for (short pkmId = 0; pkmId < rule.PokemonPerPlayerOnField; pkmId++) {
-                if (canPlayerAttack(playerId, pkmId)) {
+                if (canPlayerAttack(gameId,playerId, pkmId)) {
                     result++;
                 }
             }

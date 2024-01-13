@@ -1,7 +1,9 @@
 package compf.core.engine.pokemon.effects;
 
 import java.util.*;
+import java.util.stream.Stream;
 
+import compf.core.engine.pokemon.Pokemon;
 import compf.core.etc.Box;
 
 public class BattleEffectCollection extends ArrayList<BattleEffect> implements BattleEffectService {
@@ -17,6 +19,30 @@ public class BattleEffectCollection extends ArrayList<BattleEffect> implements B
         }
         return false;
     }
+    public boolean hasEffect(BattleEffect effect){
+        for (var eff : this) {
+            if (eff == effect) {
+                return true;
+            }
+            else if(eff.getClass()==effect.getClass()){
+               if(eff instanceof PokemonBattleEffect pkmnEff){
+                if( pkmnEff.getPokemon()==((PokemonBattleEffect)effect).getPokemon()){
+                    return true;
+                }
+               }
+               
+            }
+        }
+        return false;
+    }
+    public boolean hasEffect(Pokemon filterPokemon,Class<?> effectType){
+        for (var eff : this) {
+            if ( eff instanceof PokemonBattleEffect pkmEff && pkmEff.getPokemon()==filterPokemon && effectType ==eff.getClass()) {
+                return true;
+            }
+        }
+        return false;
+    }
     public void initializeAllNotInitialized(EffectParam param){
         while(notInitialized.size()>0){
             var item=notInitialized.remove();
@@ -27,7 +53,7 @@ public class BattleEffectCollection extends ArrayList<BattleEffect> implements B
     @Override
     public boolean add(BattleEffect effect) {
         if(effect==null)return false;
-        if(hasEffect(effect.getClass()))return false;
+        if(hasEffect(effect))return false;
         notInitialized.add(effect);
         var param=new EffectParam(null,null,null,null,new EffectParam.AdditionalBattleEffectAddedData(effect));
         this.battleEffectAdded(param);
@@ -50,6 +76,7 @@ public class BattleEffectCollection extends ArrayList<BattleEffect> implements B
     }
     @Override
     public void init(EffectParam param) {
+        this.notInitialized.clear();
         for(var eff:this){
             eff.init(param);
         }
@@ -127,4 +154,14 @@ public class BattleEffectCollection extends ArrayList<BattleEffect> implements B
             eff.battleEffectAdded(param);
         }
     }
+    @Override
+	public void indirectDamageReceived(EffectParam param){
+        for(var eff:this){
+            eff.indirectDamageReceived(param);
+        }
+    }
+    public Stream<PokemonBattleEffect> filterOnPokemon(Pokemon pkmn) {
+       return this.stream().filter((x)->x instanceof PokemonBattleEffect eff && eff.getPokemon()==pkmn).map((x)->(PokemonBattleEffect)x);
+    }
+
 }

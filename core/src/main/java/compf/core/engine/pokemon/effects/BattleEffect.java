@@ -66,9 +66,10 @@ public abstract class BattleEffect extends MyObject implements Serializable,Batt
 	}
 
 	public BattleAction getBattleAction() {
-		final BattleAction action= new BattleAction(getUID(), _messages, BattleAction.ActionKind.BattleEffect, _additionalData);
-		_messages=new LinkedList<>();
-		return action;
+		if (_action == null) {
+			_action = new BattleAction(getUID(), _messages, BattleAction.ActionKind.BattleEffect, _additionalData);
+		}
+		return _action;
 	}
 
 	public int getUID() {
@@ -89,19 +90,24 @@ public abstract class BattleEffect extends MyObject implements Serializable,Batt
 	}
 	public void battleEffectAdded(EffectParam param) {}
 	protected void modifyStats(EffectParam param, Pokemon affected, Pokemon causing, int stat, int by){
-		param.eventExecutor().executeEffects(EffectTime.STATS_MODIFIED,new EffectParam(param.schedule(),param.interrupt(),param.rule(),param.eventExecutor(),new EffectParam.AdditionalStatsModifyingData(causing,affected,stat,by)));
+		param.effectCollection().statsModified(new EffectParam(param.schedule(),param.interrupt(),param.rule(),param.effectCollection(),new EffectParam.AdditionalStatsModifyingData(causing,affected,stat,by)));
 		affected.changeStatStage(stat,by);
 		addMessage(PokemonStat.getName(stat)+ " of "+affected.toString() +" is "+((by>=0)?"increased":"decreased") );
 
 
 	}
 	protected  void dealIndirectDamage(EffectParam param,Pokemon affected, Pokemon causing,double factor){
-		param.eventExecutor().executeEffects(EffectTime.INDIRECT_DAMAGE,new EffectParam(param.schedule(),param.interrupt(),param.rule(),param.eventExecutor(),new EffectParam.AdditionalIndirectDamageData(causing,affected,factor)));
-
+		param.effectCollection().indirectDamageReceived(new EffectParam(param.schedule(),param.interrupt(),param.rule(),param.effectCollection(),new EffectParam.AdditionalIndirectDamageData(causing,affected,factor)));
+		int prevHP=affected.getCurrHP();
 		affected.modifyCurrHp(factor);
 		addMessage(affected.toString()+" lost HP" );
+		getBattleAction();
+		this._action.Data=prevHP +" "+ affected.getCurrHP();
+
 
 	}
+	public void indirectDamageReceived(EffectParam param){}
+
 
 
 

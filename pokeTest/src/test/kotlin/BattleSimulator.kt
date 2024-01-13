@@ -192,9 +192,13 @@ public class SimpleBattleSimulator {
 
 
     public fun execute(expectedNumberOfActions: Int) {
+        val MAX_ITERATIONS=10
+        var counter=0
 
-        while (meIO.actions.size < expectedNumberOfActions) {
+
+        while (counter<=expectedNumberOfActions ||  counter<MAX_ITERATIONS && !rootAssertion.check(meIO.actions)) {
             server.run(0)
+            counter++;
         }
 
         MyLogger.debug("test finnished");

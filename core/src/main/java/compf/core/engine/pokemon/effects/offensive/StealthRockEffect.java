@@ -13,9 +13,8 @@ public class StealthRockEffect extends GlobalBattleEffect {
 
     @Override
     public void pokemonSwitchedIn(EffectParam param) {
-        double factor=(1.0/8.0)*Move.getEffectiveness(getCurrPokemon(),Type.Rock);
-        dealIndirectDamage(param,getCurrPokemon(),getCurrPokemon(),1-factor);
-
+        double factor=(1.0/8.0)*Move.getEffectiveness(param.additionalData().getAffectedPokemon(),Type.Rock);
+        dealIndirectDamage(param,param.additionalData().getAffectedPokemon(),param.additionalData().getAffectedPokemon(),1-factor);
 
 
         }

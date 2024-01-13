@@ -14,7 +14,7 @@ public abstract class SwapPokemonEffect extends PokemonBattleEffect{
     @Override
     public void init(EffectParam param) {
         int oldIndex=indexOf(getPokemon().getPlayer().getTeam(),getPokemon());
-        getInterrupt(param.interrupt()).forceSwitch(param.eventExecutor(),getPokemon().getPlayer(),(short)oldIndex);
+        getInterrupt(param.interrupt()).forceSwitch(param.effectCollection(),getPokemon().getPlayer(),(short)oldIndex);
     }
     public Interrupt getInterrupt(Interrupt defaultValue){
         return defaultValue;

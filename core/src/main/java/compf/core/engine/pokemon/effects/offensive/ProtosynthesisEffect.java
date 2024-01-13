@@ -13,7 +13,7 @@ public class ProtosynthesisEffect extends PokemonBattleEffect {
 
     @Override
     public void init(EffectParam param) {
-        if(param.eventExecutor().hasEffect(HarshSunlightEffect.class) || getPokemon().getEffects().hasEffect(  BoosterEnergyffect.class )){
+        if(param.effectCollection().hasEffect(HarshSunlightEffect.class) ||  param.effectCollection().hasEffect( getPokemon(), BoosterEnergyffect.class )){
             int maxIndex=1;
             int max=0;
             for(int i=1;i<6;i++){

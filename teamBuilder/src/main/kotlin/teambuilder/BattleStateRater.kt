@@ -31,7 +31,7 @@ public class BattleStateRater{
         PoisonedStateCondition::class.java,
         SleepingStateCondition::class.java)
     private fun hasVisibleEffect(pkmn:Pokemon):Boolean{
-     return  visibleEffects.any { pkmn.effects.hasEffect(it) }
+     return  visibleEffects.any { pkmn.hasEffect(it) }
         
     }
 }

@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 import compf.core.engine.Player;
+import compf.core.engine.pokemon.effects.BattleEffect;
 import compf.core.engine.pokemon.effects.BattleEffectCollection;
 import compf.core.engine.pokemon.effects.ItemEffect;
 import compf.core.engine.pokemon.effects.PokemonBattleEffect;
@@ -32,7 +33,16 @@ public class Pokemon extends PokedexEntry {
     private Gender _gender;
     private Player _player;
     private boolean hasItem;
+    private BattleEffectCollection _battleEffects = new BattleEffectCollection();
 
+    public void addEffect(PokemonBattleEffect effect) {
+        _battleEffects.add(effect);
+    }
+    public void transferEffectsTo(BattleEffectCollection target){
+        for(BattleEffect effect:_battleEffects){
+            target.add(effect);
+        }
+    }
     public Player getPlayer() {
         return _player;
     }
@@ -52,10 +62,11 @@ public class Pokemon extends PokedexEntry {
     public boolean hasItem(){
         return hasItem;
     }
-    private BattleEffectCollection _effects = new BattleEffectCollection();
-
-    public BattleEffectCollection getEffects() {
-        return _effects;
+    public void removeItem(){
+        hasItem=false;
+    }
+    public void giveItem(){
+        hasItem=true;
     }
 
 
@@ -315,8 +326,6 @@ public class Pokemon extends PokedexEntry {
         return _name + "[" + _cHp + "/" + _stats[0] + "]";
     }
 
-    public void addEffect(PokemonBattleEffect effect) {
-        _effects.add(effect);
-    }
+   
 
 }
