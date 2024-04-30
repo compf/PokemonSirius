@@ -86,7 +86,7 @@ public class Pokemon extends PokedexEntry {
     }
 
     public enum Gender {
-        Male, Female
+        Male, Female,Unknon
     }
 
     public Pokemon(int nr) {
