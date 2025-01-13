@@ -34,8 +34,8 @@ public class SinglePlayerAgainstBotProtytype {
         startPrototyp(clientPlayer,botPlayer,new ConsolePrompt(BattleRule.DEFAULT_RULE,clientPlayer));
       }
     }
-    private static void startPrototyp(Player clientPlayer,Player botPlayer, IOInterface myIO){
-        Thread serverThread = new Thread(() -> {
+    private static void startPrototyp(Player clientPlayer,Player botPlayer, IOInterface myIO) {
+        /*Thread serverThread = new Thread(() -> {
             server = new BattleServer();
             server.waitForConnection(SharedPipe.getOrCreatePipe(PLAYER_SERVER_PORT));
             server.log("First waiting finnished");
@@ -67,5 +67,6 @@ public class SinglePlayerAgainstBotProtytype {
         
         botThread.setName("Bot thread");
         botThread.start();
+    */
     }
 }

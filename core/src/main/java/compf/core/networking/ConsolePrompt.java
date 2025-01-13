@@ -121,24 +121,7 @@ public class ConsolePrompt extends SimpleIOInterface {
 		}
 		return pkmnSelectionIndexMap;
 	}
-	@Override
-    public NetworkMessage handle(NetworkMessage msg) {
-        switch (msg.Kind) {
-            case RequestInputToIO:
-                return NetworkMessageKind.ReplyInputFromIO.createMessage(requestPlayerInput(((Tuple<Short,BattleState>) msg.Data)));
-            case SwitchPokemon:
-                return NetworkMessageKind.ReplyInputFromIO
-                        .createMessage(switchPokemon(((Tuple<Short, BattleState>) msg.Data)));
-            case Update:
-                update((BattleRoundResult) msg.Data);
-                return null;
-            case BattleEnded:
-                battleEnded((int) msg.Data);
-            default:
-                return null;
 
-        }
-    }
 	public void update(BattleRoundResult result) {
 		for (var action : result.Actions) {
 			for (var msg : action.Messages) {

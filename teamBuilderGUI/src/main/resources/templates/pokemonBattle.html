@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Battle Simulator</title>
+</head>
+
+<body>
+    <style>
+        #battleScreen {
+            display: grid;
+            height: 100%;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            grid-gap: 1px;
+        }
+
+        #enemyPokemon {
+            grid-column: 0;
+            grid-row: 0;
+        }
+
+        #enemyStats {
+            grid-column: 1;
+            grid-row: 0;
+        }
+
+        #playerPokemon {
+            grid-column: 0;
+            grid-row: 1;
+        }
+
+        #playerStats {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .progressBarBorder {
+            border: 1px solid black;
+            width: 100px;
+            height: 20px;
+            display: inline-block;
+        }
+
+        .progressBar {
+            height: 20px;
+            display: inline-block;
+            fill: black;
+        }
+
+        #moveSelection {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 1px;
+            grid-template-rows: repeat(2, 1fr);
+            height: 100%;
+            width: 100%;
+        }
+
+        #moveSelection span {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #moveSelection span:hover {
+            color: red;
+        }
+    </style>
+    <div id="battleScreen">
+        <img src="../static/img/template.png" alt="enemy Pokemon" id="enemyPokemon" />
+        <span id="enemyStats">
+            <span id="enemyName">Player</span>
+            <span id="enemyPokemonName">Pikachu</span>
+            <span id="enemyHP" data-hp="60">60/100</span>
+            <span class="progressBarBorder">
+                <span id="enemyHPProgress" class="progressBar"></span>
+            </span>
+
+
+        </span>
+        <img src="../static/img/template.png" alt="player Pokemon" id="playerPokemon" />
+        <span id="playerStats">
+            <span id="playerName">Player</span>
+            <span id="playerPokemonName">Charmander</span>
+            <span id="playerHP" data-hp="100">100/100</span>
+            <span class="progressBarBorder">
+                <span id="playerHPProgress" class="progressBar"></span>
+            </span>
+
+        </span>
+    </div>
+
+    <div id="battleActions">
+        <div id="moveSelection">
+            <span id="move1" onclick="selectMove(0)">Move 1</span>
+            <span id="move2" onclick="selectMove(1)">Move 2</span>
+            <span id="move3" onclick="selectMove(2)">Move 3</span>
+            <span id="move4" onclick="selectMove(3)">Move 4</span>
+        </div>
+        <select id="actionList" size="10">
+
+        </select>
+    </div>
+    <script>
+        let round = 0;
+        let playerId = 0;
+        let pokemonIndex = 0
+        let targetPlayer = 1;
+        let targetPokemon = 0;
+        function getRelevantSpan(id) {
+            if (id == 0) {
+                return document.getElementById("playerStats");
+            }
+            else {
+                return document.getElementById("enemyStats");
+            }
+        }
+        function updateBattleScreen(battleState) {
+            for (let pl of Object.keys(battleState.playerMap)) {
+                let relevantSpan = getRelevantSpan(pl);
+                let playerName = battleState.playerMap[pl]
+                relevantSpan.children[0].innerText = playerName;
+                relevantSpan.children[1].innerText = battleState.pokemonMap[pl][0].name;
+                let hpText = battleState.pokemonMap[pl][0].hp + "/" + battleState.pokemonMap[pl][0].maxHp;
+                relevantSpan.children[2].innerText = hpText
+
+                let progressBar = relevantSpan.children[3].children[0];
+                progressBar.value = battleState.pokemonMap[pl][0].hp;
+                progressBar.max = battleState.pokemonMap[pl][0].maxHp;
+                setProgressBarColor(progressBar);
+
+            }
+
+            let moves=battleState.pokemonMap[0][0].moves;
+
+            for(let i=0;i<4;i++){
+                let moveSpan=document.getElementById("move"+(i+1));
+                moveSpan.innerText=moves[i]
+            }
+        }
+
+        async function sendToServer(body) {
+            const request = new Request("battle/fetch", {
+                method: 'POST',
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            let data = await fetch(request);
+            if (data.status == 200) {
+                data = await data.json();
+                console.log(data);
+                return data;
+            }
+
+        }
+
+        function parseServerResponse(data) {
+            console.log("My data", data)
+            let state = data.Data
+            if(data.Data==null)return;
+            if ("State" in data.Data) {
+                document.getElementById("actionList").innerHTML="";
+
+                for(let a of data.Data.Actions){
+                    let option=document.createElement("option");
+                    option.innerText=a;
+                    document.getElementById("actionList").appendChild(option);
+                }
+                state = data.Data.State
+            }
+            updateBattleScreen(state);
+
+        }
+        function timer() {
+            const body = {
+                Kind: "None",
+                Data: null
+            }
+
+            sendToServer(body).then((data) => {
+                parseServerResponse(data);
+                
+            })
+
+        }
+        const BATTLE_ID = "[[${battle_id}]]";
+        async function selectMove(moveIndex) {
+            let body = {
+                Kind: "ReplyInputFromIO",
+                Data: {
+                    PlayerId: playerId,
+                    PokemonIndex: pokemonIndex,
+                    MoveIndex: moveIndex,
+                    TargetPlayer: targetPlayer,
+                    TargetPokemonIndex: targetPokemon
+                }
+            }
+            let battleState = await sendToServer(body);
+            parseServerResponse(battleState);
+
+        }
+
+        function setProgressBarColor(progressBar) {
+            let percentage = progressBar.value / progressBar.max;
+            const maxWidth = 100;
+            if (percentage > 0.5) {
+                progressBar.style.backgroundColor = 'green';
+            }
+            else if (percentage > 0.2) {
+                progressBar.style.backgroundColor = 'yellow';
+            }
+            else {
+                progressBar.style.backgroundColor = 'red';
+            }
+            progressBar.style.width = maxWidth * percentage + 'px';
+
+            let neighbor = progressBar.parentElement.previousElementSibling;
+            neighbor.innerText = progressBar.value + '/' + progressBar.max;
+
+        }
+        enemyHPProgress = document.getElementById('enemyHPProgress');
+        enemyHPProgress.value = 50;
+        enemyHPProgress.max = 100;
+        setProgressBarColor(enemyHPProgress);
+
+        playerHPProgress = document.getElementById('playerHPProgress');
+        playerHPProgress.value = 20;
+        playerHPProgress.max = 100;
+        setProgressBarColor(playerHPProgress);
+
+        setInterval(timer, 1000)
+    </script>
+</body>
+
+</html>

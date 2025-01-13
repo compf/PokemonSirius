@@ -142,7 +142,8 @@ public class MyClient implements IOInterface, Pipe {
 
     }
 
-    public PlayerInput requestPlayerInput(short pkmnIndex) {
+    public PlayerInput requestPlayerInput(Tuple<Short, BattleState> inf) {
+        var pkmnIndex = inf.Item1;
 
         try {
             StringWriter writer = new StringWriter();
@@ -179,6 +180,11 @@ public class MyClient implements IOInterface, Pipe {
 
     }
 
+    @Override
+    public short switchPokemon(Tuple<Short, BattleState> inf) {
+        return 0;
+    }
+
     public void battleEnded(int player) {
         write(NetworkMessageKind.BattleEnded.createMessage(String.valueOf(player)));
     }
@@ -189,22 +195,10 @@ public class MyClient implements IOInterface, Pipe {
         return this;
     }
 
+
     @Override
-    public NetworkMessage handle(NetworkMessage msg) {
-        switch (msg.Kind) {
-            case RequestInputToIO:
-                return NetworkMessageKind.ReplyInputFromIO
-                        .createMessage(requestPlayerInput(((Tuple<Short, BattleState>) msg.Data).Item1));
-
-            case Update:
-                // update( msg.Data);
-                return null;
-            case BattleEnded:
-                // battleEnded( msg.Data.toString());
-            default:
-                return null;
-        }
-
+    public void message(String msg) {
+        System.out.println(msg);
     }
 
     final int ENDPOINT_LENGTH_SIZE = 2;

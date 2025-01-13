@@ -22,36 +22,15 @@ public class SimulationBattleIO : SimpleIOInterface {
         //BattleStartedSemaphore.acquireTimeout(1, 10, TimeUnit.SECONDS)
     }
 
-    override fun handle(msg: NetworkMessage): NetworkMessage? {
-        return when (msg.Kind) {
-            NetworkMessageKind.RequestInputToIO -> {
-                return NetworkMessageKind.ReplyInputFromIO.createMessage(requestPlayerInput((msg.Data as Tuple<Short, BattleState>)));
+    override fun message(msg: String?) {
 
-            }
-
-            NetworkMessageKind.SwitchPokemon -> {
-                return NetworkMessageKind.SwitchPokemon
-                    .createMessage(switchPokemon((msg.Data as Tuple<Short, BattleState>)));
-            }
-
-            NetworkMessageKind.Update -> {
-                update(msg.Data as BattleRoundResult);
-                return null;
-            }
-
-            NetworkMessageKind.BattleEnded -> {
-                battleEnded(msg.Data as Int);
-                return null;
-            }
-
-            else ->
-                return null;
-
-        }
     }
 
+
+
+
     private val queue: ArrayDeque<PlayerInput> = ArrayDeque<PlayerInput>()
-    fun update(result: BattleRoundResult) {
+    override  fun update(result: BattleRoundResult) {
 
         MyLogger.debug("Received updates " + result.Actions?.size)
         if (result.Actions == null) return;
@@ -69,7 +48,7 @@ public class SimulationBattleIO : SimpleIOInterface {
         battleEnded(0)
     }
 
-    public fun battleEnded(player: Int) {}
+    override fun battleEnded(player: Int) {}
     public val player: Player
     public var balanceCounter = 0
     public fun addInput(input: PlayerInput) {
@@ -86,7 +65,7 @@ public class SimulationBattleIO : SimpleIOInterface {
 
     }
 
-    fun requestPlayerInput(tuple: Tuple<Short, BattleState>): PlayerInput? {
+    override fun requestPlayerInput(tuple: Tuple<Short, BattleState>): PlayerInput? {
         MyLogger.debug("requestplayerinput  " + queue.size + " " + player!!.playerId)
 
         if (queue.isEmpty()) {
@@ -98,7 +77,7 @@ public class SimulationBattleIO : SimpleIOInterface {
     }
 
 
-    fun switchPokemon(tuple: Tuple<Short, BattleState>): Short {
+    override fun switchPokemon(tuple: Tuple<Short, BattleState>): Short {
         return 0
     }
 }

@@ -22,11 +22,10 @@ public class BattleClient extends BaseServer implements Runnable,SteppableHost {
 	BattleRule _rule;
 	Player _player;
 	Thread thread;
-	protected BattleClient(Player player,BattleRule rule,IOInterface io,Pipe pipe){
+	protected BattleClient(Player player,BattleRule rule,IOInterface io){
 		this._player=player;
 		this._rule=rule;
 		this._io=io;
-		this.pipe=pipe;
 	}
 	public BattleClient(BattleRule rule, String playerName, Pokemon[] team, Pipe pipe, IOInterface io)
 			throws IOException {
@@ -77,9 +76,12 @@ public class BattleClient extends BaseServer implements Runnable,SteppableHost {
 			case RequestInputToClient:
 				BufferList<PlayerInput> inputs = new BufferList<>(_rule.PokemonPerPlayerOnField);
 				short pokemonIndex = (short) msg.Data;
-				var inp = (PlayerInput)_io.sendAndHandle(NetworkMessageKind.RequestInputToIO.createMessage(new Tuple<Short,BattleState>(pokemonIndex,_state))).Data;
-				if (inp == null)
-					return;
+				PlayerInput inp=null;
+				do{
+					inp=(PlayerInput)_io.sendAndHandle(NetworkMessageKind.RequestInputToIO.createMessage(new Tuple<Short,BattleState>(pokemonIndex,_state))).Data;
+
+				}while (inp==null);
+
 				SharedInformation.Instance.getLoggerService().log("Input from " + inp.PlayerId + " " + _io.getClass(),BattleClient.class);
 				inputs.add(inp);
 				writeObject(pipe, NetworkMessageKind.ReplyInputToServer.createMessage(inputs));
