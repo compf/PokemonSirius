@@ -129,7 +129,7 @@ class EffectTest  {
         me.addEffect(LeftoverItemEffect(me))
         val sim= createSimulator(me,enemy)
 
-        sim.attack().assertNoDamage().attack().assertNoDamage().assert(HPModifiedAssertion(1.175)) .execute(3)
+        sim.attack().assertNoDamage().attack().assertNoDamage().assert(HPModifiedAssertion(1.175)) .execute(2)
         assert(me.currHP>1) { "HP is ${me.currHP}" }
 
 

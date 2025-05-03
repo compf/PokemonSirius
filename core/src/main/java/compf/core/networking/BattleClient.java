@@ -22,10 +22,11 @@ public class BattleClient extends BaseServer implements Runnable,SteppableHost {
 	BattleRule _rule;
 	Player _player;
 	Thread thread;
-	protected BattleClient(Player player,BattleRule rule,IOInterface io){
+	protected BattleClient(Player player,BattleRule rule,IOInterface io, Pipe pipe){
 		this._player=player;
 		this._rule=rule;
 		this._io=io;
+		this.pipe=pipe;
 	}
 	public BattleClient(BattleRule rule, String playerName, Pokemon[] team, Pipe pipe, IOInterface io)
 			throws IOException {
